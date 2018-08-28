@@ -12,6 +12,8 @@
 !.eslintrc
 !.sass-lint.yml
 
+examples/webpack/dist
+
 # OS
 __*
 *.bak
