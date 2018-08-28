@@ -17,7 +17,7 @@ const Intl = (() => {
   const DEFAULT_PROPERTIES = {
     fallbackLocale: 'en',
     locale: 'en',
-    autoBind: true,
+    bind: false,
     data: null,
   }
 
@@ -30,7 +30,7 @@ const Intl = (() => {
   class Intl {
     /**
      * Creates an instance of Intl.
-     * @param {fallbackLocale: string, locale: string, autoBind: boolean, data: {[lang: string]: {[key: string]: string}}}
+     * @param {fallbackLocale: string, locale: string, bind: boolean, data: {[lang: string]: {[key: string]: string}}}
      */
     constructor(options = {}) {
       this.options = Object.assign(DEFAULT_PROPERTIES, options)
@@ -47,7 +47,7 @@ const Intl = (() => {
         throw new Error(`${NAME}. The fallback locale must necessarily have translation data.`)
       }
 
-      this.setLocale(this.options.locale, this.options.autoBind)
+      this.setLocale(this.options.locale, this.options.bind)
     }
 
     static get version() {
@@ -65,16 +65,16 @@ const Intl = (() => {
     /**
      * Set default locale
      * @param {string} locale
-     * @param {boolean} [updateHTML=true]
+     * @param {boolean} [bind=true]
      */
-    setLocale(locale, updateHTML = true) {
+    setLocale(locale, bind = false) {
       if (typeof this.options.data[locale] !== 'object') {
         console.error(`${NAME}. ${locale} has no data, fallback in ${this.options.fallbackLocale}.`)
       } else {
         this.options.locale = locale
       }
 
-      if (updateHTML) {
+      if (bind) {
         this.updateHtml()
       }
     }
@@ -136,8 +136,8 @@ const Intl = (() => {
      * Updates the HTML views
      * @param {HTMLElement} element
      */
-    updateHtml(element) {
-      if (typeof element === 'undefined') {
+    updateHtml(element = null) {
+      if (!element) {
         element = document.querySelectorAll('[data-i18n]')
       }
 

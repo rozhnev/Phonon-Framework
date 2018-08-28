@@ -21,11 +21,17 @@ const Binder = (() => {
    */
 
   class Binder {
+
+    /**
+     * @param {HTMLElement} element
+     * @param {Object} data
+     */
     constructor(element, data) {
       this.element = element
       this.data = data
 
       if (!this.isElement(this.element)) {
+        console.log('Warning, an element is invalid');
         return
       }
 
@@ -53,7 +59,8 @@ const Binder = (() => {
       if (element === null) {
         return false
       }
-      return (typeof Node === 'object' ? element instanceof Node : element && typeof element === 'object' && typeof element.nodeType === 'number' && typeof element.nodeName === 'string')
+
+      return element instanceof Node || element instanceof NodeList
     }
 
     /**
@@ -72,7 +79,7 @@ const Binder = (() => {
     /**
      * Binds some html to the given DOM element
      * @param {HTMLElement} element
-     * @param {string} text
+     * @param {String} text
      */
     setHtml(element, text) {
       element.innerHTML = text
@@ -88,6 +95,10 @@ const Binder = (() => {
       element.setAttribute(attr, text)
     }
 
+    /**
+     * Binds DOM elements
+     * @param {HTMLElement} element
+     */
     setNode(element) {
       let attr = element.getAttribute('data-i18n')
       if (!attr) {
@@ -120,8 +131,9 @@ const Binder = (() => {
     }
 
     /**
-    * Set values to DOM nodes
-    */
+     * Binds DOM elements
+     * @param {HTMLElement} element
+     */
     setNodes(element) {
       Array.from(element).forEach(el => this.setNode(el))
     }
