@@ -6,8 +6,9 @@
 import Event from '../../common/events'
 import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
+import { createJqueryPlugin } from '../../common/utils';
 
-const Dialog = (() => {
+const Dialog = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -22,6 +23,10 @@ const Dialog = (() => {
     title: null,
     message: null,
     cancelable: true,
+    cancelableKeyCodes: [
+      27, // Escape
+      13, // Enter
+    ],
     buttons: [
       {
         event: 'confirm',
@@ -163,12 +168,12 @@ const Dialog = (() => {
         this.triggerEvent(Event.SHOW)
         this.buildBackdrop()
 
+        // attach event
+        this.attachEvents()
+
         const onShown = () => {
           this.triggerEvent(Event.SHOWN)
           this.options.element.removeEventListener(Event.TRANSITION_END, onShown)
-
-          // attach event
-          this.attachEvents()
         }
 
         this.options.element.addEventListener(Event.TRANSITION_END, onShown)
@@ -182,22 +187,33 @@ const Dialog = (() => {
     }
 
     onElementEvent(event) {
-      if (event.type === 'keyup' && event.keyCode !== 27 && event.keyCode !== 13) {
+      // keyboard event (escape and enter)
+      if (event.type === 'keyup') {
+        if (this.options.cancelableKeyCodes.find(k => k === event.keyCode)) {
+          this.hide()
+        }
         return
       }
 
-      const eventName = event.target.getAttribute('data-event')
-
-      if (eventName) {
-        this.triggerEvent(eventName)
-      }
-
-      if (event.target.getAttribute('data-dismiss') !== NAME) {
+      // backdrop event
+      if (event.type === Event.START) {
+        // hide the dialog
+        this.hide()
         return
       }
 
-      // hide the dialog
-      this.hide()
+      // button event
+      if (event.type === 'click') {
+        const eventName = event.target.getAttribute('data-event')
+
+        if (eventName) {
+          this.triggerEvent(eventName)
+        }
+
+        if (event.target.getAttribute('data-dismiss') === NAME) {
+          this.hide()
+        }
+      }
     }
 
     hide() {
@@ -244,7 +260,7 @@ const Dialog = (() => {
 
       // add events if the dialog is cancelable
       // which means the user can hide the dialog
-      // by pressing the ESC key or click outside the backdrop
+      // by pressing the ESC key or click on the backdrop
       if (this.options.cancelable) {
         const backdrop = this.getBackdrop()
         this.registerElement({ target: backdrop, event: Event.START })
@@ -273,6 +289,13 @@ const Dialog = (() => {
       return super._DOMInterface(Dialog, options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Dialog);
 
   /**
    * ------------------------------------------------------------------------
@@ -311,6 +334,6 @@ const Dialog = (() => {
   })
 
   return Dialog
-})()
+})(window.$ ? window.$ : null)
 
 export default Dialog
