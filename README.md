@@ -1,4 +1,4 @@
-# Phonon
+# [Phonon](http://phonon.quarkdev.com)
 
 > Phonon: the light weight, scalable, flexible and customizable HTML5 Web - Mobile Framework.
 
@@ -10,7 +10,7 @@ Starting with v2.0, Phonon takes full advantage of ECMAScript.
 
 ## Quick start
 
-The best place to start with Phonon is the documentation place.
+Please refer to our documentation for more information.
 
 To start without reading text, several options are available:
 
