@@ -5,8 +5,9 @@
 */
 import Event from '../../common/events'
 import Component from '../component'
+import { createJqueryPlugin } from '../../common/utils';
 
-const Notification = (() => {
+const Notification = (($) => {
   /**
    * ------------------------------------------------------------------------
   * Constants
@@ -188,7 +189,15 @@ const Notification = (() => {
     }
   }
 
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Notification);
+
+
   return Notification
-})()
+})(window.$ ? window.$ : null)
 
 export default Notification
