@@ -4,7 +4,6 @@
  * --------------------------------------------------------------------------
  */
 
-import { loadFile } from '../../common/utils'
 import { dispatchPageEvent } from '../../common/events/dispatch'
 
 const Page = (() => {
@@ -56,7 +55,7 @@ const Page = (() => {
      * @returns {string}
      */
     getTemplate() {
-      return this.templatePath
+      return this.template
     }
 
     /**
@@ -67,26 +66,24 @@ const Page = (() => {
       return this.renderFunction
     }
 
-    loadTemplate() {
+    async renderTemplate() {
       const pageElement = document.querySelector(`[data-page="${this.name}"]`)
 
-      loadFile(this.getTemplate(), (template) => {
-        let render = function (DOMPage, template, elements) {
-          if (elements) {
-            Array.from(elements).forEach((el) => {
-              el.innerHTML = template
-            })
-          } else {
-            DOMPage.innerHTML = template
-          }
+      let render = async function (DOMPage, template, elements) {
+        if (elements) {
+          Array.from(elements).forEach((el) => {
+            el.innerHTML = template
+          })
+        } else {
+          DOMPage.innerHTML = template
         }
+      }
 
-        if (this.getRenderFunction()) {
-          render = this.getRenderFunction()
-        }
+      if (this.getRenderFunction()) {
+        render = this.getRenderFunction()
+      }
 
-        render(pageElement, template, pageElement.querySelectorAll(TEMPLATE_SELECTOR))
-      }, null)
+      await render(pageElement, this.getTemplate(), pageElement.querySelectorAll(TEMPLATE_SELECTOR))
     }
 
     // public
@@ -102,24 +99,19 @@ const Page = (() => {
     /**
      * Use the given template
      *
-     * @param {string} templatePath
-     */
-    useTemplate(templatePath) {
-      if (typeof templatePath !== 'string') {
-        throw new Error('The template path must be a string. ' + typeof templatePath + ' is given')
-      }
-      this.templatePath = templatePath
-    }
-
-    /**
-     * Use the given template renderer
+     * @param {string} template
      * @param {Function} renderFunction
      */
-    useTemplateRenderer(renderFunction) {
-      if (typeof renderFunction !== 'function') {
-        throw new Error('The custom template renderer must be a function. ' + typeof renderFunction + ' is given')
+    setTemplate(template = null, renderFunction = null) {
+      if (typeof template !== 'string') {
+        throw new Error('The template path must be a string. ' + typeof template + ' is given')
       }
-      this.renderFunction = renderFunction
+
+      this.template = template
+
+      if (typeof renderFunction === 'function') {
+        this.renderFunction = renderFunction
+      }
     }
 
     /**

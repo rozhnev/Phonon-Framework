@@ -99,7 +99,7 @@ const Pager = (() => {
 
     // public
 
-    showPage(pageName, addToHistory = true, back = false) {
+    async showPage(pageName, addToHistory = true, back = false) {
       const oldPage = this._('.current')
       if (oldPage) {
         const oldPageName = oldPage.getAttribute('data-page')
@@ -125,14 +125,12 @@ const Pager = (() => {
 
       newPage.classList.add('current')
 
-      // template loader
+      // render template
       const pageModel = this.getPageModel(pageName)
 
-      // @todo: use template cache?
       if (pageModel && pageModel.getTemplate()) {
-        pageModel.loadTemplate()
+        await pageModel.renderTemplate()
       }
-      // end
 
       if (oldPage) {
         const oldPageName = oldPage.getAttribute('data-page')
@@ -198,13 +196,10 @@ const Pager = (() => {
       this.cachePageSelector = null
     }
 
-    useTemplate(templatePath, renderFunction = null) {
+    setTemplate(templatePath, renderFunction = null) {
       const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true)
       pageModels.forEach((page) => {
-        page.useTemplate(templatePath)
-        if (typeof renderFunction === 'function') {
-          page.useTemplateRenderer(renderFunction)
-        }
+        page.setTemplate(templatePath, renderFunction)
       })
       this.cachePageSelector = null
     }
