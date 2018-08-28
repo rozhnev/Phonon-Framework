@@ -114,18 +114,18 @@ pager.select('myPage').addEvents({
 
 ### Page templates <i>Changed</i>
 
-You need to use `useTemplate()`.
+You need to use `setTemplate()`.
 The first argument is the path to the template file.
 
 ```js
-pager.select('myPage').useTemplate('templates/template.html')
+pager.select('myPage').setTemplate('templates/template.html')
 ```
 
 It is now possible to use custom template renderers.
 This feature is interesting if you want to use a template engine such as [Mustache](https://mustache.github.io).
 
 ```js
-pager.select('myPage').useTemplate('template.html', function (page, template, elements) {
+pager.select('myPage').setTemplate('template.html', function (page, template, elements) {
   page.querySelector('[data-render]').innerHTML = template
 })
 ```
@@ -136,30 +136,9 @@ Replace `data-navigation` by `data-navigate`.
 Note: `data-navigate="$back"` still works.
 Use `data-pop-page` for back animation if you want to force the back animation.
 
-### Ajax <i>nothing changed</i>
+### Ajax <i>removed</i>
 
-As a reminder, here is an example of a code:
-
-```js
-const request = phonon.ajax({
-  method: 'GET',
-  url: 'http://url.com',
-  crossDomain: true,
-  dataType: 'json',
-  //contentType: '',
-  //data: {key1: 'val1', key2: 'val2'}, (will be converted in string format)
-  timeout: 1,
-  headers: {
-      'Access-Control-Allow-Origin': '*'
-  },
-  success: function (res, xhr) {
-    console.log(res)
-  },
-  error: function(flagError, xhr) {
-    console.error(flagError)
-  }
-})
-```
+Please, use a HTTP client such as [axios](https://github.com/axios/axios).
 
 ### Internationalisation (i18n) <i>Changed</i>
 
@@ -192,20 +171,16 @@ If you need to keep this feature, you can load JSON language files and then
 pass everything as the second argument.
 
 ```js
-phonon.ajax({
-  method: 'GET',
-  url: '/path/to/languages.json',
-  dataType: 'json',
-  success: function (data, xhr) {
+axios.get('/locales')
+  .then(function (response) {
     const config = {
       fallbackLocale: 'en',
       locale: 'en',
-      data: data
+      data: response.data
     }
     phonon.intl(config)
-  }
+  });
 })
-
 ```
 
 ## Components

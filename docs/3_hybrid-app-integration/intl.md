@@ -12,6 +12,7 @@ The internationalization plugin is meant to be simple and light to international
 const intl = phonon.intl({
   fallbackLocale: 'en',
   locale: 'en',
+  bind: true,
   data: {
     en: {
       welcome: 'Hello (default)'
@@ -116,6 +117,7 @@ We need to add **:name1** and **:name2** in our data configuration.
 const intl = phonon.intl({
   fallbackLocale: 'en',
   locale: 'fr',
+  bind: true,
   data: {
     en: {
       welcome: 'Hello :name1 and :name2'

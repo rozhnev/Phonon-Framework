@@ -38,3 +38,5 @@ title: Collapse
 #### hide()
 
 ...
+
+### Events

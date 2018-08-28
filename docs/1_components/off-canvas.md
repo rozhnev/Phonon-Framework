@@ -42,7 +42,7 @@ Note that you can add the class `off-canvas-aside` in the body element so that t
 
 ```js
 const offCanvas = phonon.offCanvas({
-  element: '#myOffCanvas'
+  element: '#exampleOffCanvas'
 })
 
 offCanvas.show()

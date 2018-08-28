@@ -36,7 +36,7 @@ Add the class `disabled` to the item.
   <div class="dropdown-menu">
     <div class="item" data-value="blue" data-selected="true">Blue</div>
     <div class="item" data-value="red">Red</div>
-    <div class="item disabled">Invalid item</div> 
+    <div class="item disabled">Invalid item</div>
   </div>
 </div>
 ```
@@ -82,8 +82,8 @@ Add the class `disabled` to the item.
   <div class="default-text">Blue</div>
   <div class="dropdown-menu">
     <div class="input-search-container">
-      <input class="form-control" type="text" name="search">    
-    </div>          
+      <input class="form-control" type="text" name="search">
+    </div>
     <div class="item" data-value="blue" data-selected=true>Blue</div>
     <div class="item" data-value="red">Red</div>
     <div class="item" data-value="green">Green</div>

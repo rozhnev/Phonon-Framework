@@ -17,6 +17,12 @@ const notif = phonon.notification({
 })
 
 notif.show()
+
+// jQuery support
+const notif = $().notification({
+  message: 'Hello'
+})
+notif.show()
 ```
 
 ## Custom Notification

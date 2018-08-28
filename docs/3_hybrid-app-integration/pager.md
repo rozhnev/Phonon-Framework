@@ -48,7 +48,7 @@ By default, Pager will load the file and set it where the attribute `data-templa
 in the HTML view.
 
 ```js
-pager.select('myPage').useTemplate('path/to/template.html')
+pager.select('myPage').setTemplate('path/to/template.html')
 ```
 
 The page template will be injected as a node child where the attribute `data-push-template` is.
@@ -59,10 +59,17 @@ The page template will be injected as a node child where the attribute `data-pus
 </div>
 ```
 
-You may want to use a template engine or change the default behavior of Pager. In this case, the second argument of `useTemplate()` is useful.
+You may want to use a template engine or change the default behavior of Pager. In this case, the second argument of `setTemplate()` is useful.
 
 ```js
-pager.select('myPage').useTemplate('path/to/template.html', (page, template, elements) => {
+// es6
+pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
+  const template = await fetchTemplate();
+  page.querySelector('[data-template]').innerHTML = template
+})
+
+// es5
+pager.select('myPage').setTemplate('<div>This is my template</div>', (page, template, elements) => {
   page.querySelector('[data-template]').innerHTML = template
 })
 ```
