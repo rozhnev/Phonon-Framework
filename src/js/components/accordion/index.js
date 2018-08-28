@@ -4,6 +4,7 @@
  * --------------------------------------------------------------------------
  */
 import Component from '../component'
+import Event from '../../common/events'
 import Collapse from '../collapse'
 import { getAttributesConfig } from '../componentManager'
 import { findTargetByClass } from '../../common/utils'

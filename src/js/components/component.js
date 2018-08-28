@@ -4,7 +4,7 @@
  * --------------------------------------------------------------------------
  */
 import { dispatchElementEvent, dispatchWinDocEvent } from '../common/events/dispatch'
-import { generateId } from '../common/utils'
+import { generateId } from '../common/utils/index'
 import Event from '../common/events'
 import ComponentManager, { setAttributesConfig, getAttributesConfig } from './componentManager'
 
