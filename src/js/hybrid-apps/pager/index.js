@@ -74,7 +74,7 @@ const Pager = (() => {
       window.location.hash = `${this.options.hashPrefix}/${pageName}`
     }
 
-    areSamePage(pageName1, pageName2) {
+    isPageOf(pageName1, pageName2) {
       const page1 = this.getPageModel(pageName1)
       const page2 = this.getPageModel(pageName2)
       return page1 && page2 && page1.name === page2.name
@@ -104,7 +104,7 @@ const Pager = (() => {
       if (oldPage) {
         const oldPageName = oldPage.getAttribute('data-page')
 
-        if (this.areSamePage(pageName, oldPageName)) {
+        if (this.isPageOf(pageName, oldPageName)) {
           return
         }
 

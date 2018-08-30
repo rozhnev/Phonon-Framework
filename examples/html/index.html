@@ -11,48 +11,23 @@
   </head>
   <body>
 
-    <!--
-    <div class="alert" data-cancelable="false" id="custom-alert">
-      <div class="alert-dialog" role="document">
-        <div class="alert-content">
-          <div class="alert-header">
-            <h5 class="alert-title">Alert title</h5>
-          </div>
-          <div class="alert-body">
-            <p>Alert body text goes here.</p>
-          </div>
-          <div class="alert-footer">
-            <div class="btn-group float-right" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-outline-primary">Save changes</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>You have 2 messages in your inbox
-    </div>
-  -->
-<!--
-    <div class="notification">
-      <div class="notification-inner">
-        <div class="message">You have 2 messages in your inbox</div>
-        <button class="btn">X</button>
-      </div>
-    </div>
-  -->
 
     <!-- SPA: first page -->
     <div class="app-page" data-page="one">
       <nav class="navbar navbar-toggleable-md navbar-light bg-primary">
         <a class="navbar-brand text-white" id="test" href="#" data-i18n="text: welcome">Phonon</a>
 
-        <div class="dropdown navbar-toggler-right">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Icon
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
-            <button class="dropdown-item" type="button">Something else here</button>
+        <div class="dropdown" data-toggle="dropdown">
+          <input type="hidden" name="color">
+          <i class="dropdown-icon"></i>
+          <div class="default-text">Blue</div>
+          <div class="dropdown-menu">
+            <div class="item" data-value="blue" data-selected="true">Blue</div>
+            <div class="item" data-value="red">Red</div>
+            <div class="item selected" data-value="green">
+              <span class="description">Best one!</span>
+              <span class="text">Green</span>
+            </div>
           </div>
         </div>
       </nav>
@@ -60,7 +35,20 @@
       <div class="p-3">
         <h1 class="unselectable">Page1</h1>
         <h2 data-i18n="text: welcome"></h2>
-        
+
+        <p>
+          <a class="btn btn-primary" data-toggle="collapse" href="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
+            Link with href
+          </a>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
+            Button with data-target
+          </button>
+        </p>
+
+        <div class="collapse" id="exampleCollapse">
+          Collapse content.
+        </div>
+
         <button class="btn btn-primary" data-navigate="two" data-pop-page=true>Go to page2 (button)</button>
         <a href="#!/two/a/b/c">Go to page2 (link)</a>
 
@@ -90,15 +78,16 @@
       </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
     <script src="../../dist/js/phonon.js"></script>
     <script>
-
       // First of all: config
       const pager = phonon.pager({
         hashPrefix: '#!',
         useHash: true,
         defaultPage: 'one',
-        animatePages: false,
+        animatePages: true,
       })
 
       pager.select('*').addEvents({
@@ -125,37 +114,34 @@
         }
       })
 
-      pager.select('one').useTemplate('template.html', function (page, template, elements) {
+      const template = '<div class="px-2 py-2 bg-primary text-white">This is my template.</div>';
+
+      pager.select('one').setTemplate(template, function (page, template, elements) {
         page.querySelector('[data-render]').innerHTML = template
       })
-      
+
       // i18n
-      phonon.intl('en', {
-        en: {
-          welcome: 'Hello (default)'
-        },
-        'en_US': {
-          welcome: 'Hello US'
-        },
-        fr: {
-          welcome: 'Bonjour'
+      const intl = phonon.intl({
+        fallbackLocale: 'en',
+        locale: 'en',
+        bind: true,
+        data: {
+          en: {
+            welcome: 'Hello (default)'
+          },
+          en_US: {
+            welcome: 'Hello US'
+          },
+          fr: {
+            welcome: 'Bonjour'
+          }
         }
-      }).bind()
+      });
+
 
       // Start the app
       pager.start()
 
-      window.addEventListener('online.ph.network', function (event) {
-        console.log('online')
-        console.log(event.detail.date)
-      })
-
-      window.addEventListener('offline.ph.network', function (event) {
-        console.log('offline')
-        console.log(event.detail.date)
-      })
-
-      phonon.notification(null, 'Hello', true, 2000, 'danger').build().show()
     </script>
   </body>
 </html>

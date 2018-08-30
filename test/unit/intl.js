@@ -1,15 +1,3 @@
-// load Unit.js module
-import { JSDOM } from 'jsdom'
-import test from 'unit.js'
-import Intl from '../src/js/hybrid-apps/intl'
-
-const dom = new JSDOM('<body></body>', { pretendToBeVisual: true })
-
-global.window = dom.window
-global.document = dom.window.document
-global.CustomEvent = window.CustomEvent
-
-describe('Intl', () => {
 
   it('Invalid configuration test', () => {
 
@@ -152,5 +140,3 @@ describe('Intl', () => {
     test.undefined(intl.updateHtml(null))
     test.undefined(intl.updateHtml(document.body))
     test.undefined(intl.updateHtml(document.querySelector('.invalid')))
-  })
-})

@@ -1,12 +1,13 @@
 /*
 * Script to build our plugins to use them separately.
-* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+* Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
 */
 
 const rollup  = require('rollup')
 const path    = require('path')
 const babel   = require('rollup-plugin-babel')
 const resolve = require('rollup-plugin-node-resolve');
+const fs = require('fs');
 
 const rootPath = '../dist/js/components/';
 
@@ -34,8 +35,18 @@ const plugins = [
 
 const format = 'cjs'
 const components = {
-  // Dialog: path.resolve(__dirname, '../src/js/components/dialog/index.js'),
-  Dialog: './src/js/components/dialog/index.js',
+  Collapse: path.resolve(__dirname, '../src/js/components/collapse/index.js'),
+  Accordion: path.resolve(__dirname, '../src/js/components/accordion/index.js'),
+  Dialog: path.resolve(__dirname, '../src/js/components/dialog/index.js'),
+  DialogConfirm: path.resolve(__dirname, '../src/js/components/dialog/confirm.js'),
+  DialogLoader: path.resolve(__dirname, '../src/js/components/dialog/loader.js'),
+  DialogPrompt: path.resolve(__dirname, '../src/js/components/dialog/prompt.js'),
+  Dropdown: path.resolve(__dirname, '../src/js/components/dropdown/index.js'),
+  Loader: path.resolve(__dirname, '../src/js/components/loader/index.js'),
+  Notification: path.resolve(__dirname, '../src/js/components/notification/index.js'),
+  OffCanvas: path.resolve(__dirname, '../src/js/components/off-canvas/index.js'),
+  Progress: path.resolve(__dirname, '../src/js/components/progress/index.js'),
+  Tab: path.resolve(__dirname, '../src/js/components/tab/index.js'),
 }
 
 Object.keys(components)
