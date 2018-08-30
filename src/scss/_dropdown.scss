@@ -109,7 +109,7 @@ $dropdown-menu-description-color: $white;
     border-color: $dropdown-hover-border-color;
 
     .dropdown-menu {
-      border-color: $dropdown-menu-hover-border-color;      
+      border-color: $dropdown-menu-hover-border-color;
     }
   }
 
@@ -209,17 +209,13 @@ $dropdown-menu-description-color: $white;
     top: calc(50% - 4px);
     right: 1em;
 
-    transition: transform 300ms ease-in-out;    
+    transition: transform 300ms ease-in-out;
 
     z-index: 3;
     cursor: pointer;
     text-align: center;
 
     backface-visibility: hidden;
-
-    &::before {
-      content: '\f0d7';
-    }
   }
 
   // menu header
