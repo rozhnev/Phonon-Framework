@@ -23,6 +23,7 @@ const Dialog = (($) => {
     title: null,
     message: null,
     cancelable: true,
+    type: null,
     cancelableKeyCodes: [
       27, // Escape
       13, // Enter

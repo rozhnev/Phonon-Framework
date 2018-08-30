@@ -6,9 +6,9 @@
 import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
 import Event from '../../common/events'
-import { findTargetByClass } from '../../common/utils'
+import { findTargetByClass, createJqueryPlugin } from '../../common/utils'
 
-const Tab = (() => {
+const Tab = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -118,6 +118,13 @@ const Tab = (() => {
 
   /**
    * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Tab);
+
+  /**
+   * ------------------------------------------------------------------------
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
@@ -150,6 +157,6 @@ const Tab = (() => {
   })
 
   return Tab
-})()
+})(window.$ ? window.$ : null)
 
 export default Tab

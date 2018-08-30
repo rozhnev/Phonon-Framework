@@ -6,16 +6,16 @@
 import Event from '../../common/events'
 import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
-import { findTargetByAttr } from '../../common/utils'
+import { findTargetByAttr, createJqueryPlugin } from '../../common/utils'
 
-const OffCanvas = (() => {
+const OffCanvas = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'off-canvas'
+  const NAME = 'offCanvas'
   const VERSION = '2.0.0'
   const BACKDROP_SELECTOR = 'off-canvas-backdrop'
   const DEFAULT_PROPERTIES = {
@@ -266,6 +266,13 @@ const OffCanvas = (() => {
 
   /**
    * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, OffCanvas);
+
+  /**
+   * ------------------------------------------------------------------------
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
@@ -305,6 +312,6 @@ const OffCanvas = (() => {
   })
 
   return OffCanvas
-})()
+})(window.$ ? window.$ : null)
 
 export default OffCanvas

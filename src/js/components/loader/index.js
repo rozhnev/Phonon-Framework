@@ -4,8 +4,9 @@
  * --------------------------------------------------------------------------
  */
 import Component from '../component'
+import { createJqueryPlugin } from '../../common/utils'
 
-const Loader = (() => {
+const Loader = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -44,7 +45,7 @@ const Loader = (() => {
 
     getClientSize() {
       if (!this.customSize) {
-        const size = this.options.element.getBoundingClientRect()        
+        const size = this.options.element.getBoundingClientRect()
         return size.height
       }
 
@@ -115,7 +116,14 @@ const Loader = (() => {
     }
   }
 
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Loader);
+
   return Loader
-})()
+})(window.$ ? window.$ : null)
 
 export default Loader

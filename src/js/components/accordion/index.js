@@ -4,12 +4,11 @@
  * --------------------------------------------------------------------------
  */
 import Component from '../component'
-import Event from '../../common/events'
 import Collapse from '../collapse'
 import { getAttributesConfig } from '../componentManager'
-import { findTargetByClass } from '../../common/utils'
+import { findTargetByClass, createJqueryPlugin } from '../../common/utils'
 
-const Accordion = (() => {
+const Accordion = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -130,6 +129,13 @@ const Accordion = (() => {
 
   /**
    * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Accordion);
+
+  /**
+   * ------------------------------------------------------------------------
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
@@ -175,6 +181,6 @@ const Accordion = (() => {
   })
 
   return Accordion
-})()
+})(window.$ ? window.$ : null)
 
 export default Accordion

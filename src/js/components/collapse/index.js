@@ -8,7 +8,7 @@ import { getAttributesConfig } from '../componentManager'
 import Event from '../../common/events'
 import { findTargetByAttr } from '../../common/utils'
 
-const Collapse = (() => {
+const Collapse = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -178,6 +178,6 @@ const Collapse = (() => {
   })
 
   return Collapse
-})()
+})(window.$ ? window.$ : null)
 
 export default Collapse

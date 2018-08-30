@@ -5,8 +5,9 @@
  */
 import Component from '../component'
 import Event from '../../common/events'
+import { createJqueryPlugin } from '../../common/utils'
 
-const Progress = (() => {
+const Progress = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -142,7 +143,14 @@ const Progress = (() => {
     }
   }
 
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Progress);
+
   return Progress
-})()
+})(window.$ ? window.$ : null)
 
 export default Progress
