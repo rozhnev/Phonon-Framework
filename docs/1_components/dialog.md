@@ -15,29 +15,34 @@ This is particularly useful if you want to set up a dialog without worrying abou
 ### Simple dialog
 
 ```js
-const dialog = phonon.dialog({
+// es6
+const Dialog = require('phonon/dist/js/components/dialog');
+
+const dialog = new Dialog({
   title: 'Dialog title',
   message: 'Dialog body text goes here.',
 });
 
-dialog.show()
+// es5
+const dialog = phonon.dialog({
+  title: 'Dialog title',
+  message: 'Dialog body text goes here.',
+});
 
 // jQuery support
 const dialog = $().dialog({
   title: 'Dialog title',
   message: 'Dialog body text goes here.',
 });
-
-dialog.show()
 ```
 
 ### Prompt dialog
 
 ```js
-const prompt = phonon.dialog({
+
+const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
-  type: 'prompt'
 })
 
 prompt.show()
@@ -49,10 +54,9 @@ prompt.getInputValue() // only available with prompts
 ### Confirm dialog
 
 ```js
-const confirm = phonon.dialog({
+const confirm = phonon.confirm({
   title: 'Confirm title',
   message: 'Confirm body text goes here.',
-  type: 'confirm'
 })
 
 confirm.show()
@@ -61,13 +65,12 @@ confirm.show()
 ### Loader dialog
 
 ```js
-const loader = phonon.dialog({
+const dialogLoader = phonon.dialogLoader({
   title: 'Loader title',
   message: 'Loader body text goes here.',
-  type: 'loader'
 })
 
-loader.show()
+dialogLoader.show()
 ```
 
 ### Dialog with custom buttons
@@ -173,7 +176,6 @@ dialog.show()
 - title
 - message
 - cancelable
-- type
 - cancelableKeyCodes [array] (by default, Enter and Escape are shortcuts to hide the dialog)
 
 ## Methods

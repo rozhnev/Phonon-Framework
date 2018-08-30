@@ -36,43 +36,44 @@ Add the class `off-canvas-right` if you want that the off-canvas appears from th
 </div>
 ```
 
-Then, you can work with it by using the correct `element` property.
+## JavaScript
 
 Note that you can add the class `off-canvas-aside` in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.
 
 ```js
 const offCanvas = phonon.offCanvas({
-  element: '#exampleOffCanvas'
-})
+  element: '#exampleOffCanvas',
+});
 
-offCanvas.show()
+// jQuery support
+const offCanvas = $('#exampleOffCanvas').offCanvas();
 ```
 
-## Options
+### Options
 
 - aside
 
-## Methods
+### Methods
 
-### show()
+#### show()
 
 Any off canvas can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
-offCanvas.show()
+offCanvas.show();
 ```
 
 
-### hide()
+#### hide()
 
 Any off canvas can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 
 ```js
-offCanvas.hide()
+offCanvas.hide();
 ```
 
 
-## Events
+### Events
 
 It may be useful to use the events that affect your off-canvas.
 To do this, you can use object and DOM events.
@@ -86,7 +87,7 @@ To do this, you can use object and DOM events.
 |  hidden  |   This event is fired when the off-canvas has finished being hidden from the user (will wait for CSS transitions to complete).    |
 
 
-### Object Events
+#### Object Events
 
 ```js
 phonon.offCanvas({
@@ -106,7 +107,7 @@ phonon.offCanvas({
 })
 ```
 
-### DOM Events
+#### DOM Events
 
 ```js
 document.querySelector('.off-canvas').addEventListener('show.ph.off-canvas', () => {

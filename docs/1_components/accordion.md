@@ -37,7 +37,10 @@ title: Accordion
 ```js
 const accordion = phonon.accordion({
   element: '#exampleAccordion',
-})
+});
+
+// jQuery support
+const accordion = $('#exampleAccordion').accordion();
 ```
 
 ## Methods
@@ -45,13 +48,13 @@ const accordion = phonon.accordion({
 ### show(collapse: any)
 
 ```js
-accordion.show('#myCollapse')
+accordion.show('#collapseTwo');
 ```
 
 ### hide(collapse: any)
 
 ```js
-accordion.hide('#myCollapse')
+accordion.hide('#collapseTwo');
 ```
 
 ## Events

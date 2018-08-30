@@ -33,7 +33,17 @@ const progress = phonon.progress({
   label: false,
   striped: false,
   background: null,
-})
+});
+
+// jQuery support
+$('#myProgress').progress({
+  height: 5,
+  min: 0,
+  max: 100,
+  label: false,
+  striped: false,
+  background: null,
+});
 ```
 
 ## Options
@@ -88,7 +98,7 @@ To do this, you can use object and DOM events.
 ### Object Events
 
 ```js
-phonon.offCanvas({
+phonon.progress({
   element: '#exampleProgress',
   show: () => { // or onShow
     console.log('It works!')
