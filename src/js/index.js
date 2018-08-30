@@ -63,25 +63,16 @@ api.notification = Notification._DOMInterface
  * Dialog
  * ------------------------------------------------------------------------
  */
-api.dialog = (options) => {
-  if (options.type === Prompt.identifier()) {
-    // prompt dialog
-    return Prompt._DOMInterface(options)
-  }
 
-  if (options.type === Confirm.identifier()) {
-    // confirm dialog
-    return Confirm._DOMInterface(options)
-  }
+// generic
+api.dialog = Dialog._DOMInterface
 
-  if (options.type === DialogLoader.identifier()) {
-    // confirm dialog
-    return DialogLoader._DOMInterface(options)
-  }
-
-  // generic dialog
-  return Dialog._DOMInterface(options)
-}
+// prompt dialog
+api.prompt = Prompt._DOMInterface
+// confirm dialog
+api.confirm = Confirm._DOMInterface
+// loader dialog
+api.dialogLoader = DialogLoader._DOMInterface
 
 /**
  * ------------------------------------------------------------------------
