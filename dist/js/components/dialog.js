@@ -689,8 +689,8 @@ const Dialog = ($ => {
    * ------------------------------------------------------------------------
    */
 
-  createJqueryPlugin($, NAME, Dialog);
 
+  createJqueryPlugin($, NAME, Dialog);
   /**
    * ------------------------------------------------------------------------
    * DOM Api implementation
