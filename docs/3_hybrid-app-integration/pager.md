@@ -30,6 +30,19 @@ A SPA page is defined by setting up the `app-page` class and a unique data-page 
 <div class="app-page" data-page="myThirdPage"></div>
 ```
 
+## Page Navigation
+
+Page navigation works with the attribute `data-navigate`.
+
+```html
+<button class="btn btn-primary" data-navigate="myPage">Go to page</button>
+```
+
+If you want to force the back animation, you can use the attribute `data-pop-page`.
+
+<button class="btn btn-primary" data-navigate="home" data-pop-page="true">Back to home</button>
+
+
 ## Page Selector
 
 To work with pages, it is essential to use the `select()` method. Indeed, the new Phonon Pager allows you to work with both a single page and a set of pages.
@@ -44,11 +57,11 @@ Once you selected pages programatically, you can **use a template** or **listen 
 
 ## Page Template
 
-By default, Pager will load the file and set it where the attribute `data-template` is present
+Pager will use the template and set it where the attribute `data-template` is present
 in the HTML view.
 
 ```js
-pager.select('myPage').setTemplate('path/to/template.html')
+pager.select('myPage').setTemplate('<div>This is my template</div>')
 ```
 
 The page template will be injected as a node child where the attribute `data-push-template` is.
@@ -73,19 +86,6 @@ pager.select('myPage').setTemplate('<div>This is my template</div>', (page, temp
   page.querySelector('[data-template]').innerHTML = template
 })
 ```
-
-## Page Navigation
-
-Page navigation works with the attribute `data-navigate`.
-
-```html
-<button class="btn btn-primary" data-navigate="myPage">Go to page</button>
-```
-
-If you want to force the back animation, you can use the attribute `data-pop-page`.
-
-<button class="btn btn-primary" data-navigate="home" data-pop-page="true">Back to home</button>
-
 
 ## Events
 
