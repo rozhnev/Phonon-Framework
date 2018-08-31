@@ -10,7 +10,8 @@
     "build": "node ./build/build-all.js",
     "unit": "jest ./test/unit",
     "e2e": "node ./node_modules/testcafe/bin/testcafe.js chromium ./test/e2e/**",
-    "docs": "documentor docs -o docs/index.html"
+    "docs": "documentor docs -o docs/index.html",
+    "lint": "eslint --ext .js src test/unit test/e2e"
   },
   "engines": {
     "node": ">= 6.0.0",
@@ -44,6 +45,7 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^3.0.1",
+    "fs-extra": "^7.0.0",
     "jest": "^23.5.0",
     "node-sass": "^4.9.3",
     "regenerator-runtime": "^0.12.1",
