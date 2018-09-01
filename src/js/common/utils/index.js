@@ -44,7 +44,7 @@ export function createJqueryPlugin($ = null, name, obj) {
       opts.element = this[0];
     }
 
-    return obj._DOMInterface(opts)
+    return obj.DOMInterface(opts)
   };
 
   $.fn[name] = mainFn;
