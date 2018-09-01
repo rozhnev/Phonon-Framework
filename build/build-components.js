@@ -35,6 +35,7 @@ const plugins = [
 
 const format = 'cjs'
 const components = {
+  Alert: path.resolve(__dirname, '../src/js/components/alert/index.js'),
   Collapse: path.resolve(__dirname, '../src/js/components/collapse/index.js'),
   Accordion: path.resolve(__dirname, '../src/js/components/accordion/index.js'),
   Dialog: path.resolve(__dirname, '../src/js/components/dialog/index.js'),
