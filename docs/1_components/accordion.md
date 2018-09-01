@@ -81,4 +81,4 @@ accordion.hide('#collapseTwo');
 
 ## Events
 
-@todo
+Listen for events of the [collapse](#1_components/collapse) elements.

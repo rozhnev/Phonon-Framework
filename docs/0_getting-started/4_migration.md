@@ -37,13 +37,23 @@ const pager = phonon.pager({
 })
 ```
 
+### Markup page structure
+
+`.app-pages` is a wrapper of `.app-page` pages.
+
+```html
+<div class="app-pages">
+  <div class="app-page" data-page="one">...</div>
+  <div class="app-page" data-page="myPage2">...</div>
+</div>
+
 ### Page events <i>Changed</i>
 
 For a given page `myPage` for example.
 Assuming this page is present in the DOM like the following:
 
 ```html
-<div data-page="myPage"></div>
+<div class="app-page" data-page="myPage"></div>
 ```
 
 Page events are now used with `.select()`.
@@ -118,15 +128,25 @@ You need to use `setTemplate()`.
 The first argument is the path to the template file.
 
 ```js
-pager.select('myPage').setTemplate('templates/template.html')
+pager.select('myPage').setTemplate('<div>This is my template</div>')
+```
+
+The page template will be injected as a node child where the attribute `data-push-template` is.
+
+```html
+<div data-push-template>
+  <!-- The template will be injected here -->
+</div>
 ```
 
 It is now possible to use custom template renderers.
 This feature is interesting if you want to use a template engine such as [Mustache](https://mustache.github.io).
+Note that async functions are now supported.
 
 ```js
-pager.select('myPage').setTemplate('template.html', function (page, template, elements) {
-  page.querySelector('[data-render]').innerHTML = template
+pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
+  const template = await fetchTemplate();
+  page.querySelector('[data-template]').innerHTML = template
 })
 ```
 
@@ -187,9 +207,9 @@ axios.get('/locales')
 
 ### Utility
 
-#### Padding
+#### Padding and margin
 
-More information can be found here: [https://getbootstrap.com/docs/4.0/utilities/spacing/](https://getbootstrap.com/docs/4.0/utilities/spacing/)
+Please, see [#2_utilities/spacing](spacing).
 
 Replace **.padded-full** by **.p-1**.
 Replace **.padded-top** by **.pt-1**.
@@ -197,17 +217,7 @@ Replace **.padded-left** by **.pl-1**.
 Replace **.padded-right** by **.pr-1**.
 Replace **.padded-bottom** by **.pb-1**.
 
-#### Show/Hide Elements
-
-Replace **.show-for-phone-only** by **.d-sm-none**.
-Replace **.show-for-tablet-only** by **?**.
-Replace **.show-for-tablet-up** by **?**.
-Replace **.show-for-large-only** by **?**.
-Replace **.show-for-android-only** by **?**.
-Replace **.show-for-ios-only** by **?**.
-Replace **.show-for-web-only** by **?**.
-
-#### Text Alignment
+#### Text alignment
 
 More information can be found here: [https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment](https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment)
 
@@ -222,7 +232,7 @@ Replace **.padded-bottom** by **.pb-1**.
 Replace **.pull-left** by **.float-left**.
 Replace **.pull-right** by **.float-right**.
 
-#### Expand Width
+#### Fit parent width
 
 Replace **.fit-parent** by **.w-100**.
 

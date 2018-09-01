@@ -1,7 +1,9 @@
 
-const Dialog = require('../../../dist/js/components/dialog.js');
+const Modal = require('../../../dist/js/components/modal.js');
 
-var dialog = new Dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-}).show();
+const modal = new Modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+})
+
+modal.show();

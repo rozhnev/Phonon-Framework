@@ -9,7 +9,7 @@ title: Dropdown
 ## Markup
 
 ```html
-<div class="dropdown" data-toggle="dropdown">
+<div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
   <input type="hidden" name="color">
   <i class="dropdown-icon"></i>
   <div class="default-text">Blue</div>
@@ -29,7 +29,7 @@ title: Dropdown
 Add the class `disabled` to the item.
 
 ```html
-<div class="dropdown" data-toggle="dropdown">
+<div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
   <input type="hidden" name="color">
   <i class="dropdown-icon"></i>
   <div class="default-text">Blue</div>
@@ -44,7 +44,7 @@ Add the class `disabled` to the item.
 ### Dropdown with header
 
 ```html
-<div class="dropdown" data-toggle="dropdown">
+<div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
   <input type="hidden" name="color">
   <i class="dropdown-icon"></i>
   <div class="default-text">Blue</div>
@@ -59,7 +59,7 @@ Add the class `disabled` to the item.
 ### Dropdown with divider
 
 ```html
-<div class="dropdown" data-toggle="dropdown">
+<div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
   <input type="hidden" name="color">
   <i class="dropdown-icon"></i>
   <div class="default-text">Blue</div>
@@ -76,7 +76,7 @@ Add the class `disabled` to the item.
 ### Dropdown with search input
 
 ```html
-<div class="dropdown" data-search="true" data-toggle="dropdown">
+<div class="dropdown" role="button" tabindex="0" data-search="true" data-toggle="dropdown">
   <input type="hidden" name="color">
   <i class="dropdown-icon"></i>
   <div class="default-text">Blue</div>

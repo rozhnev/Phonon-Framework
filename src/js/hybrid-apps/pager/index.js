@@ -70,8 +70,9 @@ const Pager = (() => {
       return null
     }
 
-    setHash(pageName) {
-      window.location.hash = `${this.options.hashPrefix}/${pageName}`
+    setHash(pageName, params = null) {
+      const hash = `${this.options.hashPrefix}/${pageName}`;
+      window.location.hash = Array.isArray(params) ? `${hash}/${params.join('/')}` : hash;
     }
 
     isPageOf(pageName1, pageName2) {
@@ -99,7 +100,17 @@ const Pager = (() => {
 
     // public
 
-    async showPage(pageName, back = false, params = {}, from = Event.CLICK) {
+    async showPage(pageName, params = null, back = false, from = Event.CLICK) {
+      /*
+       * If we he use the hash as trigger,
+       * we change it dynamically so that the hashchange event is called
+       * Otherwise, we show the page
+       */
+      if (this.options.useHash && this.getPageFromHash() !== pageName) {
+        this.setHash(pageName, params);
+        return;
+      }
+
       const oldPage = this._('.current');
       let oldPageName = null;
 
@@ -241,7 +252,7 @@ const Pager = (() => {
 
     onClick(event) {
       const pageName = event.target.getAttribute('data-navigate')
-      const pushPage = !(event.target.getAttribute('data-pop-page') === 'true')
+      const backNavigation = event.target.getAttribute('data-pop-page') === 'true'
 
       if (pageName) {
         if (pageName === '$back') {
@@ -250,16 +261,7 @@ const Pager = (() => {
           return
         }
 
-        /*
-         * If we he use the hash as trigger,
-         * we change it dynamically so that the hashchange event is called
-         * Otherwise, we show the page
-         */
-        if (this.options.useHash) {
-          this.setHash(pageName)
-        } else {
-          this.showPage(pageName, pushPage)
-        }
+        this.showPage(pageName, null, backNavigation);
       }
     }
 
@@ -269,7 +271,7 @@ const Pager = (() => {
         return
       }
 
-      this.showPage(pageName, true)
+      this.showPage(pageName, null, true);
     }
 
     onHashChange() {
@@ -283,7 +285,7 @@ const Pager = (() => {
 
       const navPage = this.getPageFromHash()
       if (navPage) {
-        this.showPage(navPage, false, params, Event.HASH)
+        this.showPage(navPage, null, false, params, Event.HASH);
       }
     }
 
@@ -346,10 +348,10 @@ const Pager = (() => {
        * we add the page dynamically in the url
        */
       if (this.options.useHash) {
-        this.setHash(pageName)
+        this.setHash(pageName, null);
       }
 
-      this.showPage(forceDefaultPage ? this.options.defaultPage : pageName)
+      this.showPage(forceDefaultPage ? this.options.defaultPage : pageName);
     }
 
     // static

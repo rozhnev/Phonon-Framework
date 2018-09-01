@@ -36,7 +36,12 @@ const collapse = $('#exampleCollapse').collapse();
 
 ### Options
 
-- toggle: toggles immediately once the collapse is initialized when called in JavaScript.
+The options can be passed in the constructor of this plugin.
+
+|     Option     |     Description      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|
+|    toggle      |  toggles immediately once the collapse is initialized. | yes `data-toggle`
+
 
 ### Methods
 
@@ -59,3 +64,44 @@ collapse.toggle();
 ```
 
 ### Events
+
+#### Object Events
+
+```js
+phonon.collapse({
+  element: '#exampleCollapse',
+  show: () => { // or onShow
+    console.log('It works!')
+  },
+  shown: () => { // or onShown
+    console.log('It works!')
+  },
+  hide: () => { // or onHide
+    console.log('It works!')
+  },
+  hidden: () => { // or onHidden
+    console.log('It works!')
+  }
+})
+```
+
+### DOM Events
+
+```js
+document.querySelector('.collapse').addEventListener('show.ph.collapse', () => {
+  console.log('It works!')
+})
+
+document.querySelector('.collapse').addEventListener('shown.ph.collapse', () => {
+  console.log('It works!')
+})
+
+document.querySelector('.collapse').addEventListener('hide.ph.collapse', () => {
+  console.log('It works!')
+})
+
+document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () => {
+  console.log('It works!')
+})
+```
+

@@ -22,7 +22,6 @@ const Collapse = (($) => {
     toggle: false,
   }
   const DATA_ATTRS_PROPERTIES = [
-    'toggle',
   ]
 
   /**
@@ -67,7 +66,11 @@ const Collapse = (($) => {
 
       this.onTransition = true
 
+      this.triggerEvent(Event.SHOW);
+
       const onCollapsed = () => {
+        this.triggerEvent(Event.SHOWN);
+
         this.options.element.classList.add('show')
         this.options.element.classList.remove('collapsing')
         this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed)
@@ -105,7 +108,11 @@ const Collapse = (($) => {
 
       this.onTransition = true
 
+      this.triggerEvent(Event.HIDE);
+
       const onCollapsed = () => {
+        this.triggerEvent(Event.HIDDEN);
+
         this.options.element.classList.remove('collapsing')
         this.options.element.style.height = 'auto'
         this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed)
@@ -162,7 +169,7 @@ const Collapse = (($) => {
     })
   }
 
-  document.addEventListener('click', (event) => {
+  document.addEventListener(Event.CLICK, (event) => {
     const target = findTargetByAttr(event.target, 'data-toggle')
     if (!target) {
       return

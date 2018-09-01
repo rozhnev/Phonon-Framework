@@ -7,7 +7,7 @@
     "url": "https://github.com/quark-dev/Phonon-Framework.git"
   },
   "scripts": {
-    "build": "node ./build/build-all.js",
+    "build": "node ./build/all.js",
     "unit": "jest ./test/unit",
     "e2e": "node ./node_modules/testcafe/bin/testcafe.js chromium ./test/e2e/**",
     "docs": "documentor docs -o docs/index.html",

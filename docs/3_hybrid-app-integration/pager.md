@@ -102,12 +102,34 @@ pager.select('*').preventTransition(async function (prev, next, params) {
 });
 ```
 
+You can use async functions. For example, below we delay the page transition:
+
+```js
+async function delayTransition() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 1000);
+  });
+}
+
+pager.select('*').preventTransition(async function (prev, next, params) {
+  return delayTransition();
+});
+```
+
 ## Methods
 
-### showPage(pageName, backAnimation)
+### showPage(pageName, params, backAnimation)
 
 ```js
 pager.showPage('myPage');
+
+// with parameters (hash will be: #!/myPage/a/b)
+pager.showPage('myPage', ['a', 'b']);
+
+// with a back animation for the page transition
+pager.showPage('myPage', null, true);
 ```
 
 ## Events

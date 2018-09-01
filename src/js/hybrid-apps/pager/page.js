@@ -83,7 +83,7 @@ const Page = (() => {
         render = this.getRenderFunction()
       }
 
-      await render(pageElement, this.getTemplate(), pageElement.querySelectorAll(TEMPLATE_SELECTOR))
+      await render(pageElement, this.getTemplate(), Array.from(pageElement.querySelectorAll(TEMPLATE_SELECTOR) || []))
     }
 
     // public

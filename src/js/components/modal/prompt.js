@@ -3,7 +3,7 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Dialog from './index'
+import Modal from './index'
 import { getAttributesConfig } from '../componentManager'
 import { createJqueryPlugin } from '../../common/utils'
 
@@ -47,21 +47,21 @@ const Prompt = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  class Prompt extends Dialog {
+  class Prompt extends Modal {
 
     constructor(options = {}) {
       const template = '' +
-      '<div class="dialog" tabindex="-1" role="dialog">' +
-        '<div class="dialog-inner" role="document">' +
-          '<div class="dialog-content">' +
-            '<div class="dialog-header">' +
-              '<h5 class="dialog-title"></h5>' +
+      '<div class="modal" tabindex="-1" role="modal">' +
+        '<div class="modal-inner" role="document">' +
+          '<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h5 class="modal-title"></h5>' +
             '</div>' +
-            '<div class="dialog-body">' +
+            '<div class="modal-body">' +
               '<p></p>' +
               '<input class="form-control" type="text" value="">' +
             '</div>' +
-            '<div class="dialog-footer">' +
+            '<div class="modal-footer">' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -134,10 +134,10 @@ const Prompt = (($) => {
    * ------------------------------------------------------------------------
    */
   const components = []
-  const dialogs = document.querySelectorAll(`.${Dialog.identifier()}`)
+  const modals = document.querySelectorAll(`.${Modal.identifier()}`)
 
-  if (dialogs) {
-    Array.from(dialogs).forEach((element) => {
+  if (modals) {
+    Array.from(modals).forEach((element) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
@@ -163,7 +163,7 @@ const Prompt = (($) => {
       // remove the focus state of the trigger
       event.target.blur()
 
-      component.dialog.show()
+      component.modal.show()
     }
   })
 

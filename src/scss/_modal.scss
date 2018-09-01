@@ -1,26 +1,26 @@
-$zindex-dialog-backdrop: 1000;
-$dialog-backdrop-bg: rgba(0, 0, 0, .55);
+$zindex-modal-backdrop: 1000;
+$modal-backdrop-bg: rgba(0, 0, 0, .55);
 
-$dialog-content-bg: $white;
-$dialog-margin: $spacer;
-$dialog-inner-padding: $dialog-margin;
-$dialog-header-padding: $dialog-inner-padding;
-$dialog-border-radius: 3px;
-$zindex-dialog: 1010;
+$modal-content-bg: $white;
+$modal-margin: $spacer;
+$modal-inner-padding: $modal-margin;
+$modal-header-padding: $modal-inner-padding;
+$modal-border-radius: 3px;
+$zindex-modal: 1010;
 
-$dialog-animation-duration: 300ms;
+$modal-animation-duration: 300ms;
 
-$dialog-sm: 85%;
-$dialog-md: 550px;
+$modal-sm: 85%;
+$modal-md: 550px;
 
-.dialog-backdrop {
+.modal-backdrop {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $zindex-dialog-backdrop;
-  background-color: $dialog-backdrop-bg;
+  z-index: $zindex-modal-backdrop;
+  background-color: $modal-backdrop-bg;
 
   &.fadeout {
     transition: opacity .45s linear;
@@ -28,23 +28,26 @@ $dialog-md: 550px;
   }
 }
 
-.dialog {
+.modal {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   transform: translate3d(0, 0, 0) scale(1.125);
-  transition: transform $dialog-animation-duration ease-in-out;
+  transition: transform $modal-animation-duration ease-in-out;
   visibility: hidden;
   opacity: 0;
-  z-index: $zindex-dialog;
+  z-index: $zindex-modal;
   margin: 0 auto;
   // prevent Chrome on Windows from adding a focus outline. For details, see
   // https://github.com/twbs/bootstrap/pull/10951.
   outline: 0;
 
-  border-radius: $dialog-border-radius;
-  background-color: $dialog-content-bg;
+  @if $enable-rounded {
+    border-radius: $modal-border-radius;
+  }
+
+  background-color: $modal-content-bg;
   width: auto;
   height: auto;
 
@@ -55,17 +58,17 @@ $dialog-md: 550px;
   }
 
   &.hide {
-    animation: hideAlert $dialog-animation-duration ease-in-out;
+    animation: hideAlert $modal-animation-duration ease-in-out;
     visibility: visible;
   }
 
-  .dialog-inner {
+  .modal-inner {
     position: relative;
-    margin: $dialog-margin;
+    margin: $modal-margin;
     width: auto;
     pointer-events: none;
 
-    .dialog-content {
+    .modal-content {
       display: flex;
       position: relative;
       flex-direction: column;
@@ -79,32 +82,32 @@ $dialog-md: 550px;
 
       pointer-events: auto;
 
-      .dialog-header {
+      .modal-header {
         display: flex;
         align-items: flex-start; // so the close btn always stays on the upper right corner
         justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
-        padding: $dialog-header-padding;
+        padding: $modal-header-padding;
         // border-bottom: $alert-header-border-width solid $alert-header-border-color;
 
-        .dialog-title {
+        .modal-title {
           margin-bottom: 0;
         }
       }
 
-      .dialog-body {
+      .modal-body {
         position: relative;
         // Enable `flex-grow: 1` so that the body take up as much space as possible
-        // when should there be a fixed height on `.modal-dialog`.
+        // when should there be a fixed height on `.modal-modal`.
         flex: 1 1 auto;
-        padding: $dialog-inner-padding;
+        padding: $modal-inner-padding;
       }
 
       // Footer (for actions)
-      .dialog-footer {
+      .modal-footer {
         display: flex;
         align-items: center; // vertically center
         justify-content: flex-end; // Right align buttons with flex property because text-align doesn't work on flex items
-        padding: $dialog-inner-padding;
+        padding: $modal-inner-padding;
         // border-top: $alert-footer-border-width solid $alert-footer-border-color;
 
         > :not(:first-child) { margin-left: .25rem; }
@@ -127,13 +130,13 @@ $dialog-md: 550px;
 }
 
 @include media-breakpoint-up(xs) {
-  .dialog {
-    width: $dialog-sm;
+  .modal {
+    width: $modal-sm;
   }
 }
 
 @include media-breakpoint-up(md) {
-  .dialog {
-    width: $dialog-md;
+  .modal {
+    width: $modal-md;
   }
 }

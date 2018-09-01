@@ -3,12 +3,11 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Dialog from './index'
-import Spinner from '../loader/index'
+import Modal from './index'
 import { getAttributesConfig } from '../componentManager'
 import { createJqueryPlugin } from '../../common/utils'
 
-const Loader = (($) => {
+const Confirm = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -16,14 +15,27 @@ const Loader = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'loader'
+  const NAME = 'confirm'
   const DEFAULT_PROPERTIES = {
     element: null,
     title: null,
     message: null,
     cancelable: true,
     type: NAME,
-    buttons: [],
+    buttons: [
+      {
+        event: 'cancel',
+        text: 'Cancel',
+        dismiss: true,
+        class: 'btn btn-secondary',
+      },
+      {
+        event: 'confirm',
+        text: 'Ok',
+        dismiss: true,
+        class: 'btn btn-primary',
+      },
+    ],
   }
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
@@ -35,51 +47,30 @@ const Loader = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  class Loader extends Dialog {
+  class Confirm extends Modal {
 
     constructor(options = {}) {
       const template = '' +
-      '<div class="dialog" tabindex="-1" role="dialog">' +
-        '<div class="dialog-inner" role="document">' +
-          '<div class="dialog-content">' +
-            '<div class="dialog-header">' +
-              '<h5 class="dialog-title"></h5>' +
+      '<div class="modal" tabindex="-1" role="modal">' +
+        '<div class="modal-inner" role="document">' +
+          '<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h5 class="modal-title"></h5>' +
             '</div>' +
-            '<div class="dialog-body">' +
+            '<div class="modal-body">' +
               '<p></p>' +
-              '<div class="mx-auto text-center">' +
-                '<div class="loader mx-auto d-block">' +
-                  '<div class="loader-spinner"></div>' +
-                '</div>' +
-              '</div>' +
             '</div>' +
-            '<div class="dialog-footer">' +
+            '<div class="modal-footer">' +
             '</div>' +
           '</div>' +
         '</div>' +
       '</div>'
 
       if (!Array.isArray(options.buttons)) {
-        options.buttons = options.cancelable ? DEFAULT_PROPERTIES.buttons : []
+        options.buttons = DEFAULT_PROPERTIES.buttons
       }
 
       super(options, template)
-
-      this.spinner = null
-    }
-
-    show() {
-      super.show()
-
-      this.spinner = new Spinner({element: this.getElement().querySelector('.loader')})
-      this.spinner.animate(true)
-    }
-
-    hide() {
-      super.hide()
-
-      this.spinner.animate(false)
-      this.spinner = null
     }
 
     static identifier() {
@@ -87,7 +78,7 @@ const Loader = (($) => {
     }
 
     static DOMInterface(options) {
-      return new Loader(options)
+      return new Confirm(options)
     }
   }
 
@@ -96,7 +87,7 @@ const Loader = (($) => {
    * jQuery
    * ------------------------------------------------------------------------
    */
-  createJqueryPlugin($, NAME, Loader);
+  createJqueryPlugin($, NAME, Confirm);
 
   /**
    * ------------------------------------------------------------------------
@@ -104,16 +95,16 @@ const Loader = (($) => {
    * ------------------------------------------------------------------------
    */
   const components = []
-  const dialogs = document.querySelectorAll(`.${Dialog.identifier()}`)
+  const modals = document.querySelectorAll(`.${Modal.identifier()}`)
 
-  if (dialogs) {
-    Array.from(dialogs).forEach((element) => {
+  if (modals) {
+    Array.from(modals).forEach((element) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
       if (config.type === NAME) {
-        // loader
-        components.push(new Loader(config))
+        // confirm
+        components.push(new Confirm(config))
       }
     })
   }
@@ -133,11 +124,11 @@ const Loader = (($) => {
       // remove the focus state of the trigger
       event.target.blur()
 
-      component.dialog.show()
+      component.modal.show()
     }
   })
 
-  return Loader
+  return Confirm
 })(window.$ ? window.$ : null)
 
-export default Loader
+export default Confirm

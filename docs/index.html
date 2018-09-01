@@ -329,7 +329,7 @@ a {
 
       <ul class="menu">
         <li>
-          <a href="#0_getting-started">getting-started</a>
+          <a href="#0_getting-started">Getting started</a>
           <ul>
             <li><a href="#0_getting-started/0_introduction">Introduction</a></li>
             <li><a href="#0_getting-started/1_quick-start">Quick start</a></li>
@@ -346,11 +346,11 @@ a {
             <li><a href="#1_components/button">Button</a></li>
             <li><a href="#1_components/code">Code</a></li>
             <li><a href="#1_components/collapse">Collapse</a></li>
-            <li><a href="#1_components/dialog">Dialog</a></li>
             <li><a href="#1_components/dropdown">Dropdown</a></li>
             <li><a href="#1_components/form">Form</a></li>
             <li><a href="#1_components/grid">Grid</a></li>
             <li><a href="#1_components/loader">Loader</a></li>
+            <li><a href="#1_components/modal">Modal</a></li>
             <li><a href="#1_components/nav">Nav</a></li>
             <li><a href="#1_components/navbar">Navbar</a></li>
             <li><a href="#1_components/notification">Notification</a></li>
@@ -367,6 +367,7 @@ a {
             <li><a href="#2_utilities/clearfix">Clearfix</a></li>
             <li><a href="#2_utilities/close-icon">Close icon</a></li>
             <li><a href="#2_utilities/network">Network</a></li>
+            <li><a href="#2_utilities/spacing">Spacing</a></li>
             <li><a href="#2_utilities/unselectable">Unselectable</a></li>
           </ul>
         </li>
@@ -376,12 +377,6 @@ a {
             <li><a href="#3_hybrid-app-integration/getting_started">Getting started</a></li>
             <li><a href="#3_hybrid-app-integration/i18n">Internationalization (i18n)</a></li>
             <li><a href="#3_hybrid-app-integration/pager">Pager</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#4_extend">extend</a>
-          <ul>
-            <li><a href="#4_extend/icons">Icons</a></li>
           </ul>
         </li>
       </ul>
@@ -400,7 +395,7 @@ a {
       </div>
 
       <div class="page" id="0_getting-started">
-        <h1 class="heading">getting-started</h1>
+        <h1 class="heading">Getting started</h1>
         
       </div>
 
@@ -441,7 +436,7 @@ importing required components only.</p>
       <div class="page" id="0_getting-started/2_custom-build">
         <h1 class="heading">Custom builds</h1>
         <p>Import the required files for your project.</p>
-<h2>CSS</h2>
+<h2>SCSS</h2>
 <p>Please, see the source code of <a href="https://github.com/quark-dev/Phonon-Framework/blob/master/src/scss/phonon.scss">phonon.scss</a>.</p>
 <pre><code class="language-scss">// instead of importing Phonon package
 @import 'phonon/src/scss/phonon';
@@ -462,7 +457,16 @@ const Dropdown = require('phonon/dist/js/components/dropdown');
       </div>
       <div class="page" id="0_getting-started/3_theming">
         <h1 class="heading">Theming</h1>
-        <p>Edit variables.</p>
+        <p>Phonon uses the heart of Bootstrap SCSS. We really like the notation.
+As with Bootstrap 4, you can edit SCSS variables.</p>
+<p>Example:</p>
+<pre><code class="language-scss">$blue:    #3271d1;
+</code></pre>
+<p>For this, create a file <code>custom.scss</code> and import it before the Phonon SCSS file.</p>
+<pre><code class="language-scss">@import 'path/to/custom.scss'; // my custom SCSS
+@import 'phonon/src/scss/phonon.scss';
+</code></pre>
+<p>When you run the build command <code>node ./build/css.js</code>, the CSS output will take into account your new values.</p>
 
       </div>
       <div class="page" id="0_getting-started/4_migration">
@@ -493,10 +497,20 @@ const Dropdown = require('phonon/dist/js/components/dropdown');
   animatePages: false,
 })
 </code></pre>
-<h3>Page events &lt;i&gt;Changed&lt;/i&gt;</h3>
-<p>For a given page <code>myPage</code> for example.
-Assuming this page is present in the DOM like the following:</p>
-<pre><code class="language-html">&lt;div data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
+<h3>Markup page structure</h3>
+<p><code>.app-pages</code> is a wrapper of <code>.app-page</code> pages.</p>
+<pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
+  &lt;div class=&quot;app-page&quot; data-page=&quot;one&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;app-page&quot; data-page=&quot;myPage2&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+### Page events &lt;i&gt;Changed&lt;/i&gt;
+
+For a given page `myPage` for example.
+Assuming this page is present in the DOM like the following:
+
+```html
+&lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>Page events are now used with <code>.select()</code>.</p>
 <pre><code class="language-js">pager.select('myPage').addEvents({
@@ -555,12 +569,19 @@ Instead of using the event name called <code>show</code> for example, you can us
 <h3>Page templates &lt;i&gt;Changed&lt;/i&gt;</h3>
 <p>You need to use <code>setTemplate()</code>.
 The first argument is the path to the template file.</p>
-<pre><code class="language-js">pager.select('myPage').setTemplate('templates/template.html')
+<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
+</code></pre>
+<p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
+<pre><code class="language-html">&lt;div data-push-template&gt;
+  &lt;!-- The template will be injected here --&gt;
+&lt;/div&gt;
 </code></pre>
 <p>It is now possible to use custom template renderers.
-This feature is interesting if you want to use a template engine such as <a href="https://mustache.github.io">Mustache</a>.</p>
-<pre><code class="language-js">pager.select('myPage').setTemplate('template.html', function (page, template, elements) {
-  page.querySelector('[data-render]').innerHTML = template
+This feature is interesting if you want to use a template engine such as <a href="https://mustache.github.io">Mustache</a>.
+Note that async functions are now supported.</p>
+<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;'), async (page, template, elements) =&gt; {
+  const template = await fetchTemplate();
+  page.querySelector('[data-template]').innerHTML = template
 })
 </code></pre>
 <h3>Navigation between pages</h3>
@@ -607,22 +628,14 @@ pass everything as the second argument.</p>
 </code></pre>
 <h2>Components</h2>
 <h3>Utility</h3>
-<h4>Padding</h4>
-<p>More information can be found here: <a href="https://getbootstrap.com/docs/4.0/utilities/spacing/">https://getbootstrap.com/docs/4.0/utilities/spacing/</a></p>
+<h4>Padding and margin</h4>
+<p>Please, see <a href="spacing">#2_utilities/spacing</a>.</p>
 <p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.
 Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.
 Replace <strong>.padded-left</strong> by <strong>.pl-1</strong>.
 Replace <strong>.padded-right</strong> by <strong>.pr-1</strong>.
 Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
-<h4>Show/Hide Elements</h4>
-<p>Replace <strong>.show-for-phone-only</strong> by <strong>.d-sm-none</strong>.
-Replace <strong>.show-for-tablet-only</strong> by <strong>?</strong>.
-Replace <strong>.show-for-tablet-up</strong> by <strong>?</strong>.
-Replace <strong>.show-for-large-only</strong> by <strong>?</strong>.
-Replace <strong>.show-for-android-only</strong> by <strong>?</strong>.
-Replace <strong>.show-for-ios-only</strong> by <strong>?</strong>.
-Replace <strong>.show-for-web-only</strong> by <strong>?</strong>.</p>
-<h4>Text Alignment</h4>
+<h4>Text alignment</h4>
 <p>More information can be found here: <a href="https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment">https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment</a></p>
 <p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.
 Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.
@@ -632,7 +645,7 @@ Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
 <h4>Float</h4>
 <p>Replace <strong>.pull-left</strong> by <strong>.float-left</strong>.
 Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
-<h4>Expand Width</h4>
+<h4>Fit parent width</h4>
 <p>Replace <strong>.fit-parent</strong> by <strong>.w-100</strong>.</p>
 <h4>Unselectable</h4>
 <p>To make an element unselectable use the class <strong>.unselectable</strong>.</p>
@@ -704,7 +717,7 @@ const accordion = $('#exampleAccordion').accordion();
 <pre><code class="language-js">accordion.hide('#collapseTwo');
 </code></pre>
 <h2>Events</h2>
-<p>@todo</p>
+<p>Listen for events of the <a href="#1_components/collapse">collapse</a> elements.</p>
 
       </div>
       <div class="page" id="1_components/alert">
@@ -880,184 +893,8 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
 const collapse = $('#exampleCollapse').collapse();
 </code></pre>
 <h3>Options</h3>
-<ul>
-<li>toggle: toggles immediately once the collapse is initialized when called in JavaScript.</li>
-</ul>
-<h3>Methods</h3>
-<h4>show()</h4>
-<pre><code class="language-js">collapse.show();
-</code></pre>
-<h4>hide()</h4>
-<pre><code class="language-js">collapse.hide();
-</code></pre>
-<h4>toggle()</h4>
-<pre><code class="language-js">collapse.toggle();
-</code></pre>
-<h3>Events</h3>
-
-      </div>
-      <div class="page" id="1_components/dialog">
-        <h1 class="heading">Dialog</h1>
-        <h2>Introduction</h2>
-<p>[WIP]</p>
-<h2>Dynamically Created Dialogs</h2>
-<p>By not using the <code>element</code> property, it will create a dialog's HTMLElement dynamically.
-This is particularly useful if you want to set up a dialog without worrying about its HTML code.</p>
-<h3>Simple dialog</h3>
-<pre><code class="language-js">// es6
-const Dialog = require('phonon/dist/js/components/dialog');
-
-const dialog = new Dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-});
-
-// es5
-const dialog = phonon.dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-});
-
-// jQuery support
-const dialog = $().dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-});
-</code></pre>
-<h3>Prompt dialog</h3>
-<pre><code class="language-js">const prompt = phonon.prompt({
-  title: 'Prompt title',
-  message: 'Prompt body text goes here.',
-})
-
-prompt.show()
-
-prompt.setInputValue() // only available with prompts
-prompt.getInputValue() // only available with prompts
-</code></pre>
-<h3>Confirm dialog</h3>
-<pre><code class="language-js">const confirm = phonon.confirm({
-  title: 'Confirm title',
-  message: 'Confirm body text goes here.',
-})
-
-confirm.show()
-</code></pre>
-<h3>Loader dialog</h3>
-<pre><code class="language-js">const dialogLoader = phonon.dialogLoader({
-  title: 'Loader title',
-  message: 'Loader body text goes here.',
-})
-
-dialogLoader.show()
-</code></pre>
-<h3>Dialog with custom buttons</h3>
-<p>Each dialog type (normal, prompt, confirm and prompt) supports custom buttons.
-Note that the event of the button <strong>must be unique</strong>.
-The click event of a button will fire the associated callback automatically.</p>
-<pre><code class="language-js">const dialog = phonon.dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-  buttons: [
-    {
-      event: 'cancel',
-      text: 'Cancel',
-      dismiss: true,
-      class: 'btn btn-secondary',
-    },
-    {
-      event: 'confirm',
-      text: 'Ok',
-      dismiss: true,
-      class: 'btn btn-primary',
-    },
-  ],
-  onCancel: () =&gt; { // or cancel
-    console.log('Cancel')
-  },
-  onConfirm: () =&gt; { // or confirm
-    console.log('Confirm')
-  }
-})
-</code></pre>
-<p>You can also define your own event names.
-In the following example, we trigger the event called <code>neutralAnswer</code> when we click on the button.</p>
-<pre><code class="language-js">const dialog = phonon.dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-  buttons: [
-    {
-      event: 'neutralAnswer',
-      text: 'Custom button',
-      dismiss: true,
-      class: 'btn btn-primary',
-    }
-  ],
-  neutralAnswer: () =&gt; { // or onNeutralAnswer
-    console.log('Well we close it!')
-  }
-})
-</code></pre>
-<h2>Custom Dialogs</h2>
-<p>Conversely, you can create your own dialog by specifying the <code>element</code> property.</p>
-<pre><code class="language-html">&lt;!-- Button trigger dialog --&gt;
-&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;dialog&quot; data-target=&quot;#exampleDialog&quot;&gt;Launch demo dialog&lt;/button&gt;
-
-&lt;!-- Dialog --&gt;
-&lt;div class=&quot;dialog&quot; id=&quot;exampleDialog&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot;&gt;
-  &lt;div class=&quot;dialog-inner&quot; role=&quot;document&quot;&gt;
-    &lt;div class=&quot;dialog-content&quot;&gt;
-      &lt;div class=&quot;dialog-header&quot;&gt;
-        &lt;h5 class=&quot;dialog-title&quot;&gt;Dialog title&lt;/h5&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;dialog-body&quot;&gt;
-        &lt;p&gt;Dialog body text goes here.&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;dialog-footer&quot;&gt;
-        &lt;div class=&quot;btn-group float-right&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-dismiss=&quot;dialog&quot;&gt;Close&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>Then, you can work with it by using the correct <code>element</code> property.</p>
-<pre><code class="language-js">const dialog = phonon.dialog({
-  element: '#exampleDialog'
-});
-
-dialog.show()
-
-// jQuery support
-const dialog = $('#exampleDialog').dialog();
-
-dialog.show()
-</code></pre>
-<h2>Options</h2>
-<ul>
-<li>title</li>
-<li>message</li>
-<li>cancelable</li>
-<li>cancelableKeyCodes [array] (by default, Enter and Escape are shortcuts to hide the dialog)</li>
-</ul>
-<h2>Methods</h2>
-<h3>show()</h3>
-<p>Any dialog can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
-<pre><code class="language-js">dialog.show()
-</code></pre>
-<h3>hide()</h3>
-<p>Any dialog can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
-<pre><code class="language-js">dialog.hide()
-</code></pre>
-<h3>getInputValue()</h3>
-<p>It is possible to retrieve the text field value of any prompt type.</p>
-<h3>setInputValue()</h3>
-<p>It is possible to set the text field value of any prompt type.</p>
-<h2>Events</h2>
-<p>It may be useful to use the events that affect your dialog.
-To do this, you can use object and DOM events.</p>
-<p>|     Event Type     |     Description      |
+<p>The options can be passed in the constructor of this plugin.</p>
+<p>|     Option     |     Description      |     Data attribute      |
 |</p>
 
       </div>
@@ -1066,7 +903,7 @@ To do this, you can use object and DOM events.</p>
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; data-toggle=&quot;dropdown&quot;&gt;
+<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
   &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
@@ -1082,7 +919,7 @@ To do this, you can use object and DOM events.</p>
 </code></pre>
 <h3>Dropdown with invalid item</h3>
 <p>Add the class <code>disabled</code> to the item.</p>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; data-toggle=&quot;dropdown&quot;&gt;
+<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
   &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
@@ -1094,7 +931,7 @@ To do this, you can use object and DOM events.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Dropdown with header</h3>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; data-toggle=&quot;dropdown&quot;&gt;
+<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
   &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
@@ -1106,7 +943,7 @@ To do this, you can use object and DOM events.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Dropdown with divider</h3>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; data-toggle=&quot;dropdown&quot;&gt;
+<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
   &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
@@ -1120,7 +957,7 @@ To do this, you can use object and DOM events.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Dropdown with search input</h3>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; data-search=&quot;true&quot; data-toggle=&quot;dropdown&quot;&gt;
+<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-search=&quot;true&quot; data-toggle=&quot;dropdown&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
   &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
@@ -1396,6 +1233,171 @@ loader.animate(false); // hide and stop the animation
 </code></pre>
 <h2>Events</h2>
 <p>@todo</p>
+
+      </div>
+      <div class="page" id="1_components/modal">
+        <h1 class="heading">Modal</h1>
+        <h2>Introduction</h2>
+<p>[WIP]</p>
+<h2>Dynamically created modals</h2>
+<p>By not using the <code>element</code> property, it will create a modal's HTMLElement dynamically.
+This is particularly useful if you want to set up a modal without worrying about its HTML code.</p>
+<h3>Simple modal</h3>
+<pre><code class="language-js">// es6
+const Modal = require('phonon/dist/js/components/modal');
+
+const modal = new Modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+});
+
+// es5
+const modal = phonon.modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+});
+
+// jQuery support
+const modal = $().modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+});
+</code></pre>
+<h3>Prompt modal</h3>
+<pre><code class="language-js">const prompt = phonon.prompt({
+  title: 'Prompt title',
+  message: 'Prompt body text goes here.',
+})
+
+prompt.show()
+
+prompt.setInputValue() // only available with prompts
+prompt.getInputValue() // only available with prompts
+</code></pre>
+<h3>Confirm modal</h3>
+<pre><code class="language-js">const confirm = phonon.confirm({
+  title: 'Confirm title',
+  message: 'Confirm body text goes here.',
+})
+
+confirm.show()
+</code></pre>
+<h3>Loader modal</h3>
+<pre><code class="language-js">const modalLoader = phonon.modalLoader({
+  title: 'Loader title',
+  message: 'Loader body text goes here.',
+})
+
+modalLoader.show()
+</code></pre>
+<h3>Modal with custom buttons</h3>
+<p>Each modal type (normal, prompt, confirm and prompt) supports custom buttons.
+Note that the event of the button <strong>must be unique</strong>.
+The click event of a button will fire the associated callback automatically.</p>
+<pre><code class="language-js">const modal = phonon.modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+  buttons: [
+    {
+      event: 'cancel',
+      text: 'Cancel',
+      dismiss: true,
+      class: 'btn btn-secondary',
+    },
+    {
+      event: 'confirm',
+      text: 'Ok',
+      dismiss: true,
+      class: 'btn btn-primary',
+    },
+  ],
+  onCancel: () =&gt; { // or cancel
+    console.log('Cancel')
+  },
+  onConfirm: () =&gt; { // or confirm
+    console.log('Confirm')
+  }
+})
+</code></pre>
+<p>You can also define your own event names.
+In the following example, we trigger the event called <code>neutralAnswer</code> when we click on the button.</p>
+<pre><code class="language-js">const modal = phonon.modal({
+  title: 'Modal title',
+  message: 'Modal body text goes here.',
+  buttons: [
+    {
+      event: 'neutralAnswer',
+      text: 'Custom button',
+      dismiss: true,
+      class: 'btn btn-primary',
+    }
+  ],
+  neutralAnswer: () =&gt; { // or onNeutralAnswer
+    console.log('Well we close it!')
+  }
+})
+</code></pre>
+<h2>Custom modals</h2>
+<p>Conversely, you can create your own modal by specifying the <code>element</code> property.</p>
+<pre><code class="language-html">&lt;!-- Button trigger modal --&gt;
+&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;modal&quot; data-target=&quot;#exampleModal&quot;&gt;Launch demo modal&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class=&quot;modal&quot; id=&quot;exampleModal&quot; tabindex=&quot;-1&quot; role=&quot;modal&quot;&gt;
+  &lt;div class=&quot;modal-inner&quot; role=&quot;document&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-header&quot;&gt;
+        &lt;h5 class=&quot;modal-title&quot;&gt;Modal title&lt;/h5&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;
+        &lt;p&gt;Modal body text goes here.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-footer&quot;&gt;
+        &lt;div class=&quot;btn-group float-right&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-dismiss=&quot;modal&quot;&gt;Close&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Then, you can work with it by using the correct <code>element</code> property.</p>
+<pre><code class="language-js">const modal = phonon.modal({
+  element: '#exampleModal'
+});
+
+modal.show()
+
+// jQuery support
+const modal = $('#exampleModal').modal();
+
+modal.show()
+</code></pre>
+<h2>Options</h2>
+<ul>
+<li>title</li>
+<li>message</li>
+<li>cancelable</li>
+<li>cancelableKeyCodes [array] (by default, Enter and Escape are shortcuts to hide the modal)</li>
+</ul>
+<h2>Methods</h2>
+<h3>show()</h3>
+<p>Any modal can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
+<pre><code class="language-js">modal.show()
+</code></pre>
+<h3>hide()</h3>
+<p>Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
+<pre><code class="language-js">modal.hide()
+</code></pre>
+<h3>getInputValue()</h3>
+<p>It is possible to retrieve the text field value of any prompt type.</p>
+<h3>setInputValue()</h3>
+<p>It is possible to set the text field value of any prompt type.</p>
+<h2>Events</h2>
+<p>It may be useful to use the events that affect your modal.
+To do this, you can use object and DOM events.</p>
+<p>|     Event Type     |     Description      |
+|</p>
 
       </div>
       <div class="page" id="1_components/nav">
@@ -1803,6 +1805,54 @@ window.addEventListener('offline.ph.network', (event) =&gt; {
 </code></pre>
 
       </div>
+      <div class="page" id="2_utilities/spacing">
+        <h1 class="heading">Spacing</h1>
+        <h2>Introduction</h2>
+<p>[WIP]</p>
+<p><code>{property}{sides}-{size}</code></p>
+<p>Responsive <code>{property}{sides}-{breakpoint}-{size}</code> for <code>sm</code>, <code>md</code>, <code>lg</code>, and <code>xl</code>.</p>
+<p>Sizes:</p>
+<p>1 sets <code>0</code>
+1 sets <code>$spacer * .25</code>
+2 sets <code>$spacer * .5</code>
+3 sets <code>$spacer * .75</code>
+4 sets <code>$spacer</code>
+auto sets margin or padding to <code>auto</code></p>
+<h2>Margin</h2>
+<p>The prefix <code>m-</code> defines a margin.</p>
+<p><code>mt-{size}</code> - sets margin-top of size <code>{size}</code>
+<code>mb-{size}</code> - sets margin-bottom of size <code>{size}</code>
+<code>ml-{size}</code> - sets margin-left of size <code>{size}</code>
+<code>mr-{size}</code> - sets margin-right of size <code>{size}</code>
+<code>mx-{size}</code> - sets both margin-left and margin-right of size <code>{size}</code>
+<code>my-{size}</code> - sets both margin-top and margin-bottom of size <code>{size}</code>
+<code>m-{size}</code> - sets margin in 4 directions of size <code>{size}</code></p>
+<p>Example:</p>
+<pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1&quot;&gt;&lt;/div&gt;
+
+&lt;div class=&quot;px-2 py-4&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h2>Padding</h2>
+<p>The prefix <code>p-</code> defines a padding.</p>
+<p><code>pt-{size}</code> - sets padding-top of size <code>{size}</code>
+<code>pb-{size}</code> - sets padding-bottom of size <code>{size}</code>
+<code>pl-{size}</code> - sets padding-left of size <code>{size}</code>
+<code>pr-{size}</code> - sets padding-right of size <code>{size}</code>
+<code>px-{size}</code> - sets both padding-left and padding-right of size <code>{size}</code>
+<code>py-{size}</code> - sets both padding-top and padding-bottom of size <code>{size}</code>
+<code>p-{size}</code> - sets padding in 4 directions of size <code>{size}</code></p>
+<p>Example:</p>
+<pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1&quot;&gt;&lt;/div&gt;
+
+&lt;div class=&quot;mx-2 my-4&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h2>Horizontal centering</h2>
+<pre><code class="language-html">&lt;div class=&quot;mx-auto&quot; style=&quot;width: 200px;&quot;&gt;
+  Centered element
+&lt;/div&gt;
+</code></pre>
+
+      </div>
       <div class="page" id="2_utilities/unselectable">
         <h1 class="heading">Unselectable</h1>
         <p>[WIP]</p>
@@ -1979,6 +2029,19 @@ If the trigger event is a hash change, Pager will force to show the previous pag
   return next === 'private';
 });
 </code></pre>
+<p>You can use async functions. For example, below we delay the page transition:</p>
+<pre><code class="language-js">async function delayTransition() {
+  return new Promise((resolve) =&gt; {
+    setTimeout(() =&gt; {
+      resolve(true);
+    }, 1000);
+  });
+}
+
+pager.select('*').preventTransition(async function (prev, next, params) {
+  return delayTransition();
+});
+</code></pre>
 <h2>Methods</h2>
 <h3>showPage(pageName, backAnimation)</h3>
 <pre><code class="language-js">pager.showPage('myPage');
@@ -1986,16 +2049,6 @@ If the trigger event is a hash change, Pager will force to show the previous pag
 <h2>Events</h2>
 <p>|     Event Type     |     Description      |
 |</p>
-
-      </div>
-      <div class="page" id="4_extend">
-        <h1 class="heading">extend</h1>
-        
-      </div>
-
-      <div class="page" id="4_extend/icons">
-        <h1 class="heading">Icons</h1>
-        <h2>Introduction</h2>
 
       </div>
 

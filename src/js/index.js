@@ -10,10 +10,10 @@ import Network from './common/network'
 
 // components
 import Alert from './components/alert'
-import Dialog from './components/dialog'
-import Prompt from './components/dialog/prompt'
-import Confirm from './components/dialog/confirm'
-import DialogLoader from './components/dialog/loader'
+import Modal from './components/modal'
+import ModalPrompt from './components/modal/prompt'
+import ModalConfirm from './components/modal/confirm'
+import ModalLoader from './components/modal/loader'
 import Notification from './components/notification'
 import Collapse from './components/collapse'
 import Accordion from './components/accordion'
@@ -61,19 +61,19 @@ api.notification = Notification.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
- * Dialog
+ * Modal
  * ------------------------------------------------------------------------
  */
 
 // generic
-api.dialog = Dialog.DOMInterface
+api.modal = Modal.DOMInterface
 
-// prompt dialog
-api.prompt = Prompt.DOMInterface
-// confirm dialog
-api.confirm = Confirm.DOMInterface
-// loader dialog
-api.dialogLoader = DialogLoader.DOMInterface
+// prompt modal
+api.prompt = ModalPrompt.DOMInterface
+// confirm modal
+api.confirm = ModalConfirm.DOMInterface
+// loader modal
+api.modalLoader = ModalLoader.DOMInterface
 
 /**
  * ------------------------------------------------------------------------

@@ -8,16 +8,16 @@ import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
 import { createJqueryPlugin } from '../../common/utils';
 
-const Dialog = (($) => {
+const Modal = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'dialog'
+  const NAME = 'modal'
   const VERSION = '2.0.0'
-  const BACKDROP_SELECTOR = 'dialog-backdrop'
+  const BACKDROP_SELECTOR = 'modal-backdrop'
   const DEFAULT_PROPERTIES = {
     element: null,
     title: null,
@@ -47,22 +47,22 @@ const Dialog = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  class Dialog extends Component {
+  class Modal extends Component {
 
     constructor(options = {}, template = null) {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true)
 
       this.template = template || '' +
-      '<div class="dialog" tabindex="-1" role="dialog">' +
-        '<div class="dialog-inner" role="document">' +
-          '<div class="dialog-content">' +
-            '<div class="dialog-header">' +
-              '<h5 class="dialog-title"></h5>' +
+      '<div class="modal" tabindex="-1" role="modal">' +
+        '<div class="modal-inner" role="document">' +
+          '<div class="modal-content">' +
+            '<div class="modal-header">' +
+              '<h5 class="modal-title"></h5>' +
             '</div>' +
-            '<div class="dialog-body">' +
+            '<div class="modal-body">' +
               '<p></p>' +
             '</div>' +
-            '<div class="dialog-footer">' +
+            '<div class="modal-footer">' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -82,12 +82,12 @@ const Dialog = (($) => {
 
       // title
       if (this.options.title !== null) {
-        this.options.element.querySelector('.dialog-title').innerHTML = this.options.title
+        this.options.element.querySelector('.modal-title').innerHTML = this.options.title
       }
 
       // message
       if (this.options.message !== null) {
-        this.options.element.querySelector('.dialog-body').firstChild.innerHTML = this.options.message
+        this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message
       } else {
         // remove paragraph node
         this.removeTextBody()
@@ -97,7 +97,7 @@ const Dialog = (($) => {
       if (this.options.buttons !== null && Array.isArray(this.options.buttons)) {
         if (this.options.buttons.length > 0) {
           this.options.buttons.forEach((button) => {
-            this.options.element.querySelector('.dialog-footer').appendChild(this.buildButton(button))
+            this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button))
           })
         } else {
           this.removeFooter()
@@ -138,12 +138,12 @@ const Dialog = (($) => {
     }
 
     removeTextBody() {
-      this.options.element.querySelector('.dialog-body').removeChild(this.options.element.querySelector('.dialog-body').firstChild)
+      this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild)
     }
 
     removeFooter() {
-      const footer = this.options.element.querySelector('.dialog-footer')
-      this.options.element.querySelector('.dialog-content').removeChild(footer)
+      const footer = this.options.element.querySelector('.modal-footer')
+      this.options.element.querySelector('.modal-content').removeChild(footer)
     }
 
     center() {
@@ -198,7 +198,7 @@ const Dialog = (($) => {
 
       // backdrop event
       if (event.type === Event.START) {
-        // hide the dialog
+        // hide the modal
         this.hide()
         return
       }
@@ -240,7 +240,7 @@ const Dialog = (($) => {
 
         backdrop.removeEventListener(Event.TRANSITION_END, onHidden)
 
-        // remove generated dialogs from the DOM
+        // remove generated modals from the DOM
         if (this.dynamicElement) {
           document.body.removeChild(this.options.element)
           this.options.element = null
@@ -254,13 +254,13 @@ const Dialog = (($) => {
     }
 
     attachEvents() {
-      const buttons = this.options.element.querySelectorAll('[data-dismiss], .dialog-footer button')
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button')
       if (buttons) {
         Array.from(buttons).forEach(button => this.registerElement({ target: button, event: 'click' }))
       }
 
-      // add events if the dialog is cancelable
-      // which means the user can hide the dialog
+      // add events if the modal is cancelable
+      // which means the user can hide the modal
       // by pressing the ESC key or click on the backdrop
       if (this.options.cancelable) {
         const backdrop = this.getBackdrop()
@@ -270,7 +270,7 @@ const Dialog = (($) => {
     }
 
     detachEvents() {
-      const buttons = this.options.element.querySelectorAll('[data-dismiss], .dialog-footer button')
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button')
       if (buttons) {
         Array.from(buttons).forEach(button => this.unregisterElement({ target: button, event: 'click' }))
       }
@@ -287,7 +287,7 @@ const Dialog = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Dialog, options)
+      return super.DOMInterface(Modal, options)
     }
   }
 
@@ -296,7 +296,7 @@ const Dialog = (($) => {
    * jQuery
    * ------------------------------------------------------------------------
    */
-  createJqueryPlugin($, NAME, Dialog);
+  createJqueryPlugin($, NAME, Modal);
 
   /**
    * ------------------------------------------------------------------------
@@ -305,13 +305,13 @@ const Dialog = (($) => {
    */
   const components = []
 
-  const dialogs = document.querySelectorAll(`.${NAME}`)
-  if (dialogs) {
-    Array.from(dialogs).forEach((element) => {
+  const modals = document.querySelectorAll(`.${NAME}`)
+  if (modals) {
+    Array.from(modals).forEach((element) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
-      components.push({ element, dialog: new Dialog(config) })
+      components.push({ element, modal: new Modal(config) })
     })
   }
 
@@ -330,11 +330,11 @@ const Dialog = (($) => {
       // remove the focus state of the trigger
       event.target.blur()
 
-      component.dialog.show()
+      component.modal.show()
     }
   })
 
-  return Dialog
+  return Modal
 })(window.$ ? window.$ : null)
 
-export default Dialog
+export default Modal
