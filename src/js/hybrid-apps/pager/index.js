@@ -99,10 +99,23 @@ const Pager = (() => {
 
     // public
 
-    async showPage(pageName, addToHistory = true, back = false) {
-      const oldPage = this._('.current')
+    async showPage(pageName, back = false, params = {}, from = Event.CLICK) {
+      const oldPage = this._('.current');
+      let oldPageName = null;
+
       if (oldPage) {
-        const oldPageName = oldPage.getAttribute('data-page')
+        oldPageName = oldPage.getAttribute('data-page');
+        const oldPageModel = this.getPageModel(oldPageName);
+        const preventFn = oldPageModel.getPreventTransition();
+
+        if (typeof preventFn === 'function') {
+          if (await preventFn(oldPageName, pageName, params)) {
+            if (from === Event.HASH) {
+              window.history.back();
+            }
+            return;
+          }
+        }
 
         if (this.isPageOf(pageName, oldPageName)) {
           return
@@ -111,7 +124,7 @@ const Pager = (() => {
         oldPage.classList.remove('current')
 
         // history
-        window.history.replaceState({ page: oldPageName }, oldPageName, window.location.href)
+        window.history.replaceState({ page: pageName }, oldPageName)
 
         this.triggerPageEvent(oldPageName, Event.HIDE)
       }
@@ -133,7 +146,6 @@ const Pager = (() => {
       }
 
       if (oldPage) {
-        const oldPageName = oldPage.getAttribute('data-page')
         // use of prototype-oriented language
         oldPage.back = back
         oldPage.previousPageName = oldPageName
@@ -196,6 +208,22 @@ const Pager = (() => {
       this.cachePageSelector = null
     }
 
+    preventTransition(preventFn) {
+      if (this.cachePageSelector === '*') {
+        this.pages.forEach((page) => {
+          page.setPreventTransition(preventFn);
+        });
+        return;
+      }
+
+      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
+      pageModels.forEach((page) => {
+        page.setPreventTransition(preventFn);
+      });
+
+      this.cachePageSelector = null;
+    }
+
     setTemplate(templatePath, renderFunction = null) {
       const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true)
       pageModels.forEach((page) => {
@@ -230,7 +258,7 @@ const Pager = (() => {
         if (this.options.useHash) {
           this.setHash(pageName)
         } else {
-          this.showPage(pageName, true, pushPage)
+          this.showPage(pageName, pushPage)
         }
       }
     }
@@ -241,7 +269,7 @@ const Pager = (() => {
         return
       }
 
-      this.showPage(pageName, true, true)
+      this.showPage(pageName, true)
     }
 
     onHashChange() {
@@ -255,7 +283,7 @@ const Pager = (() => {
 
       const navPage = this.getPageFromHash()
       if (navPage) {
-        this.showPage(navPage)
+        this.showPage(navPage, false, params, Event.HASH)
       }
     }
 
@@ -270,16 +298,13 @@ const Pager = (() => {
       }
 
       pages.forEach((page) => {
-        let pageName = page.getAttribute('data-page')
         /*
          * the page name can be given with the attribute data-page
          * or with its node name
          */
-        if (!pageName) {
-          pageName = page.nodeName
-        }
+        const pageName = page.getAttribute('data-page') || page.nodeName;
 
-        this.addUniquePageModel(pageName)
+        this.addUniquePageModel(pageName);
       })
     }
 
@@ -306,7 +331,8 @@ const Pager = (() => {
         forceDefaultPage = true
       }
 
-      let pageName = this.getPageFromHash()
+      let pageName = this.getPageFromHash();
+
       if (!this.getPageModel(pageName)) {
         pageName = this.options.defaultPage
       }
@@ -327,7 +353,7 @@ const Pager = (() => {
     }
 
     // static
-    static _DOMInterface(options) {
+    static DOMInterface(options) {
       return new Pager(options)
     }
   }

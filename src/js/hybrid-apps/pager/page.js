@@ -115,6 +115,22 @@ const Page = (() => {
     }
 
     /**
+     * Add a transition handler
+     *
+     * @param {Function} fn
+     */
+    setPreventTransition(fn) {
+      if (typeof fn !== 'function') {
+        throw new Error(`${NAME}: invalid function to handle page transitions`);
+      }
+      this.preventTransitionFn = fn;
+    }
+
+    getPreventTransition() {
+      return this.preventTransitionFn;
+    }
+
+    /**
      * Trigger scopes
      * @param {string} eventName
      * @param {{}} [eventParams={}]
