@@ -1,12 +1,13 @@
-
 @import 'custom';
 
-// Bootstrap part
-@import "bootstrap/bootstrap";
+@import 'bootstrap/bootstrap';
 
-// Phonon part
-@import 'page'; // SPA
+//
+// SPA
+//
+@import 'page';
 
+@import 'alert-transition';
 @import 'collapse';
 @import 'dialog';
 @import 'notification';

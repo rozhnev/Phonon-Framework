@@ -44,13 +44,13 @@ $dropdown-menu-item-selected-background: $primary;
 $dropdown-menu-item-line-height: 22px;
 
 // dropdown menu header
-$dropdown-menu-header-color: #333;
+$dropdown-menu-header-color: gray('700');
 
 // dropdown menu divider
-$dropdown-menu-divider-border-color: #eee;
+$dropdown-menu-divider-border-color: gray('100');
 $dropdown-menu-divider-border-weight: 1px;
 
-$dropdown-menu-description-color: $white;
+$dropdown-menu-description-color: gray('600');
 
 .dropdown {
   display: inline-block;
@@ -184,6 +184,10 @@ $dropdown-menu-description-color: $white;
         // keep same style
         &:hover {
           background-color: $dropdown-menu-item-selected-background;
+          color: $dropdown-menu-item-selected-color;
+        }
+
+        .description {
           color: $dropdown-menu-item-selected-color;
         }
       }
