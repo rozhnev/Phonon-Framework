@@ -5,14 +5,14 @@
  */
 import Binder from './binder'
 
-const Intl = (() => {
+const I18n = (() => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'Intl'
+  const NAME = 'i18n'
   const VERSION = '2.0.0'
   const DEFAULT_PROPERTIES = {
     fallbackLocale: 'en',
@@ -27,9 +27,9 @@ const Intl = (() => {
    * ------------------------------------------------------------------------
    */
 
-  class Intl {
+  class I18n {
     /**
-     * Creates an instance of Intl.
+     * Creates an instance of I18n.
      * @param {fallbackLocale: string, locale: string, bind: boolean, data: {[lang: string]: {[key: string]: string}}}
      */
     constructor(options = {}) {
@@ -138,7 +138,7 @@ const Intl = (() => {
      */
     updateHtml(element = null) {
       if (!element) {
-        element = document.querySelectorAll('[data-i18n]')
+        element = document.querySelectorAll('[data-t]')
       }
 
       if (typeof element === 'string') {
@@ -149,12 +149,12 @@ const Intl = (() => {
     }
 
     // static
-    static _DOMInterface(options) {
-      return new Intl(options)
+    static DOMInterface(options) {
+      return new I18n(options)
     }
   }
 
-  return Intl
+  return I18n
 })()
 
-export default Intl
+export default I18n

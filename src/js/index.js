@@ -5,10 +5,11 @@
  */
 
 import Pager from './hybrid-apps/pager/index'
-import Intl from './hybrid-apps/intl'
+import I18n from './hybrid-apps/i18n'
 import Network from './common/network'
 
 // components
+import Alert from './components/alert'
 import Dialog from './components/dialog'
 import Prompt from './components/dialog/prompt'
 import Confirm from './components/dialog/confirm'
@@ -32,31 +33,31 @@ const api = {}
  */
 api.pager = (options) => {
   if (typeof api._pager === 'undefined') {
-    api._pager = Pager._DOMInterface(options)
+    api._pager = Pager.DOMInterface(options)
   }
   return api._pager
 }
 
 /**
  * ------------------------------------------------------------------------
- * Intl
+ * i18n
  * ------------------------------------------------------------------------
  */
-api.intl = Intl._DOMInterface
+api.i18n = I18n.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Network
  * ------------------------------------------------------------------------
  */
-api.network = Network._DOMInterface
+api.network = Network.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Notification
  * ------------------------------------------------------------------------
  */
-api.notification = Notification._DOMInterface
+api.notification = Notification.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
@@ -65,28 +66,35 @@ api.notification = Notification._DOMInterface
  */
 
 // generic
-api.dialog = Dialog._DOMInterface
+api.dialog = Dialog.DOMInterface
 
 // prompt dialog
-api.prompt = Prompt._DOMInterface
+api.prompt = Prompt.DOMInterface
 // confirm dialog
-api.confirm = Confirm._DOMInterface
+api.confirm = Confirm.DOMInterface
 // loader dialog
-api.dialogLoader = DialogLoader._DOMInterface
+api.dialogLoader = DialogLoader.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Collapse
  * ------------------------------------------------------------------------
  */
-api.collapse = Collapse._DOMInterface
+api.collapse = Collapse.DOMInterface
+
+/**
+ * ------------------------------------------------------------------------
+ * Collapse
+ * ------------------------------------------------------------------------
+ */
+api.alert = Alert.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Accordion
  * ------------------------------------------------------------------------
  */
-api.accordion = Accordion._DOMInterface
+api.accordion = Accordion.DOMInterface
 
 
 /**
@@ -94,28 +102,28 @@ api.accordion = Accordion._DOMInterface
  * Tab
  * ------------------------------------------------------------------------
  */
-api.tab = Tab._DOMInterface
+api.tab = Tab.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Progress
  * ------------------------------------------------------------------------
  */
-api.progress = Progress._DOMInterface
+api.progress = Progress.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Loader
  * ------------------------------------------------------------------------
  */
-api.loader = Loader._DOMInterface
+api.loader = Loader.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
  * Off canvas
  * ------------------------------------------------------------------------
  */
-api.offCanvas = OffCanvas._DOMInterface
+api.offCanvas = OffCanvas.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
@@ -125,11 +133,11 @@ api.offCanvas = OffCanvas._DOMInterface
 api.dropdown = (options) => {
   if (options.search) {
     // search dropdown
-    return DropdownSearch._DOMInterface(options)
+    return DropdownSearch.DOMInterface(options)
   }
 
   // generic dropdown
-  return Dropdown._DOMInterface(options)
+  return Dropdown.DOMInterface(options)
 }
 
 // Make the API live

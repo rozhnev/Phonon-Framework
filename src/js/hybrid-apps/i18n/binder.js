@@ -11,7 +11,7 @@ const Binder = (() => {
   * ------------------------------------------------------------------------
   */
 
-  const NAME = 'intl-binder'
+  const NAME = 'i18n-binder'
   const VERSION = '2.0.0'
 
   /**
@@ -100,7 +100,7 @@ const Binder = (() => {
      * @param {HTMLElement} element
      */
     setNode(element) {
-      let attr = element.getAttribute('data-i18n')
+      let attr = element.getAttribute('data-t')
       if (!attr) {
         return
       }
@@ -113,19 +113,19 @@ const Binder = (() => {
       while (m = r.exec(attr)) {
         const key = m[1].trim()
         const value = m[2].trim().replace(',', '')
-        let intlValue = this.data[value]
+        let i18nValue = this.data[value]
 
         if (!this.data[value]) {
           console.log(`${NAME}. Warning, ${value} does not exist.`)
-          intlValue = value
+          i18nValue = value
         }
 
         const methodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1)
 
         if (this[methodName]) {
-          this[methodName](element, intlValue)
+          this[methodName](element, i18nValue)
         } else {
-          this.setAttribute(element, key, intlValue)
+          this.setAttribute(element, key, i18nValue)
         }
       }
     }
