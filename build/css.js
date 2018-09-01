@@ -13,6 +13,10 @@ const outputCSSFileMinified = `${outputDir}/phonon.min.css`;
 const outputSourceMapFileMinified = `${outputCSSFileMinified}.map`;
 
 (async () => {
+  console.log('Building CSS...');
+
+  const start = new Date();
+
   const sassResult = sass.renderSync({
     file: inputCSSFile,
     sourceMap: true,
@@ -46,4 +50,8 @@ const outputSourceMapFileMinified = `${outputCSSFileMinified}.map`;
 
   // Source maps
   fs.writeFileSync(outputSourceMapFileMinified, output.sourceMap);
+
+  const end = new Date();
+
+  console.log(`Done in ${(end.getTime() - start.getTime()) / 1000}s.`);
 })();

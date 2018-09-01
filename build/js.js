@@ -17,26 +17,21 @@ const plugins = [
     main: true,
   }),
   babel({
-    exclude: 'node_modules/**', // Only transpile our source code
-    externalHelpersWhitelist: [ // Include only required helpers
-      /*
-      'defineProperties',
-      'createClass',
-      'inheritsLoose',
-      'defineProperty',
-      'objectSpread'
-      */
-    ]
-  })
-]
+    exclude: 'node_modules/**',
+  }),
+];
 
-console.log(`Building ${fileName} ...`)
+(async () => {
+  console.log(`Building Phonon package...`);
 
-rollup.rollup({
-  input: path.resolve(__dirname, '../src/js/index.js'),
-  plugins,
-}).then((bundle) => {
-    bundle.write({
+  const start = new Date();
+  const bundle = await rollup.rollup({
+    input: path.resolve(__dirname, '../src/js/index.js'),
+    plugins,
+  });
+
+  try {
+    await bundle.write({
       banner: `/*!
     * Phonon v${pkg.version} (${pkg.homepage})
     * Copyright 2015-${year} ${pkg.author}
@@ -48,7 +43,12 @@ rollup.rollup({
       format,
       name: fileName,
       sourcemap: true,
-    })
-      .then(() => console.log(`Building ${fileName} ... Done !`))
-      .catch((err) => console.error(`${fileName}: ${err}`))
-  });
+    });
+
+    const end = new Date();
+
+    console.log(`Done in ${(end.getTime() - start.getTime()) / 1000}s.`);
+  } catch(err) {
+    console.error(`${fileName}: ${err}`);
+  }
+})();

@@ -38,10 +38,10 @@ const components = {
   Alert: path.resolve(__dirname, '../src/js/components/alert/index.js'),
   Collapse: path.resolve(__dirname, '../src/js/components/collapse/index.js'),
   Accordion: path.resolve(__dirname, '../src/js/components/accordion/index.js'),
-  Dialog: path.resolve(__dirname, '../src/js/components/dialog/index.js'),
-  DialogConfirm: path.resolve(__dirname, '../src/js/components/dialog/confirm.js'),
-  DialogLoader: path.resolve(__dirname, '../src/js/components/dialog/loader.js'),
-  DialogPrompt: path.resolve(__dirname, '../src/js/components/dialog/prompt.js'),
+  Modal: path.resolve(__dirname, '../src/js/components/modal/index.js'),
+  ModalConfirm: path.resolve(__dirname, '../src/js/components/modal/confirm.js'),
+  ModalLoader: path.resolve(__dirname, '../src/js/components/modal/loader.js'),
+  ModalPrompt: path.resolve(__dirname, '../src/js/components/modal/prompt.js'),
   Dropdown: path.resolve(__dirname, '../src/js/components/dropdown/index.js'),
   Loader: path.resolve(__dirname, '../src/js/components/loader/index.js'),
   Notification: path.resolve(__dirname, '../src/js/components/notification/index.js'),
@@ -50,21 +50,42 @@ const components = {
   Tab: path.resolve(__dirname, '../src/js/components/tab/index.js'),
 }
 
-Object.keys(components)
-.forEach((pluginKey) => {
-  console.log(`Building ${pluginKey} plugin...`)
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
 
-  rollup.rollup({
-    input: components[pluginKey],
-    plugins,
-  }).then((bundle) => {
-    bundle.write({
-      format,
-      name: pluginKey,
-      sourcemap: true,
-      file: path.resolve(__dirname, `${rootPath}${pluginKey.toLowerCase()}.js`)
-    })
-      .then(() => console.log(`Building ${pluginKey} plugin... Done !`))
-      .catch((err) => console.error(`${pluginKey}: ${err}`))
-  })
-})
+(async () => {
+  console.log('Building components...');
+  const start = new Date();
+
+  await asyncForEach(Object.keys(components), async (pluginKey) => {
+    const bundle = await rollup.rollup({
+      input: components[pluginKey],
+      plugins,
+    });
+
+    const file = path.resolve(__dirname, `${rootPath}${pluginKey.toLowerCase()}.js`);
+
+    try {
+      await bundle.write({
+        format,
+        name: pluginKey,
+        sourcemap: true,
+        file,
+      });
+
+      const content = fs.readFileSync(file);
+      const version = content.toString().match(/VERSION[ ]?=[ ]?['"]?([a-z0-9-_\.]+)['"]?/)[1];
+
+      console.log(`|─ ${pluginKey}@${version}`);
+    } catch(err) {
+      console.error(`${pluginKey}: ${err}`)
+    }
+  });
+
+  const end = new Date();
+
+  console.log(`Done in ${(end.getTime() - start.getTime()) / 1000}s.`);
+})();
