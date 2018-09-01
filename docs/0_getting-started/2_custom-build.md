@@ -2,30 +2,28 @@
 title: Custom builds
 ---
 
-## CSS
+Import the required files for your project.
+
+## SCSS
+
+Please, see the source code of [phonon.scss](https://github.com/quark-dev/Phonon-Framework/blob/master/src/scss/phonon.scss).
 
 ```scss
-// required
-@import 'scss/functions';
-@import 'scss/variables';
-@import 'scss/mixins';
+// instead of importing Phonon package
+@import 'phonon/src/scss/phonon';
+
+// import required components for your project
+@import 'phonon/src/scss/phonon/notification';
+@import 'phonon/src/scss/phonon/off-canvas';
+@import 'phonon/src/scss/phonon/dropdown';
 ```
 
 ## JavaScript
 
-This can be useful if you want to include **only** some components.
-
-For example, for the dialog component:
-
 ```js
-import Dialog from 'phonon/src/js/components/dialog'
+// instead of importing Phonon package
+import 'phonon/dist/js/phonon'
 
-// instead of using phonon.dialog(...), you must use the component as an object:
-const dialog = new Dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-  cancelable: true
-})
-
-dialog.show()
+// import required components for your project
+const Dropdown = require('phonon/dist/js/components/dropdown');
 ```

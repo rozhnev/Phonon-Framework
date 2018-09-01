@@ -342,6 +342,7 @@ a {
           <a href="#1_components">components</a>
           <ul>
             <li><a href="#1_components/accordion">Accordion</a></li>
+            <li><a href="#1_components/alert">Alert</a></li>
             <li><a href="#1_components/button">Button</a></li>
             <li><a href="#1_components/code">Code</a></li>
             <li><a href="#1_components/collapse">Collapse</a></li>
@@ -363,6 +364,8 @@ a {
           <a href="#2_utilities">utilities</a>
           <ul>
             <li><a href="#2_utilities/borders">Borders</a></li>
+            <li><a href="#2_utilities/clearfix">Clearfix</a></li>
+            <li><a href="#2_utilities/close-icon">Close icon</a></li>
             <li><a href="#2_utilities/network">Network</a></li>
             <li><a href="#2_utilities/unselectable">Unselectable</a></li>
           </ul>
@@ -371,7 +374,7 @@ a {
           <a href="#3_hybrid-app-integration">hybrid-app-integration</a>
           <ul>
             <li><a href="#3_hybrid-app-integration/getting_started">Getting started</a></li>
-            <li><a href="#3_hybrid-app-integration/intl">Internationalization (i18n)</a></li>
+            <li><a href="#3_hybrid-app-integration/i18n">Internationalization (i18n)</a></li>
             <li><a href="#3_hybrid-app-integration/pager">Pager</a></li>
           </ul>
         </li>
@@ -398,6 +401,7 @@ a {
 
       <div class="page" id="0_getting-started">
         <h1 class="heading">getting-started</h1>
+        
       </div>
 
       <div class="page" id="0_getting-started/0_introduction">
@@ -409,18 +413,8 @@ a {
         <h1 class="heading">Quick start</h1>
         <p>Phonon builds are ready to use components. They are located in the <code>dist/</code> directory.
 They provide convenient solutions that can be installed with no effort and that satisfy the most common editing use cases.</p>
-<h2>CSS</h2>
-<p>Option 1:</p>
-<p>@todo &lt;link...&gt;</p>
-<p>Option 2:</p>
-<pre><code class="language-scss">@import '@todo';
-</code></pre>
-<h2>JavaScript</h2>
-<p>Option 1:</p>
-<p>@todo &lt;script...&gt;</p>
-<p>Option 2:</p>
-<pre><code class="language-js">import 'phonon/dist/js/phonon'
-</code></pre>
+<p>Please, read more about <a href="#0_getting-started/2_custom-build">custom builds</a> if you would like to optimize the size of Phonon by
+importing required components only.</p>
 <h2>Starter Template</h2>
 <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -429,8 +423,8 @@ They provide convenient solutions that can be installed with no effort and that 
     &lt;meta charset=&quot;utf-8&quot;&gt;
     &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
 
-    &lt;!-- Bootstrap CSS --&gt;
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;@todo.css&quot;&gt;
+    &lt;!-- Phonon CSS --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;phonon/dist/css/phonon.css&quot;&gt;
 
     &lt;title&gt;Hello, world!&lt;/title&gt;
   &lt;/head&gt;
@@ -438,7 +432,7 @@ They provide convenient solutions that can be installed with no effort and that 
     &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
     &lt;!-- Optional JavaScript --&gt;
-    &lt;script src=&quot;@todo&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;phonon/dist/js/phonon.js&quot;&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -446,25 +440,23 @@ They provide convenient solutions that can be installed with no effort and that 
       </div>
       <div class="page" id="0_getting-started/2_custom-build">
         <h1 class="heading">Custom builds</h1>
-        <h2>CSS</h2>
-<pre><code class="language-scss">// required
-@import 'scss/functions';
-@import 'scss/variables';
-@import 'scss/mixins';
+        <p>Import the required files for your project.</p>
+<h2>CSS</h2>
+<p>Please, see the source code of <a href="https://github.com/quark-dev/Phonon-Framework/blob/master/src/scss/phonon.scss">phonon.scss</a>.</p>
+<pre><code class="language-scss">// instead of importing Phonon package
+@import 'phonon/src/scss/phonon';
+
+// import required components for your project
+@import 'phonon/src/scss/phonon/notification';
+@import 'phonon/src/scss/phonon/off-canvas';
+@import 'phonon/src/scss/phonon/dropdown';
 </code></pre>
 <h2>JavaScript</h2>
-<p>This can be useful if you want to include <strong>only</strong> some components.</p>
-<p>For example, for the dialog component:</p>
-<pre><code class="language-js">import Dialog from 'phonon/src/js/components/dialog'
+<pre><code class="language-js">// instead of importing Phonon package
+import 'phonon/dist/js/phonon'
 
-// instead of using phonon.dialog(...), you must use the component as an object:
-const dialog = new Dialog({
-  title: 'Dialog title',
-  message: 'Dialog body text goes here.',
-  cancelable: true
-})
-
-dialog.show()
+// import required components for your project
+const Dropdown = require('phonon/dist/js/components/dropdown');
 </code></pre>
 
       </div>
@@ -580,7 +572,7 @@ Use <code>data-pop-page</code> for back animation if you want to force the back 
 <h3>Internationalisation (i18n) &lt;i&gt;Changed&lt;/i&gt;</h3>
 <p>For the internationalisation, there are many changes.
 Now, you need to pass all the data directly.</p>
-<pre><code class="language-js">phonon.intl({
+<pre><code class="language-js">phonon.i18n({
   fallbackLocale: 'en',
   locale: 'en',
   data: {
@@ -609,7 +601,7 @@ pass everything as the second argument.</p>
       locale: 'en',
       data: response.data
     }
-    phonon.intl(config)
+    phonon.i18n(config)
   });
 })
 </code></pre>
@@ -648,6 +640,7 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
       </div>
       <div class="page" id="1_components">
         <h1 class="heading">components</h1>
+        
       </div>
 
       <div class="page" id="1_components/accordion">
@@ -712,6 +705,123 @@ const accordion = $('#exampleAccordion').accordion();
 </code></pre>
 <h2>Events</h2>
 <p>@todo</p>
+
+      </div>
+      <div class="page" id="1_components/alert">
+        <h1 class="heading">Alert</h1>
+        <h2>Introduction</h2>
+<h2>Markup</h2>
+<h3>Display</h3>
+<pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
+  A simple primary alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-secondary&quot; role=&quot;alert&quot;&gt;
+  A simple secondary alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-success&quot; role=&quot;alert&quot;&gt;
+  A simple success alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
+  A simple danger alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;
+  A simple warning alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-info&quot; role=&quot;alert&quot;&gt;
+  A simple info alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-light&quot; role=&quot;alert&quot;&gt;
+  A simple light alert—check it out!
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-dark&quot; role=&quot;alert&quot;&gt;
+  A simple dark alert—check it out!
+&lt;/div&gt;
+</code></pre>
+<h3>Link color</h3>
+<pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
+  A simple primary alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-secondary&quot; role=&quot;alert&quot;&gt;
+  A simple secondary alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-success&quot; role=&quot;alert&quot;&gt;
+  A simple success alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;
+  A simple danger alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;
+  A simple warning alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-info&quot; role=&quot;alert&quot;&gt;
+  A simple info alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-light&quot; role=&quot;alert&quot;&gt;
+  A simple light alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+&lt;div class=&quot;alert alert-dark&quot; role=&quot;alert&quot;&gt;
+  A simple dark alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
+&lt;/div&gt;
+</code></pre>
+<h3>Dismissable</h3>
+<pre><code class="language-html">&lt;div class=&quot;alert alert-warning&quot; id=&quot;exampleAlert&quot; role=&quot;alert&quot;&gt;
+  &lt;strong&gt;Holy guacamole!&lt;/strong&gt; You should check in on some of those fields below.
+  &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;
+    &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>JavaScript</h2>
+<pre><code class="language-js">const alert = phonon.alert({
+  element: '#exampleAlert',
+  fade: true,
+});
+</code></pre>
+<h3>Options</h3>
+<ul>
+<li>fade</li>
+</ul>
+<h3>Methods</h3>
+<h4>show</h4>
+<pre><code class="language-js">alert.show()
+</code></pre>
+<h4>hide</h4>
+<pre><code class="language-js">alert.hide()
+</code></pre>
+<h3>Events</h3>
+<h3>Object Events</h3>
+<pre><code class="language-js">phonon.alert({
+  show: () =&gt; { // or onShow
+    console.log('It works!')
+  },
+  shown: () =&gt; { // or onShown
+    console.log('It works!')
+  },
+  hide: () =&gt; { // or onHide
+    console.log('It works!')
+  },
+  hidden: () =&gt; { // or onHidden
+    console.log('It works!')
+  },
+});
+</code></pre>
+<h4>DOM Events</h4>
+<pre><code class="language-js">document.querySelector('.alert').addEventListener('show.ph.alert', () =&gt; {
+  console.log('It works!')
+})
+
+document.querySelector('.alert').addEventListener('shown.ph.alert', () =&gt; {
+  console.log('It works!')
+})
+
+document.querySelector('.alert').addEventListener('hide.ph.alert', () =&gt; {
+  console.log('It works!')
+})
+
+document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
+  console.log('It works!')
+})
+</code></pre>
 
       </div>
       <div class="page" id="1_components/button">
@@ -815,8 +925,7 @@ const dialog = $().dialog({
 });
 </code></pre>
 <h3>Prompt dialog</h3>
-<pre><code class="language-js">
-const prompt = phonon.prompt({
+<pre><code class="language-js">const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
 })
@@ -1557,12 +1666,70 @@ const tab = $('#settings-tab').tab();
       </div>
       <div class="page" id="2_utilities">
         <h1 class="heading">utilities</h1>
+        
       </div>
 
       <div class="page" id="2_utilities/borders">
         <h1 class="heading">Borders</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
+<h2>Add borders</h2>
+<pre><code class="language-html">&lt;span class=&quot;border&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-top&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-right&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-bottom&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-left&quot;&gt;&lt;/span&gt;
+</code></pre>
+<h2>Remove borders</h2>
+<pre><code class="language-html">&lt;span class=&quot;border-0&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-top-0&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-right-0&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-bottom-0&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border-left-0&quot;&gt;&lt;/span&gt;
+</code></pre>
+<h2>Colors</h2>
+<pre><code class="language-html">&lt;span class=&quot;border border-primary&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-secondary&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-success&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-danger&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-warning&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-info&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-light&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-dark&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;border border-white&quot;&gt;&lt;/span&gt;
+</code></pre>
+<h2>Corners (radius)</h2>
+<pre><code class="language-html">&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-top&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-right&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-bottom&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-left&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-circle&quot;&gt;
+&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-0&quot;&gt;
+</code></pre>
+
+      </div>
+      <div class="page" id="2_utilities/clearfix">
+        <h1 class="heading">Clearfix</h1>
+        <h2>Introduction</h2>
+<p>[WIP]</p>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;div class=&quot;bg-info clearfix&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-left&quot;&gt;Example Button floated left&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-right&quot;&gt;Example Button floated right&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </div>
+      <div class="page" id="2_utilities/close-icon">
+        <h1 class="heading">Close icon</h1>
+        <h2>Introduction</h2>
+<p>[WIP]</p>
+<h2>Example</h2>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;close&quot; aria-label=&quot;Close&quot;&gt;
+  &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
 
       </div>
       <div class="page" id="2_utilities/network">
@@ -1643,6 +1810,7 @@ window.addEventListener('offline.ph.network', (event) =&gt; {
       </div>
       <div class="page" id="3_hybrid-app-integration">
         <h1 class="heading">hybrid-app-integration</h1>
+        
       </div>
 
       <div class="page" id="3_hybrid-app-integration/getting_started">
@@ -1651,12 +1819,12 @@ window.addEventListener('offline.ph.network', (event) =&gt; {
 <p>@todo</p>
 
       </div>
-      <div class="page" id="3_hybrid-app-integration/intl">
+      <div class="page" id="3_hybrid-app-integration/i18n">
         <h1 class="heading">Internationalization (i18n)</h1>
         <h2>Introduction</h2>
 <p>The internationalization plugin is meant to be simple and light to internationalize your application. You put the texts in each language as an object, the default language (fallback) as well as the user's preferred language and the plugin will display the text in the correct language in your views.</p>
 <h2>Configuration</h2>
-<pre><code class="language-js">const intl = phonon.intl({
+<pre><code class="language-js">const i18n = phonon.i18n({
   fallbackLocale: 'en',
   locale: 'en',
   bind: true,
@@ -1674,15 +1842,15 @@ window.addEventListener('offline.ph.network', (event) =&gt; {
 })
 </code></pre>
 <h2>Markup</h2>
-<p>The HTML elements with the <code>data-i18n</code> attribute will be modified by the module. For example, <strong>text</strong> will insert the internationalized text into the element.</p>
-<pre><code class="language-html">&lt;h1 data-i18n=&quot;text: welcome&quot;&gt;&lt;/h1&gt;
-&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-i18n=&quot;value: welcome&quot; value=&quot;&quot;&gt;
-&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-i18n=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
+<p>The HTML elements with the <code>data-t</code> attribute will be modified by the module. For example, <strong>text</strong> will insert the internationalized text into the element.</p>
+<pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;&lt;/h1&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;&quot;&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
 <p>If the locale is <code>en</code>, the result would be:</p>
-<pre><code class="language-html">&lt;h1 data-i18n=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
-&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-i18n=&quot;value: welcome&quot; value=&quot;Welcome&quot;&gt;
-&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-attr=&quot;Welcome&quot; placeholder=&quot;Welcome&quot; data-i18n=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
+<pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;Welcome&quot;&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-attr=&quot;Welcome&quot; placeholder=&quot;Welcome&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
 <h2>Methods</h2>
 <h3>getLocale()</h3>
@@ -1694,19 +1862,19 @@ window.addEventListener('offline.ph.network', (event) =&gt; {
 <h3>setLocale(locale: string, updateHTML: boolean)</h3>
 <p>Updates the current locale with a new <code>locale</code>. By default, it will update the HTML,
 put false if you don't want to.</p>
-<pre><code class="language-js">intl.setLocale('fr')
+<pre><code class="language-js">i18n.setLocale('fr')
 </code></pre>
 <h3>updateHtml(HTMLElement?)</h3>
-<p>Updates the HTML. If no argument is passed, it will update all the nodes containing the attribute <code>data-i18n</code>.
+<p>Updates the HTML. If no argument is passed, it will update all the nodes containing the attribute <code>data-t</code>.
 On the contrary, you can pass a desired HTML node.</p>
-<pre><code class="language-js">intl.updateHtml() // update all the elements (nodes) containing data-i18n
-intl.updateHtml('.my-element') // update the node .my-element
+<pre><code class="language-js">i18n.updateHtml() // update all the elements (nodes) containing data-t
+i18n.updateHtml('.my-element') // update the node .my-element
 </code></pre>
 <h3>translate(keyName:string | array, values?)</h3>
 <p>This method returns the desired internationalized text in the current language by providing its key.</p>
-<pre><code class="language-js">intl.translate('welcome') // one translation
-intl.translate('*') // all available translations
-intl.translate(['welcome', 'other']) // two translations
+<pre><code class="language-js">i18n.translate('welcome') // one translation
+i18n.translate('*') // all available translations
+i18n.translate(['welcome', 'other']) // two translations
 </code></pre>
 <p>If the locale is <code>fr</code>, the result would be:</p>
 <pre><code>Bonjour
@@ -1715,16 +1883,16 @@ intl.translate(['welcome', 'other']) // two translations
 </code></pre>
 <h3>t (alias of translate)</h3>
 <p>The code below is identical to the one displayed in <code>translate()</code>.</p>
-<pre><code class="language-js">intl.t('welcome')
-intl.t('*')
-intl.t(['welcome', 'other'])
+<pre><code class="language-js">i18n.t('welcome')
+i18n.t('*')
+i18n.t(['welcome', 'other'])
 </code></pre>
 <h3>Advanced</h3>
 <p>You can also retrieve internationalized text by injecting values. For this, you need to add the prefix
 <strong>:</strong> following the name.
 In this example, we will show Hello following two names (name1 and name2).
 We need to add <strong>:name1</strong> and <strong>:name2</strong> in our data configuration.</p>
-<pre><code class="language-js">const intl = phonon.intl({
+<pre><code class="language-js">const i18n = phonon.i18n({
   fallbackLocale: 'en',
   locale: 'fr',
   bind: true,
@@ -1738,7 +1906,7 @@ We need to add <strong>:name1</strong> and <strong>:name2</strong> in our data c
   }
 })
 
-intl.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
+i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 </code></pre>
 <p>If the locale is <code>fr</code>, the result would be:</p>
 <pre><code>Bonjour Fabien et Ben
@@ -1757,14 +1925,24 @@ It also offers a light and simple <strong>router</strong> for recovering paramet
   useHash: true,
   defaultPage: 'myPage',
   animatePages: true
-})
+});
+
+pager.start();
 </code></pre>
 <h2>Markup</h2>
 <p>A SPA page is defined by setting up the <code>app-page</code> class and a unique data-page attribute.</p>
-<pre><code class="language-html">&lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
-&lt;div class=&quot;app-page&quot; data-page=&quot;mySecondPage&quot;&gt;&lt;/div&gt;
-&lt;div class=&quot;app-page&quot; data-page=&quot;myThirdPage&quot;&gt;&lt;/div&gt;
+<pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
+  &lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;app-page&quot; data-page=&quot;mySecondPage&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;app-page&quot; data-page=&quot;myThirdPage&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
 </code></pre>
+<h2>Page Navigation</h2>
+<p>Page navigation works with the attribute <code>data-navigate</code>.</p>
+<pre><code class="language-html">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;myPage&quot;&gt;Go to page&lt;/button&gt;
+</code></pre>
+<p>If you want to force the back animation, you can use the attribute <code>data-pop-page</code>.</p>
+<p>&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;home&quot; data-pop-page=&quot;true&quot;&gt;Back to home&lt;/button&gt;</p>
 <h2>Page Selector</h2>
 <p>To work with pages, it is essential to use the <code>select()</code> method. Indeed, the new Phonon Pager allows you to work with both a single page and a set of pages.</p>
 <pre><code class="language-js">pager.select('myPage') // one specific page
@@ -1773,9 +1951,9 @@ pager.select('myPage, mySecondPage') // two specific pages
 </code></pre>
 <p>Once you selected pages programatically, you can <strong>use a template</strong> or <strong>listen to events</strong>.</p>
 <h2>Page Template</h2>
-<p>By default, Pager will load the file and set it where the attribute <code>data-template</code> is present
+<p>Pager will use the template and set it where the attribute <code>data-template</code> is present
 in the HTML view.</p>
-<pre><code class="language-js">pager.select('myPage').setTemplate('path/to/template.html')
+<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
 <pre><code class="language-html">&lt;div data-push-template&gt;
@@ -1794,12 +1972,17 @@ pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;',
   page.querySelector('[data-template]').innerHTML = template
 })
 </code></pre>
-<h2>Page Navigation</h2>
-<p>Page navigation works with the attribute <code>data-navigate</code>.</p>
-<pre><code class="language-html">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;myPage&quot;&gt;Go to page&lt;/button&gt;
+<h3>Prevent page transition</h3>
+<p>Cancel the page transition if the function returns true.
+If the trigger event is a hash change, Pager will force to show the previous page.</p>
+<pre><code class="language-js">pager.select('*').preventTransition(async function (prev, next, params) {
+  return next === 'private';
+});
 </code></pre>
-<p>If you want to force the back animation, you can use the attribute <code>data-pop-page</code>.</p>
-<p>&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;home&quot; data-pop-page=&quot;true&quot;&gt;Back to home&lt;/button&gt;</p>
+<h2>Methods</h2>
+<h3>showPage(pageName, backAnimation)</h3>
+<pre><code class="language-js">pager.showPage('myPage');
+</code></pre>
 <h2>Events</h2>
 <p>|     Event Type     |     Description      |
 |</p>
@@ -1807,6 +1990,7 @@ pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;',
       </div>
       <div class="page" id="4_extend">
         <h1 class="heading">extend</h1>
+        
       </div>
 
       <div class="page" id="4_extend/icons">

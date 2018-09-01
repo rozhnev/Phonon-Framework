@@ -39,7 +39,6 @@ const dialog = $().dialog({
 ### Prompt dialog
 
 ```js
-
 const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',

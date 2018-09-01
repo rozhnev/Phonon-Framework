@@ -146,7 +146,7 @@ For the internationalisation, there are many changes.
 Now, you need to pass all the data directly.
 
 ```js
-phonon.intl({
+phonon.i18n({
   fallbackLocale: 'en',
   locale: 'en',
   data: {
@@ -178,7 +178,7 @@ axios.get('/locales')
       locale: 'en',
       data: response.data
     }
-    phonon.intl(config)
+    phonon.i18n(config)
   });
 })
 ```

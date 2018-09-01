@@ -5,30 +5,9 @@ title: Quick start
 Phonon builds are ready to use components. They are located in the `dist/` directory.
 They provide convenient solutions that can be installed with no effort and that satisfy the most common editing use cases.
 
+Please, read more about [custom builds](#0_getting-started/2_custom-build) if you would like to optimize the size of Phonon by
+importing required components only.
 
-## CSS
-
-Option 1:
-
-@todo <link...>
-
-Option 2:
-
-```scss
-@import '@todo';
-```
-
-## JavaScript
-
-Option 1:
-
-@todo <script...>
-
-Option 2:
-
-```js
-import 'phonon/dist/js/phonon'
-```
 
 ## Starter Template
 
@@ -40,8 +19,8 @@ import 'phonon/dist/js/phonon'
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="@todo.css">
+    <!-- Phonon CSS -->
+    <link rel="stylesheet" href="phonon/dist/css/phonon.css">
 
     <title>Hello, world!</title>
   </head>
@@ -49,7 +28,7 @@ import 'phonon/dist/js/phonon'
     <h1>Hello, world!</h1>
 
     <!-- Optional JavaScript -->
-    <script src="@todo"></script>
+    <script src="phonon/dist/js/phonon.js"></script>
   </body>
 </html>
 ```

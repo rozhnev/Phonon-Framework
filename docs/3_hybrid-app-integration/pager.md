@@ -17,7 +17,9 @@ const pager = phonon.pager({
   useHash: true,
   defaultPage: 'myPage',
   animatePages: true
-})
+});
+
+pager.start();
 ```
 
 ## Markup
@@ -25,9 +27,11 @@ const pager = phonon.pager({
 A SPA page is defined by setting up the `app-page` class and a unique data-page attribute.
 
 ```html
-<div class="app-page" data-page="myPage"></div>
-<div class="app-page" data-page="mySecondPage"></div>
-<div class="app-page" data-page="myThirdPage"></div>
+<div class="app-pages">
+  <div class="app-page" data-page="myPage"></div>
+  <div class="app-page" data-page="mySecondPage"></div>
+  <div class="app-page" data-page="myThirdPage"></div>
+</div>
 ```
 
 ## Page Navigation
@@ -85,6 +89,25 @@ pager.select('myPage').setTemplate('<div>This is my template</div>'), async (pag
 pager.select('myPage').setTemplate('<div>This is my template</div>', (page, template, elements) => {
   page.querySelector('[data-template]').innerHTML = template
 })
+```
+
+### Prevent page transition
+
+Cancel the page transition if the function returns true.
+If the trigger event is a hash change, Pager will force to show the previous page.
+
+```js
+pager.select('*').preventTransition(async function (prev, next, params) {
+  return next === 'private';
+});
+```
+
+## Methods
+
+### showPage(pageName, backAnimation)
+
+```js
+pager.showPage('myPage');
 ```
 
 ## Events
