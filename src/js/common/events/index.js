@@ -67,6 +67,9 @@ export default {
   END: availableEvents[2],
   CANCEL: typeof availableEvents[3] === 'undefined' ? null : availableEvents[3],
 
+  // click
+  CLICK: 'click',
+
   // transitions
   TRANSITION_START: transitionStart,
   TRANSITION_END: transitionEnd,
