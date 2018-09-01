@@ -111,8 +111,8 @@ const Tab = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Tab, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Tab, options)
     }
   }
 
@@ -137,7 +137,7 @@ const Tab = (($) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
-      components.push(Tab._DOMInterface(config))
+      components.push(Tab.DOMInterface(config))
     })
   }
 

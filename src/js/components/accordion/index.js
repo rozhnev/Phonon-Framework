@@ -122,8 +122,8 @@ const Accordion = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Accordion, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Accordion, options)
     }
   }
 
@@ -147,7 +147,7 @@ const Accordion = (($) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
-      components.push(Accordion._DOMInterface(config))
+      components.push(Accordion.DOMInterface(config))
     })
   }
 

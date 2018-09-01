@@ -111,8 +111,8 @@ const Loader = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Loader, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Loader, options)
     }
   }
 

@@ -138,8 +138,8 @@ const Progress = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Progress, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Progress, options)
     }
   }
 

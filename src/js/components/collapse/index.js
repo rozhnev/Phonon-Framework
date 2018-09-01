@@ -6,7 +6,7 @@
 import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
 import Event from '../../common/events'
-import { findTargetByAttr } from '../../common/utils'
+import { findTargetByAttr, createJqueryPlugin } from '../../common/utils'
 
 const Collapse = (($) => {
   /**
@@ -132,10 +132,17 @@ const Collapse = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Collapse, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Collapse, options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Collapse);
 
   /**
    * ------------------------------------------------------------------------
@@ -151,7 +158,7 @@ const Collapse = (($) => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
       config.element = element
 
-      components.push(Collapse._DOMInterface(config))
+      components.push(Collapse.DOMInterface(config))
     })
   }
 

@@ -87,5 +87,5 @@ export default {
   },
   closable(component) {
     return stack.length === 0 || Object.is(stack[stack.length - 1], component)
-  }
-}
+  },
+};

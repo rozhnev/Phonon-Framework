@@ -184,8 +184,8 @@ const Notification = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Notification, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Notification, options)
     }
   }
 

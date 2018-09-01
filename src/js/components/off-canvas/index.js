@@ -259,8 +259,8 @@ const OffCanvas = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(OffCanvas, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(OffCanvas, options)
     }
   }
 

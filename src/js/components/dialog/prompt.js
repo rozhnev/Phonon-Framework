@@ -5,8 +5,9 @@
  */
 import Dialog from './index'
 import { getAttributesConfig } from '../componentManager'
+import { createJqueryPlugin } from '../../common/utils'
 
-const Prompt = (() => {
+const Prompt = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -115,10 +116,17 @@ const Prompt = (() => {
       return NAME
     }
 
-    static _DOMInterface(options) {
+    static DOMInterface(options) {
       return new Prompt(options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Prompt);
 
   /**
    * ------------------------------------------------------------------------
@@ -160,6 +168,6 @@ const Prompt = (() => {
   })
 
   return Prompt
-})()
+})(window.$ ? window.$ : null)
 
 export default Prompt

@@ -195,8 +195,8 @@ const Dropdown = (() => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Dropdown, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Dropdown, options)
     }
   }
 

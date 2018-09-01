@@ -5,8 +5,9 @@
  */
 import Dialog from './index'
 import { getAttributesConfig } from '../componentManager'
+import { createJqueryPlugin } from '../../common/utils'
 
-const Confirm = (() => {
+const Confirm = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -76,10 +77,17 @@ const Confirm = (() => {
       return NAME
     }
 
-    static _DOMInterface(options) {
+    static DOMInterface(options) {
       return new Confirm(options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Confirm);
 
   /**
    * ------------------------------------------------------------------------
@@ -121,6 +129,6 @@ const Confirm = (() => {
   })
 
   return Confirm
-})()
+})(window.$ ? window.$ : null)
 
 export default Confirm

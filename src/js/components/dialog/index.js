@@ -286,8 +286,8 @@ const Dialog = (($) => {
       return NAME
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Dialog, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Dialog, options)
     }
   }
 

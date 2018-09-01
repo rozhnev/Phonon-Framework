@@ -6,8 +6,9 @@
 import Dialog from './index'
 import Spinner from '../loader/index'
 import { getAttributesConfig } from '../componentManager'
+import { createJqueryPlugin } from '../../common/utils'
 
-const Loader = (() => {
+const Loader = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -85,10 +86,17 @@ const Loader = (() => {
       return NAME
     }
 
-    static _DOMInterface(options) {
+    static DOMInterface(options) {
       return new Loader(options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Loader);
 
   /**
    * ------------------------------------------------------------------------
@@ -130,6 +138,6 @@ const Loader = (() => {
   })
 
   return Loader
-})()
+})(window.$ ? window.$ : null)
 
 export default Loader

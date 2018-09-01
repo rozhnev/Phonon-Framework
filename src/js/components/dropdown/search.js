@@ -4,10 +4,10 @@
  * --------------------------------------------------------------------------
  */
 import Dropdown from './index'
-import { findTargetByClass } from '../../common/utils'
+import { findTargetByClass, createJqueryPlugin } from '../../common/utils'
 import { getAttributesConfig } from '../componentManager'
 
-const DropdownSearch = (() => {
+const DropdownSearch = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -99,10 +99,17 @@ const DropdownSearch = (() => {
       }
     }
 
-    static _DOMInterface(options) {
+    static DOMInterface(options) {
       return new DropdownSearch(options)
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, DropdownSearch);
 
   /**
    * ------------------------------------------------------------------------
@@ -149,6 +156,6 @@ const DropdownSearch = (() => {
   }
 
   return DropdownSearch
-})()
+})(window.$ ? window.$ : null)
 
 export default DropdownSearch
