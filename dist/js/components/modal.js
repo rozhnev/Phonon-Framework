@@ -1,44 +1,5 @@
 'use strict';
 
-function dispatchWinDocEvent(eventName, moduleName, detail = {}) {
-  const fullEventName = `${eventName}.ph.${moduleName}`;
-  window.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-  document.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-}
-function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
-  const fullEventName = `${eventName}.ph.${moduleName}`;
-  domElement.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-}
-
-function generateId() {
-  return Math.random().toString(36).substr(2, 10);
-}
-function createJqueryPlugin($ = null, name, obj) {
-  if (!$) {
-    return;
-  }
-
-  const mainFn = function mainFn(options = {}) {
-    const opts = options;
-
-    if (this[0]) {
-      opts.element = this[0];
-    }
-
-    return obj.DOMInterface(opts);
-  };
-
-  $.fn[name] = mainFn;
-  $.fn[name].Constructor = obj;
-  $.fn[name].noConflict = mainFn;
-}
-
 // @todo keep ?
 if (typeof window !== 'undefined') {
   window.addEventListener('error', () => {
@@ -134,6 +95,45 @@ var Event = {
   // dropdown
   ITEM_SELECTED: 'itemSelected'
 };
+
+function dispatchWinDocEvent(eventName, moduleName, detail = {}) {
+  const fullEventName = `${eventName}.ph.${moduleName}`;
+  window.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+  document.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+}
+function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
+  const fullEventName = `${eventName}.ph.${moduleName}`;
+  domElement.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+}
+
+function generateId() {
+  return Math.random().toString(36).substr(2, 10);
+}
+function createJqueryPlugin($ = null, name, obj) {
+  if (!$) {
+    return;
+  }
+
+  const mainFn = function mainFn(options = {}) {
+    const opts = options;
+
+    if (this[0]) {
+      opts.element = this[0];
+    }
+
+    return obj.DOMInterface(opts);
+  };
+
+  $.fn[name] = mainFn;
+  $.fn[name].Constructor = obj;
+  $.fn[name].noConflict = mainFn;
+}
 
 const getAttribute = (first, second) => {
   if (first === '') {
@@ -422,110 +422,257 @@ class Component {
  * --------------------------------------------------------------------------
  */
 
-const Progress = ($ => {
+const Modal = ($ => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
-  const NAME = 'progress';
+  const NAME = 'modal';
   const VERSION = '2.0.0';
+  const BACKDROP_SELECTOR = 'modal-backdrop';
   const DEFAULT_PROPERTIES = {
     element: null,
-    height: 5,
-    min: 0,
-    max: 100,
-    label: false,
-    striped: false,
-    background: null
+    title: null,
+    message: null,
+    cancelable: true,
+    type: null,
+    cancelableKeyCodes: [27, // Escape
+    13],
+    buttons: [{
+      event: 'confirm',
+      text: 'Ok',
+      dismiss: true,
+      class: 'btn btn-primary'
+    }]
   };
-  const DATA_ATTRS_PROPERTIES = ['height', 'min', 'max', 'label', 'striped', 'background'];
+  const DATA_ATTRS_PROPERTIES = ['cancelable'];
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Progress extends Component {
-    constructor(options = {}) {
-      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false); // set the wanted height
+  class Modal extends Component {
+    constructor(options = {}, template = null) {
+      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true);
+      this.template = template || '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-      this.options.element.style.height = `${this.options.height}px`; // set min and max values
-
-      const progressBar = this.getProgressBar();
-      progressBar.setAttribute('aria-valuemin', `${this.options.min}`);
-      progressBar.setAttribute('aria-valuemax', `${this.options.max}`); // set striped
-
-      if (this.options.striped && !progressBar.classList.contains('progress-bar-striped')) {
-        progressBar.classList.add('progress-bar-striped');
-      } // set background
-
-
-      if (typeof this.options.background === 'string' && !progressBar.classList.contains(`bg-${this.options.background}`)) {
-        progressBar.classList.add(`bg-${this.options.background}`);
+      if (this.dynamicElement) {
+        this.build();
       }
     }
 
-    getProgressBar() {
-      return this.options.element.querySelector('.progress-bar');
+    build() {
+      const builder = document.createElement('div');
+      builder.innerHTML = this.template;
+      this.options.element = builder.firstChild; // title
+
+      if (this.options.title !== null) {
+        this.options.element.querySelector('.modal-title').innerHTML = this.options.title;
+      } // message
+
+
+      if (this.options.message !== null) {
+        this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message;
+      } else {
+        // remove paragraph node
+        this.removeTextBody();
+      } // buttons
+
+
+      if (this.options.buttons !== null && Array.isArray(this.options.buttons)) {
+        if (this.options.buttons.length > 0) {
+          this.options.buttons.forEach(button => {
+            this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button));
+          });
+        } else {
+          this.removeFooter();
+        }
+      } else {
+        this.removeFooter();
+      }
+
+      document.body.appendChild(this.options.element);
+      this.setAttributes();
     }
 
-    set(value = 0) {
-      const progressBar = this.getProgressBar();
-      const progress = Math.round(value / (this.options.min + this.options.max) * 100);
+    buildButton(buttonInfo = {}) {
+      const button = document.createElement('button');
+      button.setAttribute('type', 'button');
+      button.setAttribute('class', buttonInfo.class || 'btn');
+      button.setAttribute('data-event', buttonInfo.event);
+      button.innerHTML = buttonInfo.text;
 
-      if (value < this.options.min) {
-        console.error(`${NAME}. Warning, ${value} is under min value.`);
-        return false;
+      if (buttonInfo.dismiss) {
+        button.setAttribute('data-dismiss', NAME);
       }
 
-      if (value > this.options.max) {
-        console.error(`${NAME}. Warning, ${value} is above max value.`);
-        return false;
-      }
-
-      progressBar.setAttribute('aria-valuenow', `${value}`); // set label
-
-      if (this.options.label) {
-        progressBar.innerHTML = `${progress}%`;
-      } // set percentage
-
-
-      progressBar.style.width = `${progress}%`;
-      return true;
+      return button;
     }
 
-    animate(startAnimation = true) {
-      if (!this.options.striped) {
-        console.error(`${NAME}. Animation works only with striped progress.`);
-        return false;
-      }
+    buildBackdrop() {
+      const backdrop = document.createElement('div');
+      backdrop.setAttribute('data-id', this.id);
+      backdrop.classList.add(BACKDROP_SELECTOR);
+      document.body.appendChild(backdrop);
+    }
 
-      const progressBar = this.getProgressBar();
+    getBackdrop() {
+      return document.querySelector(`.${BACKDROP_SELECTOR}[data-id="${this.id}"]`);
+    }
 
-      if (startAnimation && !progressBar.classList.contains('progress-bar-animated')) {
-        progressBar.classList.add('progress-bar-animated');
-      }
+    removeTextBody() {
+      this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild);
+    }
 
-      if (!startAnimation && progressBar.classList.contains('progress-bar-animated')) {
-        progressBar.classList.remove('progress-bar-animated');
-      }
+    removeFooter() {
+      const footer = this.options.element.querySelector('.modal-footer');
+      this.options.element.querySelector('.modal-content').removeChild(footer);
+    }
 
-      return true;
+    center() {
+      const computedStyle = window.getComputedStyle(this.options.element);
+      const height = computedStyle.height.slice(0, computedStyle.height.length - 2);
+      const top = window.innerHeight / 2 - height / 2;
+      this.options.element.style.top = `${top}px`;
     }
 
     show() {
-      this.options.element.style.height = `${this.options.height}px`;
-      this.triggerEvent(Event.SHOW);
-      this.triggerEvent(Event.SHOWN);
+      if (this.options.element === null) {
+        // build and insert a new DOM element
+        this.build();
+      }
+
+      if (this.options.element.classList.contains('show')) {
+        return false;
+      } // add a timeout so that the CSS animation works
+
+
+      setTimeout(() => {
+        this.triggerEvent(Event.SHOW);
+        this.buildBackdrop(); // attach event
+
+        this.attachEvents();
+
+        const onShown = () => {
+          this.triggerEvent(Event.SHOWN);
+          this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+        };
+
+        this.options.element.addEventListener(Event.TRANSITION_END, onShown);
+        this.options.element.classList.add('show');
+        this.center();
+      }, 10);
       return true;
     }
 
+    onElementEvent(event) {
+      // keyboard event (escape and enter)
+      if (event.type === 'keyup') {
+        if (this.options.cancelableKeyCodes.find(k => k === event.keyCode)) {
+          this.hide();
+        }
+
+        return;
+      } // backdrop event
+
+
+      if (event.type === Event.START) {
+        // hide the modal
+        this.hide();
+        return;
+      } // button event
+
+
+      if (event.type === 'click') {
+        const eventName = event.target.getAttribute('data-event');
+
+        if (eventName) {
+          this.triggerEvent(eventName);
+        }
+
+        if (event.target.getAttribute('data-dismiss') === NAME) {
+          this.hide();
+        }
+      }
+    }
+
     hide() {
-      this.options.element.style.height = '0px';
+      if (!this.options.element.classList.contains('show')) {
+        return false;
+      }
+
       this.triggerEvent(Event.HIDE);
-      this.triggerEvent(Event.HIDDEN);
+      this.detachEvents();
+      this.options.element.classList.add('hide');
+      this.options.element.classList.remove('show');
+      const backdrop = this.getBackdrop();
+
+      const onHidden = () => {
+        document.body.removeChild(backdrop);
+        this.options.element.classList.remove('hide');
+        this.triggerEvent(Event.HIDDEN);
+        backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+        if (this.dynamicElement) {
+          document.body.removeChild(this.options.element);
+          this.options.element = null;
+        }
+      };
+
+      backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+      backdrop.classList.add('fadeout');
       return true;
+    }
+
+    attachEvents() {
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
+
+      if (buttons) {
+        Array.from(buttons).forEach(button => this.registerElement({
+          target: button,
+          event: 'click'
+        }));
+      } // add events if the modal is cancelable
+      // which means the user can hide the modal
+      // by pressing the ESC key or click on the backdrop
+
+
+      if (this.options.cancelable) {
+        const backdrop = this.getBackdrop();
+        this.registerElement({
+          target: backdrop,
+          event: Event.START
+        });
+        this.registerElement({
+          target: document,
+          event: 'keyup'
+        });
+      }
+    }
+
+    detachEvents() {
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
+
+      if (buttons) {
+        Array.from(buttons).forEach(button => this.unregisterElement({
+          target: button,
+          event: 'click'
+        }));
+      }
+
+      if (this.options.cancelable) {
+        const backdrop = this.getBackdrop();
+        this.unregisterElement({
+          target: backdrop,
+          event: Event.START
+        });
+        this.unregisterElement({
+          target: document,
+          event: 'keyup'
+        });
+      }
     }
 
     static identifier() {
@@ -533,7 +680,7 @@ const Progress = ($ => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Progress, options);
+      return super.DOMInterface(Modal, options);
     }
 
   }
@@ -544,9 +691,46 @@ const Progress = ($ => {
    */
 
 
-  createJqueryPlugin($, NAME, Progress);
-  return Progress;
+  createJqueryPlugin($, NAME, Modal);
+  /**
+   * ------------------------------------------------------------------------
+   * DOM Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  const components = [];
+  const modals = document.querySelectorAll(`.${NAME}`);
+
+  if (modals) {
+    Array.from(modals).forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push({
+        element,
+        modal: new Modal(config)
+      });
+    });
+  }
+
+  document.addEventListener('click', event => {
+    const dataToggleAttr = event.target.getAttribute('data-toggle');
+
+    if (dataToggleAttr && dataToggleAttr === NAME) {
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
+      const component = components.find(c => c.element === element);
+
+      if (!component) {
+        return;
+      } // remove the focus state of the trigger
+
+
+      event.target.blur();
+      component.modal.show();
+    }
+  });
+  return Modal;
 })(window.$ ? window.$ : null);
 
-module.exports = Progress;
-//# sourceMappingURL=progress.js.map
+module.exports = Modal;
+//# sourceMappingURL=modal.js.map

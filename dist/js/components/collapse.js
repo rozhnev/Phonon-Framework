@@ -28,6 +28,25 @@ function findTargetByAttr(target, attr) {
 
   return null;
 }
+function createJqueryPlugin($ = null, name, obj) {
+  if (!$) {
+    return;
+  }
+
+  const mainFn = function mainFn(options = {}) {
+    const opts = options;
+
+    if (this[0]) {
+      opts.element = this[0];
+    }
+
+    return obj.DOMInterface(opts);
+  };
+
+  $.fn[name] = mainFn;
+  $.fn[name].Constructor = obj;
+  $.fn[name].noConflict = mainFn;
+}
 
 // @todo keep ?
 if (typeof window !== 'undefined') {
@@ -376,7 +395,7 @@ class Component {
   }
   /**
    * the preventClosable method manages concurrency between active components.
-   * For example, if there is a shown off-canvas and dialog, the last
+   * For example, if there is a shown off-canvas and modal, the last
    * shown component gains the processing priority
    */
 
@@ -424,7 +443,7 @@ const Collapse = ($ => {
     element: null,
     toggle: false
   };
-  const DATA_ATTRS_PROPERTIES = ['toggle'];
+  const DATA_ATTRS_PROPERTIES = [];
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -463,8 +482,10 @@ const Collapse = ($ => {
       }
 
       this.onTransition = true;
+      this.triggerEvent(Event.SHOW);
 
       const onCollapsed = () => {
+        this.triggerEvent(Event.SHOWN);
         this.options.element.classList.add('show');
         this.options.element.classList.remove('collapsing');
         this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
@@ -495,8 +516,10 @@ const Collapse = ($ => {
       }
 
       this.onTransition = true;
+      this.triggerEvent(Event.HIDE);
 
       const onCollapsed = () => {
+        this.triggerEvent(Event.HIDDEN);
         this.options.element.classList.remove('collapsing');
         this.options.element.style.height = 'auto';
         this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
@@ -526,10 +549,17 @@ const Collapse = ($ => {
   }
   /**
    * ------------------------------------------------------------------------
-   * DOM Api implementation
+   * jQuery
    * ------------------------------------------------------------------------
    */
 
+
+  createJqueryPlugin($, NAME, Collapse);
+  /**
+   * ------------------------------------------------------------------------
+   * DOM Api implementation
+   * ------------------------------------------------------------------------
+   */
 
   const components = [];
   const collapses = document.querySelectorAll(`.${NAME}`);
@@ -543,7 +573,7 @@ const Collapse = ($ => {
     });
   }
 
-  document.addEventListener('click', event => {
+  document.addEventListener(Event.CLICK, event => {
     const target = findTargetByAttr(event.target, 'data-toggle');
 
     if (!target) {

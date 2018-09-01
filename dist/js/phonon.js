@@ -116,7 +116,7 @@
           render = this.getRenderFunction();
         }
 
-        await render(pageElement, this.getTemplate(), pageElement.querySelectorAll(TEMPLATE_SELECTOR));
+        await render(pageElement, this.getTemplate(), Array.from(pageElement.querySelectorAll(TEMPLATE_SELECTOR) || []));
       } // public
 
       /**
@@ -355,8 +355,9 @@
         return null;
       }
 
-      setHash(pageName) {
-        window.location.hash = `${this.options.hashPrefix}/${pageName}`;
+      setHash(pageName, params = null) {
+        const hash = `${this.options.hashPrefix}/${pageName}`;
+        window.location.hash = Array.isArray(params) ? `${hash}/${params.join('/')}` : hash;
       }
 
       isPageOf(pageName1, pageName2) {
@@ -383,7 +384,17 @@
       } // public
 
 
-      async showPage(pageName, back = false, params = {}, from = Event.CLICK) {
+      async showPage(pageName, params = null, back = false, from = Event.CLICK) {
+        /*
+         * If we he use the hash as trigger,
+         * we change it dynamically so that the hashchange event is called
+         * Otherwise, we show the page
+         */
+        if (this.options.useHash && this.getPageFromHash() !== pageName) {
+          this.setHash(pageName, params);
+          return;
+        }
+
         const oldPage = this._('.current');
 
         let oldPageName = null;
@@ -522,7 +533,7 @@
 
       onClick(event) {
         const pageName = event.target.getAttribute('data-navigate');
-        const pushPage = !(event.target.getAttribute('data-pop-page') === 'true');
+        const backNavigation = event.target.getAttribute('data-pop-page') === 'true';
 
         if (pageName) {
           if (pageName === '$back') {
@@ -530,18 +541,8 @@
             window.history.back();
             return;
           }
-          /*
-           * If we he use the hash as trigger,
-           * we change it dynamically so that the hashchange event is called
-           * Otherwise, we show the page
-           */
 
-
-          if (this.options.useHash) {
-            this.setHash(pageName);
-          } else {
-            this.showPage(pageName, pushPage);
-          }
+          this.showPage(pageName, null, backNavigation);
         }
       }
 
@@ -552,7 +553,7 @@
           return;
         }
 
-        this.showPage(pageName, true);
+        this.showPage(pageName, null, true);
       }
 
       onHashChange() {
@@ -567,7 +568,7 @@
         const navPage = this.getPageFromHash();
 
         if (navPage) {
-          this.showPage(navPage, false, params, Event.HASH);
+          this.showPage(navPage, null, false, params, Event.HASH);
         }
       }
       /**
@@ -630,7 +631,7 @@
 
 
         if (this.options.useHash) {
-          this.setHash(pageName);
+          this.setHash(pageName, null);
         }
 
         this.showPage(forceDefaultPage ? this.options.defaultPage : pageName);
@@ -1247,7 +1248,7 @@
     }
     /**
      * the preventClosable method manages concurrency between active components.
-     * For example, if there is a shown off-canvas and dialog, the last
+     * For example, if there is a shown off-canvas and modal, the last
      * shown component gains the processing priority
      */
 
@@ -1586,15 +1587,15 @@
    * --------------------------------------------------------------------------
    */
 
-  const Dialog = ($ => {
+  const Modal = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
      * ------------------------------------------------------------------------
      */
-    const NAME = 'dialog';
+    const NAME = 'modal';
     const VERSION = '2.0.0';
-    const BACKDROP_SELECTOR = 'dialog-backdrop';
+    const BACKDROP_SELECTOR = 'modal-backdrop';
     const DEFAULT_PROPERTIES = {
       element: null,
       title: null,
@@ -1617,10 +1618,10 @@
      * ------------------------------------------------------------------------
      */
 
-    class Dialog extends Component {
+    class Modal extends Component {
       constructor(options = {}, template = null) {
         super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true);
-        this.template = template || '' + '<div class="dialog" tabindex="-1" role="dialog">' + '<div class="dialog-inner" role="document">' + '<div class="dialog-content">' + '<div class="dialog-header">' + '<h5 class="dialog-title"></h5>' + '</div>' + '<div class="dialog-body">' + '<p></p>' + '</div>' + '<div class="dialog-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
+        this.template = template || '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
         if (this.dynamicElement) {
           this.build();
@@ -1633,12 +1634,12 @@
         this.options.element = builder.firstChild; // title
 
         if (this.options.title !== null) {
-          this.options.element.querySelector('.dialog-title').innerHTML = this.options.title;
+          this.options.element.querySelector('.modal-title').innerHTML = this.options.title;
         } // message
 
 
         if (this.options.message !== null) {
-          this.options.element.querySelector('.dialog-body').firstChild.innerHTML = this.options.message;
+          this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message;
         } else {
           // remove paragraph node
           this.removeTextBody();
@@ -1648,7 +1649,7 @@
         if (this.options.buttons !== null && Array.isArray(this.options.buttons)) {
           if (this.options.buttons.length > 0) {
             this.options.buttons.forEach(button => {
-              this.options.element.querySelector('.dialog-footer').appendChild(this.buildButton(button));
+              this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button));
             });
           } else {
             this.removeFooter();
@@ -1687,12 +1688,12 @@
       }
 
       removeTextBody() {
-        this.options.element.querySelector('.dialog-body').removeChild(this.options.element.querySelector('.dialog-body').firstChild);
+        this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild);
       }
 
       removeFooter() {
-        const footer = this.options.element.querySelector('.dialog-footer');
-        this.options.element.querySelector('.dialog-content').removeChild(footer);
+        const footer = this.options.element.querySelector('.modal-footer');
+        this.options.element.querySelector('.modal-content').removeChild(footer);
       }
 
       center() {
@@ -1743,7 +1744,7 @@
 
 
         if (event.type === Event.START) {
-          // hide the dialog
+          // hide the modal
           this.hide();
           return;
         } // button event
@@ -1777,7 +1778,7 @@
           document.body.removeChild(backdrop);
           this.options.element.classList.remove('hide');
           this.triggerEvent(Event.HIDDEN);
-          backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated dialogs from the DOM
+          backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
 
           if (this.dynamicElement) {
             document.body.removeChild(this.options.element);
@@ -1791,15 +1792,15 @@
       }
 
       attachEvents() {
-        const buttons = this.options.element.querySelectorAll('[data-dismiss], .dialog-footer button');
+        const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
 
         if (buttons) {
           Array.from(buttons).forEach(button => this.registerElement({
             target: button,
             event: 'click'
           }));
-        } // add events if the dialog is cancelable
-        // which means the user can hide the dialog
+        } // add events if the modal is cancelable
+        // which means the user can hide the modal
         // by pressing the ESC key or click on the backdrop
 
 
@@ -1817,7 +1818,7 @@
       }
 
       detachEvents() {
-        const buttons = this.options.element.querySelectorAll('[data-dismiss], .dialog-footer button');
+        const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
 
         if (buttons) {
           Array.from(buttons).forEach(button => this.unregisterElement({
@@ -1844,7 +1845,7 @@
       }
 
       static DOMInterface(options) {
-        return super.DOMInterface(Dialog, options);
+        return super.DOMInterface(Modal, options);
       }
 
     }
@@ -1855,7 +1856,7 @@
      */
 
 
-    createJqueryPlugin($, NAME, Dialog);
+    createJqueryPlugin($, NAME, Modal);
     /**
      * ------------------------------------------------------------------------
      * DOM Api implementation
@@ -1863,15 +1864,15 @@
      */
 
     const components = [];
-    const dialogs = document.querySelectorAll(`.${NAME}`);
+    const modals = document.querySelectorAll(`.${NAME}`);
 
-    if (dialogs) {
-      Array.from(dialogs).forEach(element => {
+    if (modals) {
+      Array.from(modals).forEach(element => {
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
         components.push({
           element,
-          dialog: new Dialog(config)
+          modal: new Modal(config)
         });
       });
     }
@@ -1890,10 +1891,10 @@
 
 
         event.target.blur();
-        component.dialog.show();
+        component.modal.show();
       }
     });
-    return Dialog;
+    return Modal;
   })(window.$ ? window.$ : null);
 
   /**
@@ -1902,7 +1903,7 @@
    * --------------------------------------------------------------------------
    */
 
-  const Prompt = (() => {
+  const Prompt = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
@@ -1934,9 +1935,9 @@
      * ------------------------------------------------------------------------
      */
 
-    class Prompt extends Dialog {
+    class Prompt extends Modal {
       constructor(options = {}) {
-        const template = '' + '<div class="dialog" tabindex="-1" role="dialog">' + '<div class="dialog-inner" role="document">' + '<div class="dialog-content">' + '<div class="dialog-header">' + '<h5 class="dialog-title"></h5>' + '</div>' + '<div class="dialog-body">' + '<p></p>' + '<input class="form-control" type="text" value="">' + '</div>' + '<div class="dialog-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
+        const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '<input class="form-control" type="text" value="">' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
         if (!Array.isArray(options.buttons)) {
           options.buttons = DEFAULT_PROPERTIES.buttons;
@@ -2000,16 +2001,23 @@
     }
     /**
      * ------------------------------------------------------------------------
-     * DOM Api implementation
+     * jQuery
      * ------------------------------------------------------------------------
      */
 
 
-    const components = [];
-    const dialogs = document.querySelectorAll(`.${Dialog.identifier()}`);
+    createJqueryPlugin($, NAME, Prompt);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
 
-    if (dialogs) {
-      Array.from(dialogs).forEach(element => {
+    const components = [];
+    const modals = document.querySelectorAll(`.${Modal.identifier()}`);
+
+    if (modals) {
+      Array.from(modals).forEach(element => {
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
 
@@ -2034,11 +2042,11 @@
 
 
         event.target.blur();
-        component.dialog.show();
+        component.modal.show();
       }
     });
     return Prompt;
-  })();
+  })(window.$ ? window.$ : null);
 
   /**
    * --------------------------------------------------------------------------
@@ -2046,7 +2054,7 @@
    * --------------------------------------------------------------------------
    */
 
-  const Confirm = (() => {
+  const Confirm = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
@@ -2078,9 +2086,9 @@
      * ------------------------------------------------------------------------
      */
 
-    class Confirm extends Dialog {
+    class Confirm extends Modal {
       constructor(options = {}) {
-        const template = '' + '<div class="dialog" tabindex="-1" role="dialog">' + '<div class="dialog-inner" role="document">' + '<div class="dialog-content">' + '<div class="dialog-header">' + '<h5 class="dialog-title"></h5>' + '</div>' + '<div class="dialog-body">' + '<p></p>' + '</div>' + '<div class="dialog-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
+        const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
         if (!Array.isArray(options.buttons)) {
           options.buttons = DEFAULT_PROPERTIES.buttons;
@@ -2100,16 +2108,23 @@
     }
     /**
      * ------------------------------------------------------------------------
-     * DOM Api implementation
+     * jQuery
      * ------------------------------------------------------------------------
      */
 
 
-    const components = [];
-    const dialogs = document.querySelectorAll(`.${Dialog.identifier()}`);
+    createJqueryPlugin($, NAME, Confirm);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
 
-    if (dialogs) {
-      Array.from(dialogs).forEach(element => {
+    const components = [];
+    const modals = document.querySelectorAll(`.${Modal.identifier()}`);
+
+    if (modals) {
+      Array.from(modals).forEach(element => {
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
 
@@ -2134,11 +2149,11 @@
 
 
         event.target.blur();
-        component.dialog.show();
+        component.modal.show();
       }
     });
     return Confirm;
-  })();
+  })(window.$ ? window.$ : null);
 
   /**
    * --------------------------------------------------------------------------
@@ -2266,7 +2281,7 @@
    * --------------------------------------------------------------------------
    */
 
-  const Loader$1 = (() => {
+  const Loader$1 = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
@@ -2288,9 +2303,9 @@
      * ------------------------------------------------------------------------
      */
 
-    class Loader$$1 extends Dialog {
+    class Loader$$1 extends Modal {
       constructor(options = {}) {
-        const template = '' + '<div class="dialog" tabindex="-1" role="dialog">' + '<div class="dialog-inner" role="document">' + '<div class="dialog-content">' + '<div class="dialog-header">' + '<h5 class="dialog-title"></h5>' + '</div>' + '<div class="dialog-body">' + '<p></p>' + '<div class="mx-auto text-center">' + '<div class="loader mx-auto d-block">' + '<div class="loader-spinner"></div>' + '</div>' + '</div>' + '</div>' + '<div class="dialog-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
+        const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '<div class="mx-auto text-center">' + '<div class="loader mx-auto d-block">' + '<div class="loader-spinner"></div>' + '</div>' + '</div>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
         if (!Array.isArray(options.buttons)) {
           options.buttons = options.cancelable ? DEFAULT_PROPERTIES.buttons : [];
@@ -2325,16 +2340,23 @@
     }
     /**
      * ------------------------------------------------------------------------
-     * DOM Api implementation
+     * jQuery
      * ------------------------------------------------------------------------
      */
 
 
-    const components = [];
-    const dialogs = document.querySelectorAll(`.${Dialog.identifier()}`);
+    createJqueryPlugin($, NAME, Loader$$1);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
 
-    if (dialogs) {
-      Array.from(dialogs).forEach(element => {
+    const components = [];
+    const modals = document.querySelectorAll(`.${Modal.identifier()}`);
+
+    if (modals) {
+      Array.from(modals).forEach(element => {
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
 
@@ -2359,11 +2381,11 @@
 
 
         event.target.blur();
-        component.dialog.show();
+        component.modal.show();
       }
     });
     return Loader$$1;
-  })();
+  })(window.$ ? window.$ : null);
 
   /**
   * --------------------------------------------------------------------------
@@ -2563,7 +2585,7 @@
       element: null,
       toggle: false
     };
-    const DATA_ATTRS_PROPERTIES = ['toggle'];
+    const DATA_ATTRS_PROPERTIES = [];
     /**
      * ------------------------------------------------------------------------
      * Class Definition
@@ -2602,8 +2624,10 @@
         }
 
         this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
 
         const onCollapsed = () => {
+          this.triggerEvent(Event.SHOWN);
           this.options.element.classList.add('show');
           this.options.element.classList.remove('collapsing');
           this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
@@ -2634,8 +2658,10 @@
         }
 
         this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
 
         const onCollapsed = () => {
+          this.triggerEvent(Event.HIDDEN);
           this.options.element.classList.remove('collapsing');
           this.options.element.style.height = 'auto';
           this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
@@ -2665,10 +2691,17 @@
     }
     /**
      * ------------------------------------------------------------------------
-     * DOM Api implementation
+     * jQuery
      * ------------------------------------------------------------------------
      */
 
+
+    createJqueryPlugin($, NAME, Collapse);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
 
     const components = [];
     const collapses = document.querySelectorAll(`.${NAME}`);
@@ -2682,7 +2715,7 @@
       });
     }
 
-    document.addEventListener('click', event => {
+    document.addEventListener(Event.CLICK, event => {
       const target = findTargetByAttr(event.target, 'data-toggle');
 
       if (!target) {
@@ -3744,7 +3777,7 @@
    * --------------------------------------------------------------------------
    */
 
-  const DropdownSearch = (() => {
+  const DropdownSearch = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
@@ -3837,10 +3870,17 @@
     }
     /**
      * ------------------------------------------------------------------------
-     * DOM Api implementation
+     * jQuery
      * ------------------------------------------------------------------------
      */
 
+
+    createJqueryPlugin($, NAME, DropdownSearch);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
 
     const components = [];
     const dropdowns = document.querySelectorAll(`.${NAME}`);
@@ -3884,7 +3924,7 @@
     }
 
     return DropdownSearch;
-  })();
+  })(window.$ ? window.$ : null);
 
   /**
    * --------------------------------------------------------------------------
@@ -3929,18 +3969,18 @@
   api.notification = Notification.DOMInterface;
   /**
    * ------------------------------------------------------------------------
-   * Dialog
+   * Modal
    * ------------------------------------------------------------------------
    */
   // generic
 
-  api.dialog = Dialog.DOMInterface; // prompt dialog
+  api.modal = Modal.DOMInterface; // prompt modal
 
-  api.prompt = Prompt.DOMInterface; // confirm dialog
+  api.prompt = Prompt.DOMInterface; // confirm modal
 
-  api.confirm = Confirm.DOMInterface; // loader dialog
+  api.confirm = Confirm.DOMInterface; // loader modal
 
-  api.dialogLoader = Loader$1.DOMInterface;
+  api.modalLoader = Loader$1.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Collapse

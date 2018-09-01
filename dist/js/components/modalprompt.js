@@ -1,62 +1,5 @@
 'use strict';
 
-function dispatchWinDocEvent(eventName, moduleName, detail = {}) {
-  const fullEventName = `${eventName}.ph.${moduleName}`;
-  window.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-  document.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-}
-function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
-  const fullEventName = `${eventName}.ph.${moduleName}`;
-  domElement.dispatchEvent(new CustomEvent(fullEventName, {
-    detail
-  }));
-}
-
-function generateId() {
-  return Math.random().toString(36).substr(2, 10);
-}
-function findTargetByClass(target, parentClass) {
-  for (; target && target !== document; target = target.parentNode) {
-    if (target.classList.contains(parentClass)) {
-      return target;
-    }
-  }
-
-  return null;
-}
-function findTargetByAttr(target, attr) {
-  for (; target && target !== document; target = target.parentNode) {
-    if (target.getAttribute(attr) !== null) {
-      return target;
-    }
-  }
-
-  return null;
-}
-function createJqueryPlugin($ = null, name, obj) {
-  if (!$) {
-    return;
-  }
-
-  const mainFn = function mainFn(options = {}) {
-    const opts = options;
-
-    if (this[0]) {
-      opts.element = this[0];
-    }
-
-    return obj.DOMInterface(opts);
-  };
-
-  $.fn[name] = mainFn;
-  $.fn[name].Constructor = obj;
-  $.fn[name].noConflict = mainFn;
-}
-
 // @todo keep ?
 if (typeof window !== 'undefined') {
   window.addEventListener('error', () => {
@@ -152,6 +95,45 @@ var Event = {
   // dropdown
   ITEM_SELECTED: 'itemSelected'
 };
+
+function dispatchWinDocEvent(eventName, moduleName, detail = {}) {
+  const fullEventName = `${eventName}.ph.${moduleName}`;
+  window.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+  document.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+}
+function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
+  const fullEventName = `${eventName}.ph.${moduleName}`;
+  domElement.dispatchEvent(new CustomEvent(fullEventName, {
+    detail
+  }));
+}
+
+function generateId() {
+  return Math.random().toString(36).substr(2, 10);
+}
+function createJqueryPlugin($ = null, name, obj) {
+  if (!$) {
+    return;
+  }
+
+  const mainFn = function mainFn(options = {}) {
+    const opts = options;
+
+    if (this[0]) {
+      opts.element = this[0];
+    }
+
+    return obj.DOMInterface(opts);
+  };
+
+  $.fn[name] = mainFn;
+  $.fn[name].Constructor = obj;
+  $.fn[name].noConflict = mainFn;
+}
 
 const getAttribute = (first, second) => {
   if (first === '') {
@@ -440,111 +422,257 @@ class Component {
  * --------------------------------------------------------------------------
  */
 
-const Collapse = ($ => {
+const Modal = ($ => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
-  const NAME = 'collapse';
+  const NAME = 'modal';
   const VERSION = '2.0.0';
+  const BACKDROP_SELECTOR = 'modal-backdrop';
   const DEFAULT_PROPERTIES = {
     element: null,
-    toggle: false
+    title: null,
+    message: null,
+    cancelable: true,
+    type: null,
+    cancelableKeyCodes: [27, // Escape
+    13],
+    buttons: [{
+      event: 'confirm',
+      text: 'Ok',
+      dismiss: true,
+      class: 'btn btn-primary'
+    }]
   };
-  const DATA_ATTRS_PROPERTIES = [];
+  const DATA_ATTRS_PROPERTIES = ['cancelable'];
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Collapse extends Component {
-    constructor(options = {}) {
-      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
-      this.onTransition = false; // toggle directly
+  class Modal extends Component {
+    constructor(options = {}, template = null) {
+      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true);
+      this.template = template || '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-      if (this.options.toggle) {
-        this.show();
+      if (this.dynamicElement) {
+        this.build();
       }
     }
 
-    getHeight() {
-      return this.options.element.getBoundingClientRect(this.options.element).height;
-    }
+    build() {
+      const builder = document.createElement('div');
+      builder.innerHTML = this.template;
+      this.options.element = builder.firstChild; // title
 
-    toggle() {
-      if (this.options.element.classList.contains('show')) {
-        return this.hide();
+      if (this.options.title !== null) {
+        this.options.element.querySelector('.modal-title').innerHTML = this.options.title;
+      } // message
+
+
+      if (this.options.message !== null) {
+        this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message;
+      } else {
+        // remove paragraph node
+        this.removeTextBody();
+      } // buttons
+
+
+      if (this.options.buttons !== null && Array.isArray(this.options.buttons)) {
+        if (this.options.buttons.length > 0) {
+          this.options.buttons.forEach(button => {
+            this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button));
+          });
+        } else {
+          this.removeFooter();
+        }
+      } else {
+        this.removeFooter();
       }
 
-      return this.show();
+      document.body.appendChild(this.options.element);
+      this.setAttributes();
+    }
+
+    buildButton(buttonInfo = {}) {
+      const button = document.createElement('button');
+      button.setAttribute('type', 'button');
+      button.setAttribute('class', buttonInfo.class || 'btn');
+      button.setAttribute('data-event', buttonInfo.event);
+      button.innerHTML = buttonInfo.text;
+
+      if (buttonInfo.dismiss) {
+        button.setAttribute('data-dismiss', NAME);
+      }
+
+      return button;
+    }
+
+    buildBackdrop() {
+      const backdrop = document.createElement('div');
+      backdrop.setAttribute('data-id', this.id);
+      backdrop.classList.add(BACKDROP_SELECTOR);
+      document.body.appendChild(backdrop);
+    }
+
+    getBackdrop() {
+      return document.querySelector(`.${BACKDROP_SELECTOR}[data-id="${this.id}"]`);
+    }
+
+    removeTextBody() {
+      this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild);
+    }
+
+    removeFooter() {
+      const footer = this.options.element.querySelector('.modal-footer');
+      this.options.element.querySelector('.modal-content').removeChild(footer);
+    }
+
+    center() {
+      const computedStyle = window.getComputedStyle(this.options.element);
+      const height = computedStyle.height.slice(0, computedStyle.height.length - 2);
+      const top = window.innerHeight / 2 - height / 2;
+      this.options.element.style.top = `${top}px`;
     }
 
     show() {
-      if (this.onTransition) {
-        return false;
+      if (this.options.element === null) {
+        // build and insert a new DOM element
+        this.build();
       }
 
       if (this.options.element.classList.contains('show')) {
         return false;
-      }
+      } // add a timeout so that the CSS animation works
 
-      this.onTransition = true;
-      this.triggerEvent(Event.SHOW);
 
-      const onCollapsed = () => {
-        this.triggerEvent(Event.SHOWN);
-        this.options.element.classList.add('show');
-        this.options.element.classList.remove('collapsing');
-        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-        this.options.element.setAttribute('aria-expanded', true);
-        this.onTransition = false;
-      };
-
-      if (!this.options.element.classList.contains('collapsing')) {
-        this.options.element.classList.add('collapsing');
-      }
-
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-      const height = this.getHeight();
-      this.options.element.style.height = '0px';
       setTimeout(() => {
-        this.options.element.style.height = `${height}px`;
-      }, 20);
+        this.triggerEvent(Event.SHOW);
+        this.buildBackdrop(); // attach event
+
+        this.attachEvents();
+
+        const onShown = () => {
+          this.triggerEvent(Event.SHOWN);
+          this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+        };
+
+        this.options.element.addEventListener(Event.TRANSITION_END, onShown);
+        this.options.element.classList.add('show');
+        this.center();
+      }, 10);
       return true;
     }
 
-    hide() {
-      if (this.onTransition) {
-        return false;
-      }
+    onElementEvent(event) {
+      // keyboard event (escape and enter)
+      if (event.type === 'keyup') {
+        if (this.options.cancelableKeyCodes.find(k => k === event.keyCode)) {
+          this.hide();
+        }
 
+        return;
+      } // backdrop event
+
+
+      if (event.type === Event.START) {
+        // hide the modal
+        this.hide();
+        return;
+      } // button event
+
+
+      if (event.type === 'click') {
+        const eventName = event.target.getAttribute('data-event');
+
+        if (eventName) {
+          this.triggerEvent(eventName);
+        }
+
+        if (event.target.getAttribute('data-dismiss') === NAME) {
+          this.hide();
+        }
+      }
+    }
+
+    hide() {
       if (!this.options.element.classList.contains('show')) {
         return false;
       }
 
-      this.onTransition = true;
       this.triggerEvent(Event.HIDE);
+      this.detachEvents();
+      this.options.element.classList.add('hide');
+      this.options.element.classList.remove('show');
+      const backdrop = this.getBackdrop();
 
-      const onCollapsed = () => {
+      const onHidden = () => {
+        document.body.removeChild(backdrop);
+        this.options.element.classList.remove('hide');
         this.triggerEvent(Event.HIDDEN);
-        this.options.element.classList.remove('collapsing');
-        this.options.element.style.height = 'auto';
-        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-        this.options.element.setAttribute('aria-expanded', false);
-        this.onTransition = false;
+        backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+        if (this.dynamicElement) {
+          document.body.removeChild(this.options.element);
+          this.options.element = null;
+        }
       };
 
-      this.options.element.style.height = '0px';
+      backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+      backdrop.classList.add('fadeout');
+      return true;
+    }
 
-      if (!this.options.element.classList.contains('collapsing')) {
-        this.options.element.classList.add('collapsing');
+    attachEvents() {
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
+
+      if (buttons) {
+        Array.from(buttons).forEach(button => this.registerElement({
+          target: button,
+          event: 'click'
+        }));
+      } // add events if the modal is cancelable
+      // which means the user can hide the modal
+      // by pressing the ESC key or click on the backdrop
+
+
+      if (this.options.cancelable) {
+        const backdrop = this.getBackdrop();
+        this.registerElement({
+          target: backdrop,
+          event: Event.START
+        });
+        this.registerElement({
+          target: document,
+          event: 'keyup'
+        });
+      }
+    }
+
+    detachEvents() {
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
+
+      if (buttons) {
+        Array.from(buttons).forEach(button => this.unregisterElement({
+          target: button,
+          event: 'click'
+        }));
       }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-      this.options.element.classList.remove('show');
-      return true;
+      if (this.options.cancelable) {
+        const backdrop = this.getBackdrop();
+        this.unregisterElement({
+          target: backdrop,
+          event: Event.START
+        });
+        this.unregisterElement({
+          target: document,
+          event: 'keyup'
+        });
+      }
     }
 
     static identifier() {
@@ -552,7 +680,7 @@ const Collapse = ($ => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Collapse, options);
+      return super.DOMInterface(Modal, options);
     }
 
   }
@@ -563,7 +691,7 @@ const Collapse = ($ => {
    */
 
 
-  createJqueryPlugin($, NAME, Collapse);
+  createJqueryPlugin($, NAME, Modal);
   /**
    * ------------------------------------------------------------------------
    * DOM Api implementation
@@ -571,39 +699,37 @@ const Collapse = ($ => {
    */
 
   const components = [];
-  const collapses = document.querySelectorAll(`.${NAME}`);
+  const modals = document.querySelectorAll(`.${NAME}`);
 
-  if (collapses) {
-    collapses.forEach(element => {
-      // const config = {}
+  if (modals) {
+    Array.from(modals).forEach(element => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
       config.element = element;
-      components.push(Collapse.DOMInterface(config));
+      components.push({
+        element,
+        modal: new Modal(config)
+      });
     });
   }
 
-  document.addEventListener(Event.CLICK, event => {
-    const target = findTargetByAttr(event.target, 'data-toggle');
-
-    if (!target) {
-      return;
-    }
-
-    const dataToggleAttr = target.getAttribute('data-toggle');
+  document.addEventListener('click', event => {
+    const dataToggleAttr = event.target.getAttribute('data-toggle');
 
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      let id = target.getAttribute('data-target') || target.getAttribute('href');
-      id = id.replace('#', '');
-      const component = components.find(c => c.getElement().getAttribute('id') === id);
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
+      const component = components.find(c => c.element === element);
 
       if (!component) {
         return;
-      }
+      } // remove the focus state of the trigger
 
-      component.toggle();
+
+      event.target.blur();
+      component.modal.show();
     }
   });
-  return Collapse;
+  return Modal;
 })(window.$ ? window.$ : null);
 
 /**
@@ -612,107 +738,91 @@ const Collapse = ($ => {
  * --------------------------------------------------------------------------
  */
 
-const Accordion = ($ => {
+const Prompt = ($ => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
-  const NAME = 'accordion';
-  const VERSION = '2.0.0';
+  const NAME = 'prompt';
   const DEFAULT_PROPERTIES = {
-    element: null
+    element: null,
+    title: null,
+    message: null,
+    cancelable: true,
+    type: NAME,
+    buttons: [{
+      event: 'cancel',
+      text: 'Cancel',
+      dismiss: true,
+      class: 'btn btn-secondary'
+    }, {
+      event: 'confirm',
+      text: 'Ok',
+      dismiss: true,
+      class: 'btn btn-primary'
+    }]
   };
-  const DATA_ATTRS_PROPERTIES = [];
+  const DATA_ATTRS_PROPERTIES = ['cancelable'];
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Accordion extends Component {
+  class Prompt extends Modal {
     constructor(options = {}) {
-      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
-      this.collapses = [];
-      const toggles = this.options.element.querySelectorAll(`[data-toggle="${NAME}"]`);
-      Array.from(toggles).forEach(toggle => {
-        const collapseId = toggle.getAttribute('href');
-        const collapse = document.querySelector(collapseId);
+      const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '<input class="form-control" type="text" value="">' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-        if (collapse) {
-          this.addCollapse(collapse);
-        }
+      if (!Array.isArray(options.buttons)) {
+        options.buttons = DEFAULT_PROPERTIES.buttons;
+      }
+
+      super(options, template);
+    }
+
+    show() {
+      super.show();
+      this.attachInputEvent();
+    }
+
+    hide() {
+      super.hide();
+      this.detachInputEvent();
+    }
+
+    getInput() {
+      return this.options.element.querySelector('.form-control');
+    }
+
+    attachInputEvent() {
+      this.registerElement({
+        target: this.getInput(),
+        event: 'keyup'
+      });
+    }
+
+    detachInputEvent() {
+      this.unregisterElement({
+        target: this.getInput(),
+        event: 'keyup'
       });
     }
 
     onElementEvent(event) {
-      const id = event.target.getAttribute('href');
-      const element = document.querySelector(id);
-      this.setCollapses(element);
-    }
-
-    addCollapse(element) {
-      const collapse = new Collapse({
-        element
-      });
-      this.collapses.push(collapse);
-      return collapse;
-    }
-
-    getCollapse(element) {
-      let collapse = this.collapses.find(c => c.options.element.getAttribute('id') === element.getAttribute('id'));
-
-      if (!collapse) {
-        // create a new collapse
-        collapse = this.addCollapse();
+      if (event.target === this.getInput()) {
+        return;
       }
 
-      return collapse;
+      super.onElementEvent(event);
     }
 
-    getCollapses() {
-      return this.collapses;
+    setInputValue(value = '') {
+      this.getInput().value = value;
     }
 
-    setCollapses(showCollapse) {
-      const collapse = this.getCollapse(showCollapse);
-      this.collapses.forEach(c => {
-        if (c.options.element.getAttribute('id') !== showCollapse.getAttribute('id')) {
-          c.hide();
-        } else {
-          collapse.toggle();
-        }
-      });
-    }
-
-    show(collapseEl) {
-      let collapse = collapseEl;
-
-      if (typeof collapseEl === 'string') {
-        collapse = document.querySelector(collapseEl);
-      }
-
-      if (!collapse) {
-        throw new Error(`${NAME}. The collapsible ${collapseEl} is an invalid HTMLElement.`);
-      }
-
-      this.setCollapses(collapse);
-      return true;
-    }
-
-    hide(collapseEl) {
-      let collapse = collapseEl;
-
-      if (typeof collapseEl === 'string') {
-        collapse = document.querySelector(collapseEl);
-      }
-
-      if (!collapse) {
-        throw new Error(`${NAME}. The collapsible ${collapseEl} is an invalid HTMLElement.`);
-      }
-
-      const collapseObj = this.getCollapse(collapse);
-      return collapseObj.hide();
+    getInputValue() {
+      return this.getInput().value;
     }
 
     static identifier() {
@@ -720,7 +830,7 @@ const Accordion = ($ => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Accordion, options);
+      return new Prompt(options);
     }
 
   }
@@ -731,7 +841,7 @@ const Accordion = ($ => {
    */
 
 
-  createJqueryPlugin($, NAME, Accordion);
+  createJqueryPlugin($, NAME, Prompt);
   /**
    * ------------------------------------------------------------------------
    * DOM Api implementation
@@ -739,13 +849,17 @@ const Accordion = ($ => {
    */
 
   const components = [];
-  const accordions = document.querySelectorAll(`.${NAME}`);
+  const modals = document.querySelectorAll(`.${Modal.identifier()}`);
 
-  if (accordions) {
-    Array.from(accordions).forEach(element => {
+  if (modals) {
+    Array.from(modals).forEach(element => {
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
       config.element = element;
-      components.push(Accordion.DOMInterface(config));
+
+      if (config.type === NAME) {
+        // prompt
+        components.push(new Prompt(config));
+      }
     });
   }
 
@@ -753,33 +867,21 @@ const Accordion = ($ => {
     const dataToggleAttr = event.target.getAttribute('data-toggle');
 
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      const collapseId = event.target.getAttribute('data-target') || event.target.getAttribute('href');
-      const collapseEl = document.querySelector(collapseId);
-      const accordion = findTargetByClass(event.target, 'accordion');
-
-      if (accordion === null) {
-        return;
-      }
-
-      const accordionId = accordion.getAttribute('id');
-      const component = components.find(c => c.getElement().getAttribute('id') === accordionId);
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
+      const component = components.find(c => c.element === element);
 
       if (!component) {
         return;
-      } // if the collapse has been added programmatically, we add it
+      } // remove the focus state of the trigger
 
 
-      const targetCollapse = component.getCollapses().find(c => c.getElement() === collapseEl);
-
-      if (!targetCollapse) {
-        component.addCollapse(collapseEl);
-      }
-
-      component.show(collapseId);
+      event.target.blur();
+      component.modal.show();
     }
   });
-  return Accordion;
+  return Prompt;
 })(window.$ ? window.$ : null);
 
-module.exports = Accordion;
-//# sourceMappingURL=accordion.js.map
+module.exports = Prompt;
+//# sourceMappingURL=modalprompt.js.map

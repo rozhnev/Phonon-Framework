@@ -395,7 +395,7 @@ class Component {
   }
   /**
    * the preventClosable method manages concurrency between active components.
-   * For example, if there is a shown off-canvas and dialog, the last
+   * For example, if there is a shown off-canvas and modal, the last
    * shown component gains the processing priority
    */
 
