@@ -148,6 +148,24 @@
         }
       }
       /**
+       * Add a transition handler
+       *
+       * @param {Function} fn
+       */
+
+
+      setPreventTransition(fn) {
+        if (typeof fn !== 'function') {
+          throw new Error(`${NAME}: invalid function to handle page transitions`);
+        }
+
+        this.preventTransitionFn = fn;
+      }
+
+      getPreventTransition() {
+        return this.preventTransitionFn;
+      }
+      /**
        * Trigger scopes
        * @param {string} eventName
        * @param {{}} [eventParams={}]
@@ -261,6 +279,8 @@
     MOVE: availableEvents[1],
     END: availableEvents[2],
     CANCEL: typeof availableEvents[3] === 'undefined' ? null : availableEvents[3],
+    // click
+    CLICK: 'click',
     // transitions
     TRANSITION_START: transitionStart,
     TRANSITION_END: transitionEnd,
@@ -363,11 +383,25 @@
       } // public
 
 
-      async showPage(pageName, addToHistory = true, back = false) {
+      async showPage(pageName, back = false, params = {}, from = Event.CLICK) {
         const oldPage = this._('.current');
 
+        let oldPageName = null;
+
         if (oldPage) {
-          const oldPageName = oldPage.getAttribute('data-page');
+          oldPageName = oldPage.getAttribute('data-page');
+          const oldPageModel = this.getPageModel(oldPageName);
+          const preventFn = oldPageModel.getPreventTransition();
+
+          if (typeof preventFn === 'function') {
+            if (await preventFn(oldPageName, pageName, params)) {
+              if (from === Event.HASH) {
+                window.history.back();
+              }
+
+              return;
+            }
+          }
 
           if (this.isPageOf(pageName, oldPageName)) {
             return;
@@ -376,8 +410,8 @@
           oldPage.classList.remove('current'); // history
 
           window.history.replaceState({
-            page: oldPageName
-          }, oldPageName, window.location.href);
+            page: pageName
+          }, oldPageName);
           this.triggerPageEvent(oldPageName, Event.HIDE);
         }
 
@@ -395,8 +429,7 @@
         }
 
         if (oldPage) {
-          const oldPageName = oldPage.getAttribute('data-page'); // use of prototype-oriented language
-
+          // use of prototype-oriented language
           oldPage.back = back;
           oldPage.previousPageName = oldPageName;
 
@@ -456,6 +489,21 @@
         this.cachePageSelector = null;
       }
 
+      preventTransition(preventFn) {
+        if (this.cachePageSelector === '*') {
+          this.pages.forEach(page => {
+            page.setPreventTransition(preventFn);
+          });
+          return;
+        }
+
+        const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
+        pageModels.forEach(page => {
+          page.setPreventTransition(preventFn);
+        });
+        this.cachePageSelector = null;
+      }
+
       setTemplate(templatePath, renderFunction = null) {
         const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
         pageModels.forEach(page => {
@@ -492,7 +540,7 @@
           if (this.options.useHash) {
             this.setHash(pageName);
           } else {
-            this.showPage(pageName, true, pushPage);
+            this.showPage(pageName, pushPage);
           }
         }
       }
@@ -504,7 +552,7 @@
           return;
         }
 
-        this.showPage(pageName, true, true);
+        this.showPage(pageName, true);
       }
 
       onHashChange() {
@@ -519,7 +567,7 @@
         const navPage = this.getPageFromHash();
 
         if (navPage) {
-          this.showPage(navPage);
+          this.showPage(navPage, false, params, Event.HASH);
         }
       }
       /**
@@ -535,16 +583,11 @@
         }
 
         pages.forEach(page => {
-          let pageName = page.getAttribute('data-page');
           /*
            * the page name can be given with the attribute data-page
            * or with its node name
            */
-
-          if (!pageName) {
-            pageName = page.nodeName;
-          }
-
+          const pageName = page.getAttribute('data-page') || page.nodeName;
           this.addUniquePageModel(pageName);
         });
       }
@@ -594,7 +637,7 @@
       } // static
 
 
-      static _DOMInterface(options) {
+      static DOMInterface(options) {
         return new Pager(options);
       }
 
@@ -614,7 +657,7 @@
     * Constants
     * ------------------------------------------------------------------------
     */
-    const NAME = 'intl-binder';
+    const NAME = 'i18n-binder';
     const VERSION = '2.0.0';
     /**
      * ------------------------------------------------------------------------
@@ -705,7 +748,7 @@
 
 
       setNode(element) {
-        let attr = element.getAttribute('data-i18n');
+        let attr = element.getAttribute('data-t');
 
         if (!attr) {
           return;
@@ -718,19 +761,19 @@
         while (m = r.exec(attr)) {
           const key = m[1].trim();
           const value = m[2].trim().replace(',', '');
-          let intlValue = this.data[value];
+          let i18nValue = this.data[value];
 
           if (!this.data[value]) {
             console.log(`${NAME}. Warning, ${value} does not exist.`);
-            intlValue = value;
+            i18nValue = value;
           }
 
           const methodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
 
           if (this[methodName]) {
-            this[methodName](element, intlValue);
+            this[methodName](element, i18nValue);
           } else {
-            this.setAttribute(element, key, intlValue);
+            this.setAttribute(element, key, i18nValue);
           }
         }
       }
@@ -755,13 +798,13 @@
    * --------------------------------------------------------------------------
    */
 
-  const Intl = (() => {
+  const I18n = (() => {
     /**
      * ------------------------------------------------------------------------
      * Constants
      * ------------------------------------------------------------------------
      */
-    const NAME = 'Intl';
+    const NAME = 'i18n';
     const VERSION = '2.0.0';
     const DEFAULT_PROPERTIES = {
       fallbackLocale: 'en',
@@ -776,9 +819,9 @@
 
     };
 
-    class Intl {
+    class I18n {
       /**
-       * Creates an instance of Intl.
+       * Creates an instance of I18n.
        * @param {fallbackLocale: string, locale: string, bind: boolean, data: {[lang: string]: {[key: string]: string}}}
        */
       constructor(options = {}) {
@@ -892,7 +935,7 @@
 
       updateHtml(element = null) {
         if (!element) {
-          element = document.querySelectorAll('[data-i18n]');
+          element = document.querySelectorAll('[data-t]');
         }
 
         if (typeof element === 'string') {
@@ -903,13 +946,13 @@
       } // static
 
 
-      static _DOMInterface(options) {
-        return new Intl(options);
+      static DOMInterface(options) {
+        return new I18n(options);
       }
 
     }
 
-    return Intl;
+    return I18n;
   })();
 
   function generateId() {
@@ -945,7 +988,7 @@
         opts.element = this[0];
       }
 
-      return obj._DOMInterface(opts);
+      return obj.DOMInterface(opts);
     };
 
     $.fn[name] = mainFn;
@@ -1061,9 +1104,7 @@
     constructor(name, version, defaultOptions = {}, options = {}, optionAttrs = [], supportDynamicElement = false, addToStack = false) {
       this.name = name;
       this.version = version;
-      this.options = options; // @todo keep?
-      // this.options = Object.assign(defaultOptions, options)
-
+      this.options = options;
       Object.keys(defaultOptions).forEach(prop => {
         if (typeof this.options[prop] === 'undefined') {
           this.options[prop] = defaultOptions[prop];
@@ -1089,13 +1130,13 @@
       if (!this.dynamicElement) {
         /**
          * if the element exists, we read the data attributes config
-         * then we overwrite existing config keys in JavaScript, so that
+         * then we overwrite existing config keys defined in JavaScript, so that
          * we keep the following order
          * [1] default JavaScript configuration of the component
-         * [2] Data attributes configuration if the element exists in the DOM
+         * [2] Data attributes configuration
          * [3] JavaScript configuration
          */
-        this.options = Object.assign(this.options, this.assignJsConfig(this.getAttributes(), options)); // then, set the new data attributes to the element
+        this.options = Object.assign(this.options, this.assignJsConfig(this.getAttributes(), this.options)); // then, set the new data attributes to the element
 
         this.setAttributes();
       }
@@ -1103,13 +1144,14 @@
       this.elementListener = event => this.onBeforeElementEvent(event);
     }
 
-    assignJsConfig(attrConfig, options) {
+    assignJsConfig(attrConfig, jsConfig) {
+      const config = attrConfig;
       this.optionAttrs.forEach(key => {
-        if (options[key]) {
-          attrConfig[key] = options[key];
+        if (typeof jsConfig[key] !== 'undefined') {
+          config[key] = jsConfig[key];
         }
       });
-      return attrConfig;
+      return config;
     }
 
     getVersion() {
@@ -1229,7 +1271,7 @@
       return this.name;
     }
 
-    static _DOMInterface(ComponentClass, options) {
+    static DOMInterface(ComponentClass, options) {
       return new ComponentClass(options);
     }
 
@@ -1357,14 +1399,186 @@
         }
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Network, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Network, options);
       }
 
     }
 
     return Network;
   })();
+
+  /**
+   * --------------------------------------------------------------------------
+   * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  const Alert = ($ => {
+    /**
+     * ------------------------------------------------------------------------
+     * Constants
+     * ------------------------------------------------------------------------
+     */
+    const NAME = 'alert';
+    const VERSION = '2.0.0';
+    const DEFAULT_PROPERTIES = {
+      element: null,
+      fade: true
+    };
+    const DATA_ATTRS_PROPERTIES = ['fade'];
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
+
+    class Alert extends Component {
+      constructor(options = {}) {
+        super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
+        this.onTransition = false;
+      }
+
+      show() {
+        if (this.onTransition) {
+          return false;
+        }
+
+        if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+          return false;
+        }
+
+        this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
+
+        const onShow = () => {
+          this.triggerEvent(Event.SHOWN);
+
+          if (this.options.element.classList.contains('fade')) {
+            this.options.element.classList.remove('fade');
+          }
+
+          this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+          this.onTransition = false;
+        };
+
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
+
+        this.options.element.classList.add('show');
+        this.options.element.addEventListener(Event.TRANSITION_END, onShow);
+
+        if (this.options.element.classList.contains('hide')) {
+          this.options.element.classList.remove('hide');
+        }
+
+        if (!this.options.fade) {
+          onShow();
+        }
+      }
+
+      getOpacity() {
+        const _window$getComputedSt = window.getComputedStyle(this.options.element),
+              opacity = _window$getComputedSt.opacity;
+
+        return parseFloat(opacity);
+      }
+
+      hide() {
+        if (this.onTransition) {
+          return false;
+        }
+
+        if (this.getOpacity() === 0) {
+          return false;
+        }
+
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
+
+        const onHide = () => {
+          this.triggerEvent(Event.HIDDEN);
+          this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+          this.onTransition = false;
+        };
+
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
+
+        this.options.element.addEventListener(Event.TRANSITION_END, onHide);
+
+        if (!this.options.element.classList.contains('hide')) {
+          this.options.element.classList.add('hide');
+        }
+
+        if (this.options.element.classList.contains('show')) {
+          this.options.element.classList.remove('show');
+        }
+
+        if (!this.options.fade) {
+          onHide();
+        }
+      }
+
+      static identifier() {
+        return NAME;
+      }
+
+      static DOMInterface(options) {
+        return super.DOMInterface(Alert, options);
+      }
+
+    }
+    /**
+     * ------------------------------------------------------------------------
+     * jQuery
+     * ------------------------------------------------------------------------
+     */
+
+
+    createJqueryPlugin($, NAME, Alert);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
+
+    const components = [];
+    const alerts = document.querySelectorAll(`.${NAME}`);
+
+    if (alerts) {
+      alerts.forEach(element => {
+        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+        config.element = element;
+        components.push(Alert.DOMInterface(config));
+      });
+    }
+
+    document.addEventListener('click', event => {
+      const target = findTargetByAttr(event.target, 'data-dismiss');
+
+      if (!target) {
+        return;
+      }
+
+      const dataToggleAttr = target.getAttribute('data-dismiss');
+
+      if (dataToggleAttr && dataToggleAttr === NAME) {
+        const alert = findTargetByClass(event.target, NAME);
+        const id = alert.getAttribute('id');
+        const component = components.find(c => c.getElement().getAttribute('id') === id);
+
+        if (!component) {
+          return;
+        }
+
+        component.hide();
+      }
+    });
+    return Alert;
+  })(window.$ ? window.$ : null);
 
   /**
    * --------------------------------------------------------------------------
@@ -1629,8 +1843,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Dialog, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Dialog, options);
       }
 
     }
@@ -1779,7 +1993,7 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
+      static DOMInterface(options) {
         return new Prompt(options);
       }
 
@@ -1879,7 +2093,7 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
+      static DOMInterface(options) {
         return new Confirm(options);
       }
 
@@ -2030,8 +2244,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Loader, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Loader, options);
       }
 
     }
@@ -2104,7 +2318,7 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
+      static DOMInterface(options) {
         return new Loader$$1(options);
       }
 
@@ -2315,8 +2529,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Notification, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Notification, options);
       }
 
     }
@@ -2444,8 +2658,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Collapse, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Collapse, options);
       }
 
     }
@@ -2464,7 +2678,7 @@
         // const config = {}
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
-        components.push(Collapse._DOMInterface(config));
+        components.push(Collapse.DOMInterface(config));
       });
     }
 
@@ -2605,8 +2819,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Accordion, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Accordion, options);
       }
 
     }
@@ -2631,7 +2845,7 @@
       Array.from(accordions).forEach(element => {
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
-        components.push(Accordion._DOMInterface(config));
+        components.push(Accordion.DOMInterface(config));
       });
     }
 
@@ -2766,8 +2980,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Tab, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Tab, options);
       }
 
     }
@@ -2793,7 +3007,7 @@
         // const config = {}
         const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
         config.element = element;
-        components.push(Tab._DOMInterface(config));
+        components.push(Tab.DOMInterface(config));
       });
     }
 
@@ -2930,8 +3144,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Progress, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Progress, options);
       }
 
     }
@@ -3219,8 +3433,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(OffCanvas, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(OffCanvas, options);
       }
 
     }
@@ -3472,8 +3686,8 @@
         return NAME;
       }
 
-      static _DOMInterface(options) {
-        return super._DOMInterface(Dropdown, options);
+      static DOMInterface(options) {
+        return super.DOMInterface(Dropdown, options);
       }
 
     }
@@ -3616,7 +3830,7 @@
         }
       }
 
-      static _DOMInterface(options) {
+      static DOMInterface(options) {
         return new DropdownSearch(options);
       }
 
@@ -3686,33 +3900,33 @@
 
   api.pager = options => {
     if (typeof api._pager === 'undefined') {
-      api._pager = Pager._DOMInterface(options);
+      api._pager = Pager.DOMInterface(options);
     }
 
     return api._pager;
   };
   /**
    * ------------------------------------------------------------------------
-   * Intl
+   * i18n
    * ------------------------------------------------------------------------
    */
 
 
-  api.intl = Intl._DOMInterface;
+  api.i18n = I18n.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Network
    * ------------------------------------------------------------------------
    */
 
-  api.network = Network._DOMInterface;
+  api.network = Network.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Notification
    * ------------------------------------------------------------------------
    */
 
-  api.notification = Notification._DOMInterface;
+  api.notification = Notification.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Dialog
@@ -3720,55 +3934,62 @@
    */
   // generic
 
-  api.dialog = Dialog._DOMInterface; // prompt dialog
+  api.dialog = Dialog.DOMInterface; // prompt dialog
 
-  api.prompt = Prompt._DOMInterface; // confirm dialog
+  api.prompt = Prompt.DOMInterface; // confirm dialog
 
-  api.confirm = Confirm._DOMInterface; // loader dialog
+  api.confirm = Confirm.DOMInterface; // loader dialog
 
-  api.dialogLoader = Loader$1._DOMInterface;
+  api.dialogLoader = Loader$1.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Collapse
    * ------------------------------------------------------------------------
    */
 
-  api.collapse = Collapse._DOMInterface;
+  api.collapse = Collapse.DOMInterface;
+  /**
+   * ------------------------------------------------------------------------
+   * Collapse
+   * ------------------------------------------------------------------------
+   */
+
+  api.alert = Alert.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Accordion
    * ------------------------------------------------------------------------
    */
 
-  api.accordion = Accordion._DOMInterface;
+  api.accordion = Accordion.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Tab
    * ------------------------------------------------------------------------
    */
 
-  api.tab = Tab._DOMInterface;
+  api.tab = Tab.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Progress
    * ------------------------------------------------------------------------
    */
 
-  api.progress = Progress._DOMInterface;
+  api.progress = Progress.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Loader
    * ------------------------------------------------------------------------
    */
 
-  api.loader = Loader._DOMInterface;
+  api.loader = Loader.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Off canvas
    * ------------------------------------------------------------------------
    */
 
-  api.offCanvas = OffCanvas._DOMInterface;
+  api.offCanvas = OffCanvas.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Dropdown
@@ -3778,11 +3999,11 @@
   api.dropdown = options => {
     if (options.search) {
       // search dropdown
-      return DropdownSearch._DOMInterface(options);
+      return DropdownSearch.DOMInterface(options);
     } // generic dropdown
 
 
-    return Dropdown._DOMInterface(options);
+    return Dropdown.DOMInterface(options);
   }; // Make the API live
 
 

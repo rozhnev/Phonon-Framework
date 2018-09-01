@@ -113,6 +113,8 @@ var Event = {
   MOVE: availableEvents[1],
   END: availableEvents[2],
   CANCEL: typeof availableEvents[3] === 'undefined' ? null : availableEvents[3],
+  // click
+  CLICK: 'click',
   // transitions
   TRANSITION_START: transitionStart,
   TRANSITION_END: transitionEnd,
@@ -231,9 +233,7 @@ class Component {
   constructor(name, version, defaultOptions = {}, options = {}, optionAttrs = [], supportDynamicElement = false, addToStack = false) {
     this.name = name;
     this.version = version;
-    this.options = options; // @todo keep?
-    // this.options = Object.assign(defaultOptions, options)
-
+    this.options = options;
     Object.keys(defaultOptions).forEach(prop => {
       if (typeof this.options[prop] === 'undefined') {
         this.options[prop] = defaultOptions[prop];
@@ -259,13 +259,13 @@ class Component {
     if (!this.dynamicElement) {
       /**
        * if the element exists, we read the data attributes config
-       * then we overwrite existing config keys in JavaScript, so that
+       * then we overwrite existing config keys defined in JavaScript, so that
        * we keep the following order
        * [1] default JavaScript configuration of the component
-       * [2] Data attributes configuration if the element exists in the DOM
+       * [2] Data attributes configuration
        * [3] JavaScript configuration
        */
-      this.options = Object.assign(this.options, this.assignJsConfig(this.getAttributes(), options)); // then, set the new data attributes to the element
+      this.options = Object.assign(this.options, this.assignJsConfig(this.getAttributes(), this.options)); // then, set the new data attributes to the element
 
       this.setAttributes();
     }
@@ -273,13 +273,14 @@ class Component {
     this.elementListener = event => this.onBeforeElementEvent(event);
   }
 
-  assignJsConfig(attrConfig, options) {
+  assignJsConfig(attrConfig, jsConfig) {
+    const config = attrConfig;
     this.optionAttrs.forEach(key => {
-      if (options[key]) {
-        attrConfig[key] = options[key];
+      if (typeof jsConfig[key] !== 'undefined') {
+        config[key] = jsConfig[key];
       }
     });
-    return attrConfig;
+    return config;
   }
 
   getVersion() {
@@ -399,7 +400,7 @@ class Component {
     return this.name;
   }
 
-  static _DOMInterface(ComponentClass, options) {
+  static DOMInterface(ComponentClass, options) {
     return new ComponentClass(options);
   }
 
@@ -518,8 +519,8 @@ const Collapse = ($ => {
       return NAME;
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Collapse, options);
+    static DOMInterface(options) {
+      return super.DOMInterface(Collapse, options);
     }
 
   }
@@ -538,7 +539,7 @@ const Collapse = ($ => {
       // const config = {}
       const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
       config.element = element;
-      components.push(Collapse._DOMInterface(config));
+      components.push(Collapse.DOMInterface(config));
     });
   }
 
