@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../dist/css/phonon.css">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+      <a class="navbar-brand" href="#">
+        <img src="./icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Phonon
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../docs">Documentation</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="h-100">
+      <div class="container h-100">
+        <div class="row align-items-center" style="min-height: 100vh">
+          <div class="col-sm-8">
+            <h1 class="mb-5">Phonon</h1>
+            <h2><b>Responsive</b> <b>front-end</b> framework with a focus on simplicity and flexibility</h2>
+            <hr />
+            <h3>
+              Phonon is an open source HTML, CSS and JavaScript <b>agnostic</b> library that
+              allows to create a <b>website</b> or a <b>hybrid Web app</b>.
+            </h3>
+
+            <div class="d-block mt-5">
+              <a href="#" class="btn btn-lg btn-primary">Getting started</a>
+              <a href="#" class="btn btn-lg btn-outline-primary" data-toggle="modal" data-target="#downloadModal">Download</a>
+            </div>
+
+            <div class="d-block mt-5 text-center w-100">
+              <a href="#" class="btn btn-lg btn-primary">About</a>
+            </div>
+
+          </div>
+          <div class="col-sm-4">
+            <img src="./icon.svg" width="100%" alt="">
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container" style="height: 100vh">
+
+      <div class="story">
+        <h1>About</h1>
+
+        <p>Originally, Phonon has been created for building
+          <strong>hybrid apps with Apache Cordova</strong> by using <strong>web technologies
+          such as HTML, CSS and JavaScript</strong>. Of course, there are many frameworks well known,
+          but Phonon gives an intuitive and amuzing way of building apps.
+          For example, the app's workflow can be defined with page events.
+          When the user access on the page-X for the first time,
+          the onCreate callback is called, when the page becomes visible,
+          the onReady callback is called, etc. You can also prevent the automatic close if an action is required.</p>
+
+        <p>Furthermore, this framework is also an <strong>UI framework</strong> proposing many features that are generic, which means they don't differ from mobile platforms. On the other hand, you can define your style according to the platform, because Phonon adds the OS class in the body tag.</p>
+      </div>
+
+      <div class="story">
+        <h3>Technologies behind Phonon</h3>
+
+        <a href="https://sass-lang.com" class="badge badge-primary">SCSS</a>
+        <a href="https://rollupjs.org/guide/en" class="badge badge-primary">rollup.js</a>
+        <a href="https://babeljs.io" class="badge badge-primary">Babel (v7)</a>
+        <a href="http://es6-features.org" class="badge badge-primary">ECMAScript 6</a>
+        <a href="http://getbootstrap.com" class="badge badge-primary">Bootstrap Core SCSS</a>
+      </div>
+
+      <div class="story">
+        <h2>User Interface Event Control</h2>
+
+        <p>Phonon takes care to act in a native way with active UI components. One practical example is if a dialog box is opened and the user clicks on the back button on Android, instead of going back to the previous page, the event controller will close the active dialog automatically.
+        </p>
+
+        <p>Furthermore, you can define page event callbacks in order to organize tasks at a specific moment. The Navigator module is the master of page events: onCreate, onReady, onTransitionEnd, onClose, onHidden, etc. OnCreate is called when the page is first created. This is where you should do all of your normal static set up (this callback is called once). onReady is called every time the page becomes visible to the user, onClose is called only if data-prevent-close is true, this permits to prevent the page close if we want to keep the user on the same page (for example to accept conditions before using the app).</p>
+      </div>
+
+      <div class="story">
+        <h2>Open source code (MIT License)</h2>
+
+        <p>
+          The MIT License is a permissive free software license. Phonon is completely open source. Build free or paid apps!
+        </p>
+
+        <p>As a 100% free open-source project, developer participation is encouraged, as much or little as possible.</p>
+
+        <p>Fork it, open issues and star the project!</p>
+
+        <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=star&count=false&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+        <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=fork&count=false&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+
+        <p>If this framework saved your day and you wish to support future developments you may consider sending some funds via PayPal.</p>
+
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick">
+          <input type="hidden" name="hosted_button_id" value="FR8F53JKB8P32">
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+          <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+      </main>
+    </div>
+
+
+    <div class="modal" id="downloadModal" tabindex="-1" role="modal">
+      <div class="modal-inner" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Download</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+              To start without reading text, several options are available:
+            </p>
+            <p>
+              <ul>
+                <li>Download the latest release and use dist files.</li>
+                <li>Clone the repo: git clone https://github.com/quark-dev/Phonon-Framework.git. Do not forget to run npm install.</li>
+                <li>Install with npm: npm install phonon.</li>
+                <li>Install with Bower: bower install phonon.</li>
+                <li>Use CDNJS.</li>
+              </ul>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group float-right" role="group" aria-label="Basic example">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../dist/js/phonon.js"></script>
+  </body>
+</html>
