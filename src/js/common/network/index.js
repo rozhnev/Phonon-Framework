@@ -62,7 +62,7 @@ const Network = (() => {
 
       const url = `/favicon.ico?_=${new Date().getTime()}`
 
-      this.triggerEvent(Event.NETWORK_RECONNECTING, { date: new Date() }, false)            
+      this.triggerEvent(Event.NETWORK_RECONNECTING, { date: new Date() }, false)
 
       this.xhr.open('HEAD', url, true)
 
@@ -93,7 +93,7 @@ const Network = (() => {
         this.triggerEvent(Event.NETWORK_ONLINE, { date: new Date() }, false)
       }
 
-      this.setStatus(Event.NETWORK_ONLINE)      
+      this.setStatus(Event.NETWORK_ONLINE)
     }
 
     onDown() {
@@ -103,13 +103,13 @@ const Network = (() => {
         this.triggerEvent(Event.NETWORK_OFFLINE, { date: new Date() }, false)
       }
 
-      this.setStatus(Event.NETWORK_OFFLINE)      
+      this.setStatus(Event.NETWORK_OFFLINE)
     }
 
     startCheck() {
       this.stopCheck()
 
-      this.startRequest()      
+      this.startRequest()
 
       this.checkInterval = setInterval(() => {
         this.startRequest()
@@ -123,8 +123,8 @@ const Network = (() => {
       }
     }
 
-    static _DOMInterface(options) {
-      return super._DOMInterface(Network, options)
+    static DOMInterface(options) {
+      return super.DOMInterface(Network, options)
     }
   }
 
