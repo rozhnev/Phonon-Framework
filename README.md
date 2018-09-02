@@ -12,11 +12,12 @@ Starting with v2.0, Phonon takes full advantage of ECMAScript.
 
 Please refer to our documentation for more information.
 
-To start without reading text, several options are available:
+The installation can take place in several ways:
 
 - [Download the latest release](https://github.com/quark-dev/Phonon-Framework/releases) and use dist files.
-- Clone the repo: `git clone https://github.com/quark-dev/Phonon-Framework.git`. Do not forget to run `npm install`.
+- Clone the repo: `git clone https://github.com/quark-dev/Phonon-Framework.git`.
 - Install with [npm](https://www.npmjs.com): `npm install phonon`.
+- Install with [yarn](https://yarnpkg.com/en/): `yarn add phonon`.
 - Install with [Bower](https://bower.io): `bower install phonon`.
 - Use [CDNJS](https://cdnjs.com/libraries/PhononJs).
 
