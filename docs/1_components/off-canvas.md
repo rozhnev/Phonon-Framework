@@ -1,5 +1,5 @@
 ---
-title: Off-canvas
+title: offcanvas
 ---
 
 ## Introduction
@@ -8,27 +8,27 @@ title: Off-canvas
 
 ## Markup
 
-Add the class `off-canvas-left` if you want that the off-canvas appears from the left.
-Add the class `off-canvas-right` if you want that the off-canvas appears from the right.
+Add the class `offcanvas-left` if you want that the offcanvas appears from the left.
+Add the class `offcanvas-right` if you want that the offcanvas appears from the right.
 
 ```html
-<!-- Button trigger off-canvas -->
-<button class="btn btn-primary" data-toggle="off-canvas" data-target="#exampleOffCanvas">Launch demo off-canvas</button>
+<!-- Button trigger offcanvas -->
+<button class="btn btn-primary" data-toggle="offcanvas" data-target="#exampleOffCanvas">Launch demo offcanvas</button>
 
-<!-- Off-canvas, left direction -->
-<div class="off-canvas off-canvas-left" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
-  <div class="off-canvas-inner">
-    <div class="off-canvas-content">
-      <div class="off-canvas-header">
-        <h1 class="off-canvas-title">Title</h1>
-        <button type="button" class="close" data-dismiss="off-canvas" aria-label="Close">
+<!-- offcanvas, left direction -->
+<div class="offcanvas offcanvas-left" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
+  <div class="offcanvas-inner">
+    <div class="offcanvas-content">
+      <div class="offcanvas-header">
+        <h1 class="offcanvas-title">Title</h1>
+        <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="off-canvas-body">
+      <div class="offcanvas-body">
         <p>Content</p>
       </div>
-      <div class="off-canvas-footer">
+      <div class="offcanvas-footer">
         <p>Footer</p>
       </div>
     </div>
@@ -38,15 +38,15 @@ Add the class `off-canvas-right` if you want that the off-canvas appears from th
 
 ## JavaScript
 
-Note that you can add the class `off-canvas-aside` in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.
+Note that you can add the class `offcanvas-aside` in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.
 
 ```js
-const offCanvas = phonon.offCanvas({
+const offcanvas = phonon.offcanvas({
   element: '#exampleOffCanvas',
 });
 
 // jQuery support
-const offCanvas = $('#exampleOffCanvas').offCanvas();
+const offcanvas = $('#exampleOffCanvas').offcanvas();
 ```
 
 ### Options
@@ -60,7 +60,7 @@ const offCanvas = $('#exampleOffCanvas').offCanvas();
 Any off canvas can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
-offCanvas.show();
+offcanvas.show();
 ```
 
 
@@ -69,28 +69,28 @@ offCanvas.show();
 Any off canvas can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 
 ```js
-offCanvas.hide();
+offcanvas.hide();
 ```
 
 
 ### Events
 
-It may be useful to use the events that affect your off-canvas.
+It may be useful to use the events that affect your offcanvas.
 To do this, you can use object and DOM events.
 
 
 |     Event Type     |     Description      |
 |--------------------|----------------------|
 |  show    |   This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.   |
-|  shown   |  This event is fired when the off-canvas has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.    |
+|  shown   |  This event is fired when the offcanvas has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.    |
 |  hide    |    This event is fired immediately when the <code>hide</code> instance method has been called.   |
-|  hidden  |   This event is fired when the off-canvas has finished being hidden from the user (will wait for CSS transitions to complete).    |
+|  hidden  |   This event is fired when the offcanvas has finished being hidden from the user (will wait for CSS transitions to complete).    |
 
 
 #### Object Events
 
 ```js
-phonon.offCanvas({
+phonon.offcanvas({
   element: '#exampleOffCanvas',
   show: () => { // or onShow
     console.log('It works!')
@@ -110,19 +110,19 @@ phonon.offCanvas({
 #### DOM Events
 
 ```js
-document.querySelector('.off-canvas').addEventListener('show.ph.off-canvas', () => {
+document.querySelector('.offcanvas').addEventListener('show.ph.offcanvas', () => {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('shown.ph.off-canvas', () => {
+document.querySelector('.offcanvas').addEventListener('shown.ph.offcanvas', () => {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('hide.ph.off-canvas', () => {
+document.querySelector('.offcanvas').addEventListener('hide.ph.offcanvas', () => {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('hidden.ph.off-canvas', () => {
+document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () => {
   console.log('It works!')
 })
 ```

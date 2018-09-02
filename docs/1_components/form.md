@@ -108,8 +108,8 @@ More compact with `.form-row`.
 ### Info
 
 ```html
-<label for="inputPassword5">Password</label>
-<input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
+<label for="inputPassword4">Password</label>
+<input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpBlock">
 <small id="passwordHelpBlock" class="form-text text-muted">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
@@ -128,8 +128,8 @@ More compact with `.form-row`.
 ### Success
 
 ```html
-<label for="inputPassword5">Password</label>
-<input type="password" id="inputPassword5" class="form-control is-valid" aria-describedby="passwordHelpBlock">
+<label for="inputPassword6">Password</label>
+<input type="password" id="inputPassword6" class="form-control is-valid" aria-describedby="passwordHelpBlock">
 <small id="passwordHelpBlock" class="valid-feedback">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>

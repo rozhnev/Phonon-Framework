@@ -8,7 +8,6 @@ title: Alert
 
 ## Markup
 
-### Display
 
 ```html
 <div class="alert alert-primary" role="alert">
