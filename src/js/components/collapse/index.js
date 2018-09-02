@@ -84,17 +84,22 @@ const Collapse = (($) => {
         this.options.element.classList.add('collapsing')
       }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed)
+      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-      const height = this.getHeight()
+      if (!this.isVerticalCollapse()) {
+        this.options.element.classList.add('slide');
+      } else {
+        // get real height
+        const height = this.getHeight();
 
-      this.options.element.style.height = '0px'
+        this.options.element.style.height = '0px';
 
-      setTimeout(() => {
-        this.options.element.style.height = `${height}px`
-      }, 20)
+        setTimeout(() => {
+          this.options.element.style.height = `${height}px`;
+        }, 20);
+      }
 
-      return true
+      return true;
     }
 
     hide() {
@@ -122,17 +127,28 @@ const Collapse = (($) => {
         this.onTransition = false
       }
 
-      this.options.element.style.height = '0px'
+      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed)
+
+      if (!this.isVerticalCollapse()) {
+        if (this.options.element.classList.contains('slide')) {
+          this.options.element.classList.remove('slide');
+        }
+      } else {
+        this.options.element.style.height = '0px'
+      }
 
       if (!this.options.element.classList.contains('collapsing')) {
         this.options.element.classList.add('collapsing')
       }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed)
-
       this.options.element.classList.remove('show')
 
       return true
+    }
+
+    isVerticalCollapse() {
+      return !this.options.element.classList.contains('collapse-l')
+        && !this.options.element.classList.contains('collapse-r');
     }
 
     static identifier() {
