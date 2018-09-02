@@ -1,11 +1,16 @@
 name: Phonon
-version: 0.1.0
+version: 2.0.0
 sourceUrl: https://github.com/quark-dev/Phonon-Framework
 homepageUrl: https://quark-dev.github.io/Phonon-Framework/
-logo: favicon.png
-icon: favicon.png
+logo: ../site/icon-64.png
+icon: ../site/icon-64.png
+template: ./docs/_layout
+markdown-it:
+  html: true
 htmlHeader:
+  - <link rel="stylesheet" href="../dist/css/phonon.min.css">
   - <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 htmlBody:
+  - <script src="../dist/js/phonon.js"></script>
   - <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   - <script>hljs.initHighlightingOnLoad();</script>
