@@ -15,13 +15,16 @@ const files = (bootstrap.toString().match(reg) || []).map(e => e.replace(reg, '$
 
 const excludes = [
   'transitions',
-  'dropdown',
   'progress',
   'modal',
+  'dropdown',
   'tooltip',
   'popover',
   'carousel',
 ];
+
+// clean directory
+fse.emptyDirSync(path.resolve(__dirname, (destScssPath)));
 
 const includeFiles = files.filter(f => excludes.indexOf(f) === -1);
 
@@ -30,7 +33,9 @@ console.log('... Generating Bootstrap CSS dependencies');
 
 const fileContent = includeFiles.map(f => `@import '${f}';\n`).toString().replace(/,/g, '');
 
-fs.writeFileSync(path.resolve(__dirname, `${destScssPath}/bootstrap.scss`), fileContent);
+fs.writeFileSync(path.resolve(__dirname, `${destScssPath}/bootstrap.scss`), `/*
+* Bootstrap dependencies
+*/\n${fileContent}`);
 
 // move bootstrap files
 includeFiles.forEach((f) => {
@@ -42,7 +47,10 @@ includeFiles.forEach((f) => {
     // copy directory
     console.log(`... Moving ${f}`);
     fse.copySync(srcDir, path.resolve(__dirname, `${destScssPath}/${f}`));
-  } else if (fs.existsSync(srcFile) && fs.lstatSync(srcFile).isFile()) {
+  }
+
+  // dir and file can both exist (mixins/ and _mixins.scss)
+  if (fs.existsSync(srcFile) && fs.lstatSync(srcFile).isFile()) {
     // copy SCSS file
     console.log(`... Moving ${scssFilename}`);
     fse.copySync(srcFile, path.resolve(__dirname, `${destScssPath}/${scssFilename}`));
