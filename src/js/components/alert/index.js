@@ -39,7 +39,7 @@ const Alert = (($) => {
 
     /**
      * Shows the alert
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     show() {
       return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ const Alert = (($) => {
 
     /**
      * Hides the alert
-     * @return {Promise} Promise object represents the end of the animation
+     * @returns {Promise} Promise object represents the end of the animation
      */
     hide() {
       return new Promise((resolve, reject) => {

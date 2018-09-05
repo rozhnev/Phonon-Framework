@@ -90,7 +90,7 @@ const SelectboxSearch = (($) => {
 
     /**
      * Shows the search selectbox
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async show() {
       return super.hide();
@@ -98,7 +98,7 @@ const SelectboxSearch = (($) => {
 
     /**
      * Hides the search selectbox
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async hide() {
       await super.hide();

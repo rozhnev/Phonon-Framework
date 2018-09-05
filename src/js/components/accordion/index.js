@@ -80,7 +80,7 @@ const Accordion = (($) => {
     /**
      * Shows the collapse element and hides the other active collapse elements
      * @param {Element} showCollapse
-     * @return {undefined}
+     * @returns {undefined}
      */
     setCollapses(showCollapse) {
       const collapse = this.getCollapse(showCollapse);
@@ -96,7 +96,7 @@ const Accordion = (($) => {
     /**
      * Shows the collapse element
      * @param {(string|Element)} collapseEl
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async show(collapseEl) {
       let collapse = collapseEl;

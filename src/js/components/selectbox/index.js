@@ -155,7 +155,7 @@ const Selectbox = (() => {
 
     /**
      * Shows the selectbox
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async show() {
       if (this.options.element.classList.contains('active')) {
@@ -180,7 +180,7 @@ const Selectbox = (() => {
 
     /**
      * Hides the selectbox
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async hide() {
       if (!this.options.element.classList.contains('active')) {

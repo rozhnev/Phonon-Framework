@@ -74,7 +74,7 @@ const Prompt = (($) => {
 
     /**
      * Shows the prompt
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async show() {
       super.show();
@@ -83,7 +83,7 @@ const Prompt = (($) => {
 
     /**
      * Hides the prompt
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     async hide() {
       super.hide();

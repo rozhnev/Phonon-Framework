@@ -52,7 +52,7 @@ const Binder = (() => {
     /**
      * Checks if the given argument is a DOM element
      * @param {Element} the argument to test
-     * @return {boolean} true if the object is a DOM element, false otherwise
+     * @returns {boolean} true if the object is a DOM element, false otherwise
      */
     isElement(element) {
       if (element === null) {

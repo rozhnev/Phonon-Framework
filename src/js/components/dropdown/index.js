@@ -68,7 +68,7 @@ const Dropdown = (($) => {
 
     /**
      * Shows the dropdown
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     show() {
       return new Promise(async (resolve, reject) => {
@@ -123,7 +123,7 @@ const Dropdown = (($) => {
 
     /**
      * Hides the collapse
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     hide() {
       return new Promise((resolve, reject) => {

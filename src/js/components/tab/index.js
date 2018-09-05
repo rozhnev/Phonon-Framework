@@ -37,7 +37,7 @@ const Tab = (($) => {
 
     /**
      * Shows the tab
-     * @return {Promise} Promise object represents the completed animation
+     * @returns {Promise} Promise object represents the completed animation
      */
     show() {
       if (this.options.element.classList.contains('active')) {
