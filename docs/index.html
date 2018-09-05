@@ -223,7 +223,7 @@ body {
   opacity: 0;
 }
 
-.footer {
+.docs-footer {
   color: #999;
   font-size: .8em;
   font-style: italic;
@@ -231,12 +231,12 @@ body {
   margin: 30px 0;
 }
 
-.footer a, .footer a:visited {
+.docs-footer a, .docs-footer a:visited {
   color: #888;
 }
 
 
-.footer a:hover {
+.docs-footer a:hover {
   color: #444;
 }
 
@@ -363,7 +363,7 @@ body {
             <li><a href="#1_components/button">Button</a></li>
             <li><a href="#1_components/code">Code</a></li>
             <li><a href="#1_components/collapse">Collapse</a></li>
-            <li><a href="#1_components/dropdown">Dropdown</a></li>
+            <li><a href="#1_components/footer">Footer</a></li>
             <li><a href="#1_components/form">Form</a></li>
             <li><a href="#1_components/grid">Grid</a></li>
             <li><a href="#1_components/loader">Loader</a></li>
@@ -371,8 +371,9 @@ body {
             <li><a href="#1_components/nav">Nav</a></li>
             <li><a href="#1_components/navbar">Navbar</a></li>
             <li><a href="#1_components/notification">Notification</a></li>
-            <li><a href="#1_components/off-canvas">Off-canvas</a></li>
+            <li><a href="#1_components/off-canvas">offcanvas</a></li>
             <li><a href="#1_components/progress">Progress</a></li>
+            <li><a href="#1_components/selectbox">Selectbox</a></li>
             <li><a href="#1_components/tab">Tab</a></li>
             <li><a href="#1_components/table">Table</a></li>
           </ul>
@@ -437,7 +438,7 @@ importing required components only.</p>
 <li>Use <a href="https://cdnjs.com/libraries/PhononJs">CDNJS</a>.</li>
 </ul>
 <h2>Starter Template</h2>
-<pre><code class="language-html!">&lt;!doctype html&gt;
+<pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;!-- Required meta tags --&gt;
@@ -470,14 +471,14 @@ importing required components only.</p>
 // import required components for your project
 @import 'phonon/src/scss/phonon/notification';
 @import 'phonon/src/scss/phonon/off-canvas';
-@import 'phonon/src/scss/phonon/dropdown';
+@import 'phonon/src/scss/phonon/selectbox';
 </code></pre>
 <h2>JavaScript</h2>
 <pre><code class="language-js">// instead of importing Phonon package
 import 'phonon/dist/js/phonon'
 
 // import required components for your project
-const Dropdown = require('phonon/dist/js/components/dropdown');
+const Selectbox = require('phonon/dist/js/components/selectbox');
 </code></pre>
 
       </div>
@@ -525,19 +526,6 @@ As with Bootstrap 4, you can edit SCSS variables.</p>
 </code></pre>
 <h3>Markup page structure</h3>
 <p><code>.app-pages</code> is a wrapper of <code>.app-page</code> pages.</p>
-<pre></pre> <div class="example"><div class="app-pages">
-  <div class="app-page" data-page="one">...</div>
-  <div class="app-page" data-page="myPage2">...</div>
-</div>
-
-### Page events <i>Changed</i>
-
-For a given page `myPage` for example.
-Assuming this page is present in the DOM like the following:
-
-```html
-<div class="app-page" data-page="myPage"></div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;one&quot;&gt;...&lt;/div&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;myPage2&quot;&gt;...&lt;/div&gt;
@@ -611,10 +599,6 @@ The first argument is the path to the template file.</p>
 <pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
-<pre></pre> <div class="example"><div data-push-template>
-  <!-- The template will be injected here -->
-</div>
-</div>
 <pre><code class="language-html">&lt;div data-push-template&gt;
   &lt;!-- The template will be injected here --&gt;
 &lt;/div&gt;
@@ -696,13 +680,15 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
       </div>
       <div class="page" id="1_components">
         <h1 class="heading">Components</h1>
-        
+        <h1>Components</h1>
+<p>Phonon contains many UI components.</p>
+
       </div>
 
       <div class="page" id="1_components/accordion">
         <h1 class="heading">Accordion</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>An accordion is a component that displays one of the collapsible elements in a limited amout of space.</p>
 <h2>Markup</h2>
 <pre></pre> <div class="example"><div class="accordion" id="exampleAccordion" role="tablist">
   <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -726,7 +712,7 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
   </div>
 </div>
 </div>
-<pre><code class="language-html">&lt;div class=&quot;accordion&quot; id=&quot;exampleAccordion&quot; role=&quot;tablist&quot;&gt;
+<pre><code class="language-html-with-example">&lt;div class=&quot;accordion&quot; id=&quot;exampleAccordion&quot; role=&quot;tablist&quot;&gt;
   &lt;a class=&quot;d-block&quot; data-toggle=&quot;accordion&quot; href=&quot;#collapseOne&quot; aria-expanded=&quot;true&quot; aria-controls=&quot;collapseOne&quot;&gt;
     Collapsible Group Item #1
   &lt;/a&gt;
@@ -756,46 +742,31 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
 // jQuery support
 const accordion = $('#exampleAccordion').accordion();
 </code></pre>
-<h2>Methods</h2>
-<h3>show(collapse: any)</h3>
+<h3>Methods</h3>
+<h4>show(collapse)</h4>
+<ul>
+<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">accordion.show('#collapseTwo');
 </code></pre>
-<h3>hide(collapse: any)</h3>
+<h4>hide(collapse)</h4>
+<ul>
+<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">accordion.hide('#collapseTwo');
 </code></pre>
 <h2>Events</h2>
-<p>Listen for events of the <a href="#1_components/collapse">collapse</a> elements.</p>
+<p>The accordion component has events related to the collapse elements.
+See events of <a href="#1_components/collapse">collapse</a> component.</p>
 
       </div>
       <div class="page" id="1_components/alert">
         <h1 class="heading">Alert</h1>
         <h2>Introduction</h2>
+<p>An alert displays a box with a specified message.</p>
 <h2>Markup</h2>
-<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
-  A simple primary alert—check it out!
-</div>
-<div class="alert alert-secondary" role="alert">
-  A simple secondary alert—check it out!
-</div>
-<div class="alert alert-success" role="alert">
-  A simple success alert—check it out!
-</div>
-<div class="alert alert-danger" role="alert">
-  A simple danger alert—check it out!
-</div>
-<div class="alert alert-warning" role="alert">
-  A simple warning alert—check it out!
-</div>
-<div class="alert alert-info" role="alert">
-  A simple info alert—check it out!
-</div>
-<div class="alert alert-light" role="alert">
-  A simple light alert—check it out!
-</div>
-<div class="alert alert-dark" role="alert">
-  A simple dark alert—check it out!
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert—check it out!
 &lt;/div&gt;
@@ -822,31 +793,6 @@ const accordion = $('#exampleAccordion').accordion();
 &lt;/div&gt;
 </code></pre>
 <h3>Link color</h3>
-<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
-  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-secondary" role="alert">
-  A simple secondary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-success" role="alert">
-  A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-danger" role="alert">
-  A simple danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-warning" role="alert">
-  A simple warning alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-info" role="alert">
-  A simple info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-light" role="alert">
-  A simple light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-<div class="alert alert-dark" role="alert">
-  A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
 &lt;/div&gt;
@@ -873,13 +819,6 @@ const accordion = $('#exampleAccordion').accordion();
 &lt;/div&gt;
 </code></pre>
 <h3>Dismissable</h3>
-<pre></pre> <div class="example"><div class="alert alert-warning" id="exampleAlert" role="alert">
-  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-warning&quot; id=&quot;exampleAlert&quot; role=&quot;alert&quot;&gt;
   &lt;strong&gt;Holy guacamole!&lt;/strong&gt; You should check in on some of those fields below.
   &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;
@@ -895,16 +834,52 @@ const accordion = $('#exampleAccordion').accordion();
 </code></pre>
 <h3>Options</h3>
 <ul>
-<li>fade</li>
+<li><code>fade</code> (boolean) - if <code>fade</code> is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element.</li>
 </ul>
 <h3>Methods</h3>
-<h4>show</h4>
+<h4>show(alert)</h4>
+<ul>
+<li><code>alert</code> (Element | String) - if <code>alert</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>alert</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">alert.show()
 </code></pre>
-<h4>hide</h4>
+<h4>hide(alert)</h4>
+<ul>
+<li><code>alert</code> (Element | String) - if <code>alert</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>alert</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">alert.hide()
 </code></pre>
-<h3>Events</h3>
+<h2>Events</h2>
+<p>It may be useful to use the events that affect your alert.
+For this, you can use object and DOM events.</p>
+<table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
+</tr>
+<tr>
+<td>shown</td>
+<td>This event is fired when the alert is completely visible to the user (will wait for CSS transitions to complete).</td>
+</tr>
+<tr>
+<td>hide</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>This event is fired when the alert is completely hidden (will wait for CSS transitions to complete).</td>
+</tr>
+</tbody>
+</table>
 <h3>Object Events</h3>
 <pre><code class="language-js">phonon.alert({
   show: () =&gt; { // or onShow
@@ -921,7 +896,7 @@ const accordion = $('#exampleAccordion').accordion();
   },
 });
 </code></pre>
-<h4>DOM Events</h4>
+<h3>DOM Events</h3>
 <pre><code class="language-js">document.querySelector('.alert').addEventListener('show.ph.alert', () =&gt; {
   console.log('It works!')
 })
@@ -953,29 +928,18 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
         <h1>Introduction</h1>
 <p>[WIP]</p>
 <h1>Inline code</h1>
-<pre></pre> <div class="example">For example, <code>&lt;section&gt;</code> should be wrapped as inline.
-</div>
 <pre><code class="language-html">For example, &lt;code&gt;&amp;lt;section&amp;gt;&lt;/code&gt; should be wrapped as inline.
 </code></pre>
 <h1>Code blocks</h1>
-<pre></pre> <div class="example"><pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
-&lt;p&gt;And another line of sample text here...&lt;/p&gt;
-</code></pre>
-</div>
 <pre><code class="language-html">&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Sample text here...&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;And another line of sample text here...&amp;lt;/p&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 <h1>User input</h1>
-<pre></pre> <div class="example">To switch directories, type <kbd>cd</kbd> followed by the name of the directory.<br>
-To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
-</div>
 <pre><code class="language-html">To switch directories, type &lt;kbd&gt;cd&lt;/kbd&gt; followed by the name of the directory.&lt;br&gt;
 To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt;/kbd&gt;&lt;/kbd&gt;
 </code></pre>
 <h1>Sample output</h1>
-<pre></pre> <div class="example"><samp>This text is meant to be treated as sample output from a computer program.</samp>
-</div>
 <pre><code class="language-html">&lt;samp&gt;This text is meant to be treated as sample output from a computer program.&lt;/samp&gt;
 </code></pre>
 
@@ -985,19 +949,6 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<pre></pre> <div class="example"><p>
-  <a class="btn btn-primary" data-toggle="collapse" href="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
-    Link with href
-  </a>
-  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
-    Button with data-target
-  </button>
-</p>
-
-<div class="collapse" id="exampleCollapse">
-  Collapse content.
-</div>
-</div>
 <pre><code class="language-html">&lt;p&gt;
   &lt;a class=&quot;btn btn-primary&quot; data-toggle=&quot;collapse&quot; href=&quot;#exampleCollapse&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;exampleCollapse&quot;&gt;
     Link with href
@@ -1038,17 +989,56 @@ const collapse = $('#exampleCollapse').collapse();
 </tbody>
 </table>
 <h3>Methods</h3>
-<h4>show()</h4>
+<h4>show(collapse)</h4>
+<ul>
+<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">collapse.show();
 </code></pre>
-<h4>hide()</h4>
+<h4>hide(collapse)</h4>
+<ul>
+<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <pre><code class="language-js">collapse.hide();
 </code></pre>
-<h4>toggle()</h4>
+<h4>toggle(collapse)</h4>
+<ul>
+<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+</ul>
 <pre><code class="language-js">collapse.toggle();
 </code></pre>
-<h3>Events</h3>
-<h4>Object Events</h4>
+<h2>Events</h2>
+<p>It may be useful to use the events that affect your collapse.
+For this, you can use object and DOM events.</p>
+<table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
+</tr>
+<tr>
+<td>shown</td>
+<td>This event is fired when the collapse is completely visible to the user (will wait for CSS transitions to complete).</td>
+</tr>
+<tr>
+<td>hide</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>This event is fired when the collapse is completely hidden (will wait for CSS transitions to complete).</td>
+</tr>
+</tbody>
+</table>
+<h3>Object Events</h3>
 <pre><code class="language-js">phonon.collapse({
   element: '#exampleCollapse',
   show: () =&gt; { // or onShow
@@ -1084,224 +1074,50 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </code></pre>
 
       </div>
-      <div class="page" id="1_components/dropdown">
-        <h1 class="heading">Dropdown</h1>
+      <div class="page" id="1_components/footer">
+        <h1 class="heading">Footer</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>The footer is a container listed at the bottom of the page.</p>
 <h2>Markup</h2>
-<pre></pre> <div class="example"><div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
-  <input type="hidden" name="color">
-  <i class="dropdown-icon"></i>
-  <div class="default-text">Blue</div>
-  <div class="dropdown-menu">
-    <div class="item" data-value="blue" data-selected="true">Blue</div>
-    <div class="item" data-value="red">Red</div>
-    <div class="item selected" data-value="green">
-      <span class="description">Best one!</span>
-      <span class="text">Green</span>
-    </div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
-  &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
-  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
-  &lt;div class=&quot;dropdown-menu&quot;&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=&quot;true&quot;&gt;Blue&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
-    &lt;div class=&quot;item selected&quot; data-value=&quot;green&quot;&gt;
-      &lt;span class=&quot;description&quot;&gt;Best one!&lt;/span&gt;
-      &lt;span class=&quot;text&quot;&gt;Green&lt;/span&gt;
+<pre><code class="language-html">&lt;footer class=&quot;footer bg-primary&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;row align-items-start&quot;&gt;
+      &lt;div class=&quot;col-sm-6&quot;&gt;
+        &lt;div class=&quot;d-flex align-items-end mb-3 mb-sm-0&quot;&gt;
+          &lt;img src=&quot;../site/icon.svg&quot; width=&quot;60&quot; height=&quot;60&quot; alt=&quot;&quot;&gt;
+          &lt;span class=&quot;text-white ml-3&quot;&gt;© 2018 Company, Inc.&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;col-sm-6&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;col-sm-6&quot;&gt;
+            &lt;ul&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-sm-6&quot;&gt;
+            &lt;ul&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Terms&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+              &lt;li&gt;&lt;a class=&quot;text-white&quot; href=&quot;#&quot;&gt;Help&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<h3>Dropdown with invalid item</h3>
-<p>Add the class <code>disabled</code> to the item.</p>
-<pre></pre> <div class="example"><div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
-  <input type="hidden" name="color">
-  <i class="dropdown-icon"></i>
-  <div class="default-text">Blue</div>
-  <div class="dropdown-menu">
-    <div class="item" data-value="blue" data-selected="true">Blue</div>
-    <div class="item" data-value="red">Red</div>
-    <div class="item disabled">Invalid item</div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
-  &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
-  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
-  &lt;div class=&quot;dropdown-menu&quot;&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=&quot;true&quot;&gt;Blue&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
-    &lt;div class=&quot;item disabled&quot;&gt;Invalid item&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<h3>Dropdown with header</h3>
-<pre></pre> <div class="example"><div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
-  <input type="hidden" name="color">
-  <i class="dropdown-icon"></i>
-  <div class="default-text">Blue</div>
-  <div class="dropdown-menu">
-    <div class="header">Header</div>
-    <div class="item" data-value="blue" data-selected=true>Blue</div>
-    <div class="item" data-value="red">Red</div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
-  &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
-  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
-  &lt;div class=&quot;dropdown-menu&quot;&gt;
-    &lt;div class=&quot;header&quot;&gt;Header&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<h3>Dropdown with divider</h3>
-<pre></pre> <div class="example"><div class="dropdown" role="button" tabindex="0" data-toggle="dropdown">
-  <input type="hidden" name="color">
-  <i class="dropdown-icon"></i>
-  <div class="default-text">Blue</div>
-  <div class="dropdown-menu">
-    <div class="item" data-value="blue" data-selected=true>Blue</div>
-    <div class="item" data-value="red">Red</div>
-    <div class="divider"></div>
-    <div class="item" data-value="orange">Orange</div>
-    <div class="item" data-value="yellow">Yellow</div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;dropdown&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
-  &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
-  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
-  &lt;div class=&quot;dropdown-menu&quot;&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
-    &lt;div class=&quot;divider&quot;&gt;&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;orange&quot;&gt;Orange&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;yellow&quot;&gt;Yellow&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<h3>Dropdown with search input</h3>
-<pre></pre> <div class="example"><div class="dropdown" role="button" tabindex="0" data-search="true" data-toggle="dropdown">
-  <input type="hidden" name="color">
-  <i class="dropdown-icon"></i>
-  <div class="default-text">Blue</div>
-  <div class="dropdown-menu">
-    <div class="input-search-container">
-      <input class="form-control" type="text" name="search">
-    </div>
-    <div class="item" data-value="blue" data-selected=true>Blue</div>
-    <div class="item" data-value="red">Red</div>
-    <div class="item" data-value="green">Green</div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;dropdown&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-search=&quot;true&quot; data-toggle=&quot;dropdown&quot;&gt;
-  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
-  &lt;i class=&quot;dropdown-icon&quot;&gt;&lt;/i&gt;
-  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
-  &lt;div class=&quot;dropdown-menu&quot;&gt;
-    &lt;div class=&quot;input-search-container&quot;&gt;
-      &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;search&quot;&gt;
-    &lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
-    &lt;div class=&quot;item&quot; data-value=&quot;green&quot;&gt;Green&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>For the selected item, add <code>data-selected</code>.
-For each item, you must add <code>data-value</code>.
-By default, the module will try to find the text node otherwise, it will check if the attribute <code>data-text</code> is present.</p>
-<p>Add the class <code>dropdown-lg</code> to increase the size.</p>
-<pre><code class="language-html!">&lt;div class=&quot;dropdown dropdown-lg&quot; data-toggle=&quot;dropdown&quot;&gt;
-...
-&lt;/div&gt;
-</code></pre>
-<p>Add the class <code>dropdown-sm</code> to reduce the size.</p>
-<pre><code class="language-html!">&lt;div class=&quot;dropdown dropdown-sm&quot; data-toggle=&quot;dropdown&quot;&gt;
-...
-&lt;/div&gt;
-</code></pre>
-<h2>JavaScript</h2>
-<pre><code class="language-js">const dropdown = phonon.dropdown({
-  element: '.dropdown'
-})
-
-// or for a search dropdown
-const searchDropdown = phonon.dropdown({
-  element: '.dropdown-search',
-  search: true
-})
-</code></pre>
-<h2>Options</h2>
-<ul>
-<li>search</li>
-<li>filterItem(search, item)</li>
-</ul>
-<h2>Methods</h2>
-<h3>getSelected()</h3>
-<p>Returns the selected value.</p>
-<h3>setSelected(value: string, text: string)</h3>
-<p>Set the current value.</p>
-<pre><code class="language-js">dropdown.setSelected('green')
-</code></pre>
-<p>it is possible to display a custom text with the second parameter.</p>
-<pre><code class="language-js">dropdown.setSelected('green', 'Current text')
-</code></pre>
-<h3>show()</h3>
-<p>...</p>
-<h3>hide()</h3>
-<p>...</p>
-<h3>toggle()</h3>
-<p>...</p>
-<h2>Events</h2>
-<h3>Object Events</h3>
-<pre><code class="language-js">phonon.dropdown({
-  element: '.dropdown',
-  show: () =&gt; { // or onShow
-    console.log('It works!')
-  },
-  shown: () =&gt; { // or onShown
-    console.log('It works!')
-  },
-  hide: () =&gt; { // or onHide
-    console.log('It works!')
-  },
-  hidden: () =&gt; { // or onHidden
-    console.log('It works!')
-  },
-  itemSelected(selected) { // or onItemSelected
-    console.log('It works!')
-    console.log(selected.item)
-    console.log(selected.text)
-    console.log(selected.value)
-  }
-})
+&lt;/footer&gt;
 </code></pre>
 
       </div>
       <div class="page" id="1_components/form">
         <h1 class="heading">Form</h1>
         <h2>Introduction</h2>
+<p>A form contains inputs to collect user input.</p>
 <h2>Input</h2>
-<pre></pre> <div class="example"><form>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-  </div>
-</form>
-</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;exampleFormControlInput1&quot;&gt;Email address&lt;/label&gt;
@@ -1310,40 +1126,17 @@ const searchDropdown = phonon.dropdown({
 &lt;/form&gt;
 </code></pre>
 <h3>Sizing</h3>
-<pre></pre> <div class="example"><input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
-<input class="form-control" type="text" placeholder="Default input">
-<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
-</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control form-control-lg&quot; type=&quot;text&quot; placeholder=&quot;.form-control-lg&quot;&gt;
 &lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Default input&quot;&gt;
 &lt;input class=&quot;form-control form-control-sm&quot; type=&quot;text&quot; placeholder=&quot;.form-control-sm&quot;
 </code></pre>
 <h3>Readonly</h3>
-<pre></pre> <div class="example"><input class="form-control" type="text" placeholder="Readonly input here…" readonly>
-</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Readonly input here…&quot; readonly&gt;
 </code></pre>
 <h3>Disabled</h3>
-<pre></pre> <div class="example"><input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
-</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; id=&quot;disabledInput&quot; type=&quot;text&quot; placeholder=&quot;Disabled input here...&quot; disabled&gt;
 </code></pre>
 <h3>Readonly plain text</h3>
-<pre></pre> <div class="example"><form>
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-    </div>
-  </div>
-</form>
-</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;staticEmail&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1360,17 +1153,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/form&gt;
 </code></pre>
 <h2>Form with grid</h2>
-<pre></pre> <div class="example"><form>
-  <div class="row">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="First name">
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Last name">
-    </div>
-  </div>
-</form>
-</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1383,17 +1165,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/form&gt;
 </code></pre>
 <p>More compact with <code>.form-row</code>.</p>
-<pre></pre> <div class="example"><form>
-  <div class="form-row">
-    <div class="col">
-      <input type="text" class="form-control" placeholder="First name">
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" placeholder="Last name">
-    </div>
-  </div>
-</form>
-</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1406,21 +1177,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/form&gt;
 </code></pre>
 <h2>Horizontal form</h2>
-<pre></pre> <div class="example"><form>
-  <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-    </div>
-  </div>
-</form>
-</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;inputEmail3&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1438,12 +1194,6 @@ const searchDropdown = phonon.dropdown({
 </code></pre>
 <h2>Validation</h2>
 <h3>Info</h3>
-<pre></pre> <div class="example"><label for="inputPassword4">Password</label>
-<input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpBlock">
-<small id="passwordHelpBlock" class="form-text text-muted">
-  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-</small>
-</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword4&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword4&quot; class=&quot;form-control&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;form-text text-muted&quot;&gt;
@@ -1451,12 +1201,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/small&gt;
 </code></pre>
 <h3>Error</h3>
-<pre></pre> <div class="example"><label for="inputPassword5">Password</label>
-<input type="password" id="inputPassword5" class="form-control is-invalid" aria-describedby="passwordHelpBlock">
-<small id="passwordHelpBlock" class="invalid-feedback">
-  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-</small>
-</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword5&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword5&quot; class=&quot;form-control is-invalid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;invalid-feedback&quot;&gt;
@@ -1464,12 +1208,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/small&gt;
 </code></pre>
 <h3>Success</h3>
-<pre></pre> <div class="example"><label for="inputPassword6">Password</label>
-<input type="password" id="inputPassword6" class="form-control is-valid" aria-describedby="passwordHelpBlock">
-<small id="passwordHelpBlock" class="valid-feedback">
-  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-</small>
-</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword6&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword6&quot; class=&quot;form-control is-valid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;valid-feedback&quot;&gt;
@@ -1477,12 +1215,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/small&gt;
 </code></pre>
 <h2>Checkboxes</h2>
-<pre></pre> <div class="example"><label class="custom-control custom-checkbox">
-  <input type="checkbox" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Check this custom checkbox</span>
-</label>
-</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-control custom-checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
@@ -1490,17 +1222,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/label&gt;
 </code></pre>
 <h2>Radios</h2>
-<pre></pre> <div class="example"><label class="custom-control custom-radio">
-  <input id="radio1" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Toggle this custom radio</span>
-</label>
-<label class="custom-control custom-radio">
-  <input id="radio2" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Or toggle this other custom radio</span>
-</label>
-</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-control custom-radio&quot;&gt;
   &lt;input id=&quot;radio1&quot; name=&quot;radio&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
@@ -1513,19 +1234,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/label&gt;
 </code></pre>
 <h3>Stacked</h3>
-<pre></pre> <div class="example"><div class="custom-controls-stacked">
-  <label class="custom-control custom-radio">
-    <input id="radioStacked3" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Toggle this custom radio</span>
-  </label>
-  <label class="custom-control custom-radio">
-    <input id="radioStacked4" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Or toggle this other custom radio</span>
-  </label>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-controls-stacked&quot;&gt;
   &lt;label class=&quot;custom-control custom-radio&quot;&gt;
     &lt;input id=&quot;radioStacked3&quot; name=&quot;radio-stacked&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
@@ -1540,11 +1248,6 @@ const searchDropdown = phonon.dropdown({
 &lt;/div&gt;
 </code></pre>
 <h2>File browser</h2>
-<pre></pre> <div class="example"><label class="custom-file">
-  <input type="file" id="file2" class="custom-file-input">
-  <span class="custom-file-control"></span>
-</label>
-</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-file&quot;&gt;
   &lt;input type=&quot;file&quot; id=&quot;file2&quot; class=&quot;custom-file-input&quot;&gt;
   &lt;span class=&quot;custom-file-control&quot;&gt;&lt;/span&gt;
@@ -1555,27 +1258,87 @@ const searchDropdown = phonon.dropdown({
       <div class="page" id="1_components/grid">
         <h1 class="heading">Grid</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>A grid system is a layout with rows and columns.</p>
 
       </div>
       <div class="page" id="1_components/loader">
         <h1 class="heading">Loader</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>A loader is typically used to show an animation while loading.</p>
 <h2>Markup</h2>
 <pre></pre> <div class="example"><div class="loader">
   <div class="loader-spinner"></div>
 </div>
+
+<div class="loader">
+  <div class="loader-spinner color-primary"></div>
 </div>
-<pre><code class="language-html">&lt;div class=&quot;loader&quot;&gt;
+
+<div class="loader">
+  <div class="loader-spinner color-secondary"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-success"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-danger"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-warning"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-info"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-light"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner color-dark"></div>
+</div>
+</div>
+<pre><code class="language-html-with-example">&lt;div class=&quot;loader&quot;&gt;
   &lt;div class=&quot;loader-spinner&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-primary&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-secondary&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-success&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-danger&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-warning&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-info&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-light&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;loader&quot;&gt;
+  &lt;div class=&quot;loader-spinner color-dark&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <p>it may be useful not to show the loader, but after a while. For this, we add the <code>hide</code> class.</p>
-<pre></pre> <div class="example"><div class="loader hide">
-  <div class="loader-spinner"></div>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;loader hide&quot;&gt;
   &lt;div class=&quot;loader-spinner&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -1583,33 +1346,71 @@ const searchDropdown = phonon.dropdown({
 <h2>JavaScript</h2>
 <pre><code class="language-js">const loader = phonon.loader({
   element: '.loader',
+  color: null,
+  size: null,
 });
 
 // jQuery support
 const loader = $('.loader').loader();
 </code></pre>
-<h2>Options</h2>
+<h3>Options</h3>
 <ul>
-<li>color</li>
-<li>size</li>
+<li><code>color</code> (String) - the color of the spinner.</li>
+<li><code>size</code> (Number) - the size of the spinner in pixel.</li>
 </ul>
 <h2>Methods</h2>
-<h3>animate(startAnimation: boolean)</h3>
-<p>Animates the loader.
+<h3>animate(startAnimation)</h3>
+<ul>
+<li><code>startAnimation</code> (Boolean) - if <code>startAnimation</code> is set to true, it will start the animation directly. Otherwise, it won't start the animation. The default value is true.</li>
+</ul>
+<p>This method will animate the loader.
 In most cases, it is preferable to use this method to display and hide the loader. If the passed argument is true, it will display the loader and start the animation. Conversely, false will hide and finish the animation.</p>
 <pre><code class="language-js">loader.animate(); // show and start the animation
 loader.animate(false); // hide and stop the animation
 </code></pre>
 <h3>show()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any loader can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">loader.show();
 </code></pre>
 <h3>hide()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any loader can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">loader.hide();
 </code></pre>
 <h2>Events</h2>
-<p>@todo</p>
+<p>It may be useful to use the events that affect your loader.
+For this, you can use object and DOM events.</p>
+<table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
+</tr>
+<tr>
+<td>shown</td>
+<td>This event is fired when the loader is completely visible to the user (will wait for CSS transitions to complete).</td>
+</tr>
+<tr>
+<td>hide</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>This event is fired when the loader is completely hidden (will wait for CSS transitions to complete).</td>
+</tr>
+</tbody>
+</table>
 
       </div>
       <div class="page" id="1_components/modal">
@@ -1716,28 +1517,6 @@ In the following example, we trigger the event called <code>neutralAnswer</code>
 </code></pre>
 <h2>Custom modals</h2>
 <p>Conversely, you can create your own modal by specifying the <code>element</code> property.</p>
-<pre></pre> <div class="example"><!-- Button trigger modal -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
-
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="modal">
-  <div class="modal-inner" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <div class="btn-group float-right" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 <pre><code class="language-html">&lt;!-- Button trigger modal --&gt;
 &lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;modal&quot; data-target=&quot;#exampleModal&quot;&gt;Launch demo modal&lt;/button&gt;
 
@@ -1781,10 +1560,16 @@ modal.show()
 </ul>
 <h2>Methods</h2>
 <h3>show()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any modal can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">modal.show()
 </code></pre>
 <h3>hide()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">modal.hide()
 </code></pre>
@@ -1794,7 +1579,7 @@ modal.show()
 <p>It is possible to set the text field value of any prompt type.</p>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your modal.
-To do this, you can use object and DOM events.</p>
+For this, you can use object and DOM events.</p>
 <table>
 <thead>
 <tr>
@@ -1805,19 +1590,19 @@ To do this, you can use object and DOM events.</p>
 <tbody>
 <tr>
 <td>show</td>
-<td>This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
 </tr>
 <tr>
 <td>shown</td>
-<td>This event is fired when the modal has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event is fired when the modal is completely visible to the user (will wait for CSS transitions to complete).</td>
 </tr>
 <tr>
 <td>hide</td>
-<td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
 </tr>
 <tr>
 <td>hidden</td>
-<td>This event is fired when the modal has finished being hidden from the user (will wait for CSS transitions to complete).</td>
+<td>This event is fired when the modal is completely hidden (will wait for CSS transitions to complete).</td>
 </tr>
 </tbody>
 </table>
@@ -1864,24 +1649,6 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 <p>[WIP]</p>
 <h2>Tabs</h2>
 <h3>Markup</h3>
-<pre></pre> <div class="example"><ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
-  </li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">First content.</div>
-  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">Second content.</div>
-  <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">Third content.</div>
-</div>
-</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-tabs&quot; role=&quot;tablist&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; id=&quot;home-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#home&quot; role=&quot;tab&quot; aria-controls=&quot;home&quot; aria-selected=&quot;true&quot;&gt;Home&lt;/a&gt;
@@ -1914,6 +1681,10 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
         <h1 class="heading">Navbar</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
+<h2>Dropdown</h2>
+<h3>No caret</h3>
+<h3>Caret</h3>
+<h2>Off-canvas menu</h2>
 
       </div>
       <div class="page" id="1_components/notification">
@@ -1937,15 +1708,6 @@ notif.show()
 </code></pre>
 <h2>Custom Notification</h2>
 <p>Conversely, you can create your own notification by specifying the <code>element</code> property.</p>
-<pre></pre> <div class="example"><div class="notification" id="myNotification">
-  <div class="notification-inner">
-    <div class="message">You have 2 messages in your inbox</div>
-    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;notification&quot; id=&quot;myNotification&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
@@ -1972,16 +1734,22 @@ notif.show()
 </ul>
 <h2>Methods</h2>
 <h3>show()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any notification can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">notif.show()
 </code></pre>
 <h3>hide()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">notif.hide()
 </code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your notification.
-To do this, you can use object and DOM events.</p>
+For this, you can use object and DOM events.</p>
 <table>
 <thead>
 <tr>
@@ -1992,19 +1760,19 @@ To do this, you can use object and DOM events.</p>
 <tbody>
 <tr>
 <td>show</td>
-<td>This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
 </tr>
 <tr>
 <td>shown</td>
-<td>This event is fired when the notification has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event is fired when the notification is completely visible to the user (will wait for CSS transitions to complete).</td>
 </tr>
 <tr>
 <td>hide</td>
-<td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
 </tr>
 <tr>
 <td>hidden</td>
-<td>This event is fired when the notification has finished being hidden from the user (will wait for CSS transitions to complete).</td>
+<td>This event is fired when the notification is completely hidden (will wait for CSS transitions to complete).</td>
 </tr>
 </tbody>
 </table>
@@ -2046,52 +1814,29 @@ document.querySelector('.notification').addEventListener('hidden.ph.notification
 
       </div>
       <div class="page" id="1_components/off-canvas">
-        <h1 class="heading">Off-canvas</h1>
+        <h1 class="heading">offcanvas</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<p>Add the class <code>off-canvas-left</code> if you want that the off-canvas appears from the left.
-Add the class <code>off-canvas-right</code> if you want that the off-canvas appears from the right.</p>
-<pre></pre> <div class="example"><!-- Button trigger off-canvas -->
-<button class="btn btn-primary" data-toggle="off-canvas" data-target="#exampleOffCanvas">Launch demo off-canvas</button>
+<p>Add the class <code>offcanvas-left</code> if you want that the offcanvas appears from the left.
+Add the class <code>offcanvas-right</code> if you want that the offcanvas appears from the right.</p>
+<pre><code class="language-html">&lt;!-- Button trigger offcanvas --&gt;
+&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;offcanvas&quot; data-target=&quot;#exampleOffCanvas&quot;&gt;Launch demo offcanvas&lt;/button&gt;
 
-<!-- Off-canvas, left direction -->
-<div class="off-canvas off-canvas-left" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
-  <div class="off-canvas-inner">
-    <div class="off-canvas-content">
-      <div class="off-canvas-header">
-        <h1 class="off-canvas-title">Title</h1>
-        <button type="button" class="close" data-dismiss="off-canvas" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="off-canvas-body">
-        <p>Content</p>
-      </div>
-      <div class="off-canvas-footer">
-        <p>Footer</p>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;!-- Button trigger off-canvas --&gt;
-&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;off-canvas&quot; data-target=&quot;#exampleOffCanvas&quot;&gt;Launch demo off-canvas&lt;/button&gt;
-
-&lt;!-- Off-canvas, left direction --&gt;
-&lt;div class=&quot;off-canvas off-canvas-left&quot; id=&quot;exampleOffCanvas&quot; role=&quot;navigation&quot; aria-hidden=&quot;true&quot; aria-labelledby=&quot;exampleOffCanvasTitle&quot;&gt;
-  &lt;div class=&quot;off-canvas-inner&quot;&gt;
-    &lt;div class=&quot;off-canvas-content&quot;&gt;
-      &lt;div class=&quot;off-canvas-header&quot;&gt;
-        &lt;h1 class=&quot;off-canvas-title&quot;&gt;Title&lt;/h1&gt;
-        &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;off-canvas&quot; aria-label=&quot;Close&quot;&gt;
+&lt;!-- offcanvas, left direction --&gt;
+&lt;div class=&quot;offcanvas offcanvas-left&quot; id=&quot;exampleOffCanvas&quot; role=&quot;navigation&quot; aria-hidden=&quot;true&quot; aria-labelledby=&quot;exampleOffCanvasTitle&quot;&gt;
+  &lt;div class=&quot;offcanvas-inner&quot;&gt;
+    &lt;div class=&quot;offcanvas-content&quot;&gt;
+      &lt;div class=&quot;offcanvas-header&quot;&gt;
+        &lt;h1 class=&quot;offcanvas-title&quot;&gt;Title&lt;/h1&gt;
+        &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;offcanvas&quot; aria-label=&quot;Close&quot;&gt;
           &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
         &lt;/button&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;off-canvas-body&quot;&gt;
+      &lt;div class=&quot;offcanvas-body&quot;&gt;
         &lt;p&gt;Content&lt;/p&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;off-canvas-footer&quot;&gt;
+      &lt;div class=&quot;offcanvas-footer&quot;&gt;
         &lt;p&gt;Footer&lt;/p&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -2099,13 +1844,13 @@ Add the class <code>off-canvas-right</code> if you want that the off-canvas appe
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<p>Note that you can add the class <code>off-canvas-aside</code> in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.</p>
-<pre><code class="language-js">const offCanvas = phonon.offCanvas({
+<p>Note that you can add the class <code>offcanvas-aside</code> in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.</p>
+<pre><code class="language-js">const offcanvas = phonon.offcanvas({
   element: '#exampleOffCanvas',
 });
 
 // jQuery support
-const offCanvas = $('#exampleOffCanvas').offCanvas();
+const offcanvas = $('#exampleOffCanvas').offcanvas();
 </code></pre>
 <h3>Options</h3>
 <ul>
@@ -2114,15 +1859,15 @@ const offCanvas = $('#exampleOffCanvas').offCanvas();
 <h3>Methods</h3>
 <h4>show()</h4>
 <p>Any off canvas can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
-<pre><code class="language-js">offCanvas.show();
+<pre><code class="language-js">offcanvas.show();
 </code></pre>
 <h4>hide()</h4>
 <p>Any off canvas can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
-<pre><code class="language-js">offCanvas.hide();
+<pre><code class="language-js">offcanvas.hide();
 </code></pre>
 <h3>Events</h3>
 <p>It may be useful to use the events that affect your off-canvas.
-To do this, you can use object and DOM events.</p>
+For this, you can use object and DOM events.</p>
 <table>
 <thead>
 <tr>
@@ -2133,24 +1878,24 @@ To do this, you can use object and DOM events.</p>
 <tbody>
 <tr>
 <td>show</td>
-<td>This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
 </tr>
 <tr>
 <td>shown</td>
-<td>This event is fired when the off-canvas has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event is fired when the off-canvas is completely visible to the user (will wait for CSS transitions to complete).</td>
 </tr>
 <tr>
 <td>hide</td>
-<td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
 </tr>
 <tr>
 <td>hidden</td>
-<td>This event is fired when the off-canvas has finished being hidden from the user (will wait for CSS transitions to complete).</td>
+<td>This event is fired when the off-canvas is completely hidden (will wait for CSS transitions to complete).</td>
 </tr>
 </tbody>
 </table>
 <h4>Object Events</h4>
-<pre><code class="language-js">phonon.offCanvas({
+<pre><code class="language-js">phonon.offcanvas({
   element: '#exampleOffCanvas',
   show: () =&gt; { // or onShow
     console.log('It works!')
@@ -2167,19 +1912,19 @@ To do this, you can use object and DOM events.</p>
 })
 </code></pre>
 <h4>DOM Events</h4>
-<pre><code class="language-js">document.querySelector('.off-canvas').addEventListener('show.ph.off-canvas', () =&gt; {
+<pre><code class="language-js">document.querySelector('.offcanvas').addEventListener('show.ph.offcanvas', () =&gt; {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('shown.ph.off-canvas', () =&gt; {
+document.querySelector('.offcanvas').addEventListener('shown.ph.offcanvas', () =&gt; {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('hide.ph.off-canvas', () =&gt; {
+document.querySelector('.offcanvas').addEventListener('hide.ph.offcanvas', () =&gt; {
   console.log('It works!')
 })
 
-document.querySelector('.off-canvas').addEventListener('hidden.ph.off-canvas', () =&gt; {
+document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () =&gt; {
   console.log('It works!')
 })
 </code></pre>
@@ -2190,19 +1935,11 @@ document.querySelector('.off-canvas').addEventListener('hidden.ph.off-canvas', (
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<pre></pre> <div class="example"><div class="progress" id="myProgress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <p>You can specify the height of the progress in HTML if you don't want to use JavaScript:</p>
-<pre></pre> <div class="example"><div class="progress" id="myProgress" style="height: 8px">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot; style=&quot;height: 8px&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -2239,20 +1976,32 @@ $('#myProgress').progress({
 </ul>
 <h2>Methods</h2>
 <h3>set(value: int)</h3>
+<ul>
+<li>returns: <code>&lt;undefined&gt;</code></li>
+</ul>
 <p>Updates the current value of the progress bar.</p>
 <h3>animate(startAnimation: boolean)</h3>
+<ul>
+<li>returns: <code>&lt;undefined&gt;</code></li>
+</ul>
 <p>Animates the striped progress. The <code>striped</code> option must be true otherwise it won't work.</p>
 <h3>show()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any progress can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">progress.show()
 </code></pre>
 <h3>hide()</h3>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
 <p>Any progress can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">progress.hide()
 </code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your progress.
-To do this, you can use object and DOM events.</p>
+For this, you can use object and DOM events.</p>
 <table>
 <thead>
 <tr>
@@ -2263,19 +2012,19 @@ To do this, you can use object and DOM events.</p>
 <tbody>
 <tr>
 <td>show</td>
-<td>This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
 </tr>
 <tr>
 <td>shown</td>
-<td>This event is fired when the progress has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.</td>
+<td>This event is fired when the progress is completely visible to the user (will wait for CSS transitions to complete).</td>
 </tr>
 <tr>
 <td>hide</td>
-<td>This event is fired immediately when the <code>hide</code> instance method has been called.</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
 </tr>
 <tr>
 <td>hidden</td>
-<td>This event is fired when the progress has finished being hidden from the user (will wait for CSS transitions to complete).</td>
+<td>This event is fired when the progress is completely hidden (will wait for CSS transitions to complete).</td>
 </tr>
 </tbody>
 </table>
@@ -2315,24 +2064,214 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 </code></pre>
 
       </div>
+      <div class="page" id="1_components/selectbox">
+        <h1 class="heading">Selectbox</h1>
+        <h2>Introduction</h2>
+<p>[WIP]</p>
+<h2>Markup</h2>
+<pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
+  &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
+  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
+  &lt;div class=&quot;selectbox-menu&quot;&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=&quot;true&quot;&gt;Blue&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
+    &lt;div class=&quot;item selected&quot; data-value=&quot;green&quot;&gt;
+      &lt;span class=&quot;description&quot;&gt;Best one!&lt;/span&gt;
+      &lt;span class=&quot;text&quot;&gt;Green&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Selectbox with invalid item</h3>
+<p>Add the class <code>disabled</code> to the item.</p>
+<pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
+  &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
+  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
+  &lt;div class=&quot;selectbox-menu&quot;&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=&quot;true&quot;&gt;Blue&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
+    &lt;div class=&quot;item disabled&quot;&gt;Invalid item&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Selectbox with header</h3>
+<pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
+  &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
+  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
+  &lt;div class=&quot;selectbox-menu&quot;&gt;
+    &lt;div class=&quot;header&quot;&gt;Header&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Selectbox with divider</h3>
+<pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
+  &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
+  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
+  &lt;div class=&quot;selectbox-menu&quot;&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
+    &lt;div class=&quot;divider&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;orange&quot;&gt;Orange&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;yellow&quot;&gt;Yellow&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Selectbox with search input</h3>
+<pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-search=&quot;true&quot; data-toggle=&quot;selectbox&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
+  &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
+  &lt;div class=&quot;default-text&quot;&gt;Blue&lt;/div&gt;
+  &lt;div class=&quot;selectbox-menu&quot;&gt;
+    &lt;div class=&quot;input-search-container&quot;&gt;
+      &lt;input class=&quot;form-control&quot; type=&quot;text&quot; name=&quot;search&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;blue&quot; data-selected=true&gt;Blue&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;red&quot;&gt;Red&lt;/div&gt;
+    &lt;div class=&quot;item&quot; data-value=&quot;green&quot;&gt;Green&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>For the selected item, add <code>data-selected</code>.
+For each item, you must add <code>data-value</code>.
+By default, the module will try to find the text node otherwise, it will check if the attribute <code>data-text</code> is present.</p>
+<p>Add the class <code>selectbox-lg</code> to increase the size.</p>
+<pre></pre> <div class="example"><div class="selectbox selectbox-lg" data-toggle="selectbox">
+...
+</div>
+</div>
+<pre><code class="language-html-with-example">&lt;div class=&quot;selectbox selectbox-lg&quot; data-toggle=&quot;selectbox&quot;&gt;
+...
+&lt;/div&gt;
+</code></pre>
+<p>Add the class <code>selectbox-sm</code> to reduce the size.</p>
+<pre></pre> <div class="example"><div class="selectbox selectbox-sm" data-toggle="selectbox">
+...
+</div>
+</div>
+<pre><code class="language-html-with-example">&lt;div class=&quot;selectbox selectbox-sm&quot; data-toggle=&quot;selectbox&quot;&gt;
+...
+&lt;/div&gt;
+</code></pre>
+<h2>JavaScript</h2>
+<pre><code class="language-js">const selectbox = phonon.selectbox({
+  element: '.selectbox',
+});
+
+// or for a search selectbox
+const searchSelectbox = phonon.selectbox({
+  element: '.selectbox-search',
+  search: true,
+});
+</code></pre>
+<h3>Options</h3>
+<ul>
+<li>search</li>
+<li>filterItem(search, item)</li>
+</ul>
+<h3>Methods</h3>
+<h4>getSelected()</h4>
+<ul>
+<li>returns: <code>&lt;String&gt;</code></li>
+</ul>
+<p>Returns the selected value.</p>
+<h4>setSelected(value: string, text: string)</h4>
+<ul>
+<li><code>value</code> - the selected value.</li>
+<li><code>text</code> - the text to display for the given <code>value</code>.</li>
+<li>returns: <code>&lt;undefined&gt;</code></li>
+</ul>
+<p>Set the current value.</p>
+<pre><code class="language-js">selectbox.setSelected('green');
+</code></pre>
+<p>it is possible to display a custom text with the second parameter.</p>
+<pre><code class="language-js">selectbox.setSelected('green', 'Current text');
+</code></pre>
+<h4>show()</h4>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Any selectbox can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
+<pre><code class="language-js">selectbox.show();
+</code></pre>
+<h4>hide()</h4>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Any selectbox can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
+<pre><code class="language-js">selectbox.hide();
+</code></pre>
+<h4>toggle()</h4>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Any selectbox can be toggled with JavaScript. For this, we call the <code>toggle()</code> method:</p>
+<pre><code class="language-js">selectbox.toggle();
+</code></pre>
+<h2>Events</h2>
+<p>It may be useful to use the events that affect your selectbox.
+For this, you can use object and DOM events.</p>
+<table>
+<thead>
+<tr>
+<th>Event Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>show</td>
+<td>This event fires immediately when the <code>show</code> instance method is called.</td>
+</tr>
+<tr>
+<td>shown</td>
+<td>This event is fired when the selectbox is completely visible to the user (will wait for CSS transitions to complete).</td>
+</tr>
+<tr>
+<td>hide</td>
+<td>This event is fired immediately when the <code>hide</code> instance method is called.</td>
+</tr>
+<tr>
+<td>hidden</td>
+<td>This event is fired when the selectbox is completely hidden (will wait for CSS transitions to complete).</td>
+</tr>
+</tbody>
+</table>
+<h3>Object Events</h3>
+<pre><code class="language-js">phonon.selectbox({
+  element: '.selectbox',
+  show: () =&gt; { // or onShow
+    console.log('It works!')
+  },
+  shown: () =&gt; { // or onShown
+    console.log('It works!')
+  },
+  hide: () =&gt; { // or onHide
+    console.log('It works!')
+  },
+  hidden: () =&gt; { // or onHidden
+    console.log('It works!')
+  },
+  itemSelected(selected) { // or onItemSelected
+    console.log('It works!')
+    console.log(selected.item)
+    console.log(selected.text)
+    console.log(selected.value)
+  }
+})
+</code></pre>
+
+      </div>
       <div class="page" id="1_components/tab">
         <h1 class="heading">Tab</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<pre></pre> <div class="example"><ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="news-tab" data-toggle="tab" href="#news" role="tab" aria-controls="news" aria-selected="true">News</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="news" role="tabpanel" aria-labelledby="news-tab">News</div>
-  <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">Settings</div>
-</div>
-</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-tabs&quot; id=&quot;myTab&quot; role=&quot;tablist&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; id=&quot;news-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#news&quot; role=&quot;tab&quot; aria-controls=&quot;news&quot; aria-selected=&quot;true&quot;&gt;News&lt;/a&gt;
@@ -2354,19 +2293,29 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 // jQuery support
 const tab = $('#settings-tab').tab();
 </code></pre>
-<h2>Methods</h2>
-<h3>show</h3>
+<h3>Methods</h3>
+<h4>show()</h4>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Any tab can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">tab.show();
 </code></pre>
-<h3>hide</h3>
+<h4>hide()</h4>
+<ul>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Any tab can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">tab.hide();
 </code></pre>
 <h2>Events</h2>
+<p>@todo</p>
 
       </div>
       <div class="page" id="1_components/table">
         <h1 class="heading">Table</h1>
         <h2>Introduction</h2>
+<p>A table permits to arrange data into rows and columns of cells.</p>
 <p>[WIP]</p>
 
       </div>
@@ -2394,12 +2343,6 @@ pager.start();
 </code></pre>
 <h2>Markup</h2>
 <p>A SPA page is defined by setting up the <code>app-page</code> class and a unique data-page attribute.</p>
-<pre></pre> <div class="example"><div class="app-pages">
-  <div class="app-page" data-page="myPage"></div>
-  <div class="app-page" data-page="mySecondPage"></div>
-  <div class="app-page" data-page="myThirdPage"></div>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;mySecondPage&quot;&gt;&lt;/div&gt;
@@ -2408,8 +2351,6 @@ pager.start();
 </code></pre>
 <h2>Page Navigation</h2>
 <p>Page navigation works with the attribute <code>data-navigate</code>.</p>
-<pre></pre> <div class="example"><button class="btn btn-primary" data-navigate="myPage">Go to page</button>
-</div>
 <pre><code class="language-html">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;myPage&quot;&gt;Go to page&lt;/button&gt;
 </code></pre>
 <p>If you want to force the back animation, you can use the attribute <code>data-pop-page</code>.</p>
@@ -2427,10 +2368,6 @@ in the HTML view.</p>
 <pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
-<pre></pre> <div class="example"><div data-push-template>
-  <!-- The template will be injected here -->
-</div>
-</div>
 <pre><code class="language-html">&lt;div data-push-template&gt;
   &lt;!-- The template will be injected here --&gt;
 &lt;/div&gt;
@@ -2578,19 +2515,11 @@ window.addEventListener('myPage.hash', event =&gt; {
 </code></pre>
 <h2>Markup</h2>
 <p>The HTML elements with the <code>data-t</code> attribute will be modified by the module. For example, <strong>text</strong> will insert the internationalized text into the element.</p>
-<pre></pre> <div class="example"><h1 data-t="text: welcome"></h1>
-<input type="text" class="form-control" data-t="value: welcome" value="">
-<input type="text" class="form-control" data-t="data-attr: welcome, placeholder: welcome" value="">
-</div>
 <pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;&lt;/h1&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;&quot;&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
 <p>If the locale is <code>en</code>, the result would be:</p>
-<pre></pre> <div class="example"><h1 data-t="text: welcome">Welcome</h1>
-<input type="text" class="form-control" data-t="value: welcome" value="Welcome">
-<input type="text" class="form-control" data-attr="Welcome" placeholder="Welcome" data-t="data-attr: welcome, placeholder: welcome" value="">
-</div>
 <pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;Welcome&quot;&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-attr=&quot;Welcome&quot; placeholder=&quot;Welcome&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
@@ -2666,12 +2595,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Add borders</h2>
-<pre></pre> <div class="example"><span class="border"></span>
-<span class="border-top"></span>
-<span class="border-right"></span>
-<span class="border-bottom"></span>
-<span class="border-left"></span>
-</div>
 <pre><code class="language-html">&lt;span class=&quot;border&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-top&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-right&quot;&gt;&lt;/span&gt;
@@ -2679,12 +2602,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border-left&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Remove borders</h2>
-<pre></pre> <div class="example"><span class="border-0"></span>
-<span class="border-top-0"></span>
-<span class="border-right-0"></span>
-<span class="border-bottom-0"></span>
-<span class="border-left-0"></span>
-</div>
 <pre><code class="language-html">&lt;span class=&quot;border-0&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-top-0&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-right-0&quot;&gt;&lt;/span&gt;
@@ -2692,16 +2609,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border-left-0&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Colors</h2>
-<pre></pre> <div class="example"><span class="border border-primary"></span>
-<span class="border border-secondary"></span>
-<span class="border border-success"></span>
-<span class="border border-danger"></span>
-<span class="border border-warning"></span>
-<span class="border border-info"></span>
-<span class="border border-light"></span>
-<span class="border border-dark"></span>
-<span class="border border-white"></span>
-</div>
 <pre><code class="language-html">&lt;span class=&quot;border border-primary&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border border-secondary&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border border-success&quot;&gt;&lt;/span&gt;
@@ -2713,14 +2620,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border border-white&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Corners (radius)</h2>
-<pre></pre> <div class="example"><img src="..." alt="..." class="rounded">
-<img src="..." alt="..." class="rounded-top">
-<img src="..." alt="..." class="rounded-right">
-<img src="..." alt="..." class="rounded-bottom">
-<img src="..." alt="..." class="rounded-left">
-<img src="..." alt="..." class="rounded-circle">
-<img src="..." alt="..." class="rounded-0">
-</div>
 <pre><code class="language-html">&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded&quot;&gt;
 &lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-top&quot;&gt;
 &lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-right&quot;&gt;
@@ -2736,11 +2635,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Example</h2>
-<pre></pre> <div class="example"><div class="bg-info clearfix">
-  <button type="button" class="btn btn-secondary float-left">Example Button floated left</button>
-  <button type="button" class="btn btn-secondary float-right">Example Button floated right</button>
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;bg-info clearfix&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-left&quot;&gt;Example Button floated left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-right&quot;&gt;Example Button floated right&lt;/button&gt;
@@ -2753,10 +2647,6 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Example</h2>
-<pre></pre> <div class="example"><button type="button" class="close" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
-</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;close&quot; aria-label=&quot;Close&quot;&gt;
   &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
 &lt;/button&gt;
@@ -2857,10 +2747,6 @@ auto sets margin or padding to <code>auto</code></p>
 <code>my-{size}</code> - sets both margin-top and margin-bottom of size <code>{size}</code>
 <code>m-{size}</code> - sets margin in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre> <div class="example"><div class="pt-2 pr-1 pb-1 pr-1"></div>
-
-<div class="px-2 py-4"></div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;px-2 py-4&quot;&gt;&lt;/div&gt;
@@ -2875,19 +2761,11 @@ auto sets margin or padding to <code>auto</code></p>
 <code>py-{size}</code> - sets both padding-top and padding-bottom of size <code>{size}</code>
 <code>p-{size}</code> - sets padding in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre> <div class="example"><div class="mt-2 mr-1 mb-1 mr-1"></div>
-
-<div class="mx-2 my-4"></div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;mx-2 my-4&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2>Horizontal centering</h2>
-<pre></pre> <div class="example"><div class="mx-auto" style="width: 200px;">
-  Centered element
-</div>
-</div>
 <pre><code class="language-html">&lt;div class=&quot;mx-auto&quot; style=&quot;width: 200px;&quot;&gt;
   Centered element
 &lt;/div&gt;
@@ -2900,7 +2778,7 @@ auto sets margin or padding to <code>auto</code></p>
 
       </div>
 
-      <footer class="footer">
+      <footer class="docs-footer">
         Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.2
       </footer>
     </section>

@@ -45,27 +45,46 @@ The options can be passed in the constructor of this plugin.
 
 ### Methods
 
-#### show()
+#### show(collapse)
+
+* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 collapse.show();
 ```
 
-#### hide()
+#### hide(collapse)
+
+* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 collapse.hide();
 ```
 
-#### toggle()
+#### toggle(collapse)
+
+* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
 
 ```js
 collapse.toggle();
 ```
 
-### Events
+## Events
 
-#### Object Events
+It may be useful to use the events that affect your collapse.
+For this, you can use object and DOM events.
+
+|     Event Type     |     Description      |
+|--------------------|----------------------|
+|  show    |   This event fires immediately when the `show` instance method is called.   |
+|  shown   |  This event is fired when the collapse is completely visible to the user (will wait for CSS transitions to complete).    |
+|  hide    |    This event is fired immediately when the `hide` instance method is called.   |
+|  hidden  |   This event is fired when the collapse is completely hidden (will wait for CSS transitions to complete).    |
+
+
+### Object Events
 
 ```js
 phonon.collapse({

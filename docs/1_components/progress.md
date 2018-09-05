@@ -59,13 +59,19 @@ $('#myProgress').progress({
 
 ### set(value: int)
 
+* returns: `<undefined>`
+
 Updates the current value of the progress bar.
 
 ### animate(startAnimation: boolean)
 
+* returns: `<undefined>`
+
 Animates the striped progress. The `striped` option must be true otherwise it won't work.
 
 ### show()
+
+* returns: `<Promise<Boolean>>`
 
 Any progress can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -74,6 +80,8 @@ progress.show()
 ```
 
 ### hide()
+
+* returns: `<Promise<Boolean>>`
 
 Any progress can be hidden with JavaScript. For this, we call the `hide()` method:
 
@@ -84,15 +92,15 @@ progress.hide()
 ## Events
 
 It may be useful to use the events that affect your progress.
-To do this, you can use object and DOM events.
+For this, you can use object and DOM events.
 
 
 |     Event Type     |     Description      |
 |--------------------|----------------------|
-|  show    |   This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.   |
-|  shown   |  This event is fired when the progress has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.    |
-|  hide    |    This event is fired immediately when the <code>hide</code> instance method has been called.   |
-|  hidden  |   This event is fired when the progress has finished being hidden from the user (will wait for CSS transitions to complete).    |
+|  show    |   This event fires immediately when the `show` instance method is called.   |
+|  shown   |  This event is fired when the progress is completely visible to the user (will wait for CSS transitions to complete).    |
+|  hide    |    This event is fired immediately when the `hide` instance method is called.   |
+|  hidden  |   This event is fired when the progress is completely hidden (will wait for CSS transitions to complete).    |
 
 
 ### Object Events

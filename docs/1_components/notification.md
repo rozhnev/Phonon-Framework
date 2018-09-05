@@ -62,6 +62,8 @@ notif.show()
 
 ### show()
 
+* returns: `<Promise<Boolean>>`
+
 Any notification can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
@@ -69,6 +71,8 @@ notif.show()
 ```
 
 ### hide()
+
+* returns: `<Promise<Boolean>>`
 
 Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 
@@ -79,15 +83,15 @@ notif.hide()
 ## Events
 
 It may be useful to use the events that affect your notification.
-To do this, you can use object and DOM events.
+For this, you can use object and DOM events.
 
 
 |     Event Type     |     Description      |
 |--------------------|----------------------|
-|  show    |   This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.   |
-|  shown   |  This event is fired when the notification has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.    |
-|  hide    |    This event is fired immediately when the <code>hide</code> instance method has been called.   |
-|  hidden  |   This event is fired when the notification has finished being hidden from the user (will wait for CSS transitions to complete).    |
+|  show    |   This event fires immediately when the `show` instance method is called.   |
+|  shown   |  This event is fired when the notification is completely visible to the user (will wait for CSS transitions to complete).    |
+|  hide    |    This event is fired immediately when the `hide` instance method is called.   |
+|  hidden  |   This event is fired when the notification is completely hidden (will wait for CSS transitions to complete).    |
 
 
 ### Object Events

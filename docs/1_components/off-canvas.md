@@ -75,16 +75,17 @@ offcanvas.hide();
 
 ### Events
 
-It may be useful to use the events that affect your offcanvas.
-To do this, you can use object and DOM events.
+It may be useful to use the events that affect your off-canvas.
+For this, you can use object and DOM events.
 
 
 |     Event Type     |     Description      |
 |--------------------|----------------------|
-|  show    |   This event fires immediately when the <code>show</code> instance method is called. If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.   |
-|  shown   |  This event is fired when the offcanvas has been made visible to the user (will wait for CSS transitions to complete). If caused by a click, the clicked element is available as the <code>relatedTarget</code> property of the event.    |
-|  hide    |    This event is fired immediately when the <code>hide</code> instance method has been called.   |
-|  hidden  |   This event is fired when the offcanvas has finished being hidden from the user (will wait for CSS transitions to complete).    |
+|  show    |   This event fires immediately when the `show` instance method is called.   |
+|  shown   |  This event is fired when the off-canvas is completely visible to the user (will wait for CSS transitions to complete).    |
+|  hide    |    This event is fired immediately when the `hide` instance method is called.   |
+|  hidden  |   This event is fired when the off-canvas is completely hidden (will wait for CSS transitions to complete).    |
+
 
 
 #### Object Events

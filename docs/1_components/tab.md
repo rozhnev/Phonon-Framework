@@ -35,18 +35,28 @@ const tab = phonon.tab({
 const tab = $('#settings-tab').tab();
 ```
 
-## Methods
+### Methods
 
-### show
+#### show()
+
+* returns: `<Promise<Boolean>>`
+
+Any tab can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
 tab.show();
 ```
 
-### hide
+#### hide()
+
+* returns: `<Promise<Boolean>>`
+
+Any tab can be hidden with JavaScript. For this, we call the `hide()` method:
 
 ```js
 tab.hide();
 ```
 
 ## Events
+
+@todo

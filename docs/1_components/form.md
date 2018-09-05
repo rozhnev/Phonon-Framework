@@ -4,6 +4,8 @@ title: Form
 
 ## Introduction
 
+A form contains inputs to collect user input.
+
 ## Input
 
 ```html

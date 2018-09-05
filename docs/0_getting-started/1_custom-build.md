@@ -15,7 +15,7 @@ Please, see the source code of [phonon.scss](https://github.com/quark-dev/Phonon
 // import required components for your project
 @import 'phonon/src/scss/phonon/notification';
 @import 'phonon/src/scss/phonon/off-canvas';
-@import 'phonon/src/scss/phonon/dropdown';
+@import 'phonon/src/scss/phonon/selectbox';
 ```
 
 ## JavaScript
@@ -25,5 +25,5 @@ Please, see the source code of [phonon.scss](https://github.com/quark-dev/Phonon
 import 'phonon/dist/js/phonon'
 
 // import required components for your project
-const Dropdown = require('phonon/dist/js/components/dropdown');
+const Selectbox = require('phonon/dist/js/components/selectbox');
 ```

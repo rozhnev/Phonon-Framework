@@ -21,7 +21,7 @@ The installation can take place in several ways:
 
 ## Starter Template
 
-```html!
+```html
 <!doctype html>
 <html lang="en">
   <head>

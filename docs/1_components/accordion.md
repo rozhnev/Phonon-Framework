@@ -4,11 +4,11 @@ title: Accordion
 
 ## Introduction
 
-[WIP]
+An accordion is a component that displays one of the collapsible elements in a limited amout of space.
 
 ## Markup
 
-```html
+```html-with-example
 <div class="accordion" id="exampleAccordion" role="tablist">
   <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
     Collapsible Group Item #1
@@ -43,15 +43,21 @@ const accordion = phonon.accordion({
 const accordion = $('#exampleAccordion').accordion();
 ```
 
-## Methods
+### Methods
 
-### show(collapse: any)
+#### show(collapse)
+
+* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 accordion.show('#collapseTwo');
 ```
 
-### hide(collapse: any)
+#### hide(collapse)
+
+* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 accordion.hide('#collapseTwo');
@@ -59,4 +65,5 @@ accordion.hide('#collapseTwo');
 
 ## Events
 
-Listen for events of the [collapse](#1_components/collapse) elements.
+The accordion component has events related to the collapse elements.
+See events of [collapse](#1_components/collapse) component.

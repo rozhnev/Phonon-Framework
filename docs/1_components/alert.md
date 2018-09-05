@@ -4,10 +4,9 @@ title: Alert
 
 ## Introduction
 
-
+An alert displays a box with a specified message.
 
 ## Markup
-
 
 ```html
 <div class="alert alert-primary" role="alert">
@@ -37,7 +36,6 @@ title: Alert
 ```
 
 ### Link color
-
 
 ```html
 <div class="alert alert-primary" role="alert">
@@ -89,23 +87,40 @@ const alert = phonon.alert({
 
 ### Options
 
-- fade
+- `fade` (boolean) - if `fade` is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element.
 
 ### Methods
 
-#### show
+#### show(alert)
+
+* `alert` (Element | String) - if `alert` is a String, it is interpreted as a selector. If it is an object, it is expected that the `alert` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 alert.show()
 ```
 
-#### hide
+#### hide(alert)
+
+* `alert` (Element | String) - if `alert` is a String, it is interpreted as a selector. If it is an object, it is expected that the `alert` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 alert.hide()
 ```
 
-### Events
+## Events
+
+It may be useful to use the events that affect your alert.
+For this, you can use object and DOM events.
+
+|     Event Type     |     Description      |
+|--------------------|----------------------|
+|  show    |   This event fires immediately when the `show` instance method is called.   |
+|  shown   |  This event is fired when the alert is completely visible to the user (will wait for CSS transitions to complete).    |
+|  hide    |    This event is fired immediately when the `hide` instance method is called.   |
+|  hidden  |   This event is fired when the alert is completely hidden (will wait for CSS transitions to complete).    |
+
 
 ### Object Events
 
@@ -126,7 +141,7 @@ phonon.alert({
 });
 ```
 
-#### DOM Events
+### DOM Events
 
 ```js
 document.querySelector('.alert').addEventListener('show.ph.alert', () => {

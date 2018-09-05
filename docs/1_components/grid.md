@@ -4,4 +4,7 @@ title: Grid
 
 ## Introduction
 
-[WIP]
+A grid system is a layout with rows and columns.
+
+
+
