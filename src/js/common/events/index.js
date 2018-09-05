@@ -78,6 +78,6 @@ export default {
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
 
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected',
 }

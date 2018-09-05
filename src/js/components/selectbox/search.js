@@ -3,11 +3,11 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Dropdown from './index'
+import Selectbox from './index'
 import { findTargetByClass, createJqueryPlugin } from '../../common/utils'
 import { getAttributesConfig } from '../componentManager'
 
-const DropdownSearch = (($) => {
+const SelectboxSearch = (($) => {
 
   /**
    * ------------------------------------------------------------------------
@@ -15,7 +15,7 @@ const DropdownSearch = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = Dropdown.identifier()
+  const NAME = Selectbox.identifier()
   const DEFAULT_PROPERTIES = {
     element: null,
     default: true,
@@ -32,7 +32,7 @@ const DropdownSearch = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  class DropdownSearch extends Dropdown {
+  class SelectboxSearch extends Selectbox {
 
     constructor(options = {}) {
       super(options)
@@ -87,7 +87,7 @@ const DropdownSearch = (($) => {
     }
 
     getSearchInput() {
-      return this.options.element.querySelector('.dropdown-menu input')
+      return this.options.element.querySelector('.selectbox-menu input')
     }
 
     hide() {
@@ -100,7 +100,7 @@ const DropdownSearch = (($) => {
     }
 
     static DOMInterface(options) {
-      return new DropdownSearch(options)
+      return new SelectboxSearch(options)
     }
   }
 
@@ -109,7 +109,7 @@ const DropdownSearch = (($) => {
    * jQuery
    * ------------------------------------------------------------------------
    */
-  createJqueryPlugin($, NAME, DropdownSearch);
+  createJqueryPlugin($, NAME, SelectboxSearch);
 
   /**
    * ------------------------------------------------------------------------
@@ -117,33 +117,31 @@ const DropdownSearch = (($) => {
    * ------------------------------------------------------------------------
    */
   const components = []
-  const dropdowns = document.querySelectorAll(`.${NAME}`)
+  const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || [])
 
-  if (dropdowns) {
-    Array.from(dropdowns).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+  selectboxes.filter(d => !d.classList.contains('nav-item')).forEach((element) => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
+    config.element = element
 
-      if (config.search) {
-        // search
-        components.push(new DropdownSearch(config))
-      }
-    })
-  }
+    if (config.search) {
+      // search
+      components.push(new SelectboxSearch(config))
+    }
+  })
 
-  if (dropdowns) {
+  if (selectboxes) {
     document.addEventListener('click', (event) => {
-      const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu')
-      if (dropdownMenu) {
+      const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu')
+      if (selectboxMenu) {
         return
       }
 
-      const dropdown = findTargetByClass(event.target, 'dropdown')
+      const selectbox = findTargetByClass(event.target, 'selectbox')
 
-      if (dropdown) {
-        const dataToggleAttr = dropdown.getAttribute('data-toggle')
-        if (dataToggleAttr && dataToggleAttr === NAME && dropdown) {
-          const component = components.find(c => c.getElement() === dropdown)
+      if (selectbox) {
+        const dataToggleAttr = selectbox.getAttribute('data-toggle')
+        if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+          const component = components.find(c => c.getElement() === selectbox)
 
           if (!component) {
             return
@@ -155,7 +153,7 @@ const DropdownSearch = (($) => {
     })
   }
 
-  return DropdownSearch
+  return SelectboxSearch
 })(window.$ ? window.$ : null)
 
-export default DropdownSearch
+export default SelectboxSearch

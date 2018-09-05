@@ -4,11 +4,11 @@
  * --------------------------------------------------------------------------
  */
 import Component from '../component'
-import Event from '../../common/events'
-import { findTargetByClass } from '../../common/utils'
 import { getAttributesConfig } from '../componentManager'
+import Event from '../../common/events'
+import { findTargetByAttr, findTargetByClass, createJqueryPlugin, sleep } from '../../common/utils'
 
-const Dropdown = (() => {
+const Dropdown = (($) => {
   /**
    * ------------------------------------------------------------------------
    * Constants
@@ -16,16 +16,16 @@ const Dropdown = (() => {
    */
 
   const NAME = 'dropdown'
+  const MENU = 'dropdown-menu'
+  const MENU_ITEM = 'dropdown-item'
   const VERSION = '2.0.0'
   const DEFAULT_PROPERTIES = {
     element: null,
-    default: true,
-    search: false,
-  }
+    hover: true,
+  };
   const DATA_ATTRS_PROPERTIES = [
-    'default',
-    'search',
-  ]
+    'hover',
+  ];
 
   /**
    * ------------------------------------------------------------------------
@@ -36,212 +36,176 @@ const Dropdown = (() => {
   class Dropdown extends Component {
 
     constructor(options = {}) {
-      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false)
+      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
+      this.onTransition = false;
 
-      const selected = this.options.element.querySelector('[data-selected]')
-      const item = this.getItemData(selected)
 
-      this.setSelected(item.value, item.text, false)
-    }
+      if (this.options.hover) {
+        this.registerElement({ target: this.options.element, event: 'mouseover' });
+        this.registerElement({ target: this.options.element, event: 'mouseleave' });
 
-    setSelected(value = '', text = null, checkExists = true) {
-      if (!this.options.default) {
-        return false
+        this.options.element.addEventListener('mouseover', (event) => {
+          this.show();
+        });
+
+        this.options.element.addEventListener('mouseleave', (event) => {
+          this.hide();
+        });
       }
-
-      let textDisplay = text
-      this.options.element.querySelector('.default-text').innerHTML = text
-      this.options.element.querySelector('input[type="hidden"]').value = value
-
-      const items = this.options.element.querySelectorAll('.item') || []
-      let itemFound = false
-
-      Array.from(items).forEach((item) => {
-        if (item.classList.contains('selected')) {
-          item.classList.remove('selected')
-        }
-
-        const data = this.getItemData(item)
-
-        if (value === data.value) {
-          if (!item.classList.contains('selected')) {
-            item.classList.add('selected')
-          }
-
-          textDisplay = data.text
-          itemFound = true
-        }
-      })
-
-      if (checkExists && itemFound) {
-        this.options.element.querySelector('.default-text').innerHTML = textDisplay
-      } else if (checkExists && !itemFound) {
-        throw new Error(`${NAME}. The value "${value}" does not exist in the list of items.`)
-      }
-
-      return true
-    }
-
-    getSelected() {
-      return this.options.element.querySelector('input[type="hidden"]').value
-    }
-
-    getItemData(item = null) {
-      let text = ''
-      let value = ''
-
-      if (item) {
-        text = item.getAttribute('data-text') || item.innerHTML
-
-        const selectedTextNode = item.querySelector('.text')
-        if (selectedTextNode) {
-          text = selectedTextNode.innerHTML
-        }
-
-        value = item.getAttribute('data-value') || ''
-      }
-
-      return { text, value }
     }
 
     onElementEvent(event) {
-      if (event.type === Event.START) {
-        const dropdown = findTargetByClass(event.target, 'dropdown')
-
-        /*
-         * hide the current dropdown only if the event concerns another dropdown
-         * hide also if the user clicks outside a dropdown
-         */
-        if (!dropdown || dropdown !== this.getElement()) {
-          this.hide()
-        }
-      } else if (event.type === 'click') {
-        const item = findTargetByClass(event.target, 'item')
-
-        if (item) {
-          if (item.classList.contains('disabled')) {
-            return
-          }
-
-          const itemInfo = this.getItemData(item)
-
-          if (this.getSelected() !== itemInfo.value) {
-            // the user selected another value, we dispatch the event
-            this.setSelected(itemInfo.value, itemInfo.text, false)
-            const detail = { item, text: itemInfo.text, value: itemInfo.value }
-            this.triggerEvent(Event.ITEM_SELECTED, detail)
-          }
-
-          this.hide()
-          return
-        }
-
-        // don't toggle the dropdown if the event concerns headers, dividers
-        const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu')
-        if (dropdownMenu) {
-          return
-        }
-
-        this.toggle()
+      if (event.type === 'mouseover') {
+        this.show();
+        return;
       }
+
+      if (event.type === 'mouseleave') {
+        this.hide();
+      }
+    }
+
+    async show() {
+      if (this.onTransition) {
+        return false;
+      }
+
+      if (this.options.element.classList.contains('show')) {
+        return false
+      }
+
+      this.onTransition = true;
+
+      this.triggerEvent(Event.SHOW)
+
+      const onShow = () => {
+        // dropdown menu
+        this.triggerEvent(Event.SHOWN)
+
+        this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
+        this.onTransition = false;
+      }
+
+      // dropdown handler
+      this.options.element.classList.add('show');
+
+      this.getMenu().classList.add('show')
+
+      this.getMenu().addEventListener(Event.TRANSITION_END, onShow);
+
+      await sleep(20);
+
+      this.getMenu().classList.add('animate');
+    }
+
+    getMenu() {
+      return this.options.element.querySelector(`.${MENU}`);
     }
 
     toggle() {
-      if (this.options.element.classList.contains('active')) {
-        return this.hide()
+      if (this.options.element.classList.contains('show')) {
+        this.hide();
+      } else {
+        this.show();
       }
-
-      return this.show()
-    }
-
-    show() {
-      if (this.options.element.classList.contains('active')) {
-        return false
-      }
-
-      this.options.element.classList.add('active')
-
-      const dropdownMenu = this.options.element.querySelector('.dropdown-menu')
-
-      // scroll to top
-      dropdownMenu.scrollTop = 0
-
-      this.triggerEvent(Event.SHOW)
-      this.triggerEvent(Event.SHOWN)
-
-      this.registerElement({ target: dropdownMenu, event: 'click' })
-      this.registerElement({ target: document.body, event: Event.START })
-
-      return true
     }
 
     hide() {
-      if (!this.options.element.classList.contains('active')) {
+      if (this.onTransition) {
         return false
       }
 
-      this.options.element.classList.remove('active')
+      if (!this.options.element.classList.contains('show')) {
+        return false
+      }
 
+      this.onTransition = true
       this.triggerEvent(Event.HIDE)
-      this.triggerEvent(Event.HIDDEN)
 
-      this.unregisterElement({ target: this.options.element.querySelector('.dropdown-menu'), event: 'click' })
-      this.unregisterElement({ target: document.body, event: Event.START })
+      const onHide = () => {
+        // dropdown menu
+        this.getMenu().classList.remove('show');
 
-      return true
+        this.triggerEvent(Event.HIDDEN)
+        this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
+        this.onTransition = false;
+      }
+
+      // dropdown handler
+      this.options.element.classList.remove('show');
+
+      this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+
+      this.getMenu().classList.remove('animate');
     }
 
     static identifier() {
-      return NAME
+      return NAME;
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Dropdown, options)
+      return super.DOMInterface(Dropdown, options);
     }
   }
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  createJqueryPlugin($, NAME, Dropdown);
 
   /**
    * ------------------------------------------------------------------------
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = []
+  const components = [];
 
-  const dropdowns = document.querySelectorAll(`.${NAME}`)
-  if (dropdowns) {
-    Array.from(dropdowns).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+  const dropdowns = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
-      if (!config.search) {
-        components.push(new Dropdown(config))
-      }
-    })
-  }
+  dropdowns.forEach((element) => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
 
-  document.addEventListener('click', (event) => {
-    const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu')
-    if (dropdownMenu) {
-      return
-    }
-
-    const dropdown = findTargetByClass(event.target, 'dropdown')
-
-    if (dropdown) {
-      const dataToggleAttr = dropdown.getAttribute('data-toggle')
-      if (dataToggleAttr && dataToggleAttr === NAME && dropdown) {
-        const component = components.find(c => c.getElement() === dropdown)
-
-        if (!component) {
-          return
-        }
-
-        component.toggle()
-      }
-    }
+    components.push(Dropdown.DOMInterface(config));
   })
 
-  return Dropdown
-})()
+  document.addEventListener('click', (event) => {
+    const dropdown = findTargetByClass(event.target, NAME);
+    const dropdownMenuItem = findTargetByClass(event.target, MENU_ITEM);
 
-export default Dropdown
+    if (dropdown) {
+      const component = components.find(c => c.getElement() === dropdown);
+
+      if (!component) {
+        return;
+      }
+
+      if (dropdownMenuItem) {
+        // click in menu
+        component.hide();
+        return;
+      }
+
+      component.show();
+    }
+  });
+
+  document.addEventListener(Event.START, (event) => {
+    const dropdown = findTargetByClass(event.target, NAME);
+    const activeDropdown = document.querySelector('.dropdown.show');
+
+    if (dropdown || !activeDropdown) {
+      return;
+    }
+
+    const activeComponent = components.find(c => c.getElement() === activeDropdown);
+
+    activeComponent.hide();
+  });
+
+  return Dropdown;
+})(window.$ ? window.$ : null);
+
+export default Dropdown;

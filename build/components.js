@@ -42,7 +42,7 @@ const components = {
   ModalConfirm: path.resolve(__dirname, '../src/js/components/modal/confirm.js'),
   ModalLoader: path.resolve(__dirname, '../src/js/components/modal/loader.js'),
   ModalPrompt: path.resolve(__dirname, '../src/js/components/modal/prompt.js'),
-  Dropdown: path.resolve(__dirname, '../src/js/components/dropdown/index.js'),
+  Selectbox: path.resolve(__dirname, '../src/js/components/selectbox/index.js'),
   Loader: path.resolve(__dirname, '../src/js/components/loader/index.js'),
   Notification: path.resolve(__dirname, '../src/js/components/notification/index.js'),
   OffCanvas: path.resolve(__dirname, '../src/js/components/off-canvas/index.js'),
