@@ -1,275 +1,208 @@
-$dropdown-width: auto;
-$dropdown-min-width: 220px;
-$dropdown-line-height: $input-line-height;
-$dropdown-line-height-sm: $input-line-height-sm;
-$dropdown-line-height-lg: $input-line-height-lg;
-
-$dropdown-padding-y: $input-padding-y;
-$dropdown-padding-x: $input-padding-x;
-
-$dropdown-padding-y-sm: $input-padding-y-sm;
-$dropdown-padding-x-sm: $input-padding-x-sm;
-
-$dropdown-padding-y-lg: $input-padding-y-lg;
-$dropdown-padding-x-lg: $input-padding-x-lg;
-
-$dropdown-border-radius: $btn-border-radius;
-$dropdown-border-color: gray('500');
-$dropdown-hover-border-color: $primary;
-$dropdown-border-weight: 1px;
-$dropdown-border-transition-duration: 300ms;
-
-$dropdown-background: #f9f9f9;
-
-$dropdown-default-text-color: #555;
-
-// dropdown menu
-$dropdown-menu-max-height: 44px * 4;
-$dropdown-menu-border-radius: $dropdown-border-radius;
-$dropdown-menu-border-color: $dropdown-border-color;
-$dropdown-menu-hover-border-color: $dropdown-hover-border-color;
-$dropdown-menu-border-weight: $dropdown-border-weight;
-$dropdown-menu-border-transition-duration: $dropdown-border-transition-duration;
-
-$dropdown-menu-background: $white;
-
-// dropdown menu item
-$dropdown-menu-item-border-weight: 1px;
-$dropdown-menu-item-border-color: gray('300');
-$dropdown-menu-item-color: gray('700');
-$dropdown-menu-item-background: $dropdown-menu-background;
-$dropdown-menu-item-hover-color: inherit;
-$dropdown-menu-item-hover-background: gray('100');
-$dropdown-menu-item-selected-color: $white;
-$dropdown-menu-item-selected-background: $primary;
-$dropdown-menu-item-line-height: $input-line-height;
-
-// dropdown menu header
-$dropdown-menu-header-color: gray('700');
-
-// dropdown menu divider
-$dropdown-menu-divider-border-color: gray('500');
-$dropdown-menu-divider-border-weight: 1px;
-
-$dropdown-menu-description-color: gray('600');
-
-.dropdown {
-  display: inline-block;
+// The dropdown wrapper (`<div>`)
+.dropup,
+.dropright,
+.dropdown,
+.dropleft {
   position: relative;
-  transform: rotateZ(0deg);
-  transition: border-color $dropdown-border-transition-duration ease-in-out;
-  outline: none;
-  border: $dropdown-border-weight solid $dropdown-border-color;
+}
 
-  @if $enable-rounded {
-    border-radius: $dropdown-border-radius;
+.dropdown-toggle {
+  // Generate the caret automatically
+  &.caret {
+    @include caret;
   }
+}
 
-  border-color: $dropdown-border-color;
-  background-color: $dropdown-background;
-  cursor: pointer;
-
-  padding: $dropdown-padding-y $dropdown-padding-x;
-  width: $dropdown-width;
+// The dropdown menu
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: calc(-50% - 7px); // @phonon
+  z-index: $zindex-dropdown;
+  display: none; // none by default, but block on "open" of the menu
+  float: left;
   min-width: $dropdown-min-width;
+  padding: $dropdown-padding-y 0;
+  margin: $dropdown-spacer 0 0; // override default ul
+  font-size: $font-size-base; // Redeclare because nesting can cause inheritance issues
+  color: $body-color;
+  text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+  list-style: none;
+  background-color: $dropdown-bg;
+  background-clip: padding-box;
+  // border: $dropdown-border-width solid $dropdown-border-color; // @phonon
+  @include border-radius($dropdown-border-radius);
+  @include box-shadow($dropdown-box-shadow);
 
-  vertical-align: middle;
-  line-height: $dropdown-line-height;
+  transform: translate3d(0, 3px, 0);
+  transition: transform 300ms ease-in-out; // @phonon
 
-  white-space: normal;
-  word-wrap: break-word;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  // @phonon:
+  border: 1px solid gray('300');
+  border-top: 0;
 
-  &.dropdown-sm {
-    padding: $dropdown-padding-y-sm $dropdown-padding-x-sm;
-    line-height: $dropdown-line-height-sm;
+  &::after {
+    position: absolute;
+    top: -10px;
+    content: '';
+    width: 100%;
+    height: 19px;
+    background-color: transparent;
   }
 
-  &.dropdown-lg {
-    padding: $dropdown-padding-y-lg $dropdown-padding-x-lg;
-    line-height: $dropdown-line-height-lg;
-  }
-
-  &.active {
-    height: auto;
-    z-index: 10;
-
-    .dropdown-icon {
-      transform: rotate(180deg);
-    }
-
-    .dropdown-menu {
+  &::before {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      top: -5px;
+      right: calc(50% - 7px);
+      background: inherit;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      border-radius: 4px;
+      content: '';
       display: block;
-      border-top: 0;
-    }
-
-    &:focus {
-      box-shadow: none !important;
-    }
   }
+}
 
-  // hidden input
-  select {
-    display: none;
-  }
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+}
 
-  &:hover {
-    border-color: $dropdown-hover-border-color;
-
-    .dropdown-menu {
-      border-color: $dropdown-menu-hover-border-color;
-    }
-  }
-
-  &:focus {
-    box-shadow: $btn-focus-box-shadow;
-  }
-
-  // default text
-  .default-text {
-    color: $dropdown-default-text-color;
-  }
-
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Just add .dropup after the standard .dropdown class and you're set.
+.dropup {
   .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    transition: border-color $dropdown-menu-border-transition-duration ease-in-out;
-    z-index: 11;
-    margin: 0 -1px 0 -1px;
-    outline: none;
-    border: $dropdown-menu-border-weight solid $dropdown-menu-border-color;
+    top: auto;
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: $dropdown-spacer;
+  }
 
-    @if $enable-rounded {
-      border-radius: 0 0 $dropdown-border-radius $dropdown-border-radius;
-    }
-
-    background-color: $dropdown-menu-background;
-    cursor: auto;
-    padding: 0;
-    // min-width: max-content;
-    width: calc(100% + 2px);
-    max-height: $dropdown-menu-max-height;
-
-    font-size: $font-size-base;
-    will-change: transform;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-    backface-visibility: hidden;
-
-    -webkit-overflow-scrolling: touch;
-
-    > * {
-      white-space: nowrap;
-    }
-
-    .input-search-container {
-      margin: ($spacer / 2) $spacer;
-    }
-
-    // menu item
-    .item {
-      display: block;
-      position: relative;
-      background-color: $dropdown-menu-item-background;
-      cursor: pointer;
-      height: auto;
-      line-height: $dropdown-menu-item-line-height;
-      color: $dropdown-menu-item-color;
-
-      padding: $dropdown-padding-y $dropdown-padding-x;
-
-      font-size: $font-size-base;
-
-      transition: background-color $dropdown-border-transition-duration ease-in-out,
-      color $dropdown-border-transition-duration ease-in-out;
-
-      -webkit-touch-callout: none;
-
-      border-top: $dropdown-menu-item-border-weight solid $dropdown-menu-item-border-color;
-      white-space: normal;
-      word-wrap: normal;
-
-      &:hover {
-        z-index: 13;
-        background-color: $dropdown-menu-item-hover-background;
-        color: $dropdown-menu-item-hover-color;
-      }
-
-      &.selected {
-        background-color: $dropdown-menu-item-selected-background;
-        color: $dropdown-menu-item-selected-color;
-
-        // keep same style
-        &:hover {
-          background-color: $dropdown-menu-item-selected-background;
-          color: $dropdown-menu-item-selected-color;
-        }
-
-        .description {
-          color: $dropdown-menu-item-selected-color;
-        }
-      }
-
-      &.disabled {
-        pointer-events: none;
-        cursor: default;
-        opacity: .45;
-      }
+  .dropdown-toggle {
+    &.caret {
+      @include caret(up);
     }
   }
+}
 
-  // icon
-  .dropdown-icon {
-    position: absolute;
-
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 6px 4px 0 4px;
-    border-color: #000 transparent transparent transparent;
-
-    top: calc(50% - 4px);
-    right: 1em;
-
-    transition: transform 300ms ease-in-out;
-
-    z-index: 3;
-    cursor: pointer;
-    text-align: center;
-
-    backface-visibility: hidden;
+.dropright {
+  .dropdown-menu {
+    top: 0;
+    right: auto;
+    left: 100%;
+    margin-top: 0;
+    margin-left: $dropdown-spacer;
   }
 
-  // menu header
-  .header {
-    margin: 1rem 0rem 0.75rem;
-    padding: 0em 1.14285714rem;
-    text-transform: uppercase;
-    color: $dropdown-menu-header-color;
-    font-size: $font-size-sm;
-    font-weight: bold;
+  .dropdown-toggle {
+    &.caret {
+      @include caret(right);
+    }
+    &::after {
+      vertical-align: 0;
+    }
+  }
+}
+
+.dropleft {
+  .dropdown-menu {
+    top: 0;
+    right: 100%;
+    left: auto;
+    margin-top: 0;
+    margin-right: $dropdown-spacer;
   }
 
-  // menu divider
-  .divider {
-    margin: .5em 0;
-    border-top: $dropdown-menu-divider-border-weight solid $dropdown-menu-divider-border-color;
-    height: 0;
+  .dropdown-toggle {
+    &.caret {
+      @include caret(left);
+    }
+    &::before {
+      vertical-align: 0;
+    }
+  }
+}
+
+// When enabled Popper.js, reset basic dropdown position
+// stylelint-disable no-duplicate-selectors
+.dropdown-menu {
+  &[x-placement^="top"],
+  &[x-placement^="right"],
+  &[x-placement^="bottom"],
+  &[x-placement^="left"] {
+    right: auto;
+    bottom: auto;
+  }
+}
+// stylelint-enable no-duplicate-selectors
+
+// Dividers (basically an `<hr>`) within the dropdown
+.dropdown-divider {
+  @include nav-divider($dropdown-divider-bg);
+}
+
+// Links, buttons, and more within the dropdown menu
+//
+// `<button>`-specific styles are denoted with `// For <button>s`
+.dropdown-item {
+  display: block;
+  width: 100%; // For `<button>`s
+  padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+  clear: both;
+  font-weight: $font-weight-normal;
+  color: $dropdown-link-color;
+  text-align: inherit; // For `<button>`s
+  white-space: nowrap; // prevent links from randomly breaking onto new lines
+  background-color: transparent; // For `<button>`s
+  border: 0; // For `<button>`s
+
+  @include hover-focus {
+    color: $dropdown-link-hover-color;
+    text-decoration: none;
+    @include gradient-bg($dropdown-link-hover-bg);
   }
 
-  // menu item text
-  .text {
-    display: inline-block;
+  &.active,
+  &:active {
+    color: $dropdown-link-active-color;
+    text-decoration: none;
+    @include gradient-bg($dropdown-link-active-bg);
   }
 
-  // menu item description
-  .description {
-    float: right;
-    color: $dropdown-menu-description-color;
-    font-size: $font-size-sm;
-    margin-top: 2px;
+  &.disabled,
+  &:disabled {
+    color: $dropdown-link-disabled-color;
+    background-color: transparent;
+    // Remove CSS gradients if they're enabled
+    @if $enable-gradients {
+      background-image: none;
+    }
   }
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu.animate {// @phonon
+  transform: translate3d(0, 0, 0);// @phonon
+}
+
+// Dropdown section headers
+.dropdown-header {
+  display: block;
+  padding: $dropdown-padding-y $dropdown-item-padding-x;
+  margin-bottom: 0; // for use with heading elements
+  font-size: $font-size-sm;
+  color: $dropdown-header-color;
+  white-space: nowrap; // as with > li > a
+}
+
+// Dropdown text
+.dropdown-item-text {
+  display: block;
+  padding: $dropdown-item-padding-y $dropdown-item-padding-x;
+  color: $dropdown-link-color;
 }

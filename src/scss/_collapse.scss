@@ -1,7 +1,6 @@
 
 .collapse {
   display: none;
-  overflow: hidden;
   transition: height 300ms ease-in-out;
 
   &.show {
@@ -11,10 +10,12 @@
 
 .collapsing {
   display: block;
+  overflow: hidden;
 }
 
 .collapse-l,
 .collapse-r {
+  z-index: $zindex-navbar-collapse;
   position: fixed;
   display: block;
   top: 56px;

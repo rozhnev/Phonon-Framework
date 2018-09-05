@@ -1,33 +1,33 @@
 
-$zindex-off-canvas-backdrop: 900;
-$off-canvas-backdrop-bg: rgba(0, 0, 0, .25);
+$zindex-offcanvas-backdrop: 900;
+$offcanvas-backdrop-bg: rgba(0, 0, 0, .25);
 
-$off-canvas-zindex: 910;
-$off-canvas-background: $white;
-$off-canvas-margin: $spacer;
-$off-canvas-header-padding: $off-canvas-margin;
-$off-canvas-inner-padding: $off-canvas-margin;
-$off-canvas-header-border-width: 1px;
-$off-canvas-header-border-color: gray('300');
+$offcanvas-zindex: 910;
+$offcanvas-background: $white;
+$offcanvas-margin: $spacer;
+$offcanvas-header-padding: $offcanvas-margin;
+$offcanvas-inner-padding: $offcanvas-margin;
+$offcanvas-header-border-width: 1px;
+$offcanvas-header-border-color: gray('300');
 
-$off-canvas-footer-border-width: 1px;
-$off-canvas-footer-border-color: gray('300');
+$offcanvas-footer-border-width: 1px;
+$offcanvas-footer-border-color: gray('300');
 
-$off-canvas-container-border-width: 1px;
-$off-canvas-container-border-color: gray('300');
+$offcanvas-container-border-width: 1px;
+$offcanvas-container-border-color: gray('300');
 
-$off-canvas-sm: 310px; // almost full width
-$off-canvas-md: 250px; // should be around 20 - 30%
-$off-canvas-lg: 320px;
+$offcanvas-sm: 310px; // almost full width
+$offcanvas-md: 250px; // should be around 20 - 30%
+$offcanvas-lg: 320px;
 
-.off-canvas-backdrop {
+.offcanvas-backdrop {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: $zindex-off-canvas-backdrop;
-  background-color: $off-canvas-backdrop-bg;
+  z-index: $zindex-offcanvas-backdrop;
+  background-color: $offcanvas-backdrop-bg;
 
   &.fadeout {
     transition: opacity .45s linear;
@@ -35,35 +35,35 @@ $off-canvas-lg: 320px;
   }
 }
 
-.off-canvas-aside-left {
-  margin-left: $off-canvas-sm;
-  width: calc(100% - #{$off-canvas-sm});
+.offcanvas-aside-left {
+  margin-left: $offcanvas-sm;
+  width: calc(100% - #{$offcanvas-sm});
 }
 
-.off-canvas-aside-right {
-  margin-right: $off-canvas-sm;
-  width: calc(100% - #{$off-canvas-sm});
+.offcanvas-aside-right {
+  margin-right: $offcanvas-sm;
+  width: calc(100% - #{$offcanvas-sm});
 }
 
-.off-canvas {
+.offcanvas {
   position: fixed;
   top: 0;
   bottom: 0;
   visibility: hidden;
-  z-index: $off-canvas-zindex;
-  border-right: $off-canvas-container-border-width solid $off-canvas-container-border-color;
-  background-color: $off-canvas-background;
-  width: $off-canvas-sm;
+  z-index: $offcanvas-zindex;
+  border-right: $offcanvas-container-border-width solid $offcanvas-container-border-color;
+  background-color: $offcanvas-background;
+  width: $offcanvas-sm;
   height: 100%;
 
-  &.off-canvas-left {
+  &.offcanvas-left {
     left: 0;
-    transform: translate3d(#{-$off-canvas-sm}, 0, 0);
+    transform: translate3d(#{-$offcanvas-sm}, 0, 0);
   }
 
-  &.off-canvas-right {
+  &.offcanvas-right {
     right: 0;
-    transform: translate3d(#{$off-canvas-sm}, 0, 0);
+    transform: translate3d(#{$offcanvas-sm}, 0, 0);
   }
 
   &.animate {
@@ -80,13 +80,13 @@ $off-canvas-lg: 320px;
     visibility: visible;
   }
 
-  .off-canvas-inner {
+  .offcanvas-inner {
     position: relative;
-    margin: $off-canvas-margin;
+    margin: $offcanvas-margin;
     height: 100%;
     pointer-events: none;
 
-    .off-canvas-content {
+    .offcanvas-content {
       display: flex;
       position: relative;
       flex-direction: column;
@@ -97,66 +97,66 @@ $off-canvas-lg: 320px;
 
       height: 100%;
 
-      .off-canvas-header {
+      .offcanvas-header {
         display: flex;
         align-items: flex-start; // so the close btn always stays on the upper right corner
         justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
-        padding: $off-canvas-header-padding;
-        border-bottom: $off-canvas-header-border-width solid $off-canvas-header-border-color;
+        padding: $offcanvas-header-padding;
+        border-bottom: $offcanvas-header-border-width solid $offcanvas-header-border-color;
 
-        .off-canvas-title {
+        .offcanvas-title {
           margin-bottom: 0;
         }
       }
 
-      .off-canvas-body {
+      .offcanvas-body {
         position: relative;
         flex: 1 1 auto;
-        padding: $off-canvas-inner-padding;
+        padding: $offcanvas-inner-padding;
       }
 
       // footer
-      .off-canvas-footer {
+      .offcanvas-footer {
         display: flex;
         align-items: center; // vertically center
         justify-content: flex-start; // left align items
-        padding: $off-canvas-inner-padding;
-        border-top: $off-canvas-footer-border-width solid $off-canvas-footer-border-color;
+        padding: $offcanvas-inner-padding;
+        border-top: $offcanvas-footer-border-width solid $offcanvas-footer-border-color;
       }
     }
   }
 }
 
 @include media-breakpoint-up(md) {
-  .off-canvas {
-    transform: translate3d(#{-$off-canvas-md}, 0, 0);
-    width: $off-canvas-md;
+  .offcanvas {
+    transform: translate3d(#{-$offcanvas-md}, 0, 0);
+    width: $offcanvas-md;
   }
 
-  .off-canvas-aside-left {
-    margin-left: $off-canvas-md;
-    width: calc(100% - #{$off-canvas-md});
+  .offcanvas-aside-left {
+    margin-left: $offcanvas-md;
+    width: calc(100% - #{$offcanvas-md});
   }
 
-  .off-canvas-aside-right {
-    margin-right: $off-canvas-md;
-    width: calc(100% - #{$off-canvas-md});
+  .offcanvas-aside-right {
+    margin-right: $offcanvas-md;
+    width: calc(100% - #{$offcanvas-md});
   }
 }
 
 @include media-breakpoint-up(lg) {
-  .off-canvas {
-    transform: translate3d(#{-$off-canvas-lg}, 0, 0);
-    width: $off-canvas-lg;
+  .offcanvas {
+    transform: translate3d(#{-$offcanvas-lg}, 0, 0);
+    width: $offcanvas-lg;
   }
 
-  .off-canvas-aside-left {
-    margin-left: $off-canvas-lg;
-    width: calc(100% - #{$off-canvas-lg});
+  .offcanvas-aside-left {
+    margin-left: $offcanvas-lg;
+    width: calc(100% - #{$offcanvas-lg});
   }
 
-  .off-canvas-aside-right {
-    margin-left: $off-canvas-lg;
-    width: calc(100% - #{$off-canvas-lg});
+  .offcanvas-aside-right {
+    margin-left: $offcanvas-lg;
+    width: calc(100% - #{$offcanvas-lg});
   }
 }
