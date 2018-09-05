@@ -15,9 +15,9 @@ const OffCanvas = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'offCanvas'
+  const NAME = 'offcanvas'
   const VERSION = '2.0.0'
-  const BACKDROP_SELECTOR = 'off-canvas-backdrop'
+  const BACKDROP_SELECTOR = 'offcanvas-backdrop'
   const DEFAULT_PROPERTIES = {
     element: null,
     aside: {
@@ -62,7 +62,7 @@ const OffCanvas = (($) => {
 
     checkDirection() {
       this.directions.every((direction) => {
-        if (this.options.element.classList.contains(`off-canvas-${direction}`)) {
+        if (this.options.element.classList.contains(`offcanvas-${direction}`)) {
           this.direction = direction
           return false
         }
@@ -100,8 +100,8 @@ const OffCanvas = (($) => {
       const content = document.body
 
       if (this.options.aside[name] === true) {
-        if (!content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-          content.classList.add(`off-canvas-aside-${this.direction}`)
+        if (!content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+          content.classList.add(`offcanvas-aside-${this.direction}`)
         }
 
         this.useBackdrop = false
@@ -112,8 +112,8 @@ const OffCanvas = (($) => {
         // remove previous backdrop
         this.removeBackdrop()
       } else {
-        if (content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-          content.classList.remove(`off-canvas-aside-${this.direction}`)
+        if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+          content.classList.remove(`offcanvas-aside-${this.direction}`)
         }
 
         this.hide()
@@ -127,7 +127,7 @@ const OffCanvas = (($) => {
         return
       }
 
-      // hide the off-canvas
+      // hide the offcanvas
       this.hide()
     }
 
@@ -278,15 +278,14 @@ const OffCanvas = (($) => {
    */
   const components = []
 
-  const offCanvas = document.querySelectorAll(`.${NAME}`)
-  if (offCanvas) {
-    Array.from(offCanvas).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+  const offCanvas = Array.from(document.querySelectorAll(`.${NAME}`) || [])
 
-      components.push({ element, offCanvas: new OffCanvas(config) })
-    })
-  }
+  offCanvas.forEach((element) => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
+    config.element = element
+
+    components.push({ element, offCanvas: new OffCanvas(config) })
+  })
 
   document.addEventListener('click', (event) => {
     const target = findTargetByAttr(event.target, 'data-toggle')

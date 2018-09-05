@@ -4,7 +4,7 @@
  * --------------------------------------------------------------------------
  */
 
-import { dispatchPageEvent } from '../../common/events/dispatch'
+import { dispatchPageEvent } from '../../common/events/dispatch';
 
 const Page = (() => {
   /**
@@ -13,10 +13,10 @@ const Page = (() => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'page'
-  const VERSION = '2.0.0'
+  const NAME = 'page';
+  const VERSION = '2.0.0';
 
-  const TEMPLATE_SELECTOR = '[data-template]'
+  const TEMPLATE_SELECTOR = '[data-template]';
 
   /**
    * ------------------------------------------------------------------------
@@ -30,16 +30,16 @@ const Page = (() => {
      * @param {string} pageName
      */
     constructor(pageName) {
-      this.name = pageName
-      this.events = []
-      this.templatePath = null
-      this.renderFunction = null
+      this.name = pageName;
+      this.events = [];
+      this.templatePath = null;
+      this.renderFunction = null;
     }
 
     // getters
 
     static get version() {
-      return `${NAME}.${VERSION}`
+      return `${NAME}.${VERSION}`;
     }
 
     /**
@@ -47,7 +47,7 @@ const Page = (() => {
      * @returns {Function[]}
      */
     getEvents() {
-      return this.events
+      return this.events;
     }
 
     /**
@@ -55,7 +55,7 @@ const Page = (() => {
      * @returns {string}
      */
     getTemplate() {
-      return this.template
+      return this.template;
     }
 
     /**
@@ -63,27 +63,27 @@ const Page = (() => {
      * @returns {Function}
      */
     getRenderFunction() {
-      return this.renderFunction
+      return this.renderFunction;
     }
 
     async renderTemplate() {
-      const pageElement = document.querySelector(`[data-page="${this.name}"]`)
+      const pageElement = document.querySelector(`[data-page="${this.name}"]`);
 
       let render = async function (DOMPage, template, elements) {
         if (elements) {
           Array.from(elements).forEach((el) => {
-            el.innerHTML = template
-          })
+            el.innerHTML = template;
+          });
         } else {
-          DOMPage.innerHTML = template
+          DOMPage.innerHTML = template;
         }
-      }
+      };
 
       if (this.getRenderFunction()) {
-        render = this.getRenderFunction()
+        render = this.getRenderFunction();
       }
 
-      await render(pageElement, this.getTemplate(), Array.from(pageElement.querySelectorAll(TEMPLATE_SELECTOR) || []))
+      await render(pageElement, this.getTemplate(), Array.from(pageElement.querySelectorAll(TEMPLATE_SELECTOR) || []));
     }
 
     // public
@@ -93,7 +93,7 @@ const Page = (() => {
      * @param {*} callbackFn
      */
     addEventCallback(callbackFn) {
-      this.events.push(callbackFn)
+      this.events.push(callbackFn);
     }
 
     /**
@@ -104,13 +104,13 @@ const Page = (() => {
      */
     setTemplate(template = null, renderFunction = null) {
       if (typeof template !== 'string') {
-        throw new Error('The template path must be a string. ' + typeof template + ' is given')
+        throw new Error(`The template path must be a string. ${typeof template} is given`);
       }
 
-      this.template = template
+      this.template = template;
 
       if (typeof renderFunction === 'function') {
-        this.renderFunction = renderFunction
+        this.renderFunction = renderFunction;
       }
     }
 
@@ -136,26 +136,26 @@ const Page = (() => {
      * @param {{}} [eventParams={}]
      */
     triggerScopes(eventName, eventParams = {}) {
-      const eventNameAlias = `on${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`
+      const eventNameAlias = `on${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`;
 
       this.events.forEach((scope) => {
-        const scopeEvent = scope[eventName]
-        const scopeEventAlias = scope[eventNameAlias]
+        const scopeEvent = scope[eventName];
+        const scopeEventAlias = scope[eventNameAlias];
         if (typeof scopeEvent === 'function') {
-          scopeEvent.apply(this, eventParams)
+          scopeEvent.apply(this, eventParams);
         }
 
         // trigger the event alias
         if (typeof scopeEventAlias === 'function') {
-          scopeEventAlias.apply(this, eventParams)
+          scopeEventAlias.apply(this, eventParams);
         }
-      })
+      });
 
-      dispatchPageEvent(eventName, this.name, eventParams)
+      dispatchPageEvent(eventName, this.name, eventParams);
     }
   }
 
-  return Page
-})()
+  return Page;
+})();
 
-export default Page
+export default Page;

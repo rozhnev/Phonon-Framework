@@ -3,19 +3,18 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Modal from './index'
-import { getAttributesConfig } from '../componentManager'
-import { createJqueryPlugin } from '../../common/utils'
+import Modal from './index';
+import { getAttributesConfig } from '../componentManager';
+import { createJqueryPlugin } from '../../common/utils';
 
 const Confirm = (($) => {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'confirm'
+  const NAME = 'confirm';
   const DEFAULT_PROPERTIES = {
     element: null,
     title: null,
@@ -36,10 +35,10 @@ const Confirm = (($) => {
         class: 'btn btn-primary',
       },
     ],
-  }
+  };
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
-  ]
+  ];
 
   /**
    * ------------------------------------------------------------------------
@@ -48,37 +47,37 @@ const Confirm = (($) => {
    */
 
   class Confirm extends Modal {
-
     constructor(options = {}) {
-      const template = '' +
-      '<div class="modal" tabindex="-1" role="modal">' +
-        '<div class="modal-inner" role="document">' +
-          '<div class="modal-content">' +
-            '<div class="modal-header">' +
-              '<h5 class="modal-title"></h5>' +
-            '</div>' +
-            '<div class="modal-body">' +
-              '<p></p>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
+      const opts = options;
+      const template = ''
+      + '<div class="modal" tabindex="-1" role="modal">'
+        + '<div class="modal-inner" role="document">'
+          + '<div class="modal-content">'
+            + '<div class="modal-header">'
+              + '<h5 class="modal-title"></h5>'
+            + '</div>'
+            + '<div class="modal-body">'
+              + '<p></p>'
+            + '</div>'
+            + '<div class="modal-footer">'
+            + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>';
 
-      if (!Array.isArray(options.buttons)) {
-        options.buttons = DEFAULT_PROPERTIES.buttons
+      if (!Array.isArray(opts.buttons)) {
+        opts.buttons = DEFAULT_PROPERTIES.buttons;
       }
 
-      super(options, template)
+      super(opts, template);
     }
 
     static identifier() {
-      return NAME
+      return NAME;
     }
 
     static DOMInterface(options) {
-      return new Confirm(options)
+      return new Confirm(options);
     }
   }
 
@@ -94,41 +93,41 @@ const Confirm = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = []
-  const modals = document.querySelectorAll(`.${Modal.identifier()}`)
+  const components = [];
+  const modals = document.querySelectorAll(`.${Modal.identifier()}`);
 
   if (modals) {
     Array.from(modals).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
 
       if (config.type === NAME) {
         // confirm
-        components.push(new Confirm(config))
+        components.push(new Confirm(config));
       }
-    })
+    });
   }
 
   document.addEventListener('click', (event) => {
-    const dataToggleAttr = event.target.getAttribute('data-toggle')
+    const dataToggleAttr = event.target.getAttribute('data-toggle');
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      const id = event.target.getAttribute('data-target')
-      const element = document.querySelector(id)
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
 
-      const component = components.find(c => c.element === element)
+      const component = components.find(c => c.element === element);
 
       if (!component) {
-        return
+        return;
       }
 
       // remove the focus state of the trigger
-      event.target.blur()
+      event.target.blur();
 
-      component.modal.show()
+      component.modal.show();
     }
-  })
+  });
 
-  return Confirm
-})(window.$ ? window.$ : null)
+  return Confirm;
+})(window.$ ? window.$ : null);
 
-export default Confirm
+export default Confirm;

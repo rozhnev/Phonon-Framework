@@ -11,8 +11,8 @@ const Binder = (() => {
   * ------------------------------------------------------------------------
   */
 
-  const NAME = 'i18n-binder'
-  const VERSION = '2.0.0'
+  const NAME = 'i18n-binder';
+  const VERSION = '2.0.0';
 
   /**
    * ------------------------------------------------------------------------
@@ -21,46 +21,45 @@ const Binder = (() => {
    */
 
   class Binder {
-
     /**
      * @param {HTMLElement} element
      * @param {Object} data
      */
     constructor(element, data) {
-      this.element = element
-      this.data = data
+      this.element = element;
+      this.data = data;
 
       if (!this.isElement(this.element)) {
         console.log('Warning, an element is invalid');
-        return
+        return;
       }
 
       // array of HTMLElement
       if (this.element.length && this.element.length > 0) {
-        this.setNodes(this.element)
+        this.setNodes(this.element);
       } else {
         // single HTMLElement
-        this.setNode(this.element)
+        this.setNode(this.element);
       }
     }
 
     // getters
 
     static get version() {
-      return `${NAME}.${VERSION}`
+      return `${NAME}.${VERSION}`;
     }
 
     /**
      * Checks if the given argument is a DOM element
-     * @param {HTMLElement} the argument to test
+     * @param {Element} the argument to test
      * @return {boolean} true if the object is a DOM element, false otherwise
      */
     isElement(element) {
       if (element === null) {
-        return false
+        return false;
       }
 
-      return element instanceof Node || element instanceof NodeList
+      return element instanceof Node || element instanceof NodeList;
     }
 
     /**
@@ -70,9 +69,9 @@ const Binder = (() => {
     */
     setText(element, text) {
       if (!('textContent' in element)) {
-        element.innerText = text
+        element.innerText = text;
       } else {
-        element.textContent = text
+        element.textContent = text;
       }
     }
 
@@ -82,7 +81,7 @@ const Binder = (() => {
      * @param {String} text
      */
     setHtml(element, text) {
-      element.innerHTML = text
+      element.innerHTML = text;
     }
 
     /**
@@ -92,7 +91,7 @@ const Binder = (() => {
      * @param {String} text
      */
     setAttribute(element, attr, text) {
-      element.setAttribute(attr, text)
+      element.setAttribute(attr, text);
     }
 
     /**
@@ -100,32 +99,32 @@ const Binder = (() => {
      * @param {HTMLElement} element
      */
     setNode(element) {
-      let attr = element.getAttribute('data-t')
+      let attr = element.getAttribute('data-t');
       if (!attr) {
-        return
+        return;
       }
 
-      attr = attr.trim()
+      attr = attr.trim();
 
-      const r = /(?:\s|^)([A-Za-z-_0-9]+):\s*(.*?)(?=\s+\w+:|$)/g
-      let m
+      const r = /(?:\s|^)([A-Za-z-_0-9]+):\s*(.*?)(?=\s+\w+:|$)/g;
+      let m;
 
       while (m = r.exec(attr)) {
-        const key = m[1].trim()
-        const value = m[2].trim().replace(',', '')
-        let i18nValue = this.data[value]
+        const key = m[1].trim();
+        const value = m[2].trim().replace(',', '');
+        let i18nValue = this.data[value];
 
         if (!this.data[value]) {
-          console.log(`${NAME}. Warning, ${value} does not exist.`)
-          i18nValue = value
+          console.log(`${NAME}. Warning, ${value} does not exist.`);
+          i18nValue = value;
         }
 
-        const methodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1)
+        const methodName = `set${key.charAt(0).toUpperCase()}${key.slice(1)}`;
 
         if (this[methodName]) {
-          this[methodName](element, i18nValue)
+          this[methodName](element, i18nValue);
         } else {
-          this.setAttribute(element, key, i18nValue)
+          this.setAttribute(element, key, i18nValue);
         }
       }
     }
@@ -135,11 +134,11 @@ const Binder = (() => {
      * @param {HTMLElement} element
      */
     setNodes(element) {
-      Array.from(element).forEach(el => this.setNode(el))
+      Array.from(element).forEach(el => this.setNode(el));
     }
   }
 
-  return Binder
-})()
+  return Binder;
+})();
 
-export default Binder
+export default Binder;

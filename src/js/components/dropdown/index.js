@@ -3,10 +3,12 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Component from '../component'
-import { getAttributesConfig } from '../componentManager'
-import Event from '../../common/events'
-import { findTargetByAttr, findTargetByClass, createJqueryPlugin, sleep } from '../../common/utils'
+import Component from '../component';
+import { getAttributesConfig } from '../componentManager';
+import Event from '../../common/events';
+import {
+  findTargetByAttr, findTargetByClass, createJqueryPlugin, sleep,
+} from '../../common/utils';
 
 const Dropdown = (($) => {
   /**
@@ -15,10 +17,10 @@ const Dropdown = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'dropdown'
-  const MENU = 'dropdown-menu'
-  const MENU_ITEM = 'dropdown-item'
-  const VERSION = '2.0.0'
+  const NAME = 'dropdown';
+  const MENU = 'dropdown-menu';
+  const MENU_ITEM = 'dropdown-item';
+  const VERSION = '2.0.0';
   const DEFAULT_PROPERTIES = {
     element: null,
     hover: true,
@@ -34,7 +36,6 @@ const Dropdown = (($) => {
    */
 
   class Dropdown extends Component {
-
     constructor(options = {}) {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
       this.onTransition = false;
@@ -65,78 +66,98 @@ const Dropdown = (($) => {
       }
     }
 
-    async show() {
-      if (this.onTransition) {
-        return false;
-      }
+    /**
+     * Shows the dropdown
+     * @return {Promise} Promise object represents the completed animation
+     */
+    show() {
+      return new Promise(async (resolve, reject) => {
+        if (this.onTransition) {
+          reject();
+          return;
+        }
 
-      if (this.options.element.classList.contains('show')) {
-        return false
-      }
+        if (this.options.element.classList.contains('show')) {
+          reject();
+          return;
+        }
 
-      this.onTransition = true;
+        this.onTransition = true;
 
-      this.triggerEvent(Event.SHOW)
+        this.triggerEvent(Event.SHOW);
 
-      const onShow = () => {
-        // dropdown menu
-        this.triggerEvent(Event.SHOWN)
+        const onShow = () => {
+          // dropdown menu
+          this.triggerEvent(Event.SHOWN);
 
-        this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
-        this.onTransition = false;
-      }
+          this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
+          this.onTransition = false;
 
-      // dropdown handler
-      this.options.element.classList.add('show');
+          resolve();
+        };
 
-      this.getMenu().classList.add('show')
+        // dropdown handler
+        this.options.element.classList.add('show');
 
-      this.getMenu().addEventListener(Event.TRANSITION_END, onShow);
+        this.getMenu().classList.add('show');
 
-      await sleep(20);
+        this.getMenu().addEventListener(Event.TRANSITION_END, onShow);
 
-      this.getMenu().classList.add('animate');
+        await sleep(20);
+
+        this.getMenu().classList.add('animate');
+      });
     }
 
     getMenu() {
       return this.options.element.querySelector(`.${MENU}`);
     }
 
-    toggle() {
+    async toggle() {
       if (this.options.element.classList.contains('show')) {
-        this.hide();
+        await this.hide();
       } else {
-        this.show();
+        await this.show();
       }
     }
 
+    /**
+     * Hides the collapse
+     * @return {Promise} Promise object represents the completed animation
+     */
     hide() {
-      if (this.onTransition) {
-        return false
-      }
+      return new Promise((resolve, reject) => {
+        if (this.onTransition) {
+          reject();
+          return;
+        }
 
-      if (!this.options.element.classList.contains('show')) {
-        return false
-      }
+        if (!this.options.element.classList.contains('show')) {
+          reject();
+          return;
+        }
 
-      this.onTransition = true
-      this.triggerEvent(Event.HIDE)
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
 
-      const onHide = () => {
-        // dropdown menu
-        this.getMenu().classList.remove('show');
+        const onHide = () => {
+          // dropdown menu
+          this.getMenu().classList.remove('show');
 
-        this.triggerEvent(Event.HIDDEN)
-        this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
-        this.onTransition = false;
-      }
+          this.triggerEvent(Event.HIDDEN);
+          this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
+          this.onTransition = false;
 
-      // dropdown handler
-      this.options.element.classList.remove('show');
+          resolve();
+        };
 
-      this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+        // dropdown handler
+        this.options.element.classList.remove('show');
 
-      this.getMenu().classList.remove('animate');
+        this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+
+        this.getMenu().classList.remove('animate');
+      });
     }
 
     static identifier() {
@@ -169,7 +190,7 @@ const Dropdown = (($) => {
     config.element = element;
 
     components.push(Dropdown.DOMInterface(config));
-  })
+  });
 
   document.addEventListener('click', (event) => {
     const dropdown = findTargetByClass(event.target, NAME);

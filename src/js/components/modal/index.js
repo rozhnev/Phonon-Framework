@@ -3,10 +3,10 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Event from '../../common/events'
-import Component from '../component'
-import { getAttributesConfig } from '../componentManager'
-import { createJqueryPlugin } from '../../common/utils';
+import Event from '../../common/events';
+import Component from '../component';
+import { getAttributesConfig } from '../componentManager';
+import { createJqueryPlugin, sleep } from '../../common/utils';
 
 const Modal = (($) => {
   /**
@@ -15,9 +15,9 @@ const Modal = (($) => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'modal'
-  const VERSION = '2.0.0'
-  const BACKDROP_SELECTOR = 'modal-backdrop'
+  const NAME = 'modal';
+  const VERSION = '2.0.0';
+  const BACKDROP_SELECTOR = 'modal-backdrop';
   const DEFAULT_PROPERTIES = {
     element: null,
     title: null,
@@ -36,10 +36,10 @@ const Modal = (($) => {
         class: 'btn btn-primary',
       },
     ],
-  }
+  };
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
-  ]
+  ];
 
   /**
    * ------------------------------------------------------------------------
@@ -48,246 +48,255 @@ const Modal = (($) => {
    */
 
   class Modal extends Component {
-
     constructor(options = {}, template = null) {
-      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true)
+      super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, true);
 
-      this.template = template || '' +
-      '<div class="modal" tabindex="-1" role="modal">' +
-        '<div class="modal-inner" role="document">' +
-          '<div class="modal-content">' +
-            '<div class="modal-header">' +
-              '<h5 class="modal-title"></h5>' +
-            '</div>' +
-            '<div class="modal-body">' +
-              '<p></p>' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
+      this.template = template || ''
+      + '<div class="modal" tabindex="-1" role="modal">'
+        + '<div class="modal-inner" role="document">'
+          + '<div class="modal-content">'
+            + '<div class="modal-header">'
+              + '<h5 class="modal-title"></h5>'
+            + '</div>'
+            + '<div class="modal-body">'
+              + '<p></p>'
+            + '</div>'
+            + '<div class="modal-footer">'
+            + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>';
 
       if (this.dynamicElement) {
-        this.build()
+        this.build();
       }
     }
 
     build() {
-      const builder = document.createElement('div')
+      const builder = document.createElement('div');
 
-      builder.innerHTML = this.template
+      builder.innerHTML = this.template;
 
-      this.options.element = builder.firstChild
+      this.options.element = builder.firstChild;
 
       // title
       if (this.options.title !== null) {
-        this.options.element.querySelector('.modal-title').innerHTML = this.options.title
+        this.options.element.querySelector('.modal-title').innerHTML = this.options.title;
       }
 
       // message
       if (this.options.message !== null) {
-        this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message
+        this.options.element.querySelector('.modal-body').firstChild.innerHTML = this.options.message;
       } else {
         // remove paragraph node
-        this.removeTextBody()
+        this.removeTextBody();
       }
 
       // buttons
       if (this.options.buttons !== null && Array.isArray(this.options.buttons)) {
         if (this.options.buttons.length > 0) {
           this.options.buttons.forEach((button) => {
-            this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button))
-          })
+            this.options.element.querySelector('.modal-footer').appendChild(this.buildButton(button));
+          });
         } else {
-          this.removeFooter()
+          this.removeFooter();
         }
       } else {
-        this.removeFooter()
+        this.removeFooter();
       }
 
-      document.body.appendChild(this.options.element)
+      document.body.appendChild(this.options.element);
 
-      this.setAttributes()
+      this.setAttributes();
     }
 
     buildButton(buttonInfo = {}) {
-      const button = document.createElement('button')
-      button.setAttribute('type', 'button')
-      button.setAttribute('class', buttonInfo.class || 'btn')
-      button.setAttribute('data-event', buttonInfo.event)
-      button.innerHTML = buttonInfo.text
+      const button = document.createElement('button');
+      button.setAttribute('type', 'button');
+      button.setAttribute('class', buttonInfo.class || 'btn');
+      button.setAttribute('data-event', buttonInfo.event);
+      button.innerHTML = buttonInfo.text;
 
       if (buttonInfo.dismiss) {
-        button.setAttribute('data-dismiss', NAME)
+        button.setAttribute('data-dismiss', NAME);
       }
 
-      return button
+      return button;
     }
 
     buildBackdrop() {
-      const backdrop = document.createElement('div')
-      backdrop.setAttribute('data-id', this.id)
-      backdrop.classList.add(BACKDROP_SELECTOR)
+      const backdrop = document.createElement('div');
+      backdrop.setAttribute('data-id', this.id);
+      backdrop.classList.add(BACKDROP_SELECTOR);
 
-      document.body.appendChild(backdrop)
+      document.body.appendChild(backdrop);
     }
 
     getBackdrop() {
-      return document.querySelector(`.${BACKDROP_SELECTOR}[data-id="${this.id}"]`)
+      return document.querySelector(`.${BACKDROP_SELECTOR}[data-id="${this.id}"]`);
     }
 
     removeTextBody() {
-      this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild)
+      this.options.element.querySelector('.modal-body').removeChild(this.options.element.querySelector('.modal-body').firstChild);
     }
 
     removeFooter() {
-      const footer = this.options.element.querySelector('.modal-footer')
-      this.options.element.querySelector('.modal-content').removeChild(footer)
+      const footer = this.options.element.querySelector('.modal-footer');
+      this.options.element.querySelector('.modal-content').removeChild(footer);
     }
 
     center() {
-      const computedStyle = window.getComputedStyle(this.options.element)
-      const height = computedStyle.height.slice(0, computedStyle.height.length - 2)
+      const computedStyle = window.getComputedStyle(this.options.element);
+      const height = computedStyle.height.slice(0, computedStyle.height.length - 2);
 
-      const top = (window.innerHeight / 2) - (height / 2)
-      this.options.element.style.top = `${top}px`
+      const top = (window.innerHeight / 2) - (height / 2);
+      this.options.element.style.top = `${top}px`;
     }
 
     show() {
-      if (this.options.element === null) {
-        // build and insert a new DOM element
-        this.build()
-      }
-
-      if (this.options.element.classList.contains('show')) {
-        return false
-      }
-
-      // add a timeout so that the CSS animation works
-      setTimeout(() => {
-        this.triggerEvent(Event.SHOW)
-        this.buildBackdrop()
-
-        // attach event
-        this.attachEvents()
-
-        const onShown = () => {
-          this.triggerEvent(Event.SHOWN)
-          this.options.element.removeEventListener(Event.TRANSITION_END, onShown)
+      return new Promise(async (resolve, reject) => {
+        if (this.options.element === null) {
+          // build and insert a new DOM element
+          this.build();
         }
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onShown)
+        if (this.options.element.classList.contains('show')) {
+          reject(new Error('The modal is already active'));
+          return;
+        }
 
-        this.options.element.classList.add('show')
+        // add a timeout so that the CSS animation works
+        await sleep(20);
 
-        this.center()
-      }, 10)
+        this.triggerEvent(Event.SHOW);
+        this.buildBackdrop();
 
-      return true
+        // attach event
+        this.attachEvents();
+
+        const onShown = () => {
+          this.triggerEvent(Event.SHOWN);
+          this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+
+          resolve();
+        };
+
+        this.options.element.addEventListener(Event.TRANSITION_END, onShown);
+
+        this.options.element.classList.add('show');
+
+        this.center();
+      });
     }
 
     onElementEvent(event) {
       // keyboard event (escape and enter)
       if (event.type === 'keyup') {
         if (this.options.cancelableKeyCodes.find(k => k === event.keyCode)) {
-          this.hide()
+          this.hide();
         }
-        return
+        return;
       }
 
       // backdrop event
       if (event.type === Event.START) {
         // hide the modal
-        this.hide()
-        return
+        this.hide();
+        return;
       }
 
       // button event
       if (event.type === 'click') {
-        const eventName = event.target.getAttribute('data-event')
+        const eventName = event.target.getAttribute('data-event');
 
         if (eventName) {
-          this.triggerEvent(eventName)
+          this.triggerEvent(eventName);
         }
 
         if (event.target.getAttribute('data-dismiss') === NAME) {
-          this.hide()
+          this.hide();
         }
       }
     }
 
+    /**
+     * Hides the modal
+     * @return {Promise} Promise object represents the completed animation
+     */
     hide() {
-      if (!this.options.element.classList.contains('show')) {
-        return false
-      }
-
-      this.triggerEvent(Event.HIDE)
-
-      this.detachEvents()
-
-      this.options.element.classList.add('hide')
-      this.options.element.classList.remove('show')
-
-      const backdrop = this.getBackdrop()
-
-      const onHidden = () => {
-        document.body.removeChild(backdrop)
-
-        this.options.element.classList.remove('hide')
-
-        this.triggerEvent(Event.HIDDEN)
-
-        backdrop.removeEventListener(Event.TRANSITION_END, onHidden)
-
-        // remove generated modals from the DOM
-        if (this.dynamicElement) {
-          document.body.removeChild(this.options.element)
-          this.options.element = null
+      return new Promise((resolve, reject) => {
+        if (!this.options.element.classList.contains('show')) {
+          reject(new Error('The modal is not active'));
+          return;
         }
-      }
 
-      backdrop.addEventListener(Event.TRANSITION_END, onHidden)
-      backdrop.classList.add('fadeout')
+        this.triggerEvent(Event.HIDE);
 
-      return true
+        this.detachEvents();
+
+        this.options.element.classList.add('hide');
+        this.options.element.classList.remove('show');
+
+        const backdrop = this.getBackdrop();
+
+        const onHidden = () => {
+          document.body.removeChild(backdrop);
+
+          this.options.element.classList.remove('hide');
+
+          this.triggerEvent(Event.HIDDEN);
+
+          backdrop.removeEventListener(Event.TRANSITION_END, onHidden);
+
+          // remove generated modals from the DOM
+          if (this.dynamicElement) {
+            document.body.removeChild(this.options.element);
+            this.options.element = null;
+          }
+
+          resolve();
+        };
+
+        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+        backdrop.classList.add('fadeout');
+      });
     }
 
     attachEvents() {
-      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button')
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
       if (buttons) {
-        Array.from(buttons).forEach(button => this.registerElement({ target: button, event: 'click' }))
+        Array.from(buttons).forEach(button => this.registerElement({ target: button, event: 'click' }));
       }
 
       // add events if the modal is cancelable
       // which means the user can hide the modal
       // by pressing the ESC key or click on the backdrop
       if (this.options.cancelable) {
-        const backdrop = this.getBackdrop()
-        this.registerElement({ target: backdrop, event: Event.START })
-        this.registerElement({ target: document, event: 'keyup' })
+        const backdrop = this.getBackdrop();
+        this.registerElement({ target: backdrop, event: Event.START });
+        this.registerElement({ target: document, event: 'keyup' });
       }
     }
 
     detachEvents() {
-      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button')
+      const buttons = this.options.element.querySelectorAll('[data-dismiss], .modal-footer button');
       if (buttons) {
-        Array.from(buttons).forEach(button => this.unregisterElement({ target: button, event: 'click' }))
+        Array.from(buttons).forEach(button => this.unregisterElement({ target: button, event: 'click' }));
       }
 
       if (this.options.cancelable) {
-        const backdrop = this.getBackdrop()
-        this.unregisterElement({ target: backdrop, event: Event.START })
-        this.unregisterElement({ target: document, event: 'keyup' })
+        const backdrop = this.getBackdrop();
+        this.unregisterElement({ target: backdrop, event: Event.START });
+        this.unregisterElement({ target: document, event: 'keyup' });
       }
     }
 
     static identifier() {
-      return NAME
+      return NAME;
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Modal, options)
+      return super.DOMInterface(Modal, options);
     }
   }
 
@@ -303,38 +312,37 @@ const Modal = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = []
+  const components = [];
 
-  const modals = document.querySelectorAll(`.${NAME}`)
-  if (modals) {
-    Array.from(modals).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+  const modals = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
-      components.push({ element, modal: new Modal(config) })
-    })
-  }
+  modals.forEach((element) => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+
+    components.push({ element, modal: new Modal(config) });
+  });
 
   document.addEventListener('click', (event) => {
-    const dataToggleAttr = event.target.getAttribute('data-toggle')
+    const dataToggleAttr = event.target.getAttribute('data-toggle');
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      const id = event.target.getAttribute('data-target')
-      const element = document.querySelector(id)
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
 
-      const component = components.find(c => c.element === element)
+      const component = components.find(c => c.element === element);
 
       if (!component) {
-        return
+        return;
       }
 
       // remove the focus state of the trigger
-      event.target.blur()
+      event.target.blur();
 
-      component.modal.show()
+      component.modal.show();
     }
-  })
+  });
 
-  return Modal
-})(window.$ ? window.$ : null)
+  return Modal;
+})(window.$ ? window.$ : null);
 
-export default Modal
+export default Modal;

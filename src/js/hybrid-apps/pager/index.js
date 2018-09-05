@@ -4,8 +4,8 @@
  * --------------------------------------------------------------------------
  */
 
-import Page from './page'
-import Event from '../../common/events'
+import Page from './page';
+import Event from '../../common/events';
 
 const Pager = (() => {
   /**
@@ -14,16 +14,16 @@ const Pager = (() => {
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'pager'
-  const VERSION = '2.0.0'
+  const NAME = 'pager';
+  const VERSION = '2.0.0';
   const DEFAULT_PROPERTIES = {
     hashPrefix: '#!',
     useHash: true,
     defaultPage: null,
     animatePages: true,
-  }
+  };
 
-  let currentPage
+  let currentPage;
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -37,37 +37,37 @@ const Pager = (() => {
      * @param options {Object}
      */
     constructor(options = {}) {
-      this.options = Object.assign(DEFAULT_PROPERTIES, options)
+      this.options = Object.assign(DEFAULT_PROPERTIES, options);
 
-      this.pages = []
-      this.started = false
+      this.pages = [];
+      this.started = false;
 
       // add global listeners such ash hash change, navigation, etc.
-      this.addPagerEvents()
+      this.addPagerEvents();
 
       // faster way to init pages before the DOM is ready
-      this.onDOMLoaded()
+      this.onDOMLoaded();
     }
 
     // private
     _(selector) {
-      return document.querySelector(selector)
+      return document.querySelector(selector);
     }
 
     getHash() {
-      return window.location.hash.split(this.options.hashPrefix)[1]
+      return window.location.hash.split(this.options.hashPrefix)[1];
     }
 
     getPageFromHash() {
-      const hash = this.getHash()
-      const re = new RegExp('[?\/]([^\/]*)')
-      const matches = re.exec(hash)
+      const hash = this.getHash();
+      const re = new RegExp('[?\/]([^\/]*)');
+      const matches = re.exec(hash);
 
       if (matches && matches[1]) {
-        return matches[1]
+        return matches[1];
       }
 
-      return null
+      return null;
     }
 
     setHash(pageName, params = null) {
@@ -76,9 +76,9 @@ const Pager = (() => {
     }
 
     isPageOf(pageName1, pageName2) {
-      const page1 = this.getPageModel(pageName1)
-      const page2 = this.getPageModel(pageName2)
-      return page1 && page2 && page1.name === page2.name
+      const page1 = this.getPageModel(pageName1);
+      const page2 = this.getPageModel(pageName2);
+      return page1 && page2 && page1.name === page2.name;
     }
 
     /**
@@ -86,16 +86,16 @@ const Pager = (() => {
      * click on navigation buttons and links and back history
      */
     addPagerEvents() {
-      document.addEventListener('click', event => this.onClick(event))
-      window.addEventListener('popstate', event => this.onBackHistory(event))
-      window.addEventListener('hashchange', event => this.onHashChange(event))
-      document.addEventListener('DOMContentLoaded', event => this.onDOMLoaded(event))
+      document.addEventListener('click', event => this.onClick(event));
+      window.addEventListener('popstate', event => this.onBackHistory(event));
+      window.addEventListener('hashchange', event => this.onHashChange(event));
+      document.addEventListener('DOMContentLoaded', event => this.onDOMLoaded(event));
     }
 
     // getters
 
     static get version() {
-      return `${NAME}.${VERSION}`
+      return `${NAME}.${VERSION}`;
     }
 
     // public
@@ -129,94 +129,94 @@ const Pager = (() => {
         }
 
         if (this.isPageOf(pageName, oldPageName)) {
-          return
+          return;
         }
 
-        oldPage.classList.remove('current')
+        oldPage.classList.remove('current');
 
         // history
-        window.history.replaceState({ page: pageName }, oldPageName)
+        window.history.replaceState({ page: pageName }, oldPageName);
 
-        this.triggerPageEvent(oldPageName, Event.HIDE)
+        this.triggerPageEvent(oldPageName, Event.HIDE);
       }
 
-      this.triggerPageEvent(pageName, Event.SHOW)
+      this.triggerPageEvent(pageName, Event.SHOW);
 
-      currentPage = pageName
+      currentPage = pageName;
 
       // new page
-      const newPage = this._(`[data-page="${pageName}"]`)
+      const newPage = this._(`[data-page="${pageName}"]`);
 
-      newPage.classList.add('current')
+      newPage.classList.add('current');
 
       // render template
-      const pageModel = this.getPageModel(pageName)
+      const pageModel = this.getPageModel(pageName);
 
       if (pageModel && pageModel.getTemplate()) {
-        await pageModel.renderTemplate()
+        await pageModel.renderTemplate();
       }
 
       if (oldPage) {
         // use of prototype-oriented language
-        oldPage.back = back
-        oldPage.previousPageName = oldPageName
+        oldPage.back = back;
+        oldPage.previousPageName = oldPageName;
 
         const onPageAnimationEnd = () => {
           if (oldPage.classList.contains('animate')) {
-            oldPage.classList.remove('animate')
+            oldPage.classList.remove('animate');
           }
 
-          oldPage.classList.remove(oldPage.back ? 'pop-page' : 'push-page')
+          oldPage.classList.remove(oldPage.back ? 'pop-page' : 'push-page');
 
-          this.triggerPageEvent(currentPage, Event.SHOWN)
-          this.triggerPageEvent(oldPage.previousPageName, Event.HIDDEN)
+          this.triggerPageEvent(currentPage, Event.SHOWN);
+          this.triggerPageEvent(oldPage.previousPageName, Event.HIDDEN);
 
-          oldPage.removeEventListener(Event.ANIMATION_END, onPageAnimationEnd)
-        }
+          oldPage.removeEventListener(Event.ANIMATION_END, onPageAnimationEnd);
+        };
 
         if (this.options.animatePages) {
-          oldPage.addEventListener(Event.ANIMATION_END, onPageAnimationEnd)
-          oldPage.classList.add('animate')
+          oldPage.addEventListener(Event.ANIMATION_END, onPageAnimationEnd);
+          oldPage.classList.add('animate');
         } else {
-          onPageAnimationEnd()
+          onPageAnimationEnd();
         }
 
-        oldPage.classList.add(back ? 'pop-page' : 'push-page')
+        oldPage.classList.add(back ? 'pop-page' : 'push-page');
       }
     }
 
     addUniquePageModel(pageName) {
       if (!this.getPageModel(pageName)) {
-        this.pages.push(new Page(pageName))
+        this.pages.push(new Page(pageName));
       }
     }
 
     getPageModel(pageName) {
-      return this.pages.find(page => page.name === pageName)
+      return this.pages.find(page => page.name === pageName);
     }
 
     getPagesModel(pageNames) {
-      return this.pages.filter(page => pageNames.indexOf(page.name) > -1)
+      return this.pages.filter(page => pageNames.indexOf(page.name) > -1);
     }
 
     selectorToArray(str) {
-      return str.split(',').map(item => item.trim())
+      return str.split(',').map(item => item.trim());
     }
 
     addEvents(callback) {
       if (this.cachePageSelector === '*') {
         // add to all page models
         this.pages.forEach((page) => {
-          page.addEventCallback(callback)
-        })
-        return
+          page.addEventCallback(callback);
+        });
+        return;
       }
 
-      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true)
+      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
       pageModels.forEach((page) => {
-        page.addEventCallback(callback)
-      })
-      this.cachePageSelector = null
+        page.addEventCallback(callback);
+      });
+      this.cachePageSelector = null;
     }
 
     preventTransition(preventFn) {
@@ -236,29 +236,29 @@ const Pager = (() => {
     }
 
     setTemplate(templatePath, renderFunction = null) {
-      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true)
+      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
       pageModels.forEach((page) => {
-        page.setTemplate(templatePath, renderFunction)
-      })
-      this.cachePageSelector = null
+        page.setTemplate(templatePath, renderFunction);
+      });
+      this.cachePageSelector = null;
     }
 
     triggerPageEvent(pageName, eventName, eventParams = null) {
-      const pageModel = this.getPageModel(pageName)
+      const pageModel = this.getPageModel(pageName);
       if (pageModel) {
-        pageModel.triggerScopes(eventName, eventParams)
+        pageModel.triggerScopes(eventName, eventParams);
       }
     }
 
     onClick(event) {
-      const pageName = event.target.getAttribute('data-navigate')
-      const backNavigation = event.target.getAttribute('data-pop-page') === 'true'
+      const pageName = event.target.getAttribute('data-navigate');
+      const backNavigation = event.target.getAttribute('data-pop-page') === 'true';
 
       if (pageName) {
         if (pageName === '$back') {
           // the popstate event will be triggered
-          window.history.back()
-          return
+          window.history.back();
+          return;
         }
 
         this.showPage(pageName, null, backNavigation);
@@ -266,24 +266,24 @@ const Pager = (() => {
     }
 
     onBackHistory(event = {}) {
-      const pageName = event.state ? event.state.page : null
+      const pageName = event.state ? event.state.page : null;
       if (!pageName) {
-        return
+        return;
       }
 
       this.showPage(pageName, null, true);
     }
 
     onHashChange() {
-      const params = (this.getHash() ? this.getHash().split('/') : []).filter(p => p.length > 0)
+      const params = (this.getHash() ? this.getHash().split('/') : []).filter(p => p.length > 0);
       if (params.length > 0) {
         // remove first value which is the page name
-        params.shift()
+        params.shift();
       }
 
-      this.triggerPageEvent(currentPage, Event.HASH, params)
+      this.triggerPageEvent(currentPage, Event.HASH, params);
 
-      const navPage = this.getPageFromHash()
+      const navPage = this.getPageFromHash();
       if (navPage) {
         this.showPage(navPage, null, false, params, Event.HASH);
       }
@@ -293,10 +293,10 @@ const Pager = (() => {
      * Queries the page nodes in the DOM
      */
     onDOMLoaded() {
-      const pages = document.querySelectorAll('[data-page]')
+      const pages = document.querySelectorAll('[data-page]');
 
       if (!pages) {
-        return
+        return;
       }
 
       pages.forEach((page) => {
@@ -307,40 +307,40 @@ const Pager = (() => {
         const pageName = page.getAttribute('data-page') || page.nodeName;
 
         this.addUniquePageModel(pageName);
-      })
+      });
     }
 
     select(pageName, addPageModel = true) {
-      this.cachePageSelector = pageName
+      this.cachePageSelector = pageName;
 
       if (addPageModel && pageName !== '*') {
-        this.addUniquePageModel(pageName)
+        this.addUniquePageModel(pageName);
       }
 
-      return this
+      return this;
     }
 
     start(forceDefaultPage = false) {
       // check if the app has been already started
       if (this.started) {
-        throw new Error(`${NAME}. The app has been already started.`)
+        throw new Error(`${NAME}. The app has been already started.`);
       }
 
-      this.started = true
+      this.started = true;
 
       // force default page on Cordova
       if (window.cordova) {
-        forceDefaultPage = true
+        forceDefaultPage = true;
       }
 
       let pageName = this.getPageFromHash();
 
       if (!this.getPageModel(pageName)) {
-        pageName = this.options.defaultPage
+        pageName = this.options.defaultPage;
       }
 
       if (forceDefaultPage && !this.options.defaultPage) {
-        throw new Error(`${NAME}. The default page must exist for forcing its launch!`)
+        throw new Error(`${NAME}. The default page must exist for forcing its launch!`);
       }
 
       /*
@@ -356,11 +356,11 @@ const Pager = (() => {
 
     // static
     static DOMInterface(options) {
-      return new Pager(options)
+      return new Pager(options);
     }
   }
 
-  return Pager
-})()
+  return Pager;
+})();
 
-export default Pager
+export default Pager;

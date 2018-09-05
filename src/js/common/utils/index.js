@@ -51,3 +51,9 @@ export function createJqueryPlugin($ = null, name, obj) {
   $.fn[name].Constructor = obj
   $.fn[name].noConflict = mainFn;
 }
+
+export function sleep(timeout) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+}

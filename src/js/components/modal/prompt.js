@@ -3,19 +3,18 @@
  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
  * --------------------------------------------------------------------------
  */
-import Modal from './index'
-import { getAttributesConfig } from '../componentManager'
-import { createJqueryPlugin } from '../../common/utils'
+import Modal from './index';
+import { getAttributesConfig } from '../componentManager';
+import { createJqueryPlugin } from '../../common/utils';
 
 const Prompt = (($) => {
-
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'prompt'
+  const NAME = 'prompt';
   const DEFAULT_PROPERTIES = {
     element: null,
     title: null,
@@ -36,10 +35,10 @@ const Prompt = (($) => {
         class: 'btn btn-primary',
       },
     ],
-  }
+  };
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
-  ]
+  ];
 
   /**
    * ------------------------------------------------------------------------
@@ -48,76 +47,83 @@ const Prompt = (($) => {
    */
 
   class Prompt extends Modal {
-
     constructor(options = {}) {
-      const template = '' +
-      '<div class="modal" tabindex="-1" role="modal">' +
-        '<div class="modal-inner" role="document">' +
-          '<div class="modal-content">' +
-            '<div class="modal-header">' +
-              '<h5 class="modal-title"></h5>' +
-            '</div>' +
-            '<div class="modal-body">' +
-              '<p></p>' +
-              '<input class="form-control" type="text" value="">' +
-            '</div>' +
-            '<div class="modal-footer">' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
+      const template = ''
+      + '<div class="modal" tabindex="-1" role="modal">'
+        + '<div class="modal-inner" role="document">'
+          + '<div class="modal-content">'
+            + '<div class="modal-header">'
+              + '<h5 class="modal-title"></h5>'
+            + '</div>'
+            + '<div class="modal-body">'
+              + '<p></p>'
+              + '<input class="form-control" type="text" value="">'
+            + '</div>'
+            + '<div class="modal-footer">'
+            + '</div>'
+          + '</div>'
+        + '</div>'
+      + '</div>';
 
       if (!Array.isArray(options.buttons)) {
-        options.buttons = DEFAULT_PROPERTIES.buttons
+        options.buttons = DEFAULT_PROPERTIES.buttons;
       }
 
-      super(options, template)
+      super(options, template);
     }
 
-    show() {
-      super.show()
-      this.attachInputEvent()
+    /**
+     * Shows the prompt
+     * @return {Promise} Promise object represents the completed animation
+     */
+    async show() {
+      super.show();
+      this.attachInputEvent();
     }
 
-    hide() {
-      super.hide()
-      this.detachInputEvent()
+    /**
+     * Hides the prompt
+     * @return {Promise} Promise object represents the completed animation
+     */
+    async hide() {
+      super.hide();
+      this.detachInputEvent();
     }
 
     getInput() {
-      return this.options.element.querySelector('.form-control')
+      return this.options.element.querySelector('.form-control');
     }
 
     attachInputEvent() {
-      this.registerElement({ target: this.getInput(), event: 'keyup' })
+      this.registerElement({ target: this.getInput(), event: 'keyup' });
     }
 
     detachInputEvent() {
-      this.unregisterElement({ target: this.getInput(), event: 'keyup' })
+      this.unregisterElement({ target: this.getInput(), event: 'keyup' });
     }
 
     onElementEvent(event) {
       if (event.target === this.getInput()) {
-        return
+        return;
       }
 
-      super.onElementEvent(event)
+      super.onElementEvent(event);
     }
 
     setInputValue(value = '') {
-      this.getInput().value = value
+      this.getInput().value = value;
     }
 
     getInputValue() {
-      return this.getInput().value
+      return this.getInput().value;
     }
 
     static identifier() {
-      return NAME
+      return NAME;
     }
 
     static DOMInterface(options) {
-      return new Prompt(options)
+      return new Prompt(options);
     }
   }
 
@@ -133,41 +139,41 @@ const Prompt = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = []
-  const modals = document.querySelectorAll(`.${Modal.identifier()}`)
+  const components = [];
+  const modals = document.querySelectorAll(`.${Modal.identifier()}`);
 
   if (modals) {
     Array.from(modals).forEach((element) => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES)
-      config.element = element
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
 
       if (config.type === NAME) {
         // prompt
-        components.push(new Prompt(config))
+        components.push(new Prompt(config));
       }
-    })
+    });
   }
 
   document.addEventListener('click', (event) => {
-    const dataToggleAttr = event.target.getAttribute('data-toggle')
+    const dataToggleAttr = event.target.getAttribute('data-toggle');
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      const id = event.target.getAttribute('data-target')
-      const element = document.querySelector(id)
+      const id = event.target.getAttribute('data-target');
+      const element = document.querySelector(id);
 
-      const component = components.find(c => c.element === element)
+      const component = components.find(c => c.element === element);
 
       if (!component) {
-        return
+        return;
       }
 
       // remove the focus state of the trigger
-      event.target.blur()
+      event.target.blur();
 
-      component.modal.show()
+      component.modal.show();
     }
-  })
+  });
 
-  return Prompt
-})(window.$ ? window.$ : null)
+  return Prompt;
+})(window.$ ? window.$ : null);
 
-export default Prompt
+export default Prompt;
