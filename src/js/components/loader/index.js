@@ -5,6 +5,7 @@
  */
 import Component from '../component';
 import { createJqueryPlugin } from '../../common/utils';
+import Event from '../../common/events';
 
 const Loader = (($) => {
   /**
@@ -60,6 +61,8 @@ const Loader = (($) => {
         this.options.element.classList.remove('hide');
       }
 
+      this.triggerEvent(Event.SHOW);
+
       const size = this.getClientSize();
       this.options.size = size;
 
@@ -71,6 +74,8 @@ const Loader = (($) => {
         loaderSpinner.style.width = `${this.options.size}px`;
         loaderSpinner.style.height = `${this.options.size}px`;
       }
+
+      this.triggerEvent(Event.SHOWN);
 
       return true;
     }
@@ -102,6 +107,10 @@ const Loader = (($) => {
       if (!this.options.element.classList.contains('hide')) {
         this.options.element.classList.add('hide');
       }
+
+      this.triggerEvent(Event.HIDE);
+
+      this.triggerEvent(Event.HIDDEN);
 
       return true;
     }
