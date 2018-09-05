@@ -8,7 +8,7 @@ An accordion is a component that displays one of the collapsible elements in a l
 
 ## Markup
 
-```html-with-example
+```html
 <div class="accordion" id="exampleAccordion" role="tablist">
   <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
     Collapsible Group Item #1

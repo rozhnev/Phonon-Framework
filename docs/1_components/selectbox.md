@@ -97,7 +97,7 @@ By default, the module will try to find the text node otherwise, it will check i
 
 Add the class `selectbox-lg` to increase the size.
 
-```html-with-example
+```html
 <div class="selectbox selectbox-lg" data-toggle="selectbox">
 ...
 </div>
@@ -106,7 +106,7 @@ Add the class `selectbox-lg` to increase the size.
 
 Add the class `selectbox-sm` to reduce the size.
 
-```html-with-example
+```html
 <div class="selectbox selectbox-sm" data-toggle="selectbox">
 ...
 </div>

@@ -8,7 +8,7 @@ A loader is typically used to show an animation while loading.
 
 ## Markup
 
-```html-with-example
+```html
 <div class="loader">
   <div class="loader-spinner"></div>
 </div>
