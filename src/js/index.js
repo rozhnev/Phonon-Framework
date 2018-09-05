@@ -21,8 +21,9 @@ import Tab from './components/tab'
 import Progress from './components/progress'
 import Loader from './components/loader'
 import OffCanvas from './components/off-canvas'
+import Selectbox from './components/selectbox'
+import SelectboxSearch from './components/selectbox/search'
 import Dropdown from './components/dropdown'
-import DropdownSearch from './components/dropdown/search'
 
 const api = {}
 
@@ -84,7 +85,7 @@ api.collapse = Collapse.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
- * Collapse
+ * Alert
  * ------------------------------------------------------------------------
  */
 api.alert = Alert.DOMInterface
@@ -127,18 +128,26 @@ api.offCanvas = OffCanvas.DOMInterface
 
 /**
  * ------------------------------------------------------------------------
+ * Selectbox
+ * ------------------------------------------------------------------------
+ */
+api.selectbox = (options) => {
+  if (options.search) {
+    // search selectbox
+    return SelectboxSearch.DOMInterface(options)
+  }
+
+  // generic selectbox
+  return Selectbox.DOMInterface(options)
+}
+
+/**
+ * ------------------------------------------------------------------------
  * Dropdown
  * ------------------------------------------------------------------------
  */
-api.dropdown = (options) => {
-  if (options.search) {
-    // search dropdown
-    return DropdownSearch.DOMInterface(options)
-  }
+api.dropdown = Dropdown.DOMInterface
 
-  // generic dropdown
-  return Dropdown.DOMInterface(options)
-}
 
 // Make the API live
 window.phonon = api
