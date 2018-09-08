@@ -1,3 +1,4 @@
+/* eslnt no-undef: 0 */
 import { Selector, ClientFunction } from 'testcafe';
 
 fixture `Modal`
