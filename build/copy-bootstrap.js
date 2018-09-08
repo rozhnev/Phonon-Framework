@@ -15,7 +15,6 @@ const files = (bootstrap.toString().match(reg) || []).map(e => e.replace(reg, '$
 
 const excludes = [
   'transitions',
-  'progress',
   'modal',
   'dropdown',
   'tooltip',
