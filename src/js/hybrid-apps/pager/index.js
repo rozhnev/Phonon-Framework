@@ -24,6 +24,8 @@ const Pager = (() => {
   };
 
   let currentPage;
+  let lastHash = null;
+
   /**
    * ------------------------------------------------------------------------
    * Class Definition
@@ -54,25 +56,33 @@ const Pager = (() => {
       return document.querySelector(selector);
     }
 
-    getHash() {
+    getRoute() {
       return window.location.hash.split(this.options.hashPrefix)[1];
     }
 
+    getHash() {
+      return window.location.hash;
+    }
+
+    getHashParams() {
+      const page = this.getPageModel(currentPage);
+      return page.getParams(this.getHash());
+    }
+
     getPageFromHash() {
-      const hash = this.getHash();
-      const re = new RegExp('[?\/]([^\/]*)');
-      const matches = re.exec(hash);
+      const hash = this.getHash() || '';
+      const page = this.pages.find(p => hash.match(p.getRoute().regex));
 
-      if (matches && matches[1]) {
-        return matches[1];
-      }
-
-      return null;
+      return page ? page.name : null;
     }
 
     setHash(pageName, params = null) {
-      const hash = `${this.options.hashPrefix}/${pageName}`;
-      window.location.hash = Array.isArray(params) ? `${hash}/${params.join('/')}` : hash;
+      const page = this.getPageModel(pageName);
+      if (!page) {
+        throw new Error(`Cannot change the route of unknown page ${pageName}`);
+      }
+
+      window.location.hash = `${this.options.hashPrefix}${page.getRouteLink(params)}`;
     }
 
     isPageOf(pageName1, pageName2) {
@@ -87,9 +97,10 @@ const Pager = (() => {
      */
     addPagerEvents() {
       document.addEventListener('click', event => this.onClick(event));
-      window.addEventListener('popstate', event => this.onBackHistory(event));
-      window.addEventListener('hashchange', event => this.onHashChange(event));
       document.addEventListener('DOMContentLoaded', event => this.onDOMLoaded(event));
+      if (this.options.useHash) {
+        window.addEventListener('hashchange', event => this.onHashChange(event));
+      }
     }
 
     // getters
@@ -98,9 +109,20 @@ const Pager = (() => {
       return `${NAME}.${VERSION}`;
     }
 
+    async preventChangePage(oldPageName, pageName, params) {
+      const oldPage = this.getPageModel(oldPageName);
+      const preventFn = oldPage.getPreventTransition();
+
+      if (typeof preventFn === 'function') {
+        return preventFn(oldPageName, pageName, params);
+      }
+
+      return false;
+    }
+
     // public
 
-    async showPage(pageName, params = null, back = false, from = Event.CLICK) {
+    async showPage(pageName, params = null, back = false) {
       /*
        * If we he use the hash as trigger,
        * we change it dynamically so that the hashchange event is called
@@ -116,19 +138,16 @@ const Pager = (() => {
 
       if (oldPage) {
         oldPageName = oldPage.getAttribute('data-page');
-        const oldPageModel = this.getPageModel(oldPageName);
-        const preventFn = oldPageModel.getPreventTransition();
-
-        if (typeof preventFn === 'function') {
-          if (await preventFn(oldPageName, pageName, params)) {
-            if (from === Event.HASH) {
-              window.history.back();
-            }
-            return;
-          }
-        }
 
         if (this.isPageOf(pageName, oldPageName)) {
+          return;
+        }
+
+        if (await this.preventChangePage(oldPageName, pageName, params)) {
+          if (this.options.useHash) {
+            window.location.hash = lastHash;
+          }
+
           return;
         }
 
@@ -140,17 +159,20 @@ const Pager = (() => {
         this.triggerPageEvent(oldPageName, Event.HIDE);
       }
 
-      this.triggerPageEvent(pageName, Event.SHOW);
-
       currentPage = pageName;
 
       // new page
-      const newPage = this._(`[data-page="${pageName}"]`);
+      const newPage = this._(`[data-page="${currentPage}"]`);
 
       newPage.classList.add('current');
 
       // render template
-      const pageModel = this.getPageModel(pageName);
+      const pageModel = this.getPageModel(currentPage);
+
+      const hashParams = pageModel.getParams(this.getHash());
+
+      this.triggerPageEvent(currentPage, Event.SHOW, hashParams);
+
 
       if (pageModel && pageModel.getTemplate()) {
         await pageModel.renderTemplate();
@@ -168,7 +190,7 @@ const Pager = (() => {
 
           oldPage.classList.remove(oldPage.back ? 'pop-page' : 'push-page');
 
-          this.triggerPageEvent(currentPage, Event.SHOWN);
+          this.triggerPageEvent(currentPage, Event.SHOWN, hashParams);
           this.triggerPageEvent(oldPage.previousPageName, Event.HIDDEN);
 
           oldPage.removeEventListener(Event.ANIMATION_END, onPageAnimationEnd);
@@ -183,6 +205,8 @@ const Pager = (() => {
 
         oldPage.classList.add(back ? 'pop-page' : 'push-page');
       }
+
+      lastHash = this.getHash();
     }
 
     addUniquePageModel(pageName) {
@@ -195,52 +219,8 @@ const Pager = (() => {
       return this.pages.find(page => page.name === pageName);
     }
 
-    getPagesModel(pageNames) {
-      return this.pages.filter(page => pageNames.indexOf(page.name) > -1);
-    }
-
     selectorToArray(str) {
       return str.split(',').map(item => item.trim());
-    }
-
-    addEvents(callback) {
-      if (this.cachePageSelector === '*') {
-        // add to all page models
-        this.pages.forEach((page) => {
-          page.addEventCallback(callback);
-        });
-        return;
-      }
-
-      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-      pageModels.forEach((page) => {
-        page.addEventCallback(callback);
-      });
-      this.cachePageSelector = null;
-    }
-
-    preventTransition(preventFn) {
-      if (this.cachePageSelector === '*') {
-        this.pages.forEach((page) => {
-          page.setPreventTransition(preventFn);
-        });
-        return;
-      }
-
-      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-      pageModels.forEach((page) => {
-        page.setPreventTransition(preventFn);
-      });
-
-      this.cachePageSelector = null;
-    }
-
-    setTemplate(templatePath, renderFunction = null) {
-      const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-      pageModels.forEach((page) => {
-        page.setTemplate(templatePath, renderFunction);
-      });
-      this.cachePageSelector = null;
     }
 
     triggerPageEvent(pageName, eventName, eventParams = null) {
@@ -254,38 +234,25 @@ const Pager = (() => {
       const pageName = event.target.getAttribute('data-navigate');
       const backNavigation = event.target.getAttribute('data-pop-page') === 'true';
 
-      if (pageName) {
-        if (pageName === '$back') {
-          // the popstate event will be triggered
-          window.history.back();
-          return;
-        }
-
-        this.showPage(pageName, null, backNavigation);
-      }
-    }
-
-    onBackHistory(event = {}) {
-      const pageName = event.state ? event.state.page : null;
       if (!pageName) {
         return;
       }
 
-      this.showPage(pageName, null, true);
+      this.showPage(pageName, null, backNavigation);
     }
 
     onHashChange() {
-      const params = (this.getHash() ? this.getHash().split('/') : []).filter(p => p.length > 0);
-      if (params.length > 0) {
-        // remove first value which is the page name
-        params.shift();
+      const params = this.getHashParams();
+      const navPage = this.getPageFromHash();
+
+      // avoid concurrent pages if prevent page change is defined
+      if (navPage === currentPage) {
+        this.triggerPageEvent(currentPage, Event.HASH, params);
       }
 
-      this.triggerPageEvent(currentPage, Event.HASH, params);
 
-      const navPage = this.getPageFromHash();
       if (navPage) {
-        this.showPage(navPage, null, false, params, Event.HASH);
+        this.showPage(navPage, null, false, params);
       }
     }
 
@@ -311,16 +278,16 @@ const Pager = (() => {
     }
 
     select(pageName, addPageModel = true) {
-      this.cachePageSelector = pageName;
-
-      if (addPageModel && pageName !== '*') {
+      if (addPageModel) {
         this.addUniquePageModel(pageName);
       }
 
-      return this;
+      return this.getPageModel(pageName);
     }
 
     start(forceDefaultPage = false) {
+      let force = forceDefaultPage;
+
       // check if the app has been already started
       if (this.started) {
         throw new Error(`${NAME}. The app has been already started.`);
@@ -330,7 +297,7 @@ const Pager = (() => {
 
       // force default page on Cordova
       if (window.cordova) {
-        forceDefaultPage = true;
+        force = true;
       }
 
       let pageName = this.getPageFromHash();
@@ -339,7 +306,9 @@ const Pager = (() => {
         pageName = this.options.defaultPage;
       }
 
-      if (forceDefaultPage && !this.options.defaultPage) {
+      const page = this.getPageModel(pageName);
+
+      if (force && !this.options.defaultPage) {
         throw new Error(`${NAME}. The default page must exist for forcing its launch!`);
       }
 
@@ -348,10 +317,12 @@ const Pager = (() => {
        * we add the page dynamically in the url
        */
       if (this.options.useHash) {
-        this.setHash(pageName, null);
+        if (!page.validHash(this.getHash())) {
+          this.setHash(pageName);
+        }
       }
 
-      this.showPage(forceDefaultPage ? this.options.defaultPage : pageName);
+      this.showPage(force ? this.options.defaultPage : pageName);
     }
 
     // static

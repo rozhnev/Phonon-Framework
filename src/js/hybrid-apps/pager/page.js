@@ -34,6 +34,11 @@ const Page = (() => {
       this.events = [];
       this.templatePath = null;
       this.renderFunction = null;
+      this.route = `/${pageName}`;
+      this.routeRegex = null;
+      this.routeParams = [];
+
+      this.setRoute(`/${pageName}`);
     }
 
     // getters
@@ -56,6 +61,58 @@ const Page = (() => {
      */
     getTemplate() {
       return this.template;
+    }
+
+    /**
+     * Get route
+     * @returns {string}
+     */
+    getRoute() {
+      return {
+        route: this.route,
+        regex: this.routeRegex,
+        params: this.routeParams,
+      };
+    }
+
+    /**
+     * Set route
+     * @returns {undefined}
+     */
+    setRoute(route) {
+      const regParams = /{(.*?)}/g;
+
+      this.route = route;
+      this.routeRegex = `${route.replace(/({.*?})/g, '(.*?)')}$`;
+      this.routeParams = (route.match(regParams) || []).map(e => e.replace(regParams, '$1'));
+    }
+
+    getRouteLink(params = null) {
+      const reg = /{(.*?)}/g;
+      const { route } = this.getRoute();
+      const linkWithParams = (route.match(reg) || []).reduce((cur, param) => {
+        const paramName = param.replace(/{|}/g, '');
+        return cur.replace(new RegExp(param), params ? params[paramName] : 'null');
+      }, route);
+
+      return linkWithParams;
+    }
+
+    validHash(hash) {
+      const link = this.getRouteLink(this.getParams(hash));
+      return link === hash;
+    }
+
+    getParams(hash) {
+      const hashParams = {};
+      const { regex, params } = this.getRoute();
+      const hashValues = (new RegExp(regex, 'g').exec(hash) || []).slice(1);
+
+      params.forEach((p, i) => {
+        hashParams[p] = hashValues[i];
+      });
+
+      return hashParams;
     }
 
     /**
@@ -92,7 +149,7 @@ const Page = (() => {
      *
      * @param {*} callbackFn
      */
-    addEventCallback(callbackFn) {
+    addEvents(callbackFn) {
       this.events.push(callbackFn);
     }
 
@@ -119,7 +176,7 @@ const Page = (() => {
      *
      * @param {Function} fn
      */
-    setPreventTransition(fn) {
+    preventTransition(fn) {
       if (typeof fn !== 'function') {
         throw new Error(`${NAME}: invalid function to handle page transitions`);
       }
@@ -142,12 +199,12 @@ const Page = (() => {
         const scopeEvent = scope[eventName];
         const scopeEventAlias = scope[eventNameAlias];
         if (typeof scopeEvent === 'function') {
-          scopeEvent.apply(this, eventParams);
+          scopeEvent.apply(this, [eventParams]);
         }
 
         // trigger the event alias
         if (typeof scopeEventAlias === 'function') {
-          scopeEventAlias.apply(this, eventParams);
+          scopeEventAlias.apply(this, [eventParams]);
         }
       });
 
