@@ -92,7 +92,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -115,6 +115,8 @@ function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
 function generateId() {
   return Math.random().toString(36).substr(2, 10);
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -133,6 +135,11 @@ function createJqueryPlugin($ = null, name, obj) {
   $.fn[name] = mainFn;
   $.fn[name].Constructor = obj;
   $.fn[name].noConflict = mainFn;
+}
+function sleep(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
 }
 
 const getAttribute = (first, second) => {
@@ -197,7 +204,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -402,8 +409,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -470,35 +483,50 @@ const Notification = ($ => {
       document.body.appendChild(this.options.element);
       this.setAttributes();
     }
+    /**
+     * Shows the notification
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     show() {
-      if (this.options.element === null) {
-        // build and insert a new DOM element
-        this.build();
-      }
+      return new Promise(async (resolve, reject) => {
+        if (this.options.element === null) {
+          // build and insert a new DOM element
+          this.build();
+        }
 
-      if (this.options.element.classList.contains('show')) {
-        return false;
-      } // reset color
+        if (this.options.element.classList.contains('show')) {
+          reject(new Error('The notification is already active'));
+          return;
+        } // reset color
 
 
-      if (this.options.background) {
-        this.options.element.removeAttribute('class');
-        this.options.element.setAttribute('class', 'notification');
-        this.options.element.classList.add(`bg-${this.options.background}`);
-        this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
-      }
+        if (this.options.background) {
+          this.options.element.removeAttribute('class');
+          this.options.element.setAttribute('class', 'notification');
+          this.options.element.classList.add(`bg-${this.options.background}`);
+          this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
+        }
 
-      if (this.options.showButton) {
-        // attach the button handler
-        const buttonElement = this.options.element.querySelector('button');
-        this.registerElement({
-          target: buttonElement,
-          event: 'click'
-        });
-      }
+        if (this.options.showButton) {
+          // attach the button handler
+          const buttonElement = this.options.element.querySelector('button');
+          this.registerElement({
+            target: buttonElement,
+            event: 'click'
+          });
+        }
 
-      setTimeout(() => {
+        await sleep(20);
+
+        if (Number.isInteger(this.options.timeout) && this.options.timeout > 0) {
+          // if there is a timeout, auto hide the notification
+          this.timeoutCallback = setTimeout(() => {
+            this.hide();
+          }, this.options.timeout + 1);
+        }
+
         this.options.element.classList.add('show'); // set position
 
         const activeNotifications = document.querySelectorAll('.notification.show') || [];
@@ -515,61 +543,63 @@ const Notification = ($ => {
         const onShown = () => {
           this.triggerEvent(Event.SHOWN);
           this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+          resolve();
         };
 
         this.options.element.addEventListener(Event.TRANSITION_END, onShown);
-      }, 1);
-
-      if (Number.isInteger(this.options.timeout) && this.options.timeout > 0) {
-        // if there is a timeout, auto hide the notification
-        this.timeoutCallback = setTimeout(() => {
-          this.hide();
-        }, this.options.timeout + 1);
-      }
-
-      return true;
+        return true;
+      });
     }
+    /**
+     * Hides the notification
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     hide() {
-      /*
-       * prevent to close a notification with a timeout
-       * if the user has already clicked on the button
-       */
-      if (this.timeoutCallback) {
-        clearTimeout(this.timeoutCallback);
-        this.timeoutCallback = null;
-      }
-
-      if (!this.options.element.classList.contains('show')) {
-        return false;
-      }
-
-      this.triggerEvent(Event.HIDE);
-
-      if (this.options.showButton) {
-        const buttonElement = this.options.element.querySelector('button');
-        this.unregisterElement({
-          target: buttonElement,
-          event: 'click'
-        });
-      }
-
-      this.options.element.classList.remove('show');
-      this.options.element.classList.add('hide');
-
-      const onHidden = () => {
-        this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
-        this.options.element.classList.remove('hide');
-        this.triggerEvent(Event.HIDDEN);
-
-        if (this.dynamicElement) {
-          document.body.removeChild(this.options.element);
-          this.options.element = null;
+      return new Promise((resolve, reject) => {
+        /*
+        * prevent to close a notification with a timeout
+        * if the user has already clicked on the button
+        */
+        if (this.timeoutCallback) {
+          clearTimeout(this.timeoutCallback);
+          this.timeoutCallback = null;
         }
-      };
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
-      return true;
+        if (!this.options.element.classList.contains('show')) {
+          reject(new Error('The notification is not active'));
+          return;
+        }
+
+        this.triggerEvent(Event.HIDE);
+
+        if (this.options.showButton) {
+          const buttonElement = this.options.element.querySelector('button');
+          this.unregisterElement({
+            target: buttonElement,
+            event: 'click'
+          });
+        }
+
+        this.options.element.classList.remove('show');
+        this.options.element.classList.add('hide');
+
+        const onHidden = () => {
+          this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
+          this.options.element.classList.remove('hide');
+          this.triggerEvent(Event.HIDDEN);
+
+          if (this.dynamicElement) {
+            document.body.removeChild(this.options.element);
+            this.options.element = null;
+          }
+
+          resolve();
+        };
+
+        this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
+      });
     }
 
     onElementEvent() {

@@ -28,6 +28,8 @@ function findTargetByClass(target, parentClass) {
 
   return null;
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -140,7 +142,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -206,7 +208,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -411,8 +413,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -452,6 +460,11 @@ const Tab = ($ => {
     constructor(options = {}) {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
     }
+    /**
+     * Shows the tab
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     show() {
       if (this.options.element.classList.contains('active')) {
@@ -500,9 +513,9 @@ const Tab = ($ => {
       return true;
     }
 
-    hide() {
+    async hide() {
       if (!this.options.element.classList.contains('active')) {
-        return false;
+        throw new Error('The tab is not active');
       }
 
       if (this.options.element.classList.contains('active')) {

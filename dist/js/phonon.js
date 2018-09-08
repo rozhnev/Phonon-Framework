@@ -65,6 +65,10 @@
         this.events = [];
         this.templatePath = null;
         this.renderFunction = null;
+        this.route = `/${pageName}`;
+        this.routeRegex = null;
+        this.routeParams = [];
+        this.setRoute(`/${pageName}`);
       } // getters
 
 
@@ -88,6 +92,63 @@
 
       getTemplate() {
         return this.template;
+      }
+      /**
+       * Get route
+       * @returns {string}
+       */
+
+
+      getRoute() {
+        return {
+          route: this.route,
+          regex: this.routeRegex,
+          params: this.routeParams
+        };
+      }
+      /**
+       * Set route
+       * @returns {undefined}
+       */
+
+
+      setRoute(route) {
+        const regParams = /{(.*?)}/g;
+        this.route = route;
+        this.routeRegex = `${route.replace(/({.*?})/g, '(.*?)')}$`;
+        this.routeParams = (route.match(regParams) || []).map(e => e.replace(regParams, '$1'));
+      }
+
+      getRouteLink(params = null) {
+        const reg = /{(.*?)}/g;
+
+        const _this$getRoute = this.getRoute(),
+              route = _this$getRoute.route;
+
+        const linkWithParams = (route.match(reg) || []).reduce((cur, param) => {
+          const paramName = param.replace(/{|}/g, '');
+          return cur.replace(new RegExp(param), params ? params[paramName] : 'null');
+        }, route);
+        return linkWithParams;
+      }
+
+      validHash(hash) {
+        const link = this.getRouteLink(this.getParams(hash));
+        return link === hash;
+      }
+
+      getParams(hash) {
+        const hashParams = {};
+
+        const _this$getRoute2 = this.getRoute(),
+              regex = _this$getRoute2.regex,
+              params = _this$getRoute2.params;
+
+        const hashValues = (new RegExp(regex, 'g').exec(hash) || []).slice(1);
+        params.forEach((p, i) => {
+          hashParams[p] = hashValues[i];
+        });
+        return hashParams;
       }
       /**
        * Get render function
@@ -125,7 +186,7 @@
        */
 
 
-      addEventCallback(callbackFn) {
+      addEvents(callbackFn) {
         this.events.push(callbackFn);
       }
       /**
@@ -138,7 +199,7 @@
 
       setTemplate(template = null, renderFunction = null) {
         if (typeof template !== 'string') {
-          throw new Error('The template path must be a string. ' + typeof template + ' is given');
+          throw new Error(`The template path must be a string. ${typeof template} is given`);
         }
 
         this.template = template;
@@ -154,7 +215,7 @@
        */
 
 
-      setPreventTransition(fn) {
+      preventTransition(fn) {
         if (typeof fn !== 'function') {
           throw new Error(`${NAME}: invalid function to handle page transitions`);
         }
@@ -179,12 +240,12 @@
           const scopeEventAlias = scope[eventNameAlias];
 
           if (typeof scopeEvent === 'function') {
-            scopeEvent.apply(this, eventParams);
+            scopeEvent.apply(this, [eventParams]);
           } // trigger the event alias
 
 
           if (typeof scopeEventAlias === 'function') {
-            scopeEventAlias.apply(this, eventParams);
+            scopeEventAlias.apply(this, [eventParams]);
           }
         });
         dispatchPageEvent(eventName, this.name, eventParams);
@@ -287,7 +348,7 @@
     // animations
     ANIMATION_START: animationStart,
     ANIMATION_END: animationEnd,
-    // dropdown
+    // selectbox
     ITEM_SELECTED: 'itemSelected'
   };
 
@@ -312,6 +373,7 @@
       animatePages: true
     };
     let currentPage;
+    let lastHash = null;
     /**
      * ------------------------------------------------------------------------
      * Class Definition
@@ -339,25 +401,33 @@
         return document.querySelector(selector);
       }
 
-      getHash() {
+      getRoute() {
         return window.location.hash.split(this.options.hashPrefix)[1];
       }
 
+      getHash() {
+        return window.location.hash;
+      }
+
+      getHashParams() {
+        const page = this.getPageModel(currentPage);
+        return page.getParams(this.getHash());
+      }
+
       getPageFromHash() {
-        const hash = this.getHash();
-        const re = new RegExp('[?\/]([^\/]*)');
-        const matches = re.exec(hash);
-
-        if (matches && matches[1]) {
-          return matches[1];
-        }
-
-        return null;
+        const hash = this.getHash() || '';
+        const page = this.pages.find(p => hash.match(p.getRoute().regex));
+        return page ? page.name : null;
       }
 
       setHash(pageName, params = null) {
-        const hash = `${this.options.hashPrefix}/${pageName}`;
-        window.location.hash = Array.isArray(params) ? `${hash}/${params.join('/')}` : hash;
+        const page = this.getPageModel(pageName);
+
+        if (!page) {
+          throw new Error(`Cannot change the route of unknown page ${pageName}`);
+        }
+
+        window.location.hash = `${this.options.hashPrefix}${page.getRouteLink(params)}`;
       }
 
       isPageOf(pageName1, pageName2) {
@@ -373,18 +443,31 @@
 
       addPagerEvents() {
         document.addEventListener('click', event => this.onClick(event));
-        window.addEventListener('popstate', event => this.onBackHistory(event));
-        window.addEventListener('hashchange', event => this.onHashChange(event));
         document.addEventListener('DOMContentLoaded', event => this.onDOMLoaded(event));
+
+        if (this.options.useHash) {
+          window.addEventListener('hashchange', event => this.onHashChange(event));
+        }
       } // getters
 
 
       static get version() {
         return `${NAME}.${VERSION}`;
+      }
+
+      async preventChangePage(oldPageName, pageName, params) {
+        const oldPage = this.getPageModel(oldPageName);
+        const preventFn = oldPage.getPreventTransition();
+
+        if (typeof preventFn === 'function') {
+          return preventFn(oldPageName, pageName, params);
+        }
+
+        return false;
       } // public
 
 
-      async showPage(pageName, params = null, back = false, from = Event.CLICK) {
+      async showPage(pageName, params = null, back = false) {
         /*
          * If we he use the hash as trigger,
          * we change it dynamically so that the hashchange event is called
@@ -401,20 +484,16 @@
 
         if (oldPage) {
           oldPageName = oldPage.getAttribute('data-page');
-          const oldPageModel = this.getPageModel(oldPageName);
-          const preventFn = oldPageModel.getPreventTransition();
-
-          if (typeof preventFn === 'function') {
-            if (await preventFn(oldPageName, pageName, params)) {
-              if (from === Event.HASH) {
-                window.history.back();
-              }
-
-              return;
-            }
-          }
 
           if (this.isPageOf(pageName, oldPageName)) {
+            return;
+          }
+
+          if (await this.preventChangePage(oldPageName, pageName, params)) {
+            if (this.options.useHash) {
+              window.location.hash = lastHash;
+            }
+
             return;
           }
 
@@ -426,14 +505,15 @@
           this.triggerPageEvent(oldPageName, Event.HIDE);
         }
 
-        this.triggerPageEvent(pageName, Event.SHOW);
         currentPage = pageName; // new page
 
-        const newPage = this._(`[data-page="${pageName}"]`);
+        const newPage = this._(`[data-page="${currentPage}"]`);
 
         newPage.classList.add('current'); // render template
 
-        const pageModel = this.getPageModel(pageName);
+        const pageModel = this.getPageModel(currentPage);
+        const hashParams = pageModel.getParams(this.getHash());
+        this.triggerPageEvent(currentPage, Event.SHOW, hashParams);
 
         if (pageModel && pageModel.getTemplate()) {
           await pageModel.renderTemplate();
@@ -450,7 +530,7 @@
             }
 
             oldPage.classList.remove(oldPage.back ? 'pop-page' : 'push-page');
-            this.triggerPageEvent(currentPage, Event.SHOWN);
+            this.triggerPageEvent(currentPage, Event.SHOWN, hashParams);
             this.triggerPageEvent(oldPage.previousPageName, Event.HIDDEN);
             oldPage.removeEventListener(Event.ANIMATION_END, onPageAnimationEnd);
           };
@@ -464,6 +544,8 @@
 
           oldPage.classList.add(back ? 'pop-page' : 'push-page');
         }
+
+        lastHash = this.getHash();
       }
 
       addUniquePageModel(pageName) {
@@ -476,51 +558,8 @@
         return this.pages.find(page => page.name === pageName);
       }
 
-      getPagesModel(pageNames) {
-        return this.pages.filter(page => pageNames.indexOf(page.name) > -1);
-      }
-
       selectorToArray(str) {
         return str.split(',').map(item => item.trim());
-      }
-
-      addEvents(callback) {
-        if (this.cachePageSelector === '*') {
-          // add to all page models
-          this.pages.forEach(page => {
-            page.addEventCallback(callback);
-          });
-          return;
-        }
-
-        const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-        pageModels.forEach(page => {
-          page.addEventCallback(callback);
-        });
-        this.cachePageSelector = null;
-      }
-
-      preventTransition(preventFn) {
-        if (this.cachePageSelector === '*') {
-          this.pages.forEach(page => {
-            page.setPreventTransition(preventFn);
-          });
-          return;
-        }
-
-        const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-        pageModels.forEach(page => {
-          page.setPreventTransition(preventFn);
-        });
-        this.cachePageSelector = null;
-      }
-
-      setTemplate(templatePath, renderFunction = null) {
-        const pageModels = this.getPagesModel(this.selectorToArray(this.cachePageSelector), true);
-        pageModels.forEach(page => {
-          page.setTemplate(templatePath, renderFunction);
-        });
-        this.cachePageSelector = null;
       }
 
       triggerPageEvent(pageName, eventName, eventParams = null) {
@@ -535,40 +574,23 @@
         const pageName = event.target.getAttribute('data-navigate');
         const backNavigation = event.target.getAttribute('data-pop-page') === 'true';
 
-        if (pageName) {
-          if (pageName === '$back') {
-            // the popstate event will be triggered
-            window.history.back();
-            return;
-          }
-
-          this.showPage(pageName, null, backNavigation);
-        }
-      }
-
-      onBackHistory(event = {}) {
-        const pageName = event.state ? event.state.page : null;
-
         if (!pageName) {
           return;
         }
 
-        this.showPage(pageName, null, true);
+        this.showPage(pageName, null, backNavigation);
       }
 
       onHashChange() {
-        const params = (this.getHash() ? this.getHash().split('/') : []).filter(p => p.length > 0);
+        const params = this.getHashParams();
+        const navPage = this.getPageFromHash(); // avoid concurrent pages if prevent page change is defined
 
-        if (params.length > 0) {
-          // remove first value which is the page name
-          params.shift();
+        if (navPage === currentPage) {
+          this.triggerPageEvent(currentPage, Event.HASH, params);
         }
 
-        this.triggerPageEvent(currentPage, Event.HASH, params);
-        const navPage = this.getPageFromHash();
-
         if (navPage) {
-          this.showPage(navPage, null, false, params, Event.HASH);
+          this.showPage(navPage, null, false, params);
         }
       }
       /**
@@ -594,17 +616,16 @@
       }
 
       select(pageName, addPageModel = true) {
-        this.cachePageSelector = pageName;
-
-        if (addPageModel && pageName !== '*') {
+        if (addPageModel) {
           this.addUniquePageModel(pageName);
         }
 
-        return this;
+        return this.getPageModel(pageName);
       }
 
       start(forceDefaultPage = false) {
-        // check if the app has been already started
+        let force = forceDefaultPage; // check if the app has been already started
+
         if (this.started) {
           throw new Error(`${NAME}. The app has been already started.`);
         }
@@ -612,7 +633,7 @@
         this.started = true; // force default page on Cordova
 
         if (window.cordova) {
-          forceDefaultPage = true;
+          force = true;
         }
 
         let pageName = this.getPageFromHash();
@@ -621,7 +642,9 @@
           pageName = this.options.defaultPage;
         }
 
-        if (forceDefaultPage && !this.options.defaultPage) {
+        const page = this.getPageModel(pageName);
+
+        if (force && !this.options.defaultPage) {
           throw new Error(`${NAME}. The default page must exist for forcing its launch!`);
         }
         /*
@@ -631,10 +654,12 @@
 
 
         if (this.options.useHash) {
-          this.setHash(pageName, null);
+          if (!page.validHash(this.getHash())) {
+            this.setHash(pageName);
+          }
         }
 
-        this.showPage(forceDefaultPage ? this.options.defaultPage : pageName);
+        this.showPage(force ? this.options.defaultPage : pageName);
       } // static
 
 
@@ -695,8 +720,8 @@
       }
       /**
        * Checks if the given argument is a DOM element
-       * @param {HTMLElement} the argument to test
-       * @return {boolean} true if the object is a DOM element, false otherwise
+       * @param {Element} the argument to test
+       * @returns {boolean} true if the object is a DOM element, false otherwise
        */
 
 
@@ -769,7 +794,7 @@
             i18nValue = value;
           }
 
-          const methodName = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
+          const methodName = `set${key.charAt(0).toUpperCase()}${key.slice(1)}`;
 
           if (this[methodName]) {
             this[methodName](element, i18nValue);
@@ -812,13 +837,12 @@
       locale: 'en',
       bind: false,
       data: null
-      /**
-       * ------------------------------------------------------------------------
-       * Class Definition
-       * ------------------------------------------------------------------------
-       */
-
     };
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
 
     class I18n {
       /**
@@ -935,15 +959,19 @@
 
 
       updateHtml(element = null) {
-        if (!element) {
-          element = document.querySelectorAll('[data-t]');
+        let el = element;
+
+        if (!el) {
+          el = document.querySelectorAll('[data-t]');
         }
 
-        if (typeof element === 'string') {
-          element = document.querySelector(element);
+        if (typeof el === 'string') {
+          el = document.querySelector(el);
         }
+        /* eslint no-new: 0 */
 
-        new Binder(element, this.t());
+
+        new Binder(el, this.t());
       } // static
 
 
@@ -977,6 +1005,8 @@
 
     return null;
   }
+  /* eslint no-param-reassign: 0 */
+
   function createJqueryPlugin($ = null, name, obj) {
     if (!$) {
       return;
@@ -995,6 +1025,11 @@
     $.fn[name] = mainFn;
     $.fn[name].Constructor = obj;
     $.fn[name].noConflict = mainFn;
+  }
+  function sleep(timeout) {
+    return new Promise(resolve => {
+      setTimeout(resolve, timeout);
+    });
   }
 
   const getAttribute = (first, second) => {
@@ -1059,7 +1094,7 @@
         if (type === 'boolean') {
           // convert string to boolean
           value = attrValue === 'true';
-        } else if (!isNaN(attrValue)) {
+        } else if (!Number.isNaN(attrValue)) {
           value = parseInt(attrValue, 10);
         } else {
           value = attrValue;
@@ -1264,8 +1299,14 @@
 
       this.onElementEvent(event);
     }
+    /**
+     * @emits {Event} emit events registered by the component
+     * @param {Event} event
+     */
 
-    onElementEvent(event) {//
+
+    onElementEvent() {
+      /* eslint class-methods-use-this: 0 */
     }
 
     static identifier() {
@@ -1439,44 +1480,52 @@
         super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
         this.onTransition = false;
       }
+      /**
+       * Shows the alert
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       show() {
-        if (this.onTransition) {
-          return false;
-        }
-
-        if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
-          return false;
-        }
-
-        this.onTransition = true;
-        this.triggerEvent(Event.SHOW);
-
-        const onShow = () => {
-          this.triggerEvent(Event.SHOWN);
-
-          if (this.options.element.classList.contains('fade')) {
-            this.options.element.classList.remove('fade');
+        return new Promise((resolve, reject) => {
+          if (this.onTransition) {
+            reject();
           }
 
-          this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
-          this.onTransition = false;
-        };
+          if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+            reject();
+          }
 
-        if (this.options.fade && !this.options.element.classList.contains('fade')) {
-          this.options.element.classList.add('fade');
-        }
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
 
-        this.options.element.classList.add('show');
-        this.options.element.addEventListener(Event.TRANSITION_END, onShow);
+          const onShow = () => {
+            this.triggerEvent(Event.SHOWN);
 
-        if (this.options.element.classList.contains('hide')) {
-          this.options.element.classList.remove('hide');
-        }
+            if (this.options.element.classList.contains('fade')) {
+              this.options.element.classList.remove('fade');
+            }
 
-        if (!this.options.fade) {
-          onShow();
-        }
+            this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+            this.onTransition = false;
+            resolve();
+          };
+
+          if (this.options.fade && !this.options.element.classList.contains('fade')) {
+            this.options.element.classList.add('fade');
+          }
+
+          this.options.element.classList.add('show');
+          this.options.element.addEventListener(Event.TRANSITION_END, onShow);
+
+          if (this.options.element.classList.contains('hide')) {
+            this.options.element.classList.remove('hide');
+          }
+
+          if (!this.options.fade) {
+            onShow();
+          }
+        });
       }
 
       getOpacity() {
@@ -1485,42 +1534,52 @@
 
         return parseFloat(opacity);
       }
+      /**
+       * Hides the alert
+       * @returns {Promise} Promise object represents the end of the animation
+       */
+
 
       hide() {
-        if (this.onTransition) {
-          return false;
-        }
+        return new Promise((resolve, reject) => {
+          if (this.onTransition) {
+            reject();
+            return;
+          }
 
-        if (this.getOpacity() === 0) {
-          return false;
-        }
+          if (this.getOpacity() === 0) {
+            reject();
+            return;
+          }
 
-        this.onTransition = true;
-        this.triggerEvent(Event.HIDE);
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
 
-        const onHide = () => {
-          this.triggerEvent(Event.HIDDEN);
-          this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
-          this.onTransition = false;
-        };
+          const onHide = () => {
+            this.triggerEvent(Event.HIDDEN);
+            this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+            this.onTransition = false;
+            resolve();
+          };
 
-        if (this.options.fade && !this.options.element.classList.contains('fade')) {
-          this.options.element.classList.add('fade');
-        }
+          if (this.options.fade && !this.options.element.classList.contains('fade')) {
+            this.options.element.classList.add('fade');
+          }
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onHide);
+          this.options.element.addEventListener(Event.TRANSITION_END, onHide);
 
-        if (!this.options.element.classList.contains('hide')) {
-          this.options.element.classList.add('hide');
-        }
+          if (!this.options.element.classList.contains('hide')) {
+            this.options.element.classList.add('hide');
+          }
 
-        if (this.options.element.classList.contains('show')) {
-          this.options.element.classList.remove('show');
-        }
+          if (this.options.element.classList.contains('show')) {
+            this.options.element.classList.remove('show');
+          }
 
-        if (!this.options.fade) {
-          onHide();
-        }
+          if (!this.options.fade) {
+            onHide();
+          }
+        });
       }
 
       static identifier() {
@@ -1547,16 +1606,12 @@
      */
 
     const components = [];
-    const alerts = document.querySelectorAll(`.${NAME}`);
-
-    if (alerts) {
-      alerts.forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-        components.push(Alert.DOMInterface(config));
-      });
-    }
-
+    const alerts = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    alerts.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push(Alert.DOMInterface(config));
+    });
     document.addEventListener('click', event => {
       const target = findTargetByAttr(event.target, 'data-dismiss');
 
@@ -1704,17 +1759,19 @@
       }
 
       show() {
-        if (this.options.element === null) {
-          // build and insert a new DOM element
-          this.build();
-        }
+        return new Promise(async (resolve, reject) => {
+          if (this.options.element === null) {
+            // build and insert a new DOM element
+            this.build();
+          }
 
-        if (this.options.element.classList.contains('show')) {
-          return false;
-        } // add a timeout so that the CSS animation works
+          if (this.options.element.classList.contains('show')) {
+            reject(new Error('The modal is already active'));
+            return;
+          } // add a timeout so that the CSS animation works
 
 
-        setTimeout(() => {
+          await sleep(20);
           this.triggerEvent(Event.SHOW);
           this.buildBackdrop(); // attach event
 
@@ -1723,13 +1780,13 @@
           const onShown = () => {
             this.triggerEvent(Event.SHOWN);
             this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+            resolve();
           };
 
           this.options.element.addEventListener(Event.TRANSITION_END, onShown);
           this.options.element.classList.add('show');
           this.center();
-        }, 10);
-        return true;
+        });
       }
 
       onElementEvent(event) {
@@ -1762,33 +1819,42 @@
           }
         }
       }
+      /**
+       * Hides the modal
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       hide() {
-        if (!this.options.element.classList.contains('show')) {
-          return false;
-        }
-
-        this.triggerEvent(Event.HIDE);
-        this.detachEvents();
-        this.options.element.classList.add('hide');
-        this.options.element.classList.remove('show');
-        const backdrop = this.getBackdrop();
-
-        const onHidden = () => {
-          document.body.removeChild(backdrop);
-          this.options.element.classList.remove('hide');
-          this.triggerEvent(Event.HIDDEN);
-          backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
-
-          if (this.dynamicElement) {
-            document.body.removeChild(this.options.element);
-            this.options.element = null;
+        return new Promise((resolve, reject) => {
+          if (!this.options.element.classList.contains('show')) {
+            reject(new Error('The modal is not active'));
+            return;
           }
-        };
 
-        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-        backdrop.classList.add('fadeout');
-        return true;
+          this.triggerEvent(Event.HIDE);
+          this.detachEvents();
+          this.options.element.classList.add('hide');
+          this.options.element.classList.remove('show');
+          const backdrop = this.getBackdrop();
+
+          const onHidden = () => {
+            document.body.removeChild(backdrop);
+            this.options.element.classList.remove('hide');
+            this.triggerEvent(Event.HIDDEN);
+            backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+            if (this.dynamicElement) {
+              document.body.removeChild(this.options.element);
+              this.options.element = null;
+            }
+
+            resolve();
+          };
+
+          backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+          backdrop.classList.add('fadeout');
+        });
       }
 
       attachEvents() {
@@ -1864,19 +1930,15 @@
      */
 
     const components = [];
-    const modals = document.querySelectorAll(`.${NAME}`);
-
-    if (modals) {
-      Array.from(modals).forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-        components.push({
-          element,
-          modal: new Modal(config)
-        });
+    const modals = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    modals.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push({
+        element,
+        modal: new Modal(config)
       });
-    }
-
+    });
     document.addEventListener('click', event => {
       const dataToggleAttr = event.target.getAttribute('data-toggle');
 
@@ -1945,13 +2007,23 @@
 
         super(options, template);
       }
+      /**
+       * Shows the prompt
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      show() {
+
+      async show() {
         super.show();
         this.attachInputEvent();
       }
+      /**
+       * Hides the prompt
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      hide() {
+
+      async hide() {
         super.hide();
         this.detachInputEvent();
       }
@@ -2088,13 +2160,14 @@
 
     class Confirm extends Modal {
       constructor(options = {}) {
+        const opts = options;
         const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-        if (!Array.isArray(options.buttons)) {
-          options.buttons = DEFAULT_PROPERTIES.buttons;
+        if (!Array.isArray(opts.buttons)) {
+          opts.buttons = DEFAULT_PROPERTIES.buttons;
         }
 
-        super(options, template);
+        super(opts, template);
       }
 
       static identifier() {
@@ -2207,11 +2280,12 @@
         return this.options.element.querySelector('.loader-spinner');
       }
 
-      show() {
+      async show() {
         if (this.options.element.classList.contains('hide')) {
           this.options.element.classList.remove('hide');
         }
 
+        this.triggerEvent(Event.SHOW);
         const size = this.getClientSize();
         this.options.size = size;
 
@@ -2223,6 +2297,7 @@
           loaderSpinner.style.height = `${this.options.size}px`;
         }
 
+        this.triggerEvent(Event.SHOWN);
         return true;
       }
 
@@ -2247,11 +2322,13 @@
         return true;
       }
 
-      hide() {
+      async hide() {
         if (!this.options.element.classList.contains('hide')) {
           this.options.element.classList.add('hide');
         }
 
+        this.triggerEvent(Event.HIDE);
+        this.triggerEvent(Event.HIDDEN);
         return true;
       }
 
@@ -2305,17 +2382,18 @@
 
     class Loader$$1 extends Modal {
       constructor(options = {}) {
+        const opts = options;
         const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '<div class="mx-auto text-center">' + '<div class="loader mx-auto d-block">' + '<div class="loader-spinner"></div>' + '</div>' + '</div>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-        if (!Array.isArray(options.buttons)) {
-          options.buttons = options.cancelable ? DEFAULT_PROPERTIES.buttons : [];
+        if (!Array.isArray(opts.buttons)) {
+          opts.buttons = opts.cancelable ? DEFAULT_PROPERTIES.buttons : [];
         }
 
-        super(options, template);
+        super(opts, template);
         this.spinner = null;
       }
 
-      show() {
+      async show() {
         super.show();
         this.spinner = new Loader({
           element: this.getElement().querySelector('.loader')
@@ -2323,7 +2401,7 @@
         this.spinner.animate(true);
       }
 
-      hide() {
+      async hide() {
         super.hide();
         this.spinner.animate(false);
         this.spinner = null;
@@ -2441,35 +2519,50 @@
         document.body.appendChild(this.options.element);
         this.setAttributes();
       }
+      /**
+       * Shows the notification
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       show() {
-        if (this.options.element === null) {
-          // build and insert a new DOM element
-          this.build();
-        }
+        return new Promise(async (resolve, reject) => {
+          if (this.options.element === null) {
+            // build and insert a new DOM element
+            this.build();
+          }
 
-        if (this.options.element.classList.contains('show')) {
-          return false;
-        } // reset color
+          if (this.options.element.classList.contains('show')) {
+            reject(new Error('The notification is already active'));
+            return;
+          } // reset color
 
 
-        if (this.options.background) {
-          this.options.element.removeAttribute('class');
-          this.options.element.setAttribute('class', 'notification');
-          this.options.element.classList.add(`bg-${this.options.background}`);
-          this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
-        }
+          if (this.options.background) {
+            this.options.element.removeAttribute('class');
+            this.options.element.setAttribute('class', 'notification');
+            this.options.element.classList.add(`bg-${this.options.background}`);
+            this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
+          }
 
-        if (this.options.showButton) {
-          // attach the button handler
-          const buttonElement = this.options.element.querySelector('button');
-          this.registerElement({
-            target: buttonElement,
-            event: 'click'
-          });
-        }
+          if (this.options.showButton) {
+            // attach the button handler
+            const buttonElement = this.options.element.querySelector('button');
+            this.registerElement({
+              target: buttonElement,
+              event: 'click'
+            });
+          }
 
-        setTimeout(() => {
+          await sleep(20);
+
+          if (Number.isInteger(this.options.timeout) && this.options.timeout > 0) {
+            // if there is a timeout, auto hide the notification
+            this.timeoutCallback = setTimeout(() => {
+              this.hide();
+            }, this.options.timeout + 1);
+          }
+
           this.options.element.classList.add('show'); // set position
 
           const activeNotifications = document.querySelectorAll('.notification.show') || [];
@@ -2486,61 +2579,63 @@
           const onShown = () => {
             this.triggerEvent(Event.SHOWN);
             this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+            resolve();
           };
 
           this.options.element.addEventListener(Event.TRANSITION_END, onShown);
-        }, 1);
-
-        if (Number.isInteger(this.options.timeout) && this.options.timeout > 0) {
-          // if there is a timeout, auto hide the notification
-          this.timeoutCallback = setTimeout(() => {
-            this.hide();
-          }, this.options.timeout + 1);
-        }
-
-        return true;
+          return true;
+        });
       }
+      /**
+       * Hides the notification
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       hide() {
-        /*
-         * prevent to close a notification with a timeout
-         * if the user has already clicked on the button
-         */
-        if (this.timeoutCallback) {
-          clearTimeout(this.timeoutCallback);
-          this.timeoutCallback = null;
-        }
-
-        if (!this.options.element.classList.contains('show')) {
-          return false;
-        }
-
-        this.triggerEvent(Event.HIDE);
-
-        if (this.options.showButton) {
-          const buttonElement = this.options.element.querySelector('button');
-          this.unregisterElement({
-            target: buttonElement,
-            event: 'click'
-          });
-        }
-
-        this.options.element.classList.remove('show');
-        this.options.element.classList.add('hide');
-
-        const onHidden = () => {
-          this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
-          this.options.element.classList.remove('hide');
-          this.triggerEvent(Event.HIDDEN);
-
-          if (this.dynamicElement) {
-            document.body.removeChild(this.options.element);
-            this.options.element = null;
+        return new Promise((resolve, reject) => {
+          /*
+          * prevent to close a notification with a timeout
+          * if the user has already clicked on the button
+          */
+          if (this.timeoutCallback) {
+            clearTimeout(this.timeoutCallback);
+            this.timeoutCallback = null;
           }
-        };
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
-        return true;
+          if (!this.options.element.classList.contains('show')) {
+            reject(new Error('The notification is not active'));
+            return;
+          }
+
+          this.triggerEvent(Event.HIDE);
+
+          if (this.options.showButton) {
+            const buttonElement = this.options.element.querySelector('button');
+            this.unregisterElement({
+              target: buttonElement,
+              event: 'click'
+            });
+          }
+
+          this.options.element.classList.remove('show');
+          this.options.element.classList.add('hide');
+
+          const onHidden = () => {
+            this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
+            this.options.element.classList.remove('hide');
+            this.triggerEvent(Event.HIDDEN);
+
+            if (this.dynamicElement) {
+              document.body.removeChild(this.options.element);
+              this.options.element = null;
+            }
+
+            resolve();
+          };
+
+          this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
+        });
       }
 
       onElementEvent() {
@@ -2613,71 +2708,105 @@
 
         return this.show();
       }
+      /**
+       * Shows the collapse
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       show() {
-        if (this.onTransition) {
-          return false;
-        }
+        return new Promise(async (resolve, reject) => {
+          if (this.onTransition) {
+            reject();
+            return;
+          }
 
-        if (this.options.element.classList.contains('show')) {
-          return false;
-        }
+          if (this.options.element.classList.contains('show')) {
+            reject();
+            return;
+          }
 
-        this.onTransition = true;
-        this.triggerEvent(Event.SHOW);
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
 
-        const onCollapsed = () => {
-          this.triggerEvent(Event.SHOWN);
-          this.options.element.classList.add('show');
-          this.options.element.classList.remove('collapsing');
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-          this.options.element.setAttribute('aria-expanded', true);
-          this.onTransition = false;
-        };
+          const onCollapsed = () => {
+            this.triggerEvent(Event.SHOWN);
+            this.options.element.classList.add('show');
+            this.options.element.classList.remove('collapsing');
+            this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+            this.options.element.setAttribute('aria-expanded', true);
+            this.onTransition = false;
+            resolve();
+          };
 
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
+          if (!this.options.element.classList.contains('collapsing')) {
+            this.options.element.classList.add('collapsing');
+          }
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-        const height = this.getHeight();
-        this.options.element.style.height = '0px';
-        setTimeout(() => {
-          this.options.element.style.height = `${height}px`;
-        }, 20);
-        return true;
+          this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
+
+          if (!this.isVerticalCollapse()) {
+            this.options.element.classList.add('slide');
+          } else {
+            // get real height
+            const height = this.getHeight();
+            this.options.element.style.height = '0px';
+            await sleep(20);
+            this.options.element.style.height = `${height}px`;
+          }
+        });
       }
+      /**
+       * Hides the collapse
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       hide() {
-        if (this.onTransition) {
-          return false;
-        }
+        return new Promise((resolve, reject) => {
+          if (this.onTransition) {
+            reject();
+            return;
+          }
 
-        if (!this.options.element.classList.contains('show')) {
-          return false;
-        }
+          if (!this.options.element.classList.contains('show')) {
+            reject();
+            return;
+          }
 
-        this.onTransition = true;
-        this.triggerEvent(Event.HIDE);
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
 
-        const onCollapsed = () => {
-          this.triggerEvent(Event.HIDDEN);
-          this.options.element.classList.remove('collapsing');
-          this.options.element.style.height = 'auto';
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-          this.options.element.setAttribute('aria-expanded', false);
-          this.onTransition = false;
-        };
+          const onCollapsed = () => {
+            this.triggerEvent(Event.HIDDEN);
+            this.options.element.classList.remove('collapsing');
+            this.options.element.style.height = 'auto';
+            this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+            this.options.element.setAttribute('aria-expanded', false);
+            this.onTransition = false;
+            resolve();
+          };
 
-        this.options.element.style.height = '0px';
+          this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
+          if (!this.isVerticalCollapse()) {
+            if (this.options.element.classList.contains('slide')) {
+              this.options.element.classList.remove('slide');
+            }
+          } else {
+            this.options.element.style.height = '0px';
+          }
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-        this.options.element.classList.remove('show');
-        return true;
+          if (!this.options.element.classList.contains('collapsing')) {
+            this.options.element.classList.add('collapsing');
+          }
+
+          this.options.element.classList.remove('show');
+        });
+      }
+
+      isVerticalCollapse() {
+        return !this.options.element.classList.contains('collapse-l') && !this.options.element.classList.contains('collapse-r');
       }
 
       static identifier() {
@@ -2704,17 +2833,12 @@
      */
 
     const components = [];
-    const collapses = document.querySelectorAll(`.${NAME}`);
-
-    if (collapses) {
-      collapses.forEach(element => {
-        // const config = {}
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-        components.push(Collapse.DOMInterface(config));
-      });
-    }
-
+    const collapses = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    collapses.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push(Collapse.DOMInterface(config));
+    });
     document.addEventListener(Event.CLICK, event => {
       const target = findTargetByAttr(event.target, 'data-toggle');
 
@@ -2806,6 +2930,12 @@
       getCollapses() {
         return this.collapses;
       }
+      /**
+       * Shows the collapse element and hides the other active collapse elements
+       * @param {Element} showCollapse
+       * @returns {undefined}
+       */
+
 
       setCollapses(showCollapse) {
         const collapse = this.getCollapse(showCollapse);
@@ -2817,8 +2947,14 @@
           }
         });
       }
+      /**
+       * Shows the collapse element
+       * @param {(string|Element)} collapseEl
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      show(collapseEl) {
+
+      async show(collapseEl) {
         let collapse = collapseEl;
 
         if (typeof collapseEl === 'string') {
@@ -2832,8 +2968,14 @@
         this.setCollapses(collapse);
         return true;
       }
+      /**
+       * Hides the collapse element
+       * @param {(string|Element)} collapseEl
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      hide(collapseEl) {
+
+      async hide(collapseEl) {
         let collapse = collapseEl;
 
         if (typeof collapseEl === 'string') {
@@ -2872,16 +3014,12 @@
      */
 
     const components = [];
-    const accordions = document.querySelectorAll(`.${NAME}`);
-
-    if (accordions) {
-      Array.from(accordions).forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-        components.push(Accordion.DOMInterface(config));
-      });
-    }
-
+    const accordions = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    accordions.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push(Accordion.DOMInterface(config));
+    });
     document.addEventListener('click', event => {
       const dataToggleAttr = event.target.getAttribute('data-toggle');
 
@@ -2941,6 +3079,11 @@
       constructor(options = {}) {
         super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
       }
+      /**
+       * Shows the tab
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
 
       show() {
         if (this.options.element.classList.contains('active')) {
@@ -2989,9 +3132,9 @@
         return true;
       }
 
-      hide() {
+      async hide() {
         if (!this.options.element.classList.contains('active')) {
-          return false;
+          throw new Error('The tab is not active');
         }
 
         if (this.options.element.classList.contains('active')) {
@@ -3158,15 +3301,25 @@
 
         return true;
       }
+      /**
+       * Shows the progress bar
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      show() {
+
+      async show() {
         this.options.element.style.height = `${this.options.height}px`;
         this.triggerEvent(Event.SHOW);
         this.triggerEvent(Event.SHOWN);
         return true;
       }
+      /**
+       * Hides the progress bar
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      hide() {
+
+      async hide() {
         this.options.element.style.height = '0px';
         this.triggerEvent(Event.HIDE);
         this.triggerEvent(Event.HIDDEN);
@@ -3205,9 +3358,9 @@
      * Constants
      * ------------------------------------------------------------------------
      */
-    const NAME = 'offCanvas';
+    const NAME = 'offcanvas';
     const VERSION = '2.0.0';
-    const BACKDROP_SELECTOR = 'off-canvas-backdrop';
+    const BACKDROP_SELECTOR = 'offcanvas-backdrop';
     const DEFAULT_PROPERTIES = {
       element: null,
       aside: {
@@ -3254,7 +3407,7 @@
 
       checkDirection() {
         this.directions.every(direction => {
-          if (this.options.element.classList.contains(`off-canvas-${direction}`)) {
+          if (this.options.element.classList.contains(`offcanvas-${direction}`)) {
             this.direction = direction;
             return false;
           }
@@ -3294,8 +3447,8 @@
         const content = document.body;
 
         if (this.options.aside[name] === true) {
-          if (!content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-            content.classList.add(`off-canvas-aside-${this.direction}`);
+          if (!content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+            content.classList.add(`offcanvas-aside-${this.direction}`);
           }
 
           this.useBackdrop = false; // avoid animation by setting animate to false
@@ -3305,8 +3458,8 @@
 
           this.removeBackdrop();
         } else {
-          if (content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-            content.classList.remove(`off-canvas-aside-${this.direction}`);
+          if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+            content.classList.remove(`offcanvas-aside-${this.direction}`);
           }
 
           this.hide();
@@ -3318,7 +3471,7 @@
       onElementEvent(event) {
         if (event.type === 'keyup' && event.keyCode !== 27 && event.keyCode !== 13) {
           return;
-        } // hide the off-canvas
+        } // hide the offcanvas
 
 
         this.hide();
@@ -3486,19 +3639,15 @@
      */
 
     const components = [];
-    const offCanvas = document.querySelectorAll(`.${NAME}`);
-
-    if (offCanvas) {
-      Array.from(offCanvas).forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-        components.push({
-          element,
-          offCanvas: new OffCanvas(config)
-        });
+    const offCanvas = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    offCanvas.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push({
+        element,
+        offCanvas: new OffCanvas(config)
       });
-    }
-
+    });
     document.addEventListener('click', event => {
       const target = findTargetByAttr(event.target, 'data-toggle');
 
@@ -3530,27 +3679,28 @@
    * --------------------------------------------------------------------------
    */
 
-  const Dropdown = (() => {
+  const Selectbox = (() => {
     /**
      * ------------------------------------------------------------------------
      * Constants
      * ------------------------------------------------------------------------
      */
-    const NAME = 'dropdown';
+    const NAME = 'selectbox';
     const VERSION = '2.0.0';
     const DEFAULT_PROPERTIES = {
       element: null,
-      default: true,
-      search: false
+      selectable: true,
+      search: false,
+      filterItems: null
     };
-    const DATA_ATTRS_PROPERTIES = ['default', 'search'];
+    const DATA_ATTRS_PROPERTIES = ['selectable', 'search'];
     /**
      * ------------------------------------------------------------------------
      * Class Definition
      * ------------------------------------------------------------------------
      */
 
-    class Dropdown extends Component {
+    class Selectbox extends Component {
       constructor(options = {}) {
         super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
         const selected = this.options.element.querySelector('[data-selected]');
@@ -3559,7 +3709,7 @@
       }
 
       setSelected(value = '', text = null, checkExists = true) {
-        if (!this.options.default) {
+        if (!this.options.selectable) {
           return false;
         }
 
@@ -3621,13 +3771,13 @@
 
       onElementEvent(event) {
         if (event.type === Event.START) {
-          const dropdown = findTargetByClass(event.target, 'dropdown');
+          const selectbox = findTargetByClass(event.target, 'selectbox');
           /*
-           * hide the current dropdown only if the event concerns another dropdown
-           * hide also if the user clicks outside a dropdown
+           * hide the current selectbox only if the event concerns another selectbox
+           * hide also if the user clicks outside a selectbox
            */
 
-          if (!dropdown || dropdown !== this.getElement()) {
+          if (!selectbox || selectbox !== this.getElement()) {
             this.hide();
           }
         } else if (event.type === 'click') {
@@ -3653,12 +3803,12 @@
 
             this.hide();
             return;
-          } // don't toggle the dropdown if the event concerns headers, dividers
+          } // don't toggle the selectbox if the event concerns headers, dividers
 
 
-          const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu');
+          const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
 
-          if (dropdownMenu) {
+          if (selectboxMenu) {
             return;
           }
 
@@ -3673,20 +3823,25 @@
 
         return this.show();
       }
+      /**
+       * Shows the selectbox
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      show() {
+
+      async show() {
         if (this.options.element.classList.contains('active')) {
           return false;
         }
 
         this.options.element.classList.add('active');
-        const dropdownMenu = this.options.element.querySelector('.dropdown-menu'); // scroll to top
+        const selectboxMenu = this.options.element.querySelector('.selectbox-menu'); // scroll to top
 
-        dropdownMenu.scrollTop = 0;
+        selectboxMenu.scrollTop = 0;
         this.triggerEvent(Event.SHOW);
         this.triggerEvent(Event.SHOWN);
         this.registerElement({
-          target: dropdownMenu,
+          target: selectboxMenu,
           event: 'click'
         });
         this.registerElement({
@@ -3695,17 +3850,22 @@
         });
         return true;
       }
+      /**
+       * Hides the selectbox
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      hide() {
+
+      async hide() {
         if (!this.options.element.classList.contains('active')) {
-          return false;
+          throw new Error('The selectbox is not active');
         }
 
         this.options.element.classList.remove('active');
         this.triggerEvent(Event.HIDE);
         this.triggerEvent(Event.HIDDEN);
         this.unregisterElement({
-          target: this.options.element.querySelector('.dropdown-menu'),
+          target: this.options.element.querySelector('.selectbox-menu'),
           event: 'click'
         });
         this.unregisterElement({
@@ -3720,7 +3880,7 @@
       }
 
       static DOMInterface(options) {
-        return super.DOMInterface(Dropdown, options);
+        return super.DOMInterface(Selectbox, options);
       }
 
     }
@@ -3732,33 +3892,29 @@
 
 
     const components = [];
-    const dropdowns = document.querySelectorAll(`.${NAME}`);
+    const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    selectboxes.filter(d => !d.classList.contains('nav-item')).forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
 
-    if (dropdowns) {
-      Array.from(dropdowns).forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
-
-        if (!config.search) {
-          components.push(new Dropdown(config));
-        }
-      });
-    }
-
+      if (!config.search) {
+        components.push(new Selectbox(config));
+      }
+    });
     document.addEventListener('click', event => {
-      const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu');
+      const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
 
-      if (dropdownMenu) {
+      if (selectboxMenu) {
         return;
       }
 
-      const dropdown = findTargetByClass(event.target, 'dropdown');
+      const selectbox = findTargetByClass(event.target, 'selectbox');
 
-      if (dropdown) {
-        const dataToggleAttr = dropdown.getAttribute('data-toggle');
+      if (selectbox) {
+        const dataToggleAttr = selectbox.getAttribute('data-toggle');
 
-        if (dataToggleAttr && dataToggleAttr === NAME && dropdown) {
-          const component = components.find(c => c.getElement() === dropdown);
+        if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+          const component = components.find(c => c.getElement() === selectbox);
 
           if (!component) {
             return;
@@ -3768,7 +3924,7 @@
         }
       }
     });
-    return Dropdown;
+    return Selectbox;
   })();
 
   /**
@@ -3777,26 +3933,27 @@
    * --------------------------------------------------------------------------
    */
 
-  const DropdownSearch = ($ => {
+  const SelectboxSearch = ($ => {
     /**
      * ------------------------------------------------------------------------
      * Constants
      * ------------------------------------------------------------------------
      */
-    const NAME = Dropdown.identifier();
+    const NAME = Selectbox.identifier();
     const DEFAULT_PROPERTIES = {
       element: null,
-      default: true,
-      search: true
+      selectable: true,
+      search: true,
+      filterItems: null
     };
-    const DATA_ATTRS_PROPERTIES = ['default', 'search'];
+    const DATA_ATTRS_PROPERTIES = ['selectable', 'search'];
     /**
      * ------------------------------------------------------------------------
      * Class Definition
      * ------------------------------------------------------------------------
      */
 
-    class DropdownSearch extends Dropdown {
+    class SelectboxSearch extends Selectbox {
       constructor(options = {}) {
         super(options);
 
@@ -3809,7 +3966,7 @@
           }
 
           this.getItems().forEach(item => {
-            const fn = typeof this.options.filterItem === 'function' ? this.options.filterItem : this.filterItem;
+            const fn = typeof this.options.filterItems === 'function' ? this.options.filterItems : this.filterItems;
 
             if (fn(search, item)) {
               item.element.style.display = 'block';
@@ -3822,12 +3979,8 @@
         this.getSearchInput().addEventListener('keyup', this.filterItemsHandler);
       }
 
-      filterItem(search = '', item = {}) {
-        if (item.value.indexOf(search) > -1 || item.text.indexOf(search) > -1) {
-          return true;
-        }
-
-        return false;
+      filterItems(search = '', item = {}) {
+        return item.value.indexOf(search) > -1 || item.text.indexOf(search) > -1;
       }
 
       getItems() {
@@ -3851,20 +4004,34 @@
       }
 
       getSearchInput() {
-        return this.options.element.querySelector('.dropdown-menu input');
+        return this.options.element.querySelector('.selectbox-menu input');
       }
+      /**
+       * Shows the search selectbox
+       * @returns {Promise} Promise object represents the completed animation
+       */
 
-      hide() {
-        if (super.hide()) {
-          // reset the value
-          this.getSearchInput().value = ''; // show all items
 
-          this.showItems();
-        }
+      async show() {
+        return super.hide();
+      }
+      /**
+       * Hides the search selectbox
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
+
+      async hide() {
+        await super.hide(); // reset the value
+
+        this.getSearchInput().value = ''; // show all items
+
+        this.showItems();
+        return true;
       }
 
       static DOMInterface(options) {
-        return new DropdownSearch(options);
+        return new SelectboxSearch(options);
       }
 
     }
@@ -3875,7 +4042,7 @@
      */
 
 
-    createJqueryPlugin($, NAME, DropdownSearch);
+    createJqueryPlugin($, NAME, SelectboxSearch);
     /**
      * ------------------------------------------------------------------------
      * DOM Api implementation
@@ -3883,35 +4050,32 @@
      */
 
     const components = [];
-    const dropdowns = document.querySelectorAll(`.${NAME}`);
+    const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    selectboxes.filter(d => !d.classList.contains('nav-item')).forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
 
-    if (dropdowns) {
-      Array.from(dropdowns).forEach(element => {
-        const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-        config.element = element;
+      if (config.search) {
+        // search
+        components.push(new SelectboxSearch(config));
+      }
+    });
 
-        if (config.search) {
-          // search
-          components.push(new DropdownSearch(config));
-        }
-      });
-    }
-
-    if (dropdowns) {
+    if (selectboxes) {
       document.addEventListener('click', event => {
-        const dropdownMenu = findTargetByClass(event.target, 'dropdown-menu');
+        const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
 
-        if (dropdownMenu) {
+        if (selectboxMenu) {
           return;
         }
 
-        const dropdown = findTargetByClass(event.target, 'dropdown');
+        const selectbox = findTargetByClass(event.target, 'selectbox');
 
-        if (dropdown) {
-          const dataToggleAttr = dropdown.getAttribute('data-toggle');
+        if (selectbox) {
+          const dataToggleAttr = selectbox.getAttribute('data-toggle');
 
-          if (dataToggleAttr && dataToggleAttr === NAME && dropdown) {
-            const component = components.find(c => c.getElement() === dropdown);
+          if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+            const component = components.find(c => c.getElement() === selectbox);
 
             if (!component) {
               return;
@@ -3923,7 +4087,217 @@
       });
     }
 
-    return DropdownSearch;
+    return SelectboxSearch;
+  })(window.$ ? window.$ : null);
+
+  /**
+   * --------------------------------------------------------------------------
+   * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  const Dropdown = ($ => {
+    /**
+     * ------------------------------------------------------------------------
+     * Constants
+     * ------------------------------------------------------------------------
+     */
+    const NAME = 'dropdown';
+    const MENU = 'dropdown-menu';
+    const MENU_ITEM = 'dropdown-item';
+    const VERSION = '2.0.0';
+    const DEFAULT_PROPERTIES = {
+      element: null,
+      hover: true
+    };
+    const DATA_ATTRS_PROPERTIES = ['hover'];
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
+
+    class Dropdown extends Component {
+      constructor(options = {}) {
+        super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
+        this.onTransition = false;
+
+        if (this.options.hover) {
+          this.registerElement({
+            target: this.options.element,
+            event: 'mouseover'
+          });
+          this.registerElement({
+            target: this.options.element,
+            event: 'mouseleave'
+          });
+          this.options.element.addEventListener('mouseover', event => {
+            this.show();
+          });
+          this.options.element.addEventListener('mouseleave', event => {
+            this.hide();
+          });
+        }
+      }
+
+      onElementEvent(event) {
+        if (event.type === 'mouseover') {
+          this.show();
+          return;
+        }
+
+        if (event.type === 'mouseleave') {
+          this.hide();
+        }
+      }
+      /**
+       * Shows the dropdown
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
+
+      show() {
+        return new Promise(async (resolve, reject) => {
+          if (this.onTransition) {
+            reject();
+            return;
+          }
+
+          if (this.options.element.classList.contains('show')) {
+            reject();
+            return;
+          }
+
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
+
+          const onShow = () => {
+            // dropdown menu
+            this.triggerEvent(Event.SHOWN);
+            this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
+            this.onTransition = false;
+            resolve();
+          }; // dropdown handler
+
+
+          this.options.element.classList.add('show');
+          this.getMenu().classList.add('show');
+          this.getMenu().addEventListener(Event.TRANSITION_END, onShow);
+          await sleep(20);
+          this.getMenu().classList.add('animate');
+        });
+      }
+
+      getMenu() {
+        return this.options.element.querySelector(`.${MENU}`);
+      }
+
+      async toggle() {
+        if (this.options.element.classList.contains('show')) {
+          await this.hide();
+        } else {
+          await this.show();
+        }
+      }
+      /**
+       * Hides the collapse
+       * @returns {Promise} Promise object represents the completed animation
+       */
+
+
+      hide() {
+        return new Promise((resolve, reject) => {
+          if (this.onTransition) {
+            reject();
+            return;
+          }
+
+          if (!this.options.element.classList.contains('show')) {
+            reject();
+            return;
+          }
+
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
+
+          const onHide = () => {
+            // dropdown menu
+            this.getMenu().classList.remove('show');
+            this.triggerEvent(Event.HIDDEN);
+            this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
+            this.onTransition = false;
+            resolve();
+          }; // dropdown handler
+
+
+          this.options.element.classList.remove('show');
+          this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+          this.getMenu().classList.remove('animate');
+        });
+      }
+
+      static identifier() {
+        return NAME;
+      }
+
+      static DOMInterface(options) {
+        return super.DOMInterface(Dropdown, options);
+      }
+
+    }
+    /**
+     * ------------------------------------------------------------------------
+     * jQuery
+     * ------------------------------------------------------------------------
+     */
+
+
+    createJqueryPlugin($, NAME, Dropdown);
+    /**
+     * ------------------------------------------------------------------------
+     * DOM Api implementation
+     * ------------------------------------------------------------------------
+     */
+
+    const components = [];
+    const dropdowns = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+    dropdowns.forEach(element => {
+      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+      config.element = element;
+      components.push(Dropdown.DOMInterface(config));
+    });
+    document.addEventListener('click', event => {
+      const dropdown = findTargetByClass(event.target, NAME);
+      const dropdownMenuItem = findTargetByClass(event.target, MENU_ITEM);
+
+      if (dropdown) {
+        const component = components.find(c => c.getElement() === dropdown);
+
+        if (!component) {
+          return;
+        }
+
+        if (dropdownMenuItem) {
+          // click in menu
+          component.hide();
+          return;
+        }
+
+        component.show();
+      }
+    });
+    document.addEventListener(Event.START, event => {
+      const dropdown = findTargetByClass(event.target, NAME);
+      const activeDropdown = document.querySelector('.dropdown.show');
+
+      if (dropdown || !activeDropdown) {
+        return;
+      }
+
+      const activeComponent = components.find(c => c.getElement() === activeDropdown);
+      activeComponent.hide();
+    });
+    return Dropdown;
   })(window.$ ? window.$ : null);
 
   /**
@@ -3939,6 +4313,7 @@
    */
 
   api.pager = options => {
+    /* eslint no-underscore-dangle: 0 */
     if (typeof api._pager === 'undefined') {
       api._pager = Pager.DOMInterface(options);
     }
@@ -3990,7 +4365,7 @@
   api.collapse = Collapse.DOMInterface;
   /**
    * ------------------------------------------------------------------------
-   * Collapse
+   * Alert
    * ------------------------------------------------------------------------
    */
 
@@ -4032,20 +4407,27 @@
   api.offCanvas = OffCanvas.DOMInterface;
   /**
    * ------------------------------------------------------------------------
+   * Selectbox
+   * ------------------------------------------------------------------------
+   */
+
+  api.selectbox = options => {
+    if (options.search) {
+      // search selectbox
+      return SelectboxSearch.DOMInterface(options);
+    } // generic selectbox
+
+
+    return Selectbox.DOMInterface(options);
+  };
+  /**
+   * ------------------------------------------------------------------------
    * Dropdown
    * ------------------------------------------------------------------------
    */
 
-  api.dropdown = options => {
-    if (options.search) {
-      // search dropdown
-      return DropdownSearch.DOMInterface(options);
-    } // generic dropdown
 
-
-    return Dropdown.DOMInterface(options);
-  }; // Make the API live
-
+  api.dropdown = Dropdown.DOMInterface; // Make the API live
 
   window.phonon = api;
 

@@ -92,7 +92,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -124,6 +124,8 @@ function findTargetByAttr(target, attr) {
 
   return null;
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -206,7 +208,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -411,8 +413,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -437,9 +445,9 @@ const OffCanvas = ($ => {
    * Constants
    * ------------------------------------------------------------------------
    */
-  const NAME = 'offCanvas';
+  const NAME = 'offcanvas';
   const VERSION = '2.0.0';
-  const BACKDROP_SELECTOR = 'off-canvas-backdrop';
+  const BACKDROP_SELECTOR = 'offcanvas-backdrop';
   const DEFAULT_PROPERTIES = {
     element: null,
     aside: {
@@ -486,7 +494,7 @@ const OffCanvas = ($ => {
 
     checkDirection() {
       this.directions.every(direction => {
-        if (this.options.element.classList.contains(`off-canvas-${direction}`)) {
+        if (this.options.element.classList.contains(`offcanvas-${direction}`)) {
           this.direction = direction;
           return false;
         }
@@ -526,8 +534,8 @@ const OffCanvas = ($ => {
       const content = document.body;
 
       if (this.options.aside[name] === true) {
-        if (!content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-          content.classList.add(`off-canvas-aside-${this.direction}`);
+        if (!content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+          content.classList.add(`offcanvas-aside-${this.direction}`);
         }
 
         this.useBackdrop = false; // avoid animation by setting animate to false
@@ -537,8 +545,8 @@ const OffCanvas = ($ => {
 
         this.removeBackdrop();
       } else {
-        if (content.classList.contains(`off-canvas-aside-${this.direction}`)) {
-          content.classList.remove(`off-canvas-aside-${this.direction}`);
+        if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+          content.classList.remove(`offcanvas-aside-${this.direction}`);
         }
 
         this.hide();
@@ -550,7 +558,7 @@ const OffCanvas = ($ => {
     onElementEvent(event) {
       if (event.type === 'keyup' && event.keyCode !== 27 && event.keyCode !== 13) {
         return;
-      } // hide the off-canvas
+      } // hide the offcanvas
 
 
       this.hide();
@@ -718,19 +726,15 @@ const OffCanvas = ($ => {
    */
 
   const components = [];
-  const offCanvas = document.querySelectorAll(`.${NAME}`);
-
-  if (offCanvas) {
-    Array.from(offCanvas).forEach(element => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-      config.element = element;
-      components.push({
-        element,
-        offCanvas: new OffCanvas(config)
-      });
+  const offCanvas = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  offCanvas.forEach(element => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+    components.push({
+      element,
+      offCanvas: new OffCanvas(config)
     });
-  }
-
+  });
   document.addEventListener('click', event => {
     const target = findTargetByAttr(event.target, 'data-toggle');
 

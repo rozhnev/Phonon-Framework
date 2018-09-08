@@ -37,6 +37,8 @@ function findTargetByAttr(target, attr) {
 
   return null;
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -149,7 +151,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -215,7 +217,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -420,8 +422,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -464,44 +472,52 @@ const Alert = ($ => {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
       this.onTransition = false;
     }
+    /**
+     * Shows the alert
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     show() {
-      if (this.onTransition) {
-        return false;
-      }
-
-      if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
-        return false;
-      }
-
-      this.onTransition = true;
-      this.triggerEvent(Event.SHOW);
-
-      const onShow = () => {
-        this.triggerEvent(Event.SHOWN);
-
-        if (this.options.element.classList.contains('fade')) {
-          this.options.element.classList.remove('fade');
+      return new Promise((resolve, reject) => {
+        if (this.onTransition) {
+          reject();
         }
 
-        this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
-        this.onTransition = false;
-      };
+        if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+          reject();
+        }
 
-      if (this.options.fade && !this.options.element.classList.contains('fade')) {
-        this.options.element.classList.add('fade');
-      }
+        this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
 
-      this.options.element.classList.add('show');
-      this.options.element.addEventListener(Event.TRANSITION_END, onShow);
+        const onShow = () => {
+          this.triggerEvent(Event.SHOWN);
 
-      if (this.options.element.classList.contains('hide')) {
-        this.options.element.classList.remove('hide');
-      }
+          if (this.options.element.classList.contains('fade')) {
+            this.options.element.classList.remove('fade');
+          }
 
-      if (!this.options.fade) {
-        onShow();
-      }
+          this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+          this.onTransition = false;
+          resolve();
+        };
+
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
+
+        this.options.element.classList.add('show');
+        this.options.element.addEventListener(Event.TRANSITION_END, onShow);
+
+        if (this.options.element.classList.contains('hide')) {
+          this.options.element.classList.remove('hide');
+        }
+
+        if (!this.options.fade) {
+          onShow();
+        }
+      });
     }
 
     getOpacity() {
@@ -510,42 +526,52 @@ const Alert = ($ => {
 
       return parseFloat(opacity);
     }
+    /**
+     * Hides the alert
+     * @returns {Promise} Promise object represents the end of the animation
+     */
+
 
     hide() {
-      if (this.onTransition) {
-        return false;
-      }
+      return new Promise((resolve, reject) => {
+        if (this.onTransition) {
+          reject();
+          return;
+        }
 
-      if (this.getOpacity() === 0) {
-        return false;
-      }
+        if (this.getOpacity() === 0) {
+          reject();
+          return;
+        }
 
-      this.onTransition = true;
-      this.triggerEvent(Event.HIDE);
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
 
-      const onHide = () => {
-        this.triggerEvent(Event.HIDDEN);
-        this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
-        this.onTransition = false;
-      };
+        const onHide = () => {
+          this.triggerEvent(Event.HIDDEN);
+          this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+          this.onTransition = false;
+          resolve();
+        };
 
-      if (this.options.fade && !this.options.element.classList.contains('fade')) {
-        this.options.element.classList.add('fade');
-      }
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onHide);
+        this.options.element.addEventListener(Event.TRANSITION_END, onHide);
 
-      if (!this.options.element.classList.contains('hide')) {
-        this.options.element.classList.add('hide');
-      }
+        if (!this.options.element.classList.contains('hide')) {
+          this.options.element.classList.add('hide');
+        }
 
-      if (this.options.element.classList.contains('show')) {
-        this.options.element.classList.remove('show');
-      }
+        if (this.options.element.classList.contains('show')) {
+          this.options.element.classList.remove('show');
+        }
 
-      if (!this.options.fade) {
-        onHide();
-      }
+        if (!this.options.fade) {
+          onHide();
+        }
+      });
     }
 
     static identifier() {
@@ -572,16 +598,12 @@ const Alert = ($ => {
    */
 
   const components = [];
-  const alerts = document.querySelectorAll(`.${NAME}`);
-
-  if (alerts) {
-    alerts.forEach(element => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-      config.element = element;
-      components.push(Alert.DOMInterface(config));
-    });
-  }
-
+  const alerts = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  alerts.forEach(element => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+    components.push(Alert.DOMInterface(config));
+  });
   document.addEventListener('click', event => {
     const target = findTargetByAttr(event.target, 'data-dismiss');
 

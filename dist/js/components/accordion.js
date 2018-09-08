@@ -37,6 +37,8 @@ function findTargetByAttr(target, attr) {
 
   return null;
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -55,6 +57,11 @@ function createJqueryPlugin($ = null, name, obj) {
   $.fn[name] = mainFn;
   $.fn[name].Constructor = obj;
   $.fn[name].noConflict = mainFn;
+}
+function sleep(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
 }
 
 // @todo keep ?
@@ -149,7 +156,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -215,7 +222,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -420,8 +427,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -480,71 +493,105 @@ const Collapse = ($ => {
 
       return this.show();
     }
+    /**
+     * Shows the collapse
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     show() {
-      if (this.onTransition) {
-        return false;
-      }
+      return new Promise(async (resolve, reject) => {
+        if (this.onTransition) {
+          reject();
+          return;
+        }
 
-      if (this.options.element.classList.contains('show')) {
-        return false;
-      }
+        if (this.options.element.classList.contains('show')) {
+          reject();
+          return;
+        }
 
-      this.onTransition = true;
-      this.triggerEvent(Event.SHOW);
+        this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
 
-      const onCollapsed = () => {
-        this.triggerEvent(Event.SHOWN);
-        this.options.element.classList.add('show');
-        this.options.element.classList.remove('collapsing');
-        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-        this.options.element.setAttribute('aria-expanded', true);
-        this.onTransition = false;
-      };
+        const onCollapsed = () => {
+          this.triggerEvent(Event.SHOWN);
+          this.options.element.classList.add('show');
+          this.options.element.classList.remove('collapsing');
+          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+          this.options.element.setAttribute('aria-expanded', true);
+          this.onTransition = false;
+          resolve();
+        };
 
-      if (!this.options.element.classList.contains('collapsing')) {
-        this.options.element.classList.add('collapsing');
-      }
+        if (!this.options.element.classList.contains('collapsing')) {
+          this.options.element.classList.add('collapsing');
+        }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-      const height = this.getHeight();
-      this.options.element.style.height = '0px';
-      setTimeout(() => {
-        this.options.element.style.height = `${height}px`;
-      }, 20);
-      return true;
+        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
+
+        if (!this.isVerticalCollapse()) {
+          this.options.element.classList.add('slide');
+        } else {
+          // get real height
+          const height = this.getHeight();
+          this.options.element.style.height = '0px';
+          await sleep(20);
+          this.options.element.style.height = `${height}px`;
+        }
+      });
     }
+    /**
+     * Hides the collapse
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     hide() {
-      if (this.onTransition) {
-        return false;
-      }
+      return new Promise((resolve, reject) => {
+        if (this.onTransition) {
+          reject();
+          return;
+        }
 
-      if (!this.options.element.classList.contains('show')) {
-        return false;
-      }
+        if (!this.options.element.classList.contains('show')) {
+          reject();
+          return;
+        }
 
-      this.onTransition = true;
-      this.triggerEvent(Event.HIDE);
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
 
-      const onCollapsed = () => {
-        this.triggerEvent(Event.HIDDEN);
-        this.options.element.classList.remove('collapsing');
-        this.options.element.style.height = 'auto';
-        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-        this.options.element.setAttribute('aria-expanded', false);
-        this.onTransition = false;
-      };
+        const onCollapsed = () => {
+          this.triggerEvent(Event.HIDDEN);
+          this.options.element.classList.remove('collapsing');
+          this.options.element.style.height = 'auto';
+          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+          this.options.element.setAttribute('aria-expanded', false);
+          this.onTransition = false;
+          resolve();
+        };
 
-      this.options.element.style.height = '0px';
+        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-      if (!this.options.element.classList.contains('collapsing')) {
-        this.options.element.classList.add('collapsing');
-      }
+        if (!this.isVerticalCollapse()) {
+          if (this.options.element.classList.contains('slide')) {
+            this.options.element.classList.remove('slide');
+          }
+        } else {
+          this.options.element.style.height = '0px';
+        }
 
-      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-      this.options.element.classList.remove('show');
-      return true;
+        if (!this.options.element.classList.contains('collapsing')) {
+          this.options.element.classList.add('collapsing');
+        }
+
+        this.options.element.classList.remove('show');
+      });
+    }
+
+    isVerticalCollapse() {
+      return !this.options.element.classList.contains('collapse-l') && !this.options.element.classList.contains('collapse-r');
     }
 
     static identifier() {
@@ -571,17 +618,12 @@ const Collapse = ($ => {
    */
 
   const components = [];
-  const collapses = document.querySelectorAll(`.${NAME}`);
-
-  if (collapses) {
-    collapses.forEach(element => {
-      // const config = {}
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-      config.element = element;
-      components.push(Collapse.DOMInterface(config));
-    });
-  }
-
+  const collapses = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  collapses.forEach(element => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+    components.push(Collapse.DOMInterface(config));
+  });
   document.addEventListener(Event.CLICK, event => {
     const target = findTargetByAttr(event.target, 'data-toggle');
 
@@ -673,6 +715,12 @@ const Accordion = ($ => {
     getCollapses() {
       return this.collapses;
     }
+    /**
+     * Shows the collapse element and hides the other active collapse elements
+     * @param {Element} showCollapse
+     * @returns {undefined}
+     */
+
 
     setCollapses(showCollapse) {
       const collapse = this.getCollapse(showCollapse);
@@ -684,8 +732,14 @@ const Accordion = ($ => {
         }
       });
     }
+    /**
+     * Shows the collapse element
+     * @param {(string|Element)} collapseEl
+     * @returns {Promise} Promise object represents the completed animation
+     */
 
-    show(collapseEl) {
+
+    async show(collapseEl) {
       let collapse = collapseEl;
 
       if (typeof collapseEl === 'string') {
@@ -699,8 +753,14 @@ const Accordion = ($ => {
       this.setCollapses(collapse);
       return true;
     }
+    /**
+     * Hides the collapse element
+     * @param {(string|Element)} collapseEl
+     * @returns {Promise} Promise object represents the completed animation
+     */
 
-    hide(collapseEl) {
+
+    async hide(collapseEl) {
       let collapse = collapseEl;
 
       if (typeof collapseEl === 'string') {
@@ -739,16 +799,12 @@ const Accordion = ($ => {
    */
 
   const components = [];
-  const accordions = document.querySelectorAll(`.${NAME}`);
-
-  if (accordions) {
-    Array.from(accordions).forEach(element => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-      config.element = element;
-      components.push(Accordion.DOMInterface(config));
-    });
-  }
-
+  const accordions = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  accordions.forEach(element => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+    components.push(Accordion.DOMInterface(config));
+  });
   document.addEventListener('click', event => {
     const dataToggleAttr = event.target.getAttribute('data-toggle');
 

@@ -19,6 +19,8 @@ function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
 function generateId() {
   return Math.random().toString(36).substr(2, 10);
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -131,7 +133,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -197,7 +199,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -402,8 +404,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -468,11 +476,12 @@ const Loader = ($ => {
       return this.options.element.querySelector('.loader-spinner');
     }
 
-    show() {
+    async show() {
       if (this.options.element.classList.contains('hide')) {
         this.options.element.classList.remove('hide');
       }
 
+      this.triggerEvent(Event.SHOW);
       const size = this.getClientSize();
       this.options.size = size;
 
@@ -484,6 +493,7 @@ const Loader = ($ => {
         loaderSpinner.style.height = `${this.options.size}px`;
       }
 
+      this.triggerEvent(Event.SHOWN);
       return true;
     }
 
@@ -508,11 +518,13 @@ const Loader = ($ => {
       return true;
     }
 
-    hide() {
+    async hide() {
       if (!this.options.element.classList.contains('hide')) {
         this.options.element.classList.add('hide');
       }
 
+      this.triggerEvent(Event.HIDE);
+      this.triggerEvent(Event.HIDDEN);
       return true;
     }
 

@@ -92,7 +92,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -115,6 +115,8 @@ function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
 function generateId() {
   return Math.random().toString(36).substr(2, 10);
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -133,6 +135,11 @@ function createJqueryPlugin($ = null, name, obj) {
   $.fn[name] = mainFn;
   $.fn[name].Constructor = obj;
   $.fn[name].noConflict = mainFn;
+}
+function sleep(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
 }
 
 const getAttribute = (first, second) => {
@@ -197,7 +204,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -402,8 +409,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -539,17 +552,19 @@ const Modal = ($ => {
     }
 
     show() {
-      if (this.options.element === null) {
-        // build and insert a new DOM element
-        this.build();
-      }
+      return new Promise(async (resolve, reject) => {
+        if (this.options.element === null) {
+          // build and insert a new DOM element
+          this.build();
+        }
 
-      if (this.options.element.classList.contains('show')) {
-        return false;
-      } // add a timeout so that the CSS animation works
+        if (this.options.element.classList.contains('show')) {
+          reject(new Error('The modal is already active'));
+          return;
+        } // add a timeout so that the CSS animation works
 
 
-      setTimeout(() => {
+        await sleep(20);
         this.triggerEvent(Event.SHOW);
         this.buildBackdrop(); // attach event
 
@@ -558,13 +573,13 @@ const Modal = ($ => {
         const onShown = () => {
           this.triggerEvent(Event.SHOWN);
           this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+          resolve();
         };
 
         this.options.element.addEventListener(Event.TRANSITION_END, onShown);
         this.options.element.classList.add('show');
         this.center();
-      }, 10);
-      return true;
+      });
     }
 
     onElementEvent(event) {
@@ -597,33 +612,42 @@ const Modal = ($ => {
         }
       }
     }
+    /**
+     * Hides the modal
+     * @returns {Promise} Promise object represents the completed animation
+     */
+
 
     hide() {
-      if (!this.options.element.classList.contains('show')) {
-        return false;
-      }
-
-      this.triggerEvent(Event.HIDE);
-      this.detachEvents();
-      this.options.element.classList.add('hide');
-      this.options.element.classList.remove('show');
-      const backdrop = this.getBackdrop();
-
-      const onHidden = () => {
-        document.body.removeChild(backdrop);
-        this.options.element.classList.remove('hide');
-        this.triggerEvent(Event.HIDDEN);
-        backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
-
-        if (this.dynamicElement) {
-          document.body.removeChild(this.options.element);
-          this.options.element = null;
+      return new Promise((resolve, reject) => {
+        if (!this.options.element.classList.contains('show')) {
+          reject(new Error('The modal is not active'));
+          return;
         }
-      };
 
-      backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-      backdrop.classList.add('fadeout');
-      return true;
+        this.triggerEvent(Event.HIDE);
+        this.detachEvents();
+        this.options.element.classList.add('hide');
+        this.options.element.classList.remove('show');
+        const backdrop = this.getBackdrop();
+
+        const onHidden = () => {
+          document.body.removeChild(backdrop);
+          this.options.element.classList.remove('hide');
+          this.triggerEvent(Event.HIDDEN);
+          backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+          if (this.dynamicElement) {
+            document.body.removeChild(this.options.element);
+            this.options.element = null;
+          }
+
+          resolve();
+        };
+
+        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+        backdrop.classList.add('fadeout');
+      });
     }
 
     attachEvents() {
@@ -699,19 +723,15 @@ const Modal = ($ => {
    */
 
   const components = [];
-  const modals = document.querySelectorAll(`.${NAME}`);
-
-  if (modals) {
-    Array.from(modals).forEach(element => {
-      const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
-      config.element = element;
-      components.push({
-        element,
-        modal: new Modal(config)
-      });
+  const modals = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  modals.forEach(element => {
+    const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
+    config.element = element;
+    components.push({
+      element,
+      modal: new Modal(config)
     });
-  }
-
+  });
   document.addEventListener('click', event => {
     const dataToggleAttr = event.target.getAttribute('data-toggle');
 
@@ -784,11 +804,12 @@ const Loader = ($ => {
       return this.options.element.querySelector('.loader-spinner');
     }
 
-    show() {
+    async show() {
       if (this.options.element.classList.contains('hide')) {
         this.options.element.classList.remove('hide');
       }
 
+      this.triggerEvent(Event.SHOW);
       const size = this.getClientSize();
       this.options.size = size;
 
@@ -800,6 +821,7 @@ const Loader = ($ => {
         loaderSpinner.style.height = `${this.options.size}px`;
       }
 
+      this.triggerEvent(Event.SHOWN);
       return true;
     }
 
@@ -824,11 +846,13 @@ const Loader = ($ => {
       return true;
     }
 
-    hide() {
+    async hide() {
       if (!this.options.element.classList.contains('hide')) {
         this.options.element.classList.add('hide');
       }
 
+      this.triggerEvent(Event.HIDE);
+      this.triggerEvent(Event.HIDDEN);
       return true;
     }
 
@@ -882,17 +906,18 @@ const Loader$1 = ($ => {
 
   class Loader$$1 extends Modal {
     constructor(options = {}) {
+      const opts = options;
       const template = '' + '<div class="modal" tabindex="-1" role="modal">' + '<div class="modal-inner" role="document">' + '<div class="modal-content">' + '<div class="modal-header">' + '<h5 class="modal-title"></h5>' + '</div>' + '<div class="modal-body">' + '<p></p>' + '<div class="mx-auto text-center">' + '<div class="loader mx-auto d-block">' + '<div class="loader-spinner"></div>' + '</div>' + '</div>' + '</div>' + '<div class="modal-footer">' + '</div>' + '</div>' + '</div>' + '</div>';
 
-      if (!Array.isArray(options.buttons)) {
-        options.buttons = options.cancelable ? DEFAULT_PROPERTIES.buttons : [];
+      if (!Array.isArray(opts.buttons)) {
+        opts.buttons = opts.cancelable ? DEFAULT_PROPERTIES.buttons : [];
       }
 
-      super(options, template);
+      super(opts, template);
       this.spinner = null;
     }
 
-    show() {
+    async show() {
       super.show();
       this.spinner = new Loader({
         element: this.getElement().querySelector('.loader')
@@ -900,7 +925,7 @@ const Loader$1 = ($ => {
       this.spinner.animate(true);
     }
 
-    hide() {
+    async hide() {
       super.hide();
       this.spinner.animate(false);
       this.spinner = null;

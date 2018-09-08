@@ -19,40 +19,14 @@ function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
 function generateId() {
   return Math.random().toString(36).substr(2, 10);
 }
-function findTargetByAttr(target, attr) {
+function findTargetByClass(target, parentClass) {
   for (; target && target !== document; target = target.parentNode) {
-    if (target.getAttribute(attr) !== null) {
+    if (target.classList.contains(parentClass)) {
       return target;
     }
   }
 
   return null;
-}
-/* eslint no-param-reassign: 0 */
-
-function createJqueryPlugin($ = null, name, obj) {
-  if (!$) {
-    return;
-  }
-
-  const mainFn = function mainFn(options = {}) {
-    const opts = options;
-
-    if (this[0]) {
-      opts.element = this[0];
-    }
-
-    return obj.DOMInterface(opts);
-  };
-
-  $.fn[name] = mainFn;
-  $.fn[name].Constructor = obj;
-  $.fn[name].noConflict = mainFn;
-}
-function sleep(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
 }
 
 // @todo keep ?
@@ -444,145 +418,200 @@ class Component {
  * --------------------------------------------------------------------------
  */
 
-const Collapse = ($ => {
+const Selectbox = (() => {
   /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
-  const NAME = 'collapse';
+  const NAME = 'selectbox';
   const VERSION = '2.0.0';
   const DEFAULT_PROPERTIES = {
     element: null,
-    toggle: false
+    selectable: true,
+    search: false,
+    filterItems: null
   };
-  const DATA_ATTRS_PROPERTIES = [];
+  const DATA_ATTRS_PROPERTIES = ['selectable', 'search'];
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Collapse extends Component {
+  class Selectbox extends Component {
     constructor(options = {}) {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, false);
-      this.onTransition = false; // toggle directly
+      const selected = this.options.element.querySelector('[data-selected]');
+      const item = this.getItemData(selected);
+      this.setSelected(item.value, item.text, false);
+    }
 
-      if (this.options.toggle) {
-        this.show();
+    setSelected(value = '', text = null, checkExists = true) {
+      if (!this.options.selectable) {
+        return false;
+      }
+
+      let textDisplay = text;
+      this.options.element.querySelector('.default-text').innerHTML = text;
+      this.options.element.querySelector('input[type="hidden"]').value = value;
+      const items = this.options.element.querySelectorAll('.item') || [];
+      let itemFound = false;
+      Array.from(items).forEach(item => {
+        if (item.classList.contains('selected')) {
+          item.classList.remove('selected');
+        }
+
+        const data = this.getItemData(item);
+
+        if (value === data.value) {
+          if (!item.classList.contains('selected')) {
+            item.classList.add('selected');
+          }
+
+          textDisplay = data.text;
+          itemFound = true;
+        }
+      });
+
+      if (checkExists && itemFound) {
+        this.options.element.querySelector('.default-text').innerHTML = textDisplay;
+      } else if (checkExists && !itemFound) {
+        throw new Error(`${NAME}. The value "${value}" does not exist in the list of items.`);
+      }
+
+      return true;
+    }
+
+    getSelected() {
+      return this.options.element.querySelector('input[type="hidden"]').value;
+    }
+
+    getItemData(item = null) {
+      let text = '';
+      let value = '';
+
+      if (item) {
+        text = item.getAttribute('data-text') || item.innerHTML;
+        const selectedTextNode = item.querySelector('.text');
+
+        if (selectedTextNode) {
+          text = selectedTextNode.innerHTML;
+        }
+
+        value = item.getAttribute('data-value') || '';
+      }
+
+      return {
+        text,
+        value
+      };
+    }
+
+    onElementEvent(event) {
+      if (event.type === Event.START) {
+        const selectbox = findTargetByClass(event.target, 'selectbox');
+        /*
+         * hide the current selectbox only if the event concerns another selectbox
+         * hide also if the user clicks outside a selectbox
+         */
+
+        if (!selectbox || selectbox !== this.getElement()) {
+          this.hide();
+        }
+      } else if (event.type === 'click') {
+        const item = findTargetByClass(event.target, 'item');
+
+        if (item) {
+          if (item.classList.contains('disabled')) {
+            return;
+          }
+
+          const itemInfo = this.getItemData(item);
+
+          if (this.getSelected() !== itemInfo.value) {
+            // the user selected another value, we dispatch the event
+            this.setSelected(itemInfo.value, itemInfo.text, false);
+            const detail = {
+              item,
+              text: itemInfo.text,
+              value: itemInfo.value
+            };
+            this.triggerEvent(Event.ITEM_SELECTED, detail);
+          }
+
+          this.hide();
+          return;
+        } // don't toggle the selectbox if the event concerns headers, dividers
+
+
+        const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
+
+        if (selectboxMenu) {
+          return;
+        }
+
+        this.toggle();
       }
     }
 
-    getHeight() {
-      return this.options.element.getBoundingClientRect(this.options.element).height;
-    }
-
     toggle() {
-      if (this.options.element.classList.contains('show')) {
+      if (this.options.element.classList.contains('active')) {
         return this.hide();
       }
 
       return this.show();
     }
     /**
-     * Shows the collapse
+     * Shows the selectbox
      * @returns {Promise} Promise object represents the completed animation
      */
 
 
-    show() {
-      return new Promise(async (resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+    async show() {
+      if (this.options.element.classList.contains('active')) {
+        return false;
+      }
 
-        if (this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
+      this.options.element.classList.add('active');
+      const selectboxMenu = this.options.element.querySelector('.selectbox-menu'); // scroll to top
 
-        this.onTransition = true;
-        this.triggerEvent(Event.SHOW);
-
-        const onCollapsed = () => {
-          this.triggerEvent(Event.SHOWN);
-          this.options.element.classList.add('show');
-          this.options.element.classList.remove('collapsing');
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-          this.options.element.setAttribute('aria-expanded', true);
-          this.onTransition = false;
-          resolve();
-        };
-
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
-
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-        if (!this.isVerticalCollapse()) {
-          this.options.element.classList.add('slide');
-        } else {
-          // get real height
-          const height = this.getHeight();
-          this.options.element.style.height = '0px';
-          await sleep(20);
-          this.options.element.style.height = `${height}px`;
-        }
+      selectboxMenu.scrollTop = 0;
+      this.triggerEvent(Event.SHOW);
+      this.triggerEvent(Event.SHOWN);
+      this.registerElement({
+        target: selectboxMenu,
+        event: 'click'
       });
+      this.registerElement({
+        target: document.body,
+        event: Event.START
+      });
+      return true;
     }
     /**
-     * Hides the collapse
+     * Hides the selectbox
      * @returns {Promise} Promise object represents the completed animation
      */
 
 
-    hide() {
-      return new Promise((resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+    async hide() {
+      if (!this.options.element.classList.contains('active')) {
+        throw new Error('The selectbox is not active');
+      }
 
-        if (!this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
-
-        this.onTransition = true;
-        this.triggerEvent(Event.HIDE);
-
-        const onCollapsed = () => {
-          this.triggerEvent(Event.HIDDEN);
-          this.options.element.classList.remove('collapsing');
-          this.options.element.style.height = 'auto';
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-          this.options.element.setAttribute('aria-expanded', false);
-          this.onTransition = false;
-          resolve();
-        };
-
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-        if (!this.isVerticalCollapse()) {
-          if (this.options.element.classList.contains('slide')) {
-            this.options.element.classList.remove('slide');
-          }
-        } else {
-          this.options.element.style.height = '0px';
-        }
-
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
-
-        this.options.element.classList.remove('show');
+      this.options.element.classList.remove('active');
+      this.triggerEvent(Event.HIDE);
+      this.triggerEvent(Event.HIDDEN);
+      this.unregisterElement({
+        target: this.options.element.querySelector('.selectbox-menu'),
+        event: 'click'
       });
-    }
-
-    isVerticalCollapse() {
-      return !this.options.element.classList.contains('collapse-l') && !this.options.element.classList.contains('collapse-r');
+      this.unregisterElement({
+        target: document.body,
+        event: Event.START
+      });
+      return true;
     }
 
     static identifier() {
@@ -590,54 +619,52 @@ const Collapse = ($ => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Collapse, options);
+      return super.DOMInterface(Selectbox, options);
     }
 
   }
-  /**
-   * ------------------------------------------------------------------------
-   * jQuery
-   * ------------------------------------------------------------------------
-   */
-
-
-  createJqueryPlugin($, NAME, Collapse);
   /**
    * ------------------------------------------------------------------------
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
 
+
   const components = [];
-  const collapses = Array.from(document.querySelectorAll(`.${NAME}`) || []);
-  collapses.forEach(element => {
+  const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || []);
+  selectboxes.filter(d => !d.classList.contains('nav-item')).forEach(element => {
     const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
     config.element = element;
-    components.push(Collapse.DOMInterface(config));
-  });
-  document.addEventListener(Event.CLICK, event => {
-    const target = findTargetByAttr(event.target, 'data-toggle');
 
-    if (!target) {
+    if (!config.search) {
+      components.push(new Selectbox(config));
+    }
+  });
+  document.addEventListener('click', event => {
+    const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
+
+    if (selectboxMenu) {
       return;
     }
 
-    const dataToggleAttr = target.getAttribute('data-toggle');
+    const selectbox = findTargetByClass(event.target, 'selectbox');
 
-    if (dataToggleAttr && dataToggleAttr === NAME) {
-      let id = target.getAttribute('data-target') || target.getAttribute('href');
-      id = id.replace('#', '');
-      const component = components.find(c => c.getElement().getAttribute('id') === id);
+    if (selectbox) {
+      const dataToggleAttr = selectbox.getAttribute('data-toggle');
 
-      if (!component) {
-        return;
+      if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+        const component = components.find(c => c.getElement() === selectbox);
+
+        if (!component) {
+          return;
+        }
+
+        component.toggle();
       }
-
-      component.toggle();
     }
   });
-  return Collapse;
-})(window.$ ? window.$ : null);
+  return Selectbox;
+})();
 
-module.exports = Collapse;
-//# sourceMappingURL=collapse.js.map
+module.exports = Selectbox;
+//# sourceMappingURL=selectbox.js.map

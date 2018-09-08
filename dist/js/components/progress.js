@@ -19,6 +19,8 @@ function dispatchElementEvent(domElement, eventName, moduleName, detail = {}) {
 function generateId() {
   return Math.random().toString(36).substr(2, 10);
 }
+/* eslint no-param-reassign: 0 */
+
 function createJqueryPlugin($ = null, name, obj) {
   if (!$) {
     return;
@@ -131,7 +133,7 @@ var Event = {
   // animations
   ANIMATION_START: animationStart,
   ANIMATION_END: animationEnd,
-  // dropdown
+  // selectbox
   ITEM_SELECTED: 'itemSelected'
 };
 
@@ -197,7 +199,7 @@ function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!isNaN(attrValue)) {
+      } else if (!Number.isNaN(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -402,8 +404,14 @@ class Component {
 
     this.onElementEvent(event);
   }
+  /**
+   * @emits {Event} emit events registered by the component
+   * @param {Event} event
+   */
 
-  onElementEvent(event) {//
+
+  onElementEvent() {
+    /* eslint class-methods-use-this: 0 */
   }
 
   static identifier() {
@@ -513,15 +521,25 @@ const Progress = ($ => {
 
       return true;
     }
+    /**
+     * Shows the progress bar
+     * @returns {Promise} Promise object represents the completed animation
+     */
 
-    show() {
+
+    async show() {
       this.options.element.style.height = `${this.options.height}px`;
       this.triggerEvent(Event.SHOW);
       this.triggerEvent(Event.SHOWN);
       return true;
     }
+    /**
+     * Hides the progress bar
+     * @returns {Promise} Promise object represents the completed animation
+     */
 
-    hide() {
+
+    async hide() {
       this.options.element.style.height = '0px';
       this.triggerEvent(Event.HIDE);
       this.triggerEvent(Event.HIDDEN);
