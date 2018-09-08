@@ -17,11 +17,12 @@ const SelectboxSearch = (($) => {
   const NAME = Selectbox.identifier();
   const DEFAULT_PROPERTIES = {
     element: null,
-    default: true,
+    selectable: true,
     search: true,
+    filterItems: null,
   };
   const DATA_ATTRS_PROPERTIES = [
-    'default',
+    'selectable',
     'search',
   ];
 
@@ -45,7 +46,7 @@ const SelectboxSearch = (($) => {
 
 
         this.getItems().forEach((item) => {
-          const fn = typeof this.options.filterItem === 'function' ? this.options.filterItem : this.filterItem;
+          const fn = typeof this.options.filterItems === 'function' ? this.options.filterItems : this.filterItems;
 
           if (fn(search, item)) {
             item.element.style.display = 'block';
@@ -58,13 +59,8 @@ const SelectboxSearch = (($) => {
       this.getSearchInput().addEventListener('keyup', this.filterItemsHandler);
     }
 
-    filterItem(search = '', item = {}) {
-      if (item.value.indexOf(search) > -1
-        || item.text.indexOf(search) > -1) {
-        return true;
-      }
-
-      return false;
+    filterItems(search = '', item = {}) {
+      return item.value.indexOf(search) > -1 || item.text.indexOf(search) > -1;
     }
 
     getItems() {
