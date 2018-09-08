@@ -67,3 +67,6 @@ accordion.hide('#collapseTwo');
 
 The accordion component has events related to the collapse elements.
 See events of [collapse](#1_components/collapse) component.
+
+<!-- fix for links -->
+<script>document.querySelector('.page #exampleAccordion').addEventListener('click', function (event) { event.preventDefault()});</script>

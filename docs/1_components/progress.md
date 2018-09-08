@@ -4,7 +4,7 @@ title: Progress
 
 ## Introduction
 
-[WIP]
+A progress indicates the completion status of a task or a process with a horizontal bar.
 
 ## Markup
 
@@ -14,11 +14,11 @@ title: Progress
 </div>
 ```
 
-You can specify the height of the progress in HTML if you don't want to use JavaScript:
+You can specify the height and the value of the progress in HTML if you don't want to use JavaScript:
 
 ```html
 <div class="progress" id="myProgress" style="height: 8px">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 ```
 
@@ -46,47 +46,52 @@ $('#myProgress').progress({
 });
 ```
 
-## Options
+### Options
 
-- height
-- min
-- max
-- label
-- striped
-- background
+|     Name     |     Description      |     Default value      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|-------------------------------------|
+|    height      |  Height of the progress bar. | 5 | yes `data-height`
+|    min      |  Minimum value of the progress bar. | 0 | yes `data-min`
+|    max      |  Maximum value of the progress bar. | 100 | yes `data-max`
+|    label      |  Display of the current value of the progress bar. | false | yes `data-label`
+|    striped      |  Progress bar with the striped style. | false | yes `data-striped`
+|    background      |  Background of the progress bar. | null | yes `data-background`
 
-## Methods
 
-### set(value: int)
+### Methods
 
+#### set(value)
+
+* `value` (Number) - the value of the progress bar.
 * returns: `<undefined>`
 
 Updates the current value of the progress bar.
 
-### animate(startAnimation: boolean)
+#### animate(startAnimation)
 
+* `startAnimation` (Boolean) - if `startAnimation` is set to true, it will start the stripe animation. Otherwise, it will stop the animation.
 * returns: `<undefined>`
 
-Animates the striped progress. The `striped` option must be true otherwise it won't work.
+Animates the striped progress. The `striped` option must be set to true otherwise it won't work.
 
-### show()
+#### show()
 
 * returns: `<Promise<Boolean>>`
 
 Any progress can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
-progress.show()
+progress.show();
 ```
 
-### hide()
+#### hide()
 
 * returns: `<Promise<Boolean>>`
 
 Any progress can be hidden with JavaScript. For this, we call the `hide()` method:
 
 ```js
-progress.hide()
+progress.hide();
 ```
 
 ## Events
@@ -109,36 +114,36 @@ For this, you can use object and DOM events.
 phonon.progress({
   element: '#exampleProgress',
   show: () => { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () => { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () => { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 ```
 
 ### DOM Events
 
 ```js
 document.querySelector('.progress').addEventListener('show.ph.progress', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('shown.ph.progress', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('hide.ph.progress', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('hidden.ph.progress', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 ```

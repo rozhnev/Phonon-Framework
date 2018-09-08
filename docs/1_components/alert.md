@@ -87,26 +87,27 @@ const alert = phonon.alert({
 
 ### Options
 
-- `fade` (boolean) - if `fade` is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element.
+|     Name     |     Description      |     Default value      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|-------------------------------------|
+|    fade      |  if `fade` is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element. | true | yes `data-fade` |
+
 
 ### Methods
 
-#### show(alert)
+#### show()
 
-* `alert` (Element | String) - if `alert` is a String, it is interpreted as a selector. If it is an object, it is expected that the `alert` exists.
 * returns: `<Promise<Boolean>>`
 
 ```js
-alert.show()
+alert.show();
 ```
 
-#### hide(alert)
+#### hide()
 
-* `alert` (Element | String) - if `alert` is a String, it is interpreted as a selector. If it is an object, it is expected that the `alert` exists.
 * returns: `<Promise<Boolean>>`
 
 ```js
-alert.hide()
+alert.hide();
 ```
 
 ## Events
@@ -127,16 +128,16 @@ For this, you can use object and DOM events.
 ```js
 phonon.alert({
   show: () => { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () => { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () => { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => { // or onHidden
-    console.log('It works!')
+    console.log('It works!');
   },
 });
 ```
@@ -145,18 +146,18 @@ phonon.alert({
 
 ```js
 document.querySelector('.alert').addEventListener('show.ph.alert', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('shown.ph.alert', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('hide.ph.alert', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('hidden.ph.alert', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 ```

@@ -4,7 +4,7 @@ title: Selectbox
 
 ## Introduction
 
-[WIP]
+A selectbox is an element to choose a value in a list of selection items.
 
 ## Markup
 
@@ -95,9 +95,11 @@ For the selected item, add `data-selected`.
 For each item, you must add `data-value`.
 By default, the module will try to find the text node otherwise, it will check if the attribute `data-text` is present.
 
+### Sizing
+
 Add the class `selectbox-lg` to increase the size.
 
-```html
+```html!
 <div class="selectbox selectbox-lg" data-toggle="selectbox">
 ...
 </div>
@@ -106,7 +108,7 @@ Add the class `selectbox-lg` to increase the size.
 
 Add the class `selectbox-sm` to reduce the size.
 
-```html
+```html!
 <div class="selectbox selectbox-sm" data-toggle="selectbox">
 ...
 </div>
@@ -128,8 +130,27 @@ const searchSelectbox = phonon.selectbox({
 
 ### Options
 
-- search
-- filterItem(search, item)
+|     Name     |     Description      |     Default value      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|-------------------------------------|
+|    selectable      |  Shows and updates the selected value. | true | yes `data-selectable` |
+|    search      |  If it is true, it will filter items according to the value of the input. | false | yes `data-search` |
+|    filterItems      |  Customer filter function `filterItems(search, item)`. If you use a custom handler, the function must return `true` if the item should be visible to the user or `false` otherwise. | null | no |
+
+
+<br />
+
+The default implementation of `filterItems` is the following:
+
+```js
+function filterItems(search = '', item = {}) {
+  return item.value.indexOf(search) > -1 || item.text.indexOf(search) > -1;
+}
+```
+
+Where:
+
+* `search` (String) - input value of the selectbox.
+* `item` (Object{text, value}) - the item to filter. Text is displayed in the selectbox and value is the hidden value.
 
 ### Methods
 
@@ -139,7 +160,7 @@ const searchSelectbox = phonon.selectbox({
 
 Returns the selected value.
 
-#### setSelected(value: string, text: string)
+#### setSelected(value, text)
 
 * `value` - the selected value.
 * `text` - the text to display for the given `value`.
@@ -197,7 +218,7 @@ For this, you can use object and DOM events.
 |  show    |   This event fires immediately when the `show` instance method is called.   |
 |  shown   |  This event is fired when the selectbox is completely visible to the user (will wait for CSS transitions to complete).    |
 |  hide    |    This event is fired immediately when the `hide` instance method is called.   |
-|  hidden  |   This event is fired when the selectbox is completely hidden (will wait for CSS transitions to complete).    |
+|  hidden  |   This event is fired when the selectbox is completely hidden (will wait for CSS transitions to complete). |
 
 ### Object Events
 
@@ -205,22 +226,42 @@ For this, you can use object and DOM events.
 phonon.selectbox({
   element: '.selectbox',
   show: () => { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () => { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () => { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => { // or onHidden
-    console.log('It works!')
+    console.log('It works!');
   },
   itemSelected(selected) { // or onItemSelected
-    console.log('It works!')
-    console.log(selected.item)
-    console.log(selected.text)
-    console.log(selected.value)
-  }
-})
+    console.log('It works!');
+    console.log(selected.item);
+    console.log(selected.text);
+    console.log(selected.value);
+  },
+});
+```
+
+### DOM Events
+
+```js
+document.querySelector('.selectbox').addEventListener('show.ph.selectbox', () => {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('shown.ph.selectbox', () => {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('hide.ph.selectbox', () => {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('hidden.ph.selectbox', () => {
+  console.log('It works!');
+});
 ```

@@ -11,7 +11,7 @@ The footer is a container listed at the bottom of the page.
 ```html
 <footer class="footer bg-primary">
   <div class="container">
-    <div class="row align-items-start">
+    <div class="row align-items-end">
       <div class="col-sm-6">
         <div class="d-flex align-items-end mb-3 mb-sm-0">
           <img src="../site/icon.svg" width="60" height="60" alt="">

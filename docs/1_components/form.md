@@ -22,7 +22,7 @@ A form contains inputs to collect user input.
 ```html
 <input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
 <input class="form-control" type="text" placeholder="Default input">
-<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
 ```
 
 ### Readonly
@@ -135,6 +135,21 @@ More compact with `.form-row`.
 <small id="passwordHelpBlock" class="valid-feedback">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
+```
+
+## Selectboxes
+
+Alternatively, you can use our advanced [selectbox](#1_components/selectbox) that supports a filter.
+
+```html
+<label for="exampleFormControlSelect1">Example select</label>
+<select class="form-control" id="exampleFormControlSelect1">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
 ```
 
 ## Checkboxes

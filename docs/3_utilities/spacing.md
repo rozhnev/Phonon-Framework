@@ -34,9 +34,9 @@ The prefix `m-` defines a margin.
 Example:
 
 ```html
-<div class="pt-2 pr-1 pb-1 pr-1"></div>
+<div class="mt-2 mr-1 mb-1 mr-1 bg-primary" style="height: 50px"></div>
 
-<div class="px-2 py-4"></div>
+<div class="mx-2 my-4 bg-secondary" style="height: 50px"></div>
 ```
 
 ## Padding
@@ -54,9 +54,9 @@ The prefix `p-` defines a padding.
 Example:
 
 ```html
-<div class="mt-2 mr-1 mb-1 mr-1"></div>
+<div class="pt-2 pr-1 pb-1 pr-1 bg-primary"></div>
 
-<div class="mx-2 my-4"></div>
+<div class="px-2 py-4 bg-secondary"></div>
 ```
 
 ## Horizontal centering

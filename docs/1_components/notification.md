@@ -13,16 +13,13 @@ This is particularly useful if you want to set up a notification without worryin
 
 ```js
 const notif = phonon.notification({
-  message: 'Hello'
-})
-
-notif.show()
+  message: 'Hello',
+});
 
 // jQuery support
 const notif = $().notification({
-  message: 'Hello'
-})
-notif.show()
+  message: 'Hello',
+});
 ```
 
 ## Custom Notification
@@ -45,10 +42,8 @@ Then, you can work with it by using the correct `element` property.
 ```js
 const notif = phonon.notification({
   element: '#myNotification',
-  message: 'Hello'
-})
-
-notif.show()
+  message: 'Hello',
+});
 ```
 
 ## Options
@@ -67,7 +62,7 @@ notif.show()
 Any notification can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
-notif.show()
+notif.show();
 ```
 
 ### hide()
@@ -77,7 +72,7 @@ notif.show()
 Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 
 ```js
-notif.hide()
+notif.hide();
 ```
 
 ## Events
@@ -101,37 +96,37 @@ phonon.notification({
   element: '#myNotification',
   message: 'Hello',
   show: () => { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () => { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () => { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 ```
 
 ### DOM Events
 
 ```js
 document.querySelector('.notification').addEventListener('show.ph.notification', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('shown.ph.notification', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('hide.ph.notification', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('hidden.ph.notification', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 ```
 

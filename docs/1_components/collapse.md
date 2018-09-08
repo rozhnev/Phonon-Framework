@@ -36,8 +36,6 @@ const collapse = $('#exampleCollapse').collapse();
 
 ### Options
 
-The options can be passed in the constructor of this plugin.
-
 |     Option     |     Description      |     Available as a data attribute      |
 |----------------|----------------------|-------------------------|
 |    toggle      |  toggles immediately once the collapse is initialized. | yes `data-toggle`
@@ -66,6 +64,7 @@ collapse.hide();
 #### toggle(collapse)
 
 * `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
+* returns: `<Promise<Boolean>>`
 
 ```js
 collapse.toggle();
@@ -124,3 +123,5 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =>
 })
 ```
 
+<!-- fix for links -->
+<script>document.querySelector('.page [data-toggle="collapse"]').addEventListener('click', function (event) { event.preventDefault()});</script>

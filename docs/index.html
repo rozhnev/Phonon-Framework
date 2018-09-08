@@ -320,11 +320,12 @@ body {
   </style>
     <link rel="stylesheet" href="../dist/css/phonon.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-    <a class="navbar-brand" href="#">
-      <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <a class="navbar-brand" href="../site">
+      <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="Phonon Framework Icon">
       Phonon
     </a>
 
@@ -398,7 +399,7 @@ body {
         </li>
       </ul>
 
-      <input class="search-input hide" placeholder="search"></input>
+      <input class="search-input hide" placeholder="search">
     </section>
 
     <section class="content">
@@ -407,8 +408,8 @@ body {
         <button class="toggle-light">
           <div class="raindrop icon"></div>
         </button>
-        <button class="previous-page"><</button>
-        <button class="next-page">></button>
+        <button class="previous-page">&lt;</button>
+        <button class="next-page">&gt;</button>
 
         <span class="float-right"> | 2.0.0</span>
       </div>
@@ -425,7 +426,7 @@ Please, read the <a href="https://creativecommons.org/licenses/by/3.0/">license<
         <h1 class="heading">Quick start</h1>
         <p>Phonon builds are ready to use components. They are located in the <code>dist/</code> directory.
 They provide convenient solutions that can be installed with no effort and that satisfy the most common editing use cases.</p>
-<p>Please, read more about <a href="#0_getting-started/2_custom-build">custom builds</a> if you would like to optimize the size of Phonon by
+<p>Please, read more about <a href="#0_getting-started/1_custom-build">custom builds</a> if you would like to optimize the size of Phonon by
 importing required components only.</p>
 <h2>Installation</h2>
 <p>The installation can take place in several ways:</p>
@@ -438,27 +439,7 @@ importing required components only.</p>
 <li>Use <a href="https://cdnjs.com/libraries/PhononJs">CDNJS</a>.</li>
 </ul>
 <h2>Starter Template</h2>
-<pre></pre> <div class="example"><!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Phonon CSS -->
-    <link rel="stylesheet" href="phonon/dist/css/phonon.css">
-
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
-
-    <!-- Optional JavaScript -->
-    <script src="phonon/dist/js/phonon.js"></script>
-  </body>
-</html>
-</div>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre><code class="language-html!">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
     &lt;!-- Required meta tags --&gt;
@@ -483,6 +464,20 @@ importing required components only.</p>
       <div class="page" id="0_getting-started/1_custom-build">
         <h1 class="heading">Custom builds</h1>
         <p>Import the required files for your project.</p>
+<h2>Dist Structure</h2>
+<p><code>phonon.js</code> is a bundle containing the entire framework as a whole (components and single-page apps modules).</p>
+<p>In <code>components/</code>, you can import the required components that you want to use in ES6.</p>
+<pre><code>dist/js/phonon.js
+dist/js/phonon.min.js
+dist/js/components/accordion.js
+dist/js/components/accordion.min.js
+dist/js/components/alert.js
+dist/js/components/alert.min.js
+...
+
+dist/css/phonon.css
+dist/css/phonon.min.css
+</code></pre>
 <h2>SCSS</h2>
 <p>Please, see the source code of <a href="https://github.com/quark-dev/Phonon-Framework/blob/master/src/scss/phonon.scss">phonon.scss</a>.</p>
 <pre><code class="language-scss">// instead of importing Phonon package
@@ -542,101 +537,81 @@ As with Bootstrap 4, you can edit SCSS variables.</p>
   useHash: true,
   defaultPage: 'one',
   animatePages: false,
-})
+});
 </code></pre>
 <h3>Markup page structure</h3>
 <p><code>.app-pages</code> is a wrapper of <code>.app-page</code> pages.</p>
-<pre></pre> <div class="example"><div class="app-pages">
-  <div class="app-page" data-page="one">...</div>
-  <div class="app-page" data-page="myPage2">...</div>
-</div>
-
-### Page events <i>Changed</i>
-
-For a given page `myPage` for example.
-Assuming this page is present in the DOM like the following:
-
-```html
-<div class="app-page" data-page="myPage"></div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
+<pre><code class="language-html!">&lt;div class=&quot;app-pages&quot;&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;one&quot;&gt;...&lt;/div&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;myPage2&quot;&gt;...&lt;/div&gt;
 &lt;/div&gt;
-
-### Page events &lt;i&gt;Changed&lt;/i&gt;
-
-For a given page `myPage` for example.
-Assuming this page is present in the DOM like the following:
-
-```html
-&lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3>Page events <i>Changed</i></h3>
+<p>For a given page <code>myPage</code> for example.
+Assuming this page is present in the DOM like the following:</p>
+<pre><code class="language-html!">&lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>Page events are now used with <code>.select()</code>.</p>
 <pre><code class="language-js">pager.select('myPage').addEvents({
   show: function () {
-    console.log('myPage: show')
+    console.log('myPage: show');;
   },
   shown: function () {
-    console.log('myPage: shown')
+    console.log('myPage: shown');
   },
   hide: function () {
-    console.log('myPage: hide')
+    console.log('myPage: hide');
   },
   hidden: function () {
-    console.log('myPage: hidden')
+    console.log('myPage: hidden');
   },
   hash: function () {
-    console.log('myPage: hash')
-  }
-})
+    console.log('myPage: hash');
+  },
+});
 </code></pre>
 <p>In some situations, it may be useful to listen to certain events that affect all pages.</p>
 <pre><code class="language-js">pager.select('*').addEvents({
   show: function () {
-    console.log('global: show')
+    console.log('global: show');
   },
   shown: function () {
-    console.log('global: shown')
+    console.log('global: shown');
   },
   hide: function () {
-    console.log('global: hide')
+    console.log('global: hide');
   },
   hidden: function () {
-    console.log('global: hidden')
+    console.log('global: hidden');
   },
   hash: function () {
-    console.log('global: hash')
-  }
-})
+    console.log('global: hash');
+  },
+});
 </code></pre>
 <p>Page events are also dispatched in the DOM.</p>
-<pre><code class="language-js">window.addEventListener('myPage.show', function () {
-  console.log('myPage: show (DOM event)')
-})
+<pre><code class="language-js">window.addEventListener('myPage.show', () =&gt; {
+  console.log('myPage: show (DOM event)');
+});
 </code></pre>
 <p>Finally, page events have their own aliases.
 Instead of using the event name called <code>show</code> for example, you can use <code>onShow</code>:</p>
 <pre><code class="language-js">pager.select('myPage').addEvents({
-  show: function () {
-    console.log('myPage: show')
+  show: () =&gt; {
+    console.log('myPage: show');
   },
-  onShow: function () {
-    console.log('myPage: show (alias)')
-  }
-})
+  onShow: () =&gt; {
+    console.log('myPage: show (alias)');
+  },
+});
 </code></pre>
 <h3>Page templates <i>Changed</i></h3>
 <p>You need to use <code>setTemplate()</code>.
 The first argument is the path to the template file.</p>
-<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
+<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;');
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
-<pre></pre> <div class="example"><div data-push-template>
-  <!-- The template will be injected here -->
-</div>
-</div>
-<pre><code class="language-html">&lt;div data-push-template&gt;
+<pre><code class="language-html!">&lt;div data-push-template&gt;
   &lt;!-- The template will be injected here --&gt;
 &lt;/div&gt;
 </code></pre>
@@ -645,8 +620,8 @@ This feature is interesting if you want to use a template engine such as <a href
 Note that async functions are now supported.</p>
 <pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;'), async (page, template, elements) =&gt; {
   const template = await fetchTemplate();
-  page.querySelector('[data-template]').innerHTML = template
-})
+  page.querySelector('[data-template]').innerHTML = template;
+});
 </code></pre>
 <h3>Navigation between pages</h3>
 <p>Replace <code>data-navigation</code> by <code>data-navigate</code>.
@@ -663,32 +638,33 @@ Now, you need to pass all the data directly.</p>
   data: {
     en: {
       welcome: 'Hello (default)',
-      welcomePerson: 'Hello :name'
+      welcomePerson: 'Hello :name',
     },
     en_US: {
       welcome: 'Hello (US)',
-      welcomePerson: 'Hello :name'
+      welcomePerson: 'Hello :name',
     },
     fr: {
       welcome: 'Bonjour',
-      welcomePerson: 'Bonjour :name'
-    }
-  }
-})
+      welcomePerson: 'Bonjour :name',
+    },
+  },
+});
 </code></pre>
 <p>It is no longer possible to load JSON by doing Ajax requests.
 If you need to keep this feature, you can load JSON language files and then
 pass everything as the second argument.</p>
 <pre><code class="language-js">axios.get('/locales')
-  .then(function (response) {
+  .then((response) =&gt; {
     const config = {
       fallbackLocale: 'en',
       locale: 'en',
-      data: response.data
-    }
-    phonon.i18n(config)
+      data: response.data,
+    };
+
+    phonon.i18n(config);
   });
-})
+});
 </code></pre>
 <h2>Components</h2>
 <h3>Utility</h3>
@@ -797,6 +773,8 @@ const accordion = $('#exampleAccordion').accordion();
 <h2>Events</h2>
 <p>The accordion component has events related to the collapse elements.
 See events of <a href="#1_components/collapse">collapse</a> component.</p>
+<!-- fix for links -->
+<script>document.querySelector('.page #exampleAccordion').addEventListener('click', function (event) { event.preventDefault()});</script>
 
       </div>
       <div class="page" id="1_components/alert">
@@ -927,23 +905,36 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 });
 </code></pre>
 <h3>Options</h3>
-<ul>
-<li><code>fade</code> (boolean) - if <code>fade</code> is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element.</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fade</td>
+<td>if <code>fade</code> is set to true, it will add a fade animation. Otherwise, it will toggle the display property when showing or hidding this element.</td>
+<td>true</td>
+<td>yes <code>data-fade</code></td>
+</tr>
+</tbody>
+</table>
 <h3>Methods</h3>
-<h4>show(alert)</h4>
+<h4>show()</h4>
 <ul>
-<li><code>alert</code> (Element | String) - if <code>alert</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>alert</code> exists.</li>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
-<pre><code class="language-js">alert.show()
+<pre><code class="language-js">alert.show();
 </code></pre>
-<h4>hide(alert)</h4>
+<h4>hide()</h4>
 <ul>
-<li><code>alert</code> (Element | String) - if <code>alert</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>alert</code> exists.</li>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
-<pre><code class="language-js">alert.hide()
+<pre><code class="language-js">alert.hide();
 </code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your alert.
@@ -977,35 +968,35 @@ For this, you can use object and DOM events.</p>
 <h3>Object Events</h3>
 <pre><code class="language-js">phonon.alert({
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
+    console.log('It works!');
   },
 });
 </code></pre>
 <h3>DOM Events</h3>
 <pre><code class="language-js">document.querySelector('.alert').addEventListener('show.ph.alert', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('shown.ph.alert', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('hide.ph.alert', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
@@ -1013,8 +1004,96 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
         <h1 class="heading">Button</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
-<h2>Button</h2>
-<h2>Button group</h2>
+<h2>Markup</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+
+<button type="button" class="btn btn-link">Link</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;Primary&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Secondary&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-success&quot;&gt;Success&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-danger&quot;&gt;Danger&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-warning&quot;&gt;Warning&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-info&quot;&gt;Info&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-light&quot;&gt;Light&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-dark&quot;&gt;Dark&lt;/button&gt;
+
+&lt;button type=&quot;button&quot; class=&quot;btn btn-link&quot;&gt;Link&lt;/button&gt;
+</code></pre>
+<pre></pre> <div class="example"><button type="button" class="btn btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-outline-secondary">Secondary</button>
+<button type="button" class="btn btn-outline-success">Success</button>
+<button type="button" class="btn btn-outline-danger">Danger</button>
+<button type="button" class="btn btn-outline-warning">Warning</button>
+<button type="button" class="btn btn-outline-info">Info</button>
+<button type="button" class="btn btn-outline-light">Light</button>
+<button type="button" class="btn btn-outline-dark">Dark</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-primary&quot;&gt;Primary&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-secondary&quot;&gt;Secondary&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-success&quot;&gt;Success&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-danger&quot;&gt;Danger&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-warning&quot;&gt;Warning&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-info&quot;&gt;Info&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light&quot;&gt;Light&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-dark&quot;&gt;Dark&lt;/button&gt;
+</code></pre>
+<h3>Tag compatibility</h3>
+<pre></pre> <div class="example"><a class="btn btn-primary" href="#" role="button">Link</a>
+<button class="btn btn-primary" type="submit">Button</button>
+<input class="btn btn-primary" type="button" value="Input">
+<input class="btn btn-primary" type="submit" value="Submit">
+<input class="btn btn-primary" type="reset" value="Reset">
+</div>
+<pre><code class="language-html">&lt;a class=&quot;btn btn-primary&quot; href=&quot;#&quot; role=&quot;button&quot;&gt;Link&lt;/a&gt;
+&lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Button&lt;/button&gt;
+&lt;input class=&quot;btn btn-primary&quot; type=&quot;button&quot; value=&quot;Input&quot;&gt;
+&lt;input class=&quot;btn btn-primary&quot; type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+&lt;input class=&quot;btn btn-primary&quot; type=&quot;reset&quot; value=&quot;Reset&quot;&gt;
+</code></pre>
+<h2>Sizing</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg">Large button</button>
+<button type="button" class="btn btn-secondary btn-lg">Large button</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;Large button&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot;&gt;Large button&lt;/button&gt;
+</code></pre>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-sm">Small button</button>
+<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-sm&quot;&gt;Small button&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm&quot;&gt;Small button&lt;/button&gt;
+</code></pre>
+<h2>Block</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
+</code></pre>
+<h2>Active state</h2>
+<pre></pre> <div class="example"><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
+<a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Link</a>
+</div>
+<pre><code class="language-html">&lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Primary link&lt;/a&gt;
+&lt;a href=&quot;#&quot; class=&quot;btn btn-secondary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Link&lt;/a&gt;
+</code></pre>
+<h2>Disabled state</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
+<button type="button" class="btn btn-secondary btn-lg" disabled>Button</button>
+</div>
+<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-lg btn-primary&quot; disabled&gt;Primary button&lt;/button&gt;
+&lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot; disabled&gt;Button&lt;/button&gt;
+</code></pre>
+<p>@todo info</p>
+<h2>Checkbox and radio buttons</h2>
 
       </div>
       <div class="page" id="1_components/code">
@@ -1089,7 +1168,6 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
 const collapse = $('#exampleCollapse').collapse();
 </code></pre>
 <h3>Options</h3>
-<p>The options can be passed in the constructor of this plugin.</p>
 <table>
 <thead>
 <tr>
@@ -1124,6 +1202,7 @@ const collapse = $('#exampleCollapse').collapse();
 <h4>toggle(collapse)</h4>
 <ul>
 <li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <pre><code class="language-js">collapse.toggle();
 </code></pre>
@@ -1190,6 +1269,8 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
   console.log('It works!')
 })
 </code></pre>
+<!-- fix for links -->
+<script>document.querySelector('.page [data-toggle="collapse"]').addEventListener('click', function (event) { event.preventDefault()});</script>
 
       </div>
       <div class="page" id="1_components/footer">
@@ -1199,7 +1280,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 <h2>Markup</h2>
 <pre></pre> <div class="example"><footer class="footer bg-primary">
   <div class="container">
-    <div class="row align-items-start">
+    <div class="row align-items-end">
       <div class="col-sm-6">
         <div class="d-flex align-items-end mb-3 mb-sm-0">
           <img src="../site/icon.svg" width="60" height="60" alt="">
@@ -1231,7 +1312,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </div>
 <pre><code class="language-html">&lt;footer class=&quot;footer bg-primary&quot;&gt;
   &lt;div class=&quot;container&quot;&gt;
-    &lt;div class=&quot;row align-items-start&quot;&gt;
+    &lt;div class=&quot;row align-items-end&quot;&gt;
       &lt;div class=&quot;col-sm-6&quot;&gt;
         &lt;div class=&quot;d-flex align-items-end mb-3 mb-sm-0&quot;&gt;
           &lt;img src=&quot;../site/icon.svg&quot; width=&quot;60&quot; height=&quot;60&quot; alt=&quot;&quot;&gt;
@@ -1285,11 +1366,11 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 <h3>Sizing</h3>
 <pre></pre> <div class="example"><input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
 <input class="form-control" type="text" placeholder="Default input">
-<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm"
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
 </div>
 <pre><code class="language-html">&lt;input class=&quot;form-control form-control-lg&quot; type=&quot;text&quot; placeholder=&quot;.form-control-lg&quot;&gt;
 &lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Default input&quot;&gt;
-&lt;input class=&quot;form-control form-control-sm&quot; type=&quot;text&quot; placeholder=&quot;.form-control-sm&quot;
+&lt;input class=&quot;form-control form-control-sm&quot; type=&quot;text&quot; placeholder=&quot;.form-control-sm&quot;&gt;
 </code></pre>
 <h3>Readonly</h3>
 <pre></pre> <div class="example"><input class="form-control" type="text" placeholder="Readonly input here…" readonly>
@@ -1449,6 +1530,26 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 &lt;/small&gt;
 </code></pre>
+<h2>Selectboxes</h2>
+<p>Alternatively, you can use our advanced <a href="#1_components/selectbox">selectbox</a> that supports a filter.</p>
+<pre></pre> <div class="example"><label for="exampleFormControlSelect1">Example select</label>
+<select class="form-control" id="exampleFormControlSelect1">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+</div>
+<pre><code class="language-html">&lt;label for=&quot;exampleFormControlSelect1&quot;&gt;Example select&lt;/label&gt;
+&lt;select class=&quot;form-control&quot; id=&quot;exampleFormControlSelect1&quot;&gt;
+  &lt;option&gt;1&lt;/option&gt;
+  &lt;option&gt;2&lt;/option&gt;
+  &lt;option&gt;3&lt;/option&gt;
+  &lt;option&gt;4&lt;/option&gt;
+  &lt;option&gt;5&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
 <h2>Checkboxes</h2>
 <pre></pre> <div class="example"><label class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input">
@@ -1529,7 +1630,6 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
         <h1 class="heading">Grid</h1>
         <h2>Introduction</h2>
 <p>A grid system is a layout with rows and columns.</p>
-<h2>test</h2>
 
       </div>
       <div class="page" id="1_components/loader">
@@ -1691,8 +1791,27 @@ For this, you can use object and DOM events.</p>
       <div class="page" id="1_components/modal">
         <h1 class="heading">Modal</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
-<h2>Dynamically created modals</h2>
+<p>A modal is a flexible window that is visible on top of the main window.</p>
+<div style="position:relative;padding: 8px;background: #eee;">
+  <div class="modal show" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<h2>Modal without markup</h2>
 <p>By not using the <code>element</code> property, it will create a modal's HTMLElement dynamically.
 This is particularly useful if you want to set up a modal without worrying about its HTML code.</p>
 <h3>Simple modal</h3>
@@ -1720,7 +1839,7 @@ const modal = $().modal({
 <pre><code class="language-js">const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
-})
+});
 
 prompt.show()
 
@@ -1731,7 +1850,7 @@ prompt.getInputValue() // only available with prompts
 <pre><code class="language-js">const confirm = phonon.confirm({
   title: 'Confirm title',
   message: 'Confirm body text goes here.',
-})
+});
 
 confirm.show()
 </code></pre>
@@ -1739,7 +1858,7 @@ confirm.show()
 <pre><code class="language-js">const modalLoader = phonon.modalLoader({
   title: 'Loader title',
   message: 'Loader body text goes here.',
-})
+});
 
 modalLoader.show()
 </code></pre>
@@ -1751,26 +1870,16 @@ The click event of a button will fire the associated callback automatically.</p>
   title: 'Modal title',
   message: 'Modal body text goes here.',
   buttons: [
-    {
-      event: 'cancel',
-      text: 'Cancel',
-      dismiss: true,
-      class: 'btn btn-secondary',
-    },
-    {
-      event: 'confirm',
-      text: 'Ok',
-      dismiss: true,
-      class: 'btn btn-primary',
-    },
+    { event: 'cancel', text: 'Cancel', dismiss: true, class: 'btn btn-secondary' },
+    { event: 'confirm', text: 'Ok', dismiss: true, class: 'btn btn-primary' },
   ],
   onCancel: () =&gt; { // or cancel
     console.log('Cancel')
   },
   onConfirm: () =&gt; { // or confirm
     console.log('Confirm')
-  }
-})
+  },
+});
 </code></pre>
 <p>You can also define your own event names.
 In the following example, we trigger the event called <code>neutralAnswer</code> when we click on the button.</p>
@@ -1778,43 +1887,18 @@ In the following example, we trigger the event called <code>neutralAnswer</code>
   title: 'Modal title',
   message: 'Modal body text goes here.',
   buttons: [
-    {
-      event: 'neutralAnswer',
-      text: 'Custom button',
-      dismiss: true,
-      class: 'btn btn-primary',
-    }
+    { event: 'neutralAnswer', text: 'Custom button', dismiss: true, class: 'btn btn-primary' },
   ],
   neutralAnswer: () =&gt; { // or onNeutralAnswer
     console.log('Well we close it!')
-  }
-})
+  },
+});
 </code></pre>
 <h2>Custom modals</h2>
 <p>Conversely, you can create your own modal by specifying the <code>element</code> property.</p>
-<pre></pre> <div class="example"><!-- Button trigger modal -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
-
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="modal">
-  <div class="modal-inner" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <div class="btn-group float-right" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;!-- Button trigger modal --&gt;
+<p><button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button></p>
+<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
+<pre><code class="language-html!">&lt;!-- Button trigger modal --&gt;
 &lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;modal&quot; data-target=&quot;#exampleModal&quot;&gt;Launch demo modal&lt;/button&gt;
 
 &lt;!-- Modal --&gt;
@@ -1838,15 +1922,11 @@ In the following example, we trigger the event called <code>neutralAnswer</code>
 </code></pre>
 <p>Then, you can work with it by using the correct <code>element</code> property.</p>
 <pre><code class="language-js">const modal = phonon.modal({
-  element: '#exampleModal'
+  element: '#exampleModal',
 });
-
-modal.show()
 
 // jQuery support
 const modal = $('#exampleModal').modal();
-
-modal.show()
 </code></pre>
 <h2>Options</h2>
 <ul>
@@ -1861,19 +1941,23 @@ modal.show()
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any modal can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
-<pre><code class="language-js">modal.show()
+<pre><code class="language-js">modal.show();
 </code></pre>
 <h3>hide()</h3>
 <ul>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
-<pre><code class="language-js">modal.hide()
+<pre><code class="language-js">modal.hide();
 </code></pre>
 <h3>getInputValue()</h3>
 <p>It is possible to retrieve the text field value of any prompt type.</p>
+<pre><code class="language-js">const value = modal.getInputValue();
+</code></pre>
 <h3>setInputValue()</h3>
 <p>It is possible to set the text field value of any prompt type.</p>
+<pre><code class="language-js">modal.setInputValue('Hello World');
+</code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your modal.
 For this, you can use object and DOM events.</p>
@@ -1908,35 +1992,35 @@ For this, you can use object and DOM events.</p>
   title: 'Modal title',
   message: 'Modal body text goes here.',
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 </code></pre>
 <h3>DOM Events</h3>
 <pre><code class="language-js">document.querySelector('.modal').addEventListener('show.ph.modal', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('shown.ph.modal', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('hide.ph.modal', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
@@ -1944,52 +2028,6 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
         <h1 class="heading">Nav</h1>
         <h2>Introduction</h2>
 <p>[WIP]</p>
-<h2>Tabs</h2>
-<h3>Markup</h3>
-<pre></pre> <div class="example"><ul class="nav nav-tabs" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="messages-tab" data-toggle="tab" href="#messages" role="tab" aria-controls="messages" aria-selected="false">Messages</a>
-  </li>
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">First content.</div>
-  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">Second content.</div>
-  <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">Third content.</div>
-</div>
-</div>
-<pre><code class="language-html">&lt;ul class=&quot;nav nav-tabs&quot; role=&quot;tablist&quot;&gt;
-  &lt;li class=&quot;nav-item&quot;&gt;
-    &lt;a class=&quot;nav-link active&quot; id=&quot;home-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#home&quot; role=&quot;tab&quot; aria-controls=&quot;home&quot; aria-selected=&quot;true&quot;&gt;Home&lt;/a&gt;
-  &lt;/li&gt;
-  &lt;li class=&quot;nav-item&quot;&gt;
-    &lt;a class=&quot;nav-link&quot; id=&quot;profile-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#profile&quot; role=&quot;tab&quot; aria-controls=&quot;profile&quot; aria-selected=&quot;false&quot;&gt;Profile&lt;/a&gt;
-  &lt;/li&gt;
-  &lt;li class=&quot;nav-item&quot;&gt;
-    &lt;a class=&quot;nav-link&quot; id=&quot;messages-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#messages&quot; role=&quot;tab&quot; aria-controls=&quot;messages&quot; aria-selected=&quot;false&quot;&gt;Messages&lt;/a&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;tab-content&quot;&gt;
-  &lt;div class=&quot;tab-pane active&quot; id=&quot;home&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;home-tab&quot;&gt;First content.&lt;/div&gt;
-  &lt;div class=&quot;tab-pane&quot; id=&quot;profile&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;profile-tab&quot;&gt;Second content.&lt;/div&gt;
-  &lt;div class=&quot;tab-pane&quot; id=&quot;messages&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;messages-tab&quot;&gt;Third content.&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<h3>JavaScript</h3>
-<pre><code class="language-js">const tab = phonon.tab({
-  element: '[href=&quot;#home&quot;]'
-})
-</code></pre>
-<h3>Methods</h3>
-<h4>show()</h4>
-<h4>hide()</h4>
 
       </div>
       <div class="page" id="1_components/navbar">
@@ -2010,16 +2048,13 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 <p>By not using the <code>element</code> property, it will create a notification's HTMLElement dynamically.
 This is particularly useful if you want to set up a notification without worrying about its HTML code.</p>
 <pre><code class="language-js">const notif = phonon.notification({
-  message: 'Hello'
-})
-
-notif.show()
+  message: 'Hello',
+});
 
 // jQuery support
 const notif = $().notification({
-  message: 'Hello'
-})
-notif.show()
+  message: 'Hello',
+});
 </code></pre>
 <h2>Custom Notification</h2>
 <p>Conversely, you can create your own notification by specifying the <code>element</code> property.</p>
@@ -2044,10 +2079,8 @@ notif.show()
 <p>Then, you can work with it by using the correct <code>element</code> property.</p>
 <pre><code class="language-js">const notif = phonon.notification({
   element: '#myNotification',
-  message: 'Hello'
-})
-
-notif.show()
+  message: 'Hello',
+});
 </code></pre>
 <h2>Options</h2>
 <ul>
@@ -2062,14 +2095,14 @@ notif.show()
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any notification can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
-<pre><code class="language-js">notif.show()
+<pre><code class="language-js">notif.show();
 </code></pre>
 <h3>hide()</h3>
 <ul>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
-<pre><code class="language-js">notif.hide()
+<pre><code class="language-js">notif.hide();
 </code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your notification.
@@ -2105,35 +2138,35 @@ For this, you can use object and DOM events.</p>
   element: '#myNotification',
   message: 'Hello',
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 </code></pre>
 <h3>DOM Events</h3>
 <pre><code class="language-js">document.querySelector('.notification').addEventListener('show.ph.notification', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('shown.ph.notification', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('hide.ph.notification', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.notification').addEventListener('hidden.ph.notification', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
@@ -2280,7 +2313,7 @@ document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () 
       <div class="page" id="1_components/progress">
         <h1 class="heading">Progress</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>A progress indicates the completion status of a task or a process with a horizontal bar.</p>
 <h2>Markup</h2>
 <pre></pre> <div class="example"><div class="progress" id="myProgress">
   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -2290,13 +2323,13 @@ document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () 
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<p>You can specify the height of the progress in HTML if you don't want to use JavaScript:</p>
+<p>You can specify the height and the value of the progress in HTML if you don't want to use JavaScript:</p>
 <pre></pre> <div class="example"><div class="progress" id="myProgress" style="height: 8px">
-  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 </div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot; style=&quot;height: 8px&quot;&gt;
-  &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; style=&quot;width: 50%&quot; aria-valuenow=&quot;50&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
@@ -2320,39 +2353,81 @@ $('#myProgress').progress({
   background: null,
 });
 </code></pre>
-<h2>Options</h2>
+<h3>Options</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>height</td>
+<td>Height of the progress bar.</td>
+<td>5</td>
+<td>yes <code>data-height</code></td>
+</tr>
+<tr>
+<td>min</td>
+<td>Minimum value of the progress bar.</td>
+<td>0</td>
+<td>yes <code>data-min</code></td>
+</tr>
+<tr>
+<td>max</td>
+<td>Maximum value of the progress bar.</td>
+<td>100</td>
+<td>yes <code>data-max</code></td>
+</tr>
+<tr>
+<td>label</td>
+<td>Display of the current value of the progress bar.</td>
+<td>false</td>
+<td>yes <code>data-label</code></td>
+</tr>
+<tr>
+<td>striped</td>
+<td>Progress bar with the striped style.</td>
+<td>false</td>
+<td>yes <code>data-striped</code></td>
+</tr>
+<tr>
+<td>background</td>
+<td>Background of the progress bar.</td>
+<td>null</td>
+<td>yes <code>data-background</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Methods</h3>
+<h4>set(value)</h4>
 <ul>
-<li>height</li>
-<li>min</li>
-<li>max</li>
-<li>label</li>
-<li>striped</li>
-<li>background</li>
-</ul>
-<h2>Methods</h2>
-<h3>set(value: int)</h3>
-<ul>
+<li><code>value</code> (Number) - the value of the progress bar.</li>
 <li>returns: <code>&lt;undefined&gt;</code></li>
 </ul>
 <p>Updates the current value of the progress bar.</p>
-<h3>animate(startAnimation: boolean)</h3>
+<h4>animate(startAnimation)</h4>
 <ul>
+<li><code>startAnimation</code> (Boolean) - if <code>startAnimation</code> is set to true, it will start the stripe animation. Otherwise, it will stop the animation.</li>
 <li>returns: <code>&lt;undefined&gt;</code></li>
 </ul>
-<p>Animates the striped progress. The <code>striped</code> option must be true otherwise it won't work.</p>
-<h3>show()</h3>
+<p>Animates the striped progress. The <code>striped</code> option must be set to true otherwise it won't work.</p>
+<h4>show()</h4>
 <ul>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any progress can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
-<pre><code class="language-js">progress.show()
+<pre><code class="language-js">progress.show();
 </code></pre>
-<h3>hide()</h3>
+<h4>hide()</h4>
 <ul>
 <li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
 </ul>
 <p>Any progress can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
-<pre><code class="language-js">progress.hide()
+<pre><code class="language-js">progress.hide();
 </code></pre>
 <h2>Events</h2>
 <p>It may be useful to use the events that affect your progress.
@@ -2387,42 +2462,42 @@ For this, you can use object and DOM events.</p>
 <pre><code class="language-js">phonon.progress({
   element: '#exampleProgress',
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 </code></pre>
 <h3>DOM Events</h3>
 <pre><code class="language-js">document.querySelector('.progress').addEventListener('show.ph.progress', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('shown.ph.progress', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('hide.ph.progress', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
       <div class="page" id="1_components/selectbox">
         <h1 class="heading">Selectbox</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>A selectbox is an element to choose a value in a list of selection items.</p>
 <h2>Markup</h2>
 <pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
   <input type="hidden" name="color">
@@ -2558,21 +2633,14 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 <p>For the selected item, add <code>data-selected</code>.
 For each item, you must add <code>data-value</code>.
 By default, the module will try to find the text node otherwise, it will check if the attribute <code>data-text</code> is present.</p>
+<h3>Sizing</h3>
 <p>Add the class <code>selectbox-lg</code> to increase the size.</p>
-<pre></pre> <div class="example"><div class="selectbox selectbox-lg" data-toggle="selectbox">
-...
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;selectbox selectbox-lg&quot; data-toggle=&quot;selectbox&quot;&gt;
+<pre><code class="language-html!">&lt;div class=&quot;selectbox selectbox-lg&quot; data-toggle=&quot;selectbox&quot;&gt;
 ...
 &lt;/div&gt;
 </code></pre>
 <p>Add the class <code>selectbox-sm</code> to reduce the size.</p>
-<pre></pre> <div class="example"><div class="selectbox selectbox-sm" data-toggle="selectbox">
-...
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;selectbox selectbox-sm&quot; data-toggle=&quot;selectbox&quot;&gt;
+<pre><code class="language-html!">&lt;div class=&quot;selectbox selectbox-sm&quot; data-toggle=&quot;selectbox&quot;&gt;
 ...
 &lt;/div&gt;
 </code></pre>
@@ -2588,9 +2656,46 @@ const searchSelectbox = phonon.selectbox({
 });
 </code></pre>
 <h3>Options</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>selectable</td>
+<td>Shows and updates the selected value.</td>
+<td>true</td>
+<td>yes <code>data-selectable</code></td>
+</tr>
+<tr>
+<td>search</td>
+<td>If it is true, it will filter items according to the value of the input.</td>
+<td>false</td>
+<td>yes <code>data-search</code></td>
+</tr>
+<tr>
+<td>filterItems</td>
+<td>Customer filter function <code>filterItems(search, item)</code>. If you use a custom handler, the function must return <code>true</code> if the item should be visible to the user or <code>false</code> otherwise.</td>
+<td>null</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<br />
+<p>The default implementation of <code>filterItems</code> is the following:</p>
+<pre><code class="language-js">function filterItems(search = '', item = {}) {
+  return item.value.indexOf(search) &gt; -1 || item.text.indexOf(search) &gt; -1;
+}
+</code></pre>
+<p>Where:</p>
 <ul>
-<li>search</li>
-<li>filterItem(search, item)</li>
+<li><code>search</code> (String) - input value of the selectbox.</li>
+<li><code>item</code> (Object{text, value}) - the item to filter. Text is displayed in the selectbox and value is the hidden value.</li>
 </ul>
 <h3>Methods</h3>
 <h4>getSelected()</h4>
@@ -2598,7 +2703,7 @@ const searchSelectbox = phonon.selectbox({
 <li>returns: <code>&lt;String&gt;</code></li>
 </ul>
 <p>Returns the selected value.</p>
-<h4>setSelected(value: string, text: string)</h4>
+<h4>setSelected(value, text)</h4>
 <ul>
 <li><code>value</code> - the selected value.</li>
 <li><code>text</code> - the text to display for the given <code>value</code>.</li>
@@ -2664,24 +2769,41 @@ For this, you can use object and DOM events.</p>
 <pre><code class="language-js">phonon.selectbox({
   element: '.selectbox',
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
+    console.log('It works!');
   },
   itemSelected(selected) { // or onItemSelected
-    console.log('It works!')
-    console.log(selected.item)
-    console.log(selected.text)
-    console.log(selected.value)
-  }
-})
+    console.log('It works!');
+    console.log(selected.item);
+    console.log(selected.text);
+    console.log(selected.value);
+  },
+});
+</code></pre>
+<h3>DOM Events</h3>
+<pre><code class="language-js">document.querySelector('.selectbox').addEventListener('show.ph.selectbox', () =&gt; {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('shown.ph.selectbox', () =&gt; {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('hide.ph.selectbox', () =&gt; {
+  console.log('It works!');
+});
+
+document.querySelector('.selectbox').addEventListener('hidden.ph.selectbox', () =&gt; {
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
@@ -2716,6 +2838,8 @@ For this, you can use object and DOM events.</p>
   &lt;div class=&quot;tab-pane fade&quot; id=&quot;settings&quot; role=&quot;tabpanel&quot; aria-labelledby=&quot;settings-tab&quot;&gt;Settings&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+<!-- fix for links -->
+<script>document.querySelector('.page .nav-tabs').addEventListener('click', function (event) { event.preventDefault()});</script>
 <h2>JavaScript</h2>
 <pre><code class="language-js">const tab = phonon.tab({
   element: '#settings-tab',
@@ -2762,6 +2886,8 @@ const tab = $('#settings-tab').tab();
 <p>The pager is Phonon's basic module for designing an <strong>SPA</strong>-like application. It connects pages together by providing <strong>page navigation</strong> and allows you to listen to <strong>page events</strong>.
 It also offers a light and simple <strong>router</strong> for recovering parameters with the <code>hash</code> event.</p>
 <p>If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.</p>
+<iframe class="border border-light" src="../examples/single-page-apps/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
+<p class="text-light">Source code</p>
 <h2>Configuration</h2>
 <pre><code class="language-js">const pager = phonon.pager({
   hashPrefix: '#!',
@@ -2774,13 +2900,7 @@ pager.start();
 </code></pre>
 <h2>Markup</h2>
 <p>A SPA page is defined by setting up the <code>app-page</code> class and a unique data-page attribute.</p>
-<pre></pre> <div class="example"><div class="app-pages">
-  <div class="app-page" data-page="myPage"></div>
-  <div class="app-page" data-page="mySecondPage"></div>
-  <div class="app-page" data-page="myThirdPage"></div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;app-pages&quot;&gt;
+<pre><code class="language-html!">&lt;div class=&quot;app-pages&quot;&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;myPage&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;mySecondPage&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;app-page&quot; data-page=&quot;myThirdPage&quot;&gt;&lt;/div&gt;
@@ -2795,13 +2915,21 @@ pager.start();
 <p>If you want to force the back animation, you can use the attribute <code>data-pop-page</code>.</p>
 <p><button class="btn btn-primary" data-navigate="home" data-pop-page="true">Back to home</button></p>
 <h2>Page Selector</h2>
-<p>To work with pages, it is essential to use the <code>select()</code> method. Indeed, the new Phonon Pager allows you to work with both a single page and a set of pages.</p>
-<pre><code class="language-js">pager.select('myPage') // one specific page
-pager.select('*') // all the pages
-pager.select('myPage, mySecondPage') // two specific pages
+<p>To work with pages, it is essential to use the <code>select()</code> method.</p>
+<pre><code class="language-js">pager.select('myPage');
 </code></pre>
 <p>Once you selected pages programatically, you can <strong>use a template</strong> or <strong>listen to events</strong>.</p>
-<h2>Page Template</h2>
+<h2>Page route</h2>
+<p>By default, the router will create a route with the page name.
+For example, the default route of myPage would be <code>/myPage</code>.</p>
+<p>You can define routes with or without named parameters.</p>
+<pre><code class="language-js">// no parametes
+pager.select('home').setRoute('/home_sweet_home');
+
+// parameter &quot;newsId&quot;
+pager.select('myPage').setRoute('/myRoute/{newsId}');
+</code></pre>
+<h2>Page template</h2>
 <p>Pager will use the template and set it where the attribute <code>data-template</code> is present
 in the HTML view.</p>
 <pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
@@ -2816,21 +2944,15 @@ in the HTML view.</p>
 &lt;/div&gt;
 </code></pre>
 <p>You may want to use a template engine or change the default behavior of Pager. In this case, the second argument of <code>setTemplate()</code> is useful.</p>
-<pre><code class="language-js">// es6
-pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;'), async (page, template, elements) =&gt; {
-  const template = await fetchTemplate();
-  page.querySelector('[data-template]').innerHTML = template
-})
-
-// es5
-pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;', (page, template, elements) =&gt; {
-  page.querySelector('[data-template]').innerHTML = template
-})
+<pre><code class="language-js">pager.select('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;'), async (page, template, elements) =&gt; {
+  const template = await yourTask();
+  page.querySelector('[data-template]').innerHTML = template;
+});
 </code></pre>
-<h3>Prevent page transition</h3>
+<h2>Prevent page transition</h2>
 <p>Cancel the page transition if the function returns true.
 If the trigger event is a hash change, Pager will force to show the previous page.</p>
-<pre><code class="language-js">pager.select('*').preventTransition(async function (prev, next, params) {
+<pre><code class="language-js">pager.select('myPage').preventTransition(async function (prev, next, params) {
   return next === 'private';
 });
 </code></pre>
@@ -2843,19 +2965,45 @@ If the trigger event is a hash change, Pager will force to show the previous pag
   });
 }
 
-pager.select('*').preventTransition(async function (prev, next, params) {
+pager.select('myPage').preventTransition(async function (prev, next, params) {
   return delayTransition();
 });
 </code></pre>
 <h2>Methods</h2>
 <h3>showPage(pageName, params, backAnimation)</h3>
+<ul>
+<li><code>pageName</code> (String) - the page name.</li>
+<li><code>params</code> (Object) - the hash parameters. If the route is <code>/myPage/{newsId}</code>, you can pass <code>{newsId: 2}</code> and the result would be <code>/myPage/2</code>.</li>
+<li><code>backAnimation</code> (Boolean) - if <code>backAnimation</code> is set to true, it will animate the page with a previous page transition. Otherwise, it will animate the page with a next page transition.</li>
+<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+</ul>
+<p>Shows the page <code>pageName</code>.</p>
 <pre><code class="language-js">pager.showPage('myPage');
 
-// with parameters (hash will be: #!/myPage/a/b)
-pager.showPage('myPage', ['a', 'b']);
+// with parameters (hash will be: #!/myPage/2)
+pager.showPage('myPage', { newsId: 2 });
 
 // with a back animation for the page transition
 pager.showPage('myPage', null, true);
+</code></pre>
+<h2>getHash()</h2>
+<ul>
+<li>returns: <code>String</code></li>
+</ul>
+<p>Returns the current hash.
+Example: <code>#!/news/2</code></p>
+<h2>getRoute()</h2>
+<ul>
+<li>returns: <code>String</code></li>
+</ul>
+<p>Returns the current route with parameters.</p>
+<p>Example: <code>/news/2</code></p>
+<h3>getHashParams()</h3>
+<ul>
+<li>returns: <code>Object</code></li>
+</ul>
+<p>Returns the current hash parameters. For example, if the route is <code>/news/{id}</code>, <code>getHashParams()</code> would return:</p>
+<pre><code class="language-js">{ id: 2 }
 </code></pre>
 <h2>Events</h2>
 <table>
@@ -2890,47 +3038,48 @@ pager.showPage('myPage', null, true);
 </table>
 <h3>Object Events</h3>
 <pre><code class="language-js">pager.select('myPage').addEvents({
-  show: () =&gt; {
-    console.log('It works!')
+  show: (params) =&gt; {
+    console.log('It works!');
   },
-  shown: () =&gt; {
-    console.log('It works!')
+  shown: (params) =&gt; {
+    console.log('It works!');
   },
   hide: () =&gt; {
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; {
-    console.log('It works!')
+    console.log('It works!');
   },
-  hash: (param1, param2) =&gt; {
-    console.log('It works!')
-  }
-})
+  hash: (params) =&gt; {
+    console.log('It works!');
+  },
+});
 </code></pre>
 <h3>DOM Events</h3>
 <p>For DOM events, you must specify the name of the page followed by a dot and then the event in question.
 Note that DOM events are dispatched in both <code>window</code> and <code>document</code>.</p>
-<pre><code class="language-js">window.addEventListener('myPage.show', () =&gt; {
-  console.log('It works!')
-})
+<pre><code class="language-js">window.addEventListener('myPage.show', (event) =&gt; {
+  console.log('It works!');
+  const params = event.detail;
+});
 
-window.addEventListener('myPage.shown', () =&gt; {
-  console.log('It works!')
-})
+window.addEventListener('myPage.shown', (event) =&gt; {
+  console.log('It works!');
+  const params = event.detail;
+});
 
 window.addEventListener('myPage.hide', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 window.addEventListener('myPage.hidden', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
-window.addEventListener('myPage.hash', event =&gt; {
-  console.log('It works!')
-  const firstParam = event.detail[0]
-  const secondParam = event.detail[1]
-})
+window.addEventListener('myPage.hash', (event) =&gt; {
+  console.log('It works!');
+  const params = event.detail;
+});
 </code></pre>
 
       </div>
@@ -3237,13 +3386,13 @@ auto sets margin or padding to <code>auto</code></p>
 <code>my-{size}</code> - sets both margin-top and margin-bottom of size <code>{size}</code>
 <code>m-{size}</code> - sets margin in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre> <div class="example"><div class="pt-2 pr-1 pb-1 pr-1"></div>
+<pre></pre> <div class="example"><div class="mt-2 mr-1 mb-1 mr-1 bg-primary" style="height: 50px"></div>
 
-<div class="px-2 py-4"></div>
+<div class="mx-2 my-4 bg-secondary" style="height: 50px"></div>
 </div>
-<pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1&quot;&gt;&lt;/div&gt;
+<pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1 bg-primary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
 
-&lt;div class=&quot;px-2 py-4&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;mx-2 my-4 bg-secondary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2>Padding</h2>
 <p>The prefix <code>p-</code> defines a padding.</p>
@@ -3255,13 +3404,13 @@ auto sets margin or padding to <code>auto</code></p>
 <code>py-{size}</code> - sets both padding-top and padding-bottom of size <code>{size}</code>
 <code>p-{size}</code> - sets padding in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre> <div class="example"><div class="mt-2 mr-1 mb-1 mr-1"></div>
+<pre></pre> <div class="example"><div class="pt-2 pr-1 pb-1 pr-1 bg-primary"></div>
 
-<div class="mx-2 my-4"></div>
+<div class="px-2 py-4 bg-secondary"></div>
 </div>
-<pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1&quot;&gt;&lt;/div&gt;
+<pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1 bg-primary&quot;&gt;&lt;/div&gt;
 
-&lt;div class=&quot;mx-2 my-4&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;px-2 py-4 bg-secondary&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2>Horizontal centering</h2>
 <pre></pre> <div class="example"><div class="mx-auto" style="width: 200px;">
@@ -3276,7 +3425,19 @@ auto sets margin or padding to <code>auto</code></p>
       </div>
       <div class="page" id="3_utilities/unselectable">
         <h1 class="heading">Unselectable</h1>
-        <p>[WIP]</p>
+        <h2>Introduction</h2>
+<p>Unselectable stops users from being able to select text.</p>
+<p>This class improves the user experience on mobile by reducing user frustration from
+unintended selections.</p>
+<h2>Markup</h2>
+<pre></pre> <div class="example"><div class="unselectable">
+  <p>I am unselectable.</p>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;unselectable&quot;&gt;
+  &lt;p&gt;I am unselectable.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
 
       </div>
 
@@ -3327,6 +3488,8 @@ window.onhashchange=function(){showPageFromCurrentHash()};showPageFromCurrentHas
   </script>
     <script src="../dist/js/phonon.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scss.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+    <script src="./highlight.js"></script>
 </body>
 </html>

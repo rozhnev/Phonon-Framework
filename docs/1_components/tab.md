@@ -24,6 +24,10 @@ title: Tab
 </div>
 ```
 
+<!-- fix for links -->
+<script>document.querySelector('.page .nav-tabs').addEventListener('click', function (event) { event.preventDefault()});</script>
+
+
 ## JavaScript
 
 ```js
@@ -57,6 +61,8 @@ Any tab can be hidden with JavaScript. For this, we call the `hide()` method:
 tab.hide();
 ```
 
+
 ## Events
 
 @todo
+

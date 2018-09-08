@@ -9,6 +9,9 @@ It also offers a light and simple **router** for recovering parameters with the 
 
 If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.
 
+<iframe class="border border-light" src="../examples/single-page-apps/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
+<p class="text-light">Source code</p>
+
 ## Configuration
 
 ```js
@@ -26,7 +29,7 @@ pager.start();
 
 A SPA page is defined by setting up the `app-page` class and a unique data-page attribute.
 
-```html
+```html!
 <div class="app-pages">
   <div class="app-page" data-page="myPage"></div>
   <div class="app-page" data-page="mySecondPage"></div>
@@ -49,17 +52,30 @@ If you want to force the back animation, you can use the attribute `data-pop-pag
 
 ## Page Selector
 
-To work with pages, it is essential to use the `select()` method. Indeed, the new Phonon Pager allows you to work with both a single page and a set of pages.
+To work with pages, it is essential to use the `select()` method.
 
 ```js
-pager.select('myPage') // one specific page
-pager.select('*') // all the pages
-pager.select('myPage, mySecondPage') // two specific pages
+pager.select('myPage');
 ```
 
 Once you selected pages programatically, you can **use a template** or **listen to events**.
 
-## Page Template
+## Page route
+
+By default, the router will create a route with the page name.
+For example, the default route of myPage would be `/myPage`.
+
+You can define routes with or without named parameters.
+
+```js
+// no parametes
+pager.select('home').setRoute('/home_sweet_home');
+
+// parameter "newsId"
+pager.select('myPage').setRoute('/myRoute/{newsId}');
+```
+
+## Page template
 
 Pager will use the template and set it where the attribute `data-template` is present
 in the HTML view.
@@ -79,25 +95,19 @@ The page template will be injected as a node child where the attribute `data-pus
 You may want to use a template engine or change the default behavior of Pager. In this case, the second argument of `setTemplate()` is useful.
 
 ```js
-// es6
 pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
-  const template = await fetchTemplate();
-  page.querySelector('[data-template]').innerHTML = template
-})
-
-// es5
-pager.select('myPage').setTemplate('<div>This is my template</div>', (page, template, elements) => {
-  page.querySelector('[data-template]').innerHTML = template
-})
+  const template = await yourTask();
+  page.querySelector('[data-template]').innerHTML = template;
+});
 ```
 
-### Prevent page transition
+## Prevent page transition
 
 Cancel the page transition if the function returns true.
 If the trigger event is a hash change, Pager will force to show the previous page.
 
 ```js
-pager.select('*').preventTransition(async function (prev, next, params) {
+pager.select('myPage').preventTransition(async function (prev, next, params) {
   return next === 'private';
 });
 ```
@@ -113,7 +123,7 @@ async function delayTransition() {
   });
 }
 
-pager.select('*').preventTransition(async function (prev, next, params) {
+pager.select('myPage').preventTransition(async function (prev, next, params) {
   return delayTransition();
 });
 ```
@@ -122,14 +132,47 @@ pager.select('*').preventTransition(async function (prev, next, params) {
 
 ### showPage(pageName, params, backAnimation)
 
+* `pageName` (String) - the page name.
+* `params` (Object) - the hash parameters. If the route is `/myPage/{newsId}`, you can pass `{newsId: 2}` and the result would be `/myPage/2`.
+* `backAnimation` (Boolean) - if `backAnimation` is set to true, it will animate the page with a previous page transition. Otherwise, it will animate the page with a next page transition.
+* returns: `<Promise<Boolean>>`
+
+Shows the page `pageName`.
+
 ```js
 pager.showPage('myPage');
 
-// with parameters (hash will be: #!/myPage/a/b)
-pager.showPage('myPage', ['a', 'b']);
+// with parameters (hash will be: #!/myPage/2)
+pager.showPage('myPage', { newsId: 2 });
 
 // with a back animation for the page transition
 pager.showPage('myPage', null, true);
+```
+
+## getHash()
+
+* returns: `String`
+
+Returns the current hash.
+
+Example: `#!/news/2`
+
+## getRoute()
+
+* returns: `String`
+
+Returns the current route with parameters.
+
+Example: `/news/2`
+
+### getHashParams()
+
+* returns: `Object`
+
+Returns the current hash parameters. For example, if the route is `/news/{id}`, `getHashParams()` would return:
+
+```js
+{ id: 2 }
 ```
 
 ## Events
@@ -147,22 +190,22 @@ pager.showPage('myPage', null, true);
 
 ```js
 pager.select('myPage').addEvents({
-  show: () => {
-    console.log('It works!')
+  show: (params) => {
+    console.log('It works!');
   },
-  shown: () => {
-    console.log('It works!')
+  shown: (params) => {
+    console.log('It works!');
   },
   hide: () => {
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => {
-    console.log('It works!')
+    console.log('It works!');
   },
-  hash: (param1, param2) => {
-    console.log('It works!')
-  }
-})
+  hash: (params) => {
+    console.log('It works!');
+  },
+});
 ```
 
 ### DOM Events
@@ -171,25 +214,26 @@ For DOM events, you must specify the name of the page followed by a dot and then
 Note that DOM events are dispatched in both `window` and `document`.
 
 ```js
-window.addEventListener('myPage.show', () => {
-  console.log('It works!')
-})
+window.addEventListener('myPage.show', (event) => {
+  console.log('It works!');
+  const params = event.detail;
+});
 
-window.addEventListener('myPage.shown', () => {
-  console.log('It works!')
-})
+window.addEventListener('myPage.shown', (event) => {
+  console.log('It works!');
+  const params = event.detail;
+});
 
 window.addEventListener('myPage.hide', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 window.addEventListener('myPage.hidden', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
-window.addEventListener('myPage.hash', event => {
-  console.log('It works!')
-  const firstParam = event.detail[0]
-  const secondParam = event.detail[1]
-})
+window.addEventListener('myPage.hash', (event) => {
+  console.log('It works!');
+  const params = event.detail;
+});
 ```

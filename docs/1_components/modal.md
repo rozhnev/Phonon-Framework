@@ -4,10 +4,29 @@ title: Modal
 
 ## Introduction
 
-[WIP]
+A modal is a flexible window that is visible on top of the main window.
 
+<div style="position:relative;padding: 8px;background: #eee;">
+  <div class="modal show" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-## Dynamically created modals
+## Modal without markup
 
 By not using the `element` property, it will create a modal's HTMLElement dynamically.
 This is particularly useful if you want to set up a modal without worrying about its HTML code.
@@ -42,7 +61,7 @@ const modal = $().modal({
 const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
-})
+});
 
 prompt.show()
 
@@ -56,7 +75,7 @@ prompt.getInputValue() // only available with prompts
 const confirm = phonon.confirm({
   title: 'Confirm title',
   message: 'Confirm body text goes here.',
-})
+});
 
 confirm.show()
 ```
@@ -67,7 +86,7 @@ confirm.show()
 const modalLoader = phonon.modalLoader({
   title: 'Loader title',
   message: 'Loader body text goes here.',
-})
+});
 
 modalLoader.show()
 ```
@@ -83,26 +102,16 @@ const modal = phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
   buttons: [
-    {
-      event: 'cancel',
-      text: 'Cancel',
-      dismiss: true,
-      class: 'btn btn-secondary',
-    },
-    {
-      event: 'confirm',
-      text: 'Ok',
-      dismiss: true,
-      class: 'btn btn-primary',
-    },
+    { event: 'cancel', text: 'Cancel', dismiss: true, class: 'btn btn-secondary' },
+    { event: 'confirm', text: 'Ok', dismiss: true, class: 'btn btn-primary' },
   ],
   onCancel: () => { // or cancel
     console.log('Cancel')
   },
   onConfirm: () => { // or confirm
     console.log('Confirm')
-  }
-})
+  },
+});
 ```
 
 You can also define your own event names.
@@ -113,17 +122,12 @@ const modal = phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
   buttons: [
-    {
-      event: 'neutralAnswer',
-      text: 'Custom button',
-      dismiss: true,
-      class: 'btn btn-primary',
-    }
+    { event: 'neutralAnswer', text: 'Custom button', dismiss: true, class: 'btn btn-primary' },
   ],
   neutralAnswer: () => { // or onNeutralAnswer
     console.log('Well we close it!')
-  }
-})
+  },
+});
 ```
 
 
@@ -131,7 +135,11 @@ const modal = phonon.modal({
 
 Conversely, you can create your own modal by specifying the `element` property.
 
-```html
+<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+
+<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
+
+```html!
 <!-- Button trigger modal -->
 <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
 
@@ -159,15 +167,11 @@ Then, you can work with it by using the correct `element` property.
 
 ```js
 const modal = phonon.modal({
-  element: '#exampleModal'
+  element: '#exampleModal',
 });
-
-modal.show()
 
 // jQuery support
 const modal = $('#exampleModal').modal();
-
-modal.show()
 ```
 
 ## Options
@@ -186,7 +190,7 @@ modal.show()
 Any modal can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
-modal.show()
+modal.show();
 ```
 
 
@@ -197,16 +201,24 @@ modal.show()
 Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 
 ```js
-modal.hide()
+modal.hide();
 ```
 
 ### getInputValue()
 
 It is possible to retrieve the text field value of any prompt type.
 
+```js
+const value = modal.getInputValue();
+```
+
 ### setInputValue()
 
 It is possible to set the text field value of any prompt type.
+
+```js
+modal.setInputValue('Hello World');
+```
 
 ## Events
 
@@ -229,36 +241,36 @@ phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
   show: () => { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () => { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () => { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () => { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 ```
 
 ### DOM Events
 
 ```js
 document.querySelector('.modal').addEventListener('show.ph.modal', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('shown.ph.modal', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('hide.ph.modal', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.modal').addEventListener('hidden.ph.modal', () => {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 ```

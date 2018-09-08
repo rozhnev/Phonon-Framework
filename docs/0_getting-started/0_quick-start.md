@@ -5,7 +5,7 @@ title: Quick start
 Phonon builds are ready to use components. They are located in the `dist/` directory.
 They provide convenient solutions that can be installed with no effort and that satisfy the most common editing use cases.
 
-Please, read more about [custom builds](#0_getting-started/2_custom-build) if you would like to optimize the size of Phonon by
+Please, read more about [custom builds](#0_getting-started/1_custom-build) if you would like to optimize the size of Phonon by
 importing required components only.
 
 ## Installation
@@ -21,7 +21,7 @@ The installation can take place in several ways:
 
 ## Starter Template
 
-```html
+```html!
 <!doctype html>
 <html lang="en">
   <head>

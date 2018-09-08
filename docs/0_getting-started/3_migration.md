@@ -34,25 +34,26 @@ const pager = phonon.pager({
   useHash: true,
   defaultPage: 'one',
   animatePages: false,
-})
+});
 ```
 
 ### Markup page structure
 
 `.app-pages` is a wrapper of `.app-page` pages.
 
-```html
+```html!
 <div class="app-pages">
   <div class="app-page" data-page="one">...</div>
   <div class="app-page" data-page="myPage2">...</div>
 </div>
+```
 
 ### Page events <i>Changed</i>
 
 For a given page `myPage` for example.
 Assuming this page is present in the DOM like the following:
 
-```html
+```html!
 <div class="app-page" data-page="myPage"></div>
 ```
 
@@ -61,21 +62,21 @@ Page events are now used with `.select()`.
 ```js
 pager.select('myPage').addEvents({
   show: function () {
-    console.log('myPage: show')
+    console.log('myPage: show');;
   },
   shown: function () {
-    console.log('myPage: shown')
+    console.log('myPage: shown');
   },
   hide: function () {
-    console.log('myPage: hide')
+    console.log('myPage: hide');
   },
   hidden: function () {
-    console.log('myPage: hidden')
+    console.log('myPage: hidden');
   },
   hash: function () {
-    console.log('myPage: hash')
-  }
-})
+    console.log('myPage: hash');
+  },
+});
 ```
 
 In some situations, it may be useful to listen to certain events that affect all pages.
@@ -83,29 +84,29 @@ In some situations, it may be useful to listen to certain events that affect all
 ```js
 pager.select('*').addEvents({
   show: function () {
-    console.log('global: show')
+    console.log('global: show');
   },
   shown: function () {
-    console.log('global: shown')
+    console.log('global: shown');
   },
   hide: function () {
-    console.log('global: hide')
+    console.log('global: hide');
   },
   hidden: function () {
-    console.log('global: hidden')
+    console.log('global: hidden');
   },
   hash: function () {
-    console.log('global: hash')
-  }
-})
+    console.log('global: hash');
+  },
+});
 ```
 
 Page events are also dispatched in the DOM.
 
 ```js
-window.addEventListener('myPage.show', function () {
-  console.log('myPage: show (DOM event)')
-})
+window.addEventListener('myPage.show', () => {
+  console.log('myPage: show (DOM event)');
+});
 ```
 
 Finally, page events have their own aliases.
@@ -113,13 +114,13 @@ Instead of using the event name called `show` for example, you can use `onShow`:
 
 ```js
 pager.select('myPage').addEvents({
-  show: function () {
-    console.log('myPage: show')
+  show: () => {
+    console.log('myPage: show');
   },
-  onShow: function () {
-    console.log('myPage: show (alias)')
-  }
-})
+  onShow: () => {
+    console.log('myPage: show (alias)');
+  },
+});
 ```
 
 ### Page templates <i>Changed</i>
@@ -128,12 +129,12 @@ You need to use `setTemplate()`.
 The first argument is the path to the template file.
 
 ```js
-pager.select('myPage').setTemplate('<div>This is my template</div>')
+pager.select('myPage').setTemplate('<div>This is my template</div>');
 ```
 
 The page template will be injected as a node child where the attribute `data-push-template` is.
 
-```html
+```html!
 <div data-push-template>
   <!-- The template will be injected here -->
 </div>
@@ -146,8 +147,8 @@ Note that async functions are now supported.
 ```js
 pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
   const template = await fetchTemplate();
-  page.querySelector('[data-template]').innerHTML = template
-})
+  page.querySelector('[data-template]').innerHTML = template;
+});
 ```
 
 ### Navigation between pages
@@ -172,18 +173,18 @@ phonon.i18n({
   data: {
     en: {
       welcome: 'Hello (default)',
-      welcomePerson: 'Hello :name'
+      welcomePerson: 'Hello :name',
     },
     en_US: {
       welcome: 'Hello (US)',
-      welcomePerson: 'Hello :name'
+      welcomePerson: 'Hello :name',
     },
     fr: {
       welcome: 'Bonjour',
-      welcomePerson: 'Bonjour :name'
-    }
-  }
-})
+      welcomePerson: 'Bonjour :name',
+    },
+  },
+});
 ```
 
 It is no longer possible to load JSON by doing Ajax requests.
@@ -192,15 +193,16 @@ pass everything as the second argument.
 
 ```js
 axios.get('/locales')
-  .then(function (response) {
+  .then((response) => {
     const config = {
       fallbackLocale: 'en',
       locale: 'en',
-      data: response.data
-    }
-    phonon.i18n(config)
+      data: response.data,
+    };
+
+    phonon.i18n(config);
   });
-})
+});
 ```
 
 ## Components
