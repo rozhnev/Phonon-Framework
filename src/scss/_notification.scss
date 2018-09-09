@@ -17,6 +17,7 @@ $notification-lg: 400px;
   width: $notification-sm;
   height: auto;
   color: $white;
+  background-color: $primary;
 
   .notification-inner {
     position: relative;
