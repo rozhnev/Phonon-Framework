@@ -8,6 +8,7 @@ const path    = require('path')
 const babel   = require('rollup-plugin-babel')
 const resolve = require('rollup-plugin-node-resolve');
 const fs = require('fs');
+const regenerator = require('rollup-plugin-regenerator');
 
 const rootPath = '../dist/js/components/';
 
@@ -17,21 +18,10 @@ const plugins = [
     main: true,
   }),
   babel({
-    exclude: 'node_modules/**', // Only transpile our source code
-    externalHelpersWhitelist: [ // Include only required helpers
-      // 'defineProperties',
-      // 'defineProperty',
-      'createClass',
-      // 'inheritsLoose',
-      // 'objectSpread',
-      'inherits',
-      'classCallCheck',
-      'get',
-      'possibleConstructorReturn',
-    ],
-    // plugins: ['external-helpers']
-  })
-]
+    exclude: 'node_modules/**',
+  }),
+  regenerator(),
+];
 
 const format = 'cjs'
 const components = {

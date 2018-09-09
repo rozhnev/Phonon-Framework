@@ -2,13 +2,16 @@ const rollup  = require('rollup')
 const path    = require('path')
 const babel   = require('rollup-plugin-babel')
 const resolve = require('rollup-plugin-node-resolve')
+const UglifyJS = require('uglify-js');
+const fs = require('fs');
+const regenerator = require('rollup-plugin-regenerator');
 
 const pkg     = require(path.resolve(__dirname, '../package.json'))
 const year    = new Date().getFullYear()
 
 let fileName = 'phonon'
-let fileDest  = `${fileName}.js`
-
+const fileDest  = `${fileName}.js`
+const fileDestMin = `${fileName}.min.js`
 const format = 'umd'
 
 const plugins = [
@@ -19,6 +22,7 @@ const plugins = [
   babel({
     exclude: 'node_modules/**',
   }),
+  regenerator(),
 ];
 
 (async () => {
@@ -31,19 +35,38 @@ const plugins = [
   });
 
   try {
+    const file = path.resolve(__dirname, `../dist/js/${fileDest}`);
+    const fileMin = path.resolve(__dirname, `../dist/js/${fileDestMin}`);
+    const fileMinMap = path.resolve(__dirname, `../dist/js/${fileDestMin}.map`);
+
     await bundle.write({
       banner: `/*!
     * Phonon v${pkg.version} (${pkg.homepage})
     * Copyright 2015-${year} ${pkg.author}
     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
     */`,
-      file: path.resolve(__dirname, `../dist/js/${fileDest}`),
+      file,
       format,
       name: 'phonon',
       format,
       name: fileName,
       sourcemap: true,
     });
+
+    const result = UglifyJS.minify(fs.readFileSync(file, 'utf8'), {
+      sourceMap: {
+        filename: fileDestMin,
+        url: `${fileDestMin}.map`,
+      },
+    });
+
+    if (result.error) throw result.error;
+
+    // minified file
+    fs.writeFileSync(fileMin, result.code, 'utf8');
+
+    // source map
+    fs.writeFileSync(fileMinMap, result.map, 'utf8');
 
     const end = new Date();
 
