@@ -21,7 +21,6 @@ function setPosition(btn) {
   var el = btn;
 
   el.style.marginLeft = '-' + rect.width + 'px';
-  el.style.marginTop = (rect.height - 10) + 'px';
 }
 
 function setListener(btnId, code) {

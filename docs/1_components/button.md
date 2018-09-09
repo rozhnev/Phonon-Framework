@@ -4,7 +4,7 @@ title: Button
 
 ## Introduction
 
-[WIP]
+A button is a clickable element that allows the user to do an action.
 
 ## Markup
 
@@ -34,6 +34,8 @@ title: Button
 ```
 
 ### Tag compatibility
+
+You can use different tags.
 
 ```html
 <a class="btn btn-primary" href="#" role="button">Link</a>
@@ -71,12 +73,79 @@ title: Button
 
 ## Disabled state
 
+Disabled buttons with the `<a>` tag need the class `.disabled` and `aria-disabled="true"` attribue.
+Furthermore, `tabindex="-1"` attribute prevent the keyboard focus on the element.
+
 ```html
 <button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
 <button type="button" class="btn btn-secondary btn-lg" disabled>Button</button>
+<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Primary link</a>
+<a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Link</a>
 ```
 
-@todo info
+## Button group
 
-## Checkbox and radio buttons
+```html
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+```
 
+### Vertical button group
+
+```html
+<div class="btn-group-vertical" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+```
+
+## Button toolbar
+
+```html
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-secondary">1</button>
+    <button type="button" class="btn btn-secondary">2</button>
+    <button type="button" class="btn btn-secondary">3</button>
+    <button type="button" class="btn btn-secondary">4</button>
+  </div>
+  <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <button type="button" class="btn btn-secondary">5</button>
+    <button type="button" class="btn btn-secondary">6</button>
+    <button type="button" class="btn btn-secondary">7</button>
+  </div>
+  <div class="btn-group" role="group" aria-label="Third group">
+    <button type="button" class="btn btn-secondary">8</button>
+  </div>
+</div>
+```
+
+## Sizing
+
+```html
+<div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+
+<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+```
+
+<div class="alert alert-secondary" role="alert">
+  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+</div>

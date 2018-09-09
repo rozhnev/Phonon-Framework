@@ -4,12 +4,33 @@ title: Notification
 
 ## Introduction
 
-[WIP]
+A notification is a floating message on top of the main window.
+
+<div class="mx-auto text-center" style="padding:8px;background:#eee;">
+  <div class="notification show mx-auto" style="top:0;bottom:auto;position:relative;margin-bottom:0">
+    <div class="notification-inner">
+      <div class="message">You have 2 messages in your inbox</div>
+      <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 ## Dynamically Created Notifications
 
 By not using the `element` property, it will create a notification's HTMLElement dynamically.
 This is particularly useful if you want to set up a notification without worrying about its HTML code.
+
+<button class="btn btn-primary" id="notificationDemo">Show</button>
+<script>
+  document.querySelector('#notificationDemo').addEventListener('click', function() {
+    phonon.notification({
+      message: 'Hello',
+      timeout: 2000,
+    }).show();
+  });
+</script>
 
 ```js
 const notif = phonon.notification({
@@ -39,6 +60,83 @@ Conversely, you can create your own notification by specifying the `element` pro
 
 Then, you can work with it by using the correct `element` property.
 
+## Colors
+
+<div class="notification show bg-primary" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-secondary" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-success" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-danger" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-warning" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-info" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-light text-dark" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+<div class="notification show bg-dark" style="top:0;left:auto;bottom:auto;position:relative">
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+</div>
+
+```html
+<div class="notification bg-primary">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-secondary">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-success">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-danger">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-warning">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-info">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-light text-dark">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+
+<div class="notification bg-dark">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+```
+
 ```js
 const notif = phonon.notification({
   element: '#myNotification',
@@ -48,10 +146,13 @@ const notif = phonon.notification({
 
 ## Options
 
-- message
-- showButton
-- timeout
-- background
+|     Name     |     Description      |     Default value      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|-------------------------------------|
+|    message      |  The text placed inside the notification | '' | yes `data-message` |
+|    showButton      | If it is set to true, it will show a close button. Otherwise, it will not display the button.  | '' | no |
+|    timeout      |  The display time before making the notification invisible.  | null | yes `data-timeout` |
+|    background      |  The background color such as `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light` and `dark`.  | null | yes `data-background` |
+
 
 ## Methods
 
@@ -113,19 +214,21 @@ phonon.notification({
 ### DOM Events
 
 ```js
-document.querySelector('.notification').addEventListener('show.ph.notification', () => {
+const notification = document.querySelector('.notification');
+
+notification.addEventListener('show.ph.notification', () => {
   console.log('It works!');
 });
 
-document.querySelector('.notification').addEventListener('shown.ph.notification', () => {
+notification.addEventListener('shown.ph.notification', () => {
   console.log('It works!');
 });
 
-document.querySelector('.notification').addEventListener('hide.ph.notification', () => {
+notification.addEventListener('hide.ph.notification', () => {
   console.log('It works!');
 });
 
-document.querySelector('.notification').addEventListener('hidden.ph.notification', () => {
+notification.addEventListener('hidden.ph.notification', () => {
   console.log('It works!');
 });
 ```

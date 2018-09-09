@@ -4,13 +4,13 @@ title: Pager
 
 ## Introduction
 
-The pager is Phonon's basic module for designing an **SPA**-like application. It connects pages together by providing **page navigation** and allows you to listen to **page events**.
+The pager is Phonon's main module for designing a single-page application (SPA). It connects pages together by providing **page navigation** and allows you to listen to **page events**.
 It also offers a light and simple **router** for recovering parameters with the `hash` event.
 
 If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.
 
 <iframe class="border border-light" src="../examples/single-page-apps/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
-<p class="text-light">Source code</p>
+<p class="text-dark">Source code</p>
 
 ## Configuration
 
@@ -19,7 +19,7 @@ const pager = phonon.pager({
   hashPrefix: '#!',
   useHash: true,
   defaultPage: 'myPage',
-  animatePages: true
+  animatePages: true,
 });
 
 pager.start();
@@ -52,10 +52,10 @@ If you want to force the back animation, you can use the attribute `data-pop-pag
 
 ## Page Selector
 
-To work with pages, it is essential to use the `select()` method.
+To work with pages, it is essential to use the `getPage()` method.
 
 ```js
-pager.select('myPage');
+pager.getPage('myPage');
 ```
 
 Once you selected pages programatically, you can **use a template** or **listen to events**.
@@ -69,10 +69,10 @@ You can define routes with or without named parameters.
 
 ```js
 // no parametes
-pager.select('home').setRoute('/home_sweet_home');
+pager.getPage('home').setRoute('/home_sweet_home');
 
 // parameter "newsId"
-pager.select('myPage').setRoute('/myRoute/{newsId}');
+pager.getPage('myPage').setRoute('/myRoute/{newsId}');
 ```
 
 ## Page template
@@ -81,7 +81,7 @@ Pager will use the template and set it where the attribute `data-template` is pr
 in the HTML view.
 
 ```js
-pager.select('myPage').setTemplate('<div>This is my template</div>')
+pager.getPage('myPage').setTemplate('<div>This is my template</div>')
 ```
 
 The page template will be injected as a node child where the attribute `data-push-template` is.
@@ -95,7 +95,7 @@ The page template will be injected as a node child where the attribute `data-pus
 You may want to use a template engine or change the default behavior of Pager. In this case, the second argument of `setTemplate()` is useful.
 
 ```js
-pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
+pager.getPage('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
   const template = await yourTask();
   page.querySelector('[data-template]').innerHTML = template;
 });
@@ -107,7 +107,7 @@ Cancel the page transition if the function returns true.
 If the trigger event is a hash change, Pager will force to show the previous page.
 
 ```js
-pager.select('myPage').preventTransition(async function (prev, next, params) {
+pager.getPage('myPage').preventTransition(async function (prev, next, params) {
   return next === 'private';
 });
 ```
@@ -123,7 +123,7 @@ async function delayTransition() {
   });
 }
 
-pager.select('myPage').preventTransition(async function (prev, next, params) {
+pager.getPage('myPage').preventTransition(async function (prev, next, params) {
   return delayTransition();
 });
 ```
@@ -149,7 +149,7 @@ pager.showPage('myPage', { newsId: 2 });
 pager.showPage('myPage', null, true);
 ```
 
-## getHash()
+### getHash()
 
 * returns: `String`
 
@@ -157,7 +157,7 @@ Returns the current hash.
 
 Example: `#!/news/2`
 
-## getRoute()
+### getRoute()
 
 * returns: `String`
 
@@ -175,6 +175,23 @@ Returns the current hash parameters. For example, if the route is `/news/{id}`, 
 { id: 2 }
 ```
 
+## getPage(pageName)
+
+* `pageName` (String) - the page name.
+* returns: `<Object<Page>>`
+
+Returns the page object of `pageName`.
+
+## getPage(pageName)
+
+Alias of `getPage()`.
+
+## getPages()
+
+* returns: `Array`
+
+Returns all the pages.
+
 ## Events
 
 |     Event Type     |     Description      |
@@ -189,7 +206,7 @@ Returns the current hash parameters. For example, if the route is `/news/{id}`, 
 ### Object Events
 
 ```js
-pager.select('myPage').addEvents({
+pager.getPage('myPage').addEvents({
   show: (params) => {
     console.log('It works!');
   },

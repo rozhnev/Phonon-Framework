@@ -57,10 +57,10 @@ Assuming this page is present in the DOM like the following:
 <div class="app-page" data-page="myPage"></div>
 ```
 
-Page events are now used with `.select()`.
+Page events are now used with `.getPage()`.
 
 ```js
-pager.select('myPage').addEvents({
+pager.getPage('myPage').addEvents({
   show: function () {
     console.log('myPage: show');;
   },
@@ -82,7 +82,7 @@ pager.select('myPage').addEvents({
 In some situations, it may be useful to listen to certain events that affect all pages.
 
 ```js
-pager.select('*').addEvents({
+pager.getPage('*').addEvents({
   show: function () {
     console.log('global: show');
   },
@@ -113,7 +113,7 @@ Finally, page events have their own aliases.
 Instead of using the event name called `show` for example, you can use `onShow`:
 
 ```js
-pager.select('myPage').addEvents({
+pager.getPage('myPage').addEvents({
   show: () => {
     console.log('myPage: show');
   },
@@ -129,7 +129,7 @@ You need to use `setTemplate()`.
 The first argument is the path to the template file.
 
 ```js
-pager.select('myPage').setTemplate('<div>This is my template</div>');
+pager.getPage('myPage').setTemplate('<div>This is my template</div>');
 ```
 
 The page template will be injected as a node child where the attribute `data-push-template` is.
@@ -145,7 +145,7 @@ This feature is interesting if you want to use a template engine such as [Mustac
 Note that async functions are now supported.
 
 ```js
-pager.select('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
+pager.getPage('myPage').setTemplate('<div>This is my template</div>'), async (page, template, elements) => {
   const template = await fetchTemplate();
   page.querySelector('[data-template]').innerHTML = template;
 });

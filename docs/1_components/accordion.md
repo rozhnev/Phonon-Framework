@@ -8,9 +8,11 @@ An accordion is a component that displays one of the collapsible elements in a l
 
 ## Markup
 
+You can use links and buttons to toggle the collapsible elements.
+
 ```html
 <div class="accordion" id="exampleAccordion" role="tablist">
-  <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+  <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
     Collapsible Group Item #1
   </a>
 
@@ -20,9 +22,7 @@ An accordion is a component that displays one of the collapsible elements in a l
     </div>
   </div>
 
-  <a class="d-block" data-toggle="accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-    Collapsible Group Item #2
-  </a>
+  <button class="btn btn-primary" type="button" data-toggle="accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Collapsible Group Item #2</button>
 
   <div id="collapseTwo" class="collapse" role="tabpane2" aria-labelledby="headingTwo">
     <div class="card-body">
