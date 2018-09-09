@@ -28,6 +28,7 @@ const Dropdown = (($) => {
   const DATA_ATTRS_PROPERTIES = [
     'hover',
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -165,7 +166,7 @@ const Dropdown = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Dropdown, options);
+      return super.DOMInterface(Dropdown, options, components);
     }
   }
 
@@ -181,8 +182,6 @@ const Dropdown = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const dropdowns = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   dropdowns.forEach((element) => {

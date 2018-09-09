@@ -27,6 +27,7 @@ export default class Component {
     this.name = name;
     this.version = version;
     this.options = options;
+    this.eventHandlers = [];
 
     Object.keys(defaultOptions).forEach((prop) => {
       if (typeof this.options[prop] === 'undefined') {
@@ -46,7 +47,7 @@ export default class Component {
     }
 
     if (checkElement && !this.options.element) {
-      throw new Error(`${this.name}. The element is not a HTMLElement.`);
+      throw new Error(`${this.name}. The element is not a valid HTMLElement.`);
     }
 
     this.dynamicElement = this.options.element === null;
@@ -61,16 +62,44 @@ export default class Component {
        * [2] Data attributes configuration
        * [3] JavaScript configuration
        */
-      this.options = Object.assign(
-        this.options,
-        this.assignJsConfig(this.getAttributes(), this.options),
-      );
-
-      // then, set the new data attributes to the element
-      this.setAttributes();
+      this.updateConfig(this.options);
     }
 
+    this.addEventsHandler(this.getConfig());
+
     this.elementListener = event => this.onBeforeElementEvent(event);
+  }
+
+  getConfig(key = null, defaultValue = null) {
+    if (!key) {
+      return this.options;
+    }
+
+    return typeof this.options[key] === 'undefined' ? defaultValue : this.options[key];
+  }
+
+  updateConfig(options) {
+    this.options = Object.assign(
+      this.options,
+      this.assignJsConfig(this.getAttributes(), options),
+    );
+
+    // then, set the new data attributes to the element
+    this.setAttributes();
+  }
+
+  addEventsHandler(options) {
+    const scope = Object.keys(options).reduce((cur, key) => {
+      if (typeof options[key] === 'function') {
+        cur[key] = options[key];
+      }
+
+      return cur;
+    }, {});
+
+    if (Object.keys(scope).length > 0) {
+      this.eventHandlers.push(scope);
+    }
   }
 
   assignJsConfig(attrConfig, jsConfig) {
@@ -148,13 +177,15 @@ export default class Component {
     const eventNameAlias = `on${eventNameObject.charAt(0).toUpperCase()}${eventNameObject.slice(1)}`;
 
     // object event
-    if (typeof this.options[eventNameObject] === 'function') {
-      this.options[eventNameObject].apply(this, [detail]);
-    }
+    this.eventHandlers.forEach((scope) => {
+      if (typeof scope[eventNameObject] === 'function') {
+        scope[eventNameObject].apply(this, [detail]);
+      }
 
-    if (typeof this.options[eventNameAlias] === 'function') {
-      this.options[eventNameAlias].apply(this, [detail]);
-    }
+      if (typeof scope[eventNameAlias] === 'function') {
+        this.options[eventNameAlias].apply(this, [detail]);
+      }
+    });
 
     if (objectEventOnly) {
       return;
@@ -208,7 +239,16 @@ export default class Component {
     return this.name;
   }
 
-  static DOMInterface(ComponentClass, options) {
+  static DOMInterface(ComponentClass, options, currentComponents = []) {
+    const el = typeof options.element === 'string' ? document.querySelector(options.element) : options.element;
+    const component = currentComponents.find(c => c.getElement() === el);
+
+    if (component) {
+      component.updateConfig(options);
+      component.addEventsHandler(options);
+      return component;
+    }
+
     return new ComponentClass(options);
   }
 }

@@ -24,7 +24,9 @@ const Notification = (($) => {
     background: 'primary',
   };
   const DATA_ATTRS_PROPERTIES = [
+    'message',
     'timeout',
+    'background',
   ];
 
   /**
@@ -96,6 +98,11 @@ const Notification = (($) => {
 
           this.options.element.classList.add(`bg-${this.options.background}`);
           this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
+
+          // dark text
+          if (this.options.background.indexOf('light')) {
+            this.options.element.classList.add('text-dark');
+          }
         }
 
         if (this.options.showButton) {

@@ -24,6 +24,7 @@ const Alert = (($) => {
   const DATA_ATTRS_PROPERTIES = [
     'fade',
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -142,7 +143,7 @@ const Alert = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Alert, options);
+      return super.DOMInterface(Alert, options, components);
     }
   }
 
@@ -158,8 +159,6 @@ const Alert = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const alerts = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   alerts.forEach((element) => {

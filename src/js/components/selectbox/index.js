@@ -19,13 +19,15 @@ const Selectbox = (() => {
   const VERSION = '2.0.0';
   const DEFAULT_PROPERTIES = {
     element: null,
-    default: true,
+    selectable: true,
     search: false,
+    filterItems: null,
   };
   const DATA_ATTRS_PROPERTIES = [
-    'default',
+    'selectable',
     'search',
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -44,7 +46,7 @@ const Selectbox = (() => {
     }
 
     setSelected(value = '', text = null, checkExists = true) {
-      if (!this.options.default) {
+      if (!this.options.selectable) {
         return false;
       }
 
@@ -203,7 +205,7 @@ const Selectbox = (() => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Selectbox, options);
+      return super.DOMInterface(Selectbox, options, components);
     }
   }
 
@@ -212,8 +214,6 @@ const Selectbox = (() => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || []);
   selectboxes.filter(d => !d.classList.contains('nav-item')).forEach((element) => {
     const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);

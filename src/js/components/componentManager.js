@@ -73,19 +73,21 @@ export function getAttributesConfig(element, obj = {}, attrs, start = '') {
   return newObj;
 }
 
-const stack = [];
+if (!Array.isArray(document.componentStack)) {
+  document.componentStack = [];
+}
 
 export default {
   add(component) {
-    stack.push(component);
+    document.componentStack.push(component);
   },
   remove(component) {
-    const index = stack.findIndex(c => Object.is(component, c));
+    const index = document.componentStack.findIndex(c => Object.is(component, c));
     if (index > -1) {
-      stack.splice(index, 1);
+      document.componentStack.splice(index, 1);
     }
   },
   closable(component) {
-    return stack.length === 0 || Object.is(stack[stack.length - 1], component);
+    return document.componentStack.length === 0 || Object.is(document.componentStack[document.componentStack.length - 1], component);
   },
 };

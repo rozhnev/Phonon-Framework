@@ -23,6 +23,7 @@ const Collapse = (($) => {
   };
   const DATA_ATTRS_PROPERTIES = [
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -171,7 +172,7 @@ const Collapse = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Collapse, options);
+      return super.DOMInterface(Collapse, options, components);
     }
   }
 
@@ -187,8 +188,6 @@ const Collapse = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const collapses = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   collapses.forEach((element) => {

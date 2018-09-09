@@ -29,6 +29,7 @@ const OffCanvas = (($) => {
   const DATA_ATTRS_PROPERTIES = [
     'aside',
   ]
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -260,7 +261,7 @@ const OffCanvas = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(OffCanvas, options)
+      return super.DOMInterface(OffCanvas, options, components);
     }
   }
 
@@ -276,8 +277,6 @@ const OffCanvas = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = []
-
   const offCanvas = Array.from(document.querySelectorAll(`.${NAME}`) || [])
 
   offCanvas.forEach((element) => {

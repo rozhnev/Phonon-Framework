@@ -40,6 +40,7 @@ const Modal = (($) => {
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -296,7 +297,7 @@ const Modal = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Modal, options);
+      return super.DOMInterface(Modal, options, components);
     }
   }
 
@@ -312,8 +313,6 @@ const Modal = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const modals = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   modals.forEach((element) => {

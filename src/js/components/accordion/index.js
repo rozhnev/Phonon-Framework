@@ -22,6 +22,7 @@ const Accordion = (($) => {
   };
   const DATA_ATTRS_PROPERTIES = [
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -138,7 +139,7 @@ const Accordion = (($) => {
     }
 
     static DOMInterface(options) {
-      return super.DOMInterface(Accordion, options);
+      return super.DOMInterface(Accordion, options, components);
     }
   }
 
@@ -154,8 +155,6 @@ const Accordion = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
-
   const accordions = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   accordions.forEach((element) => {
