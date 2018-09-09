@@ -56,7 +56,7 @@ function canQuit() {
   document.querySelector('.back-ok').style.display = 'block';
 }
 
-const orderPage = pager.select('order');
+const orderPage = pager.getPage('order');
 
 orderPage.setRoute('/order/{pizza}');
 orderPage.addEvents({
