@@ -71,7 +71,7 @@ const Pager = (() => {
 
     getPageFromHash() {
       const hash = this.getHash() || '';
-      const page = this.pages.find(p => hash.match(p.getRoute().regex));
+      const page = this.getPages().find(p => hash.match(p.getRoute().regex));
 
       return page ? page.name : null;
     }
@@ -211,16 +211,12 @@ const Pager = (() => {
 
     addUniquePageModel(pageName) {
       if (!this.getPageModel(pageName)) {
-        this.pages.push(new Page(pageName));
+        this.getPages().push(new Page(pageName));
       }
     }
 
     getPageModel(pageName) {
-      return this.pages.find(page => page.name === pageName);
-    }
-
-    selectorToArray(str) {
-      return str.split(',').map(item => item.trim());
+      return this.getPages().find(page => page.name === pageName);
     }
 
     triggerPageEvent(pageName, eventName, eventParams = null) {
@@ -232,13 +228,13 @@ const Pager = (() => {
 
     onClick(event) {
       const pageName = event.target.getAttribute('data-navigate');
-      const backNavigation = event.target.getAttribute('data-pop-page') === 'true';
+      const backAnimation = event.target.getAttribute('data-pop-page') === 'true';
 
       if (!pageName) {
         return;
       }
 
-      this.showPage(pageName, null, backNavigation);
+      this.showPage(pageName, null, backAnimation);
     }
 
     onHashChange() {
@@ -277,12 +273,16 @@ const Pager = (() => {
       });
     }
 
-    select(pageName, addPageModel = true) {
+    getPage(pageName, addPageModel = true) {
       if (addPageModel) {
         this.addUniquePageModel(pageName);
       }
 
       return this.getPageModel(pageName);
+    }
+
+    getPages() {
+      return this.pages;
     }
 
     start(forceDefaultPage = false) {
@@ -317,7 +317,7 @@ const Pager = (() => {
        * we add the page dynamically in the url
        */
       if (this.options.useHash) {
-        if (!page.validHash(this.getHash())) {
+        if (!page.validHash(this.getRoute())) {
           this.setHash(pageName);
         }
       }
