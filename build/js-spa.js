@@ -9,7 +9,7 @@ const regenerator = require('rollup-plugin-regenerator');
 const pkg     = require(path.resolve(__dirname, '../package.json'))
 const year    = new Date().getFullYear()
 
-let fileName = 'phonon'
+let fileName = 'phonon-spa'
 const fileDest  = `${fileName}.js`
 const fileDestMin = `${fileName}.min.js`
 const format = 'umd'
@@ -30,7 +30,7 @@ const plugins = [
 
   const start = new Date();
   const bundle = await rollup.rollup({
-    input: path.resolve(__dirname, '../src/js/phonon.js'),
+    input: path.resolve(__dirname, '../src/js/phonon-spa.js'),
     plugins,
   });
 

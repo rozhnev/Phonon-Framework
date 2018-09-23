@@ -4,11 +4,6 @@
  * --------------------------------------------------------------------------
  */
 
-// single-page modules
-import Pager from './hybrid-apps/pager/index';
-import I18n from './hybrid-apps/i18n';
-import Network from './common/network';
-
 // components
 import Alert from './components/alert';
 import Modal from './components/modal';
@@ -25,28 +20,9 @@ import OffCanvas from './components/off-canvas';
 import Selectbox from './components/selectbox';
 import SelectboxSearch from './components/selectbox/search';
 import Dropdown from './components/dropdown';
+import Network from './common/network';
 
 const api = {};
-
-/**
- * ------------------------------------------------------------------------
- * Pager
- * ------------------------------------------------------------------------
- */
-api.pager = (options) => {
-  /* eslint no-underscore-dangle: 0 */
-  if (typeof api._pager === 'undefined') {
-    api._pager = Pager.DOMInterface(options);
-  }
-  return api._pager;
-};
-
-/**
- * ------------------------------------------------------------------------
- * i18n
- * ------------------------------------------------------------------------
- */
-api.i18n = I18n.DOMInterface;
 
 /**
  * ------------------------------------------------------------------------
@@ -151,7 +127,6 @@ api.selectbox = (options) => {
 api.dropdown = Dropdown.DOMInterface;
 
 
-// Make the API live
 window.phonon = api;
 
 export default api;
