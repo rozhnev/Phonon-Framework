@@ -17,7 +17,7 @@
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: calc(-50% - 7px); // @phonon
+  left: auto;
   z-index: $zindex-dropdown;
   display: none; // none by default, but block on "open" of the menu
   float: left;
@@ -51,17 +51,24 @@
   }
 
   &::before {
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      top: -5px;
-      right: calc(50% - 7px);
-      background: inherit;
-      -webkit-transform: rotate(45deg);
-      transform: rotate(45deg);
-      border-radius: 4px;
-      content: '';
-      display: block;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    top: -5px;
+    right: calc(50% - 7px);
+    background: inherit;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-radius: 4px;
+    content: '';
+    display: block;
+  }
+
+  &.force-left {
+    &::before {
+      right: auto;
+      left: $dropdown-item-padding-x;
+    }
   }
 }
 
