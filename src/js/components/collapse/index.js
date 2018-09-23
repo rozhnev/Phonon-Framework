@@ -86,6 +86,9 @@ const Collapse = (($) => {
 
           this.onTransition = false;
 
+          // reset the normal height after the animation
+          this.options.element.style.height = 'auto';
+
           resolve();
         };
 
@@ -96,6 +99,7 @@ const Collapse = (($) => {
         this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
         if (!this.isVerticalCollapse()) {
+          // expandableElement
           this.options.element.classList.add('slide');
         } else {
           // get real height
