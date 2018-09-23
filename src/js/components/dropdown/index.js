@@ -7,7 +7,7 @@ import Component from '../component';
 import { getAttributesConfig } from '../componentManager';
 import Event from '../../common/events';
 import {
-  findTargetByAttr, findTargetByClass, createJqueryPlugin, sleep,
+  findTargetByClass, createJqueryPlugin, sleep,
 } from '../../common/utils';
 
 const Dropdown = (($) => {
@@ -100,13 +100,25 @@ const Dropdown = (($) => {
         // dropdown handler
         this.options.element.classList.add('show');
 
-        this.getMenu().classList.add('show');
+        const dropdownMenu = this.getMenu();
 
-        this.getMenu().addEventListener(Event.TRANSITION_END, onShow);
+        dropdownMenu.classList.add('show');
+
+        if (dropdownMenu.clientWidth > this.options.element.clientWidth
+          && !dropdownMenu.classList.contains('force-left')) {
+          // move the caret to the left
+          dropdownMenu.classList.add('force-left');
+        } else if (dropdownMenu.clientWidth < this.options.element.clientWidth
+          && dropdownMenu.classList.contains('force-left')) {
+          // set default position for the caret
+          dropdownMenu.classList.remove('force-left');
+        }
+
+        dropdownMenu.addEventListener(Event.TRANSITION_END, onShow);
 
         await sleep(20);
 
-        this.getMenu().classList.add('animate');
+        dropdownMenu.classList.add('animate');
       });
     }
 
