@@ -48,7 +48,7 @@ $selectbox-menu-item-line-height: $input-line-height;
 $selectbox-menu-header-color: gray('700');
 
 // selectbox menu divider
-$selectbox-menu-divider-border-color: gray('500');
+$selectbox-menu-divider-border-color: gray('200');
 $selectbox-menu-divider-border-weight: 1px;
 
 $selectbox-menu-description-color: gray('600');
@@ -245,8 +245,8 @@ $selectbox-menu-description-color: gray('600');
 
   // menu header
   .header {
-    margin: 1rem 0rem 0.75rem;
-    padding: 0em 1.14285714rem;
+    margin: 1rem 0rem 0.75rem 0rem;
+    padding: 0em $selectbox-padding-x;
     text-transform: uppercase;
     color: $selectbox-menu-header-color;
     font-size: $font-size-sm;
