@@ -20,12 +20,14 @@ const excludes = [
   'tooltip',
   'popover',
   'carousel',
+  'jumbotron',
 ];
+
+
+const includeFiles = files.filter(f => excludes.indexOf(f) === -1);
 
 // clean directory
 fse.emptyDirSync(path.resolve(__dirname, (destScssPath)));
-
-const includeFiles = files.filter(f => excludes.indexOf(f) === -1);
 
 // gen bootstrap CSS file
 console.log('... Generating Bootstrap CSS dependencies');
