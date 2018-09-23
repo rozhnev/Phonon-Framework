@@ -9,7 +9,6 @@ $notification-lg: 400px;
 
 .notification {
   position: fixed;
-  bottom: 0;
   transition: opacity 300ms ease-in-out;
   visibility: hidden;
   opacity: 0;
@@ -38,15 +37,42 @@ $notification-lg: 400px;
     visibility: visible;
     opacity: 0;
   }
+
+  &.notification-top {
+    top: $spacer;
+  }
+
+  &.notification-right {
+    right: $spacer;
+  }
+
+  &.notification-bottom {
+    bottom: $spacer;
+  }
+
+  &.notification-left {
+    left: $spacer;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .notification-#{$color} {
+    background-color: theme-color-level($color);
+
+    @if $color == 'light' {
+      color: $dark;
+    }
+  }
 }
 
 @include media-breakpoint-up(md) {
   .notification {
-    top: $spacer;
-    right: $spacer;
-    bottom: auto;
-    margin-bottom: $spacer; // add margin if several notifications are shown
-    border-radius: $notification-border-radius;
+    margin: $spacer 0; // add margin if several notifications are shown
+
+    @if $enable-rounded {
+      border-radius: $notification-border-radius;
+    }
+
     width: $notification-md;
   }
 }

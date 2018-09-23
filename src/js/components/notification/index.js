@@ -19,12 +19,18 @@ const Notification = (($) => {
   const DEFAULT_PROPERTIES = {
     element: null,
     message: '',
-    showButton: true,
+    button: true,
     timeout: null,
     background: 'primary',
+    directionX: 'right',
+    directionY: 'top',
+    offsetX: 0,
+    offsetY: 0,
+    appendIn: document.body,
   };
   const DATA_ATTRS_PROPERTIES = [
     'message',
+    'button',
     'timeout',
     'background',
   ];
@@ -66,13 +72,50 @@ const Notification = (($) => {
       // text message
       this.options.element.querySelector('.message').innerHTML = this.options.message;
 
-      if (!this.options.showButton) {
+      if (!this.options.button) {
         this.options.element.querySelector('button').style.display = 'none';
       }
 
-      document.body.appendChild(this.options.element);
-
+      this.getConfig('appendIn', DEFAULT_PROPERTIES.appendIn).appendChild(this.options.element);
       this.setAttributes();
+    }
+
+    setPosition() {
+      const x = this.getConfig('directionX', DEFAULT_PROPERTIES.directionX);
+      const y = this.getConfig('directionY', DEFAULT_PROPERTIES.directionY);
+      const offsetX = this.getConfig('offsetX', DEFAULT_PROPERTIES.offsetX);
+      const offsetY = this.getConfig('offsetY', DEFAULT_PROPERTIES.offsetY);
+
+      const notification = this.options.element;
+      const directions = ['top', 'right', 'bottom', 'left'];
+
+      directions.forEach((d) => {
+        if (notification.classList.contains(d)) {
+          notification.classList.remove(d);
+        }
+      });
+
+      notification.style.marginLeft = '0px';
+      notification.style.marginRight = '0px';
+
+      notification.classList.add(`notification-${x}`);
+      notification.classList.add(`notification-${y}`);
+
+      const activeNotifications = document.querySelectorAll('.notification.show') || [];
+      let totalNotifY = 0;
+      activeNotifications.forEach((n) => {
+        if (notification !== n) {
+          const style = getComputedStyle(n);
+          totalNotifY += n.offsetHeight
+            + parseInt(style.marginTop, 10)
+            + parseInt(style.marginBottom, 10);
+        }
+      });
+
+      notification.style.transform = `translateY(${y === 'top' ? '' : '-'}${totalNotifY}px)`;
+
+      notification.style[`margin${x.replace(/^\w/, c => c.toUpperCase())}`] = `${offsetX}px`;
+      notification.style[`margin${y.replace(/^\w/, c => c.toUpperCase())}`] = `${offsetY}px`;
     }
 
     /**
@@ -96,16 +139,13 @@ const Notification = (($) => {
           this.options.element.removeAttribute('class');
           this.options.element.setAttribute('class', 'notification');
 
-          this.options.element.classList.add(`bg-${this.options.background}`);
+          this.options.element.classList.add(`notification-${this.options.background}`);
           this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
-
-          // dark text
-          if (this.options.background.indexOf('light')) {
-            this.options.element.classList.add('text-dark');
-          }
         }
 
-        if (this.options.showButton) {
+        this.setPosition();
+
+        if (this.options.button) {
           // attach the button handler
           const buttonElement = this.options.element.querySelector('button');
           this.registerElement({ target: buttonElement, event: 'click' });
@@ -121,18 +161,6 @@ const Notification = (($) => {
         }
 
         this.options.element.classList.add('show');
-
-        // set position
-        const activeNotifications = document.querySelectorAll('.notification.show') || [];
-        let pushDistance = 0;
-        activeNotifications.forEach((notification) => {
-          if (this.options.element !== notification) {
-            const style = getComputedStyle(notification);
-            pushDistance += notification.offsetHeight + parseInt(style.marginBottom, 10);
-          }
-        });
-
-        this.options.element.style.transform = `translateY(${pushDistance}px)`;
 
         this.triggerEvent(Event.SHOW);
 
@@ -171,7 +199,7 @@ const Notification = (($) => {
 
         this.triggerEvent(Event.HIDE);
 
-        if (this.options.showButton) {
+        if (this.options.button) {
           const buttonElement = this.options.element.querySelector('button');
           this.unregisterElement({ target: buttonElement, event: 'click' });
         }
