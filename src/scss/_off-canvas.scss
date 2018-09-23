@@ -4,9 +4,9 @@ $offcanvas-backdrop-bg: rgba(0, 0, 0, .25);
 
 $offcanvas-zindex: 910;
 $offcanvas-background: $white;
-$offcanvas-margin: $spacer;
-$offcanvas-header-padding: $offcanvas-margin;
-$offcanvas-inner-padding: $offcanvas-margin;
+$offcanvas-header-padding: $spacer;
+$offcanvas-inner-padding: $spacer;
+$offcanvas-footer-padding: $spacer;
 $offcanvas-header-border-width: 1px;
 $offcanvas-header-border-color: gray('300');
 
@@ -28,6 +28,7 @@ $offcanvas-lg: 320px;
   left: 0;
   z-index: $zindex-offcanvas-backdrop;
   background-color: $offcanvas-backdrop-bg;
+  will-change: opacity;
 
   &.fadeout {
     transition: opacity .45s linear;
@@ -36,13 +37,23 @@ $offcanvas-lg: 320px;
 }
 
 .offcanvas-aside-left {
-  margin-left: $offcanvas-sm;
-  width: calc(100% - #{$offcanvas-sm});
+  transition: margin-left 1ms ease-in-out;
+  will-change: margin-left;
+
+  &.show {
+    margin-left: $offcanvas-sm;
+    width: calc(100% - #{$offcanvas-sm});
+  }
 }
 
 .offcanvas-aside-right {
-  margin-right: $offcanvas-sm;
-  width: calc(100% - #{$offcanvas-sm});
+  transition: margin-right 1ms ease-in-out;
+  will-change: margin-right;
+
+  &.show {
+    margin-right: $offcanvas-sm;
+    width: calc(100% - #{$offcanvas-sm});
+  }
 }
 
 .offcanvas {
@@ -55,6 +66,7 @@ $offcanvas-lg: 320px;
   background-color: $offcanvas-background;
   width: $offcanvas-sm;
   height: 100%;
+  will-change: transform;
 
   &.offcanvas-left {
     left: 0;
@@ -82,7 +94,6 @@ $offcanvas-lg: 320px;
 
   .offcanvas-inner {
     position: relative;
-    margin: $offcanvas-margin;
     height: 100%;
     pointer-events: none;
 
@@ -112,6 +123,7 @@ $offcanvas-lg: 320px;
       .offcanvas-body {
         position: relative;
         flex: 1 1 auto;
+        overflow-y: auto;
         padding: $offcanvas-inner-padding;
       }
 
@@ -120,7 +132,7 @@ $offcanvas-lg: 320px;
         display: flex;
         align-items: center; // vertically center
         justify-content: flex-start; // left align items
-        padding: $offcanvas-inner-padding;
+        padding: $offcanvas-footer-padding;
         border-top: $offcanvas-footer-border-width solid $offcanvas-footer-border-color;
       }
     }
@@ -134,13 +146,17 @@ $offcanvas-lg: 320px;
   }
 
   .offcanvas-aside-left {
-    margin-left: $offcanvas-md;
-    width: calc(100% - #{$offcanvas-md});
+    &.show {
+      margin-left: $offcanvas-md;
+      width: calc(100% - #{$offcanvas-md});
+    }
   }
 
   .offcanvas-aside-right {
-    margin-right: $offcanvas-md;
-    width: calc(100% - #{$offcanvas-md});
+    &.show {
+      margin-right: $offcanvas-md;
+      width: calc(100% - #{$offcanvas-md});
+    }
   }
 }
 
@@ -151,12 +167,16 @@ $offcanvas-lg: 320px;
   }
 
   .offcanvas-aside-left {
-    margin-left: $offcanvas-lg;
-    width: calc(100% - #{$offcanvas-lg});
+    &.show {
+      margin-left: $offcanvas-lg;
+      width: calc(100% - #{$offcanvas-lg});
+    }
   }
 
   .offcanvas-aside-right {
-    margin-left: $offcanvas-lg;
-    width: calc(100% - #{$offcanvas-lg});
+    &.show {
+      margin-left: $offcanvas-lg;
+      width: calc(100% - #{$offcanvas-lg});
+    }
   }
 }

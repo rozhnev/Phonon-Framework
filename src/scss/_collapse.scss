@@ -1,4 +1,3 @@
-
 .collapse {
   display: none;
   transition: height 300ms ease-in-out;
@@ -11,29 +10,4 @@
 .collapsing {
   display: block;
   overflow: hidden;
-}
-
-.collapse-l,
-.collapse-r {
-  z-index: $zindex-navbar-collapse;
-  position: fixed;
-  display: block;
-  top: 56px;
-  background-color: inherit;
-  padding: $navbar-padding-y $navbar-padding-x;
-  transition: transform 300ms ease-in-out;
-
-  &.slide {
-    transform: translateX(0);
-  }
-}
-
-.collapse-l {
-  left: 0;
-  transform: translateX(-100%);
-}
-
-.collapse-r {
-  right: 0;
-  transform: translateX(100%);
 }

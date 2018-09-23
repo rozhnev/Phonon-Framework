@@ -6,7 +6,7 @@
 import Event from '../../common/events'
 import Component from '../component'
 import { getAttributesConfig } from '../componentManager'
-import { findTargetByAttr, createJqueryPlugin } from '../../common/utils'
+import { findTargetByAttr, createJqueryPlugin, sleep } from '../../common/utils'
 
 const OffCanvas = (($) => {
   /**
@@ -20,14 +20,17 @@ const OffCanvas = (($) => {
   const BACKDROP_SELECTOR = 'offcanvas-backdrop'
   const DEFAULT_PROPERTIES = {
     element: null,
+    container: document.body,
+    toggle: false,
     aside: {
       md: false,
-      lg: false,
-      xl: false,
+      lg: true,
+      xl: true,
     },
   }
   const DATA_ATTRS_PROPERTIES = [
     'aside',
+    'toggle',
   ]
   const components = [];
 
@@ -42,9 +45,9 @@ const OffCanvas = (($) => {
     constructor(options = {}) {
       super(NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, true)
 
-      this.useBackdrop = true
       this.currentWidth = null
       this.animate = true
+      this.showAside = false
 
       this.directions = ['left', 'right']
 
@@ -58,13 +61,17 @@ const OffCanvas = (($) => {
       this.checkDirection()
       this.checkWidth()
 
+      if (this.options.toggle) {
+        this.toggle();
+      }
+
       window.addEventListener('resize', () => this.checkWidth(), false)
     }
 
     checkDirection() {
       this.directions.every((direction) => {
         if (this.options.element.classList.contains(`offcanvas-${direction}`)) {
-          this.direction = direction
+          this.direction = direction;
           return false
         }
         return true
@@ -73,7 +80,7 @@ const OffCanvas = (($) => {
 
     checkWidth() {
       if (!('matchMedia' in window)) {
-        return
+        return;
       }
 
       this.sizes.every((size) => {
@@ -84,42 +91,48 @@ const OffCanvas = (($) => {
             if (this.currentWidth !== size.name) {
               this.setAside(size.name)
             }
-            this.currentWidth = size.name
-            return false
+            this.currentWidth = size.name;
+            return false;
           }
         }
 
-        return true
+        return true;
       })
     }
 
-    preventClosable() {
-      return super.preventClosable() || this.options.aside[this.currentWidth] === true
-    }
-
     setAside(name) {
-      const content = document.body
+      const content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+
+      this.showAside = this.options.aside[name] === true;
 
       if (this.options.aside[name] === true) {
         if (!content.classList.contains(`offcanvas-aside-${this.direction}`)) {
           content.classList.add(`offcanvas-aside-${this.direction}`)
         }
 
-        this.useBackdrop = false
-
         // avoid animation by setting animate to false
         this.animate = false
-        this.show()
         // remove previous backdrop
-        this.removeBackdrop()
+        if (this.getBackdrop()) {
+          this.removeBackdrop();
+        }
+
+        if (this.isVisible() && !content.classList.contains('show')) {
+          content.classList.add('show');
+        } else if (!this.isVisible() && content.classList.contains('show')) {
+          content.classList.remove('show');
+        }
       } else {
         if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
           content.classList.remove(`offcanvas-aside-${this.direction}`)
         }
 
-        this.hide()
-        this.useBackdrop = true
         this.animate = true
+
+        if (!this.getBackdrop() && this.isVisible()) {
+          this.createBackdrop();
+          this.attachEvents();
+        }
       }
     }
 
@@ -132,14 +145,29 @@ const OffCanvas = (($) => {
       this.hide()
     }
 
-    show() {
-      if (this.options.element.classList.contains('show')) {
-        return false
-      }
+    isVisible() {
+      return this.options.element.classList.contains('show');
+    }
 
-      // add a timeout so that the CSS animation works
-      setTimeout(() => {
-        this.triggerEvent(Event.SHOW)
+    show() {
+      return new Promise(async (resolve, reject) => {
+        if (this.options.element.classList.contains('show')) {
+          reject();
+          return;
+        }
+
+        this.triggerEvent(Event.SHOW);
+
+        if (!this.showAside) {
+          this.createBackdrop();
+        }
+
+        // add a timeout so that the CSS animation works
+        await sleep(20);
+
+        // attach event
+        console.log('attach events')
+        this.attachEvents();
 
         const onShown = () => {
           this.triggerEvent(Event.SHOWN)
@@ -148,12 +176,16 @@ const OffCanvas = (($) => {
             this.options.element.removeEventListener(Event.TRANSITION_END, onShown)
             this.options.element.classList.remove('animate')
           }
+
+          resolve();
         }
 
-        if (this.useBackdrop) {
-          this.createBackdrop()
+        if (this.showAside) {
+          const container = this.getConfig('container', DEFAULT_PROPERTIES.container);
+          if (!container.classList.contains('show')) {
+            container.classList.add('show');
+          }
         }
-
 
         if (this.animate) {
           this.options.element.addEventListener(Event.TRANSITION_END, onShown)
@@ -164,47 +196,60 @@ const OffCanvas = (($) => {
         }
 
         this.options.element.classList.add('show')
-
-        // attach event
-        this.attachEvents()
-      }, 1)
-
-      return true
+      });
     }
 
     hide() {
-      if (!this.options.element.classList.contains('show')) {
-        return false
-      }
-
-      this.triggerEvent(Event.HIDE)
-
-      this.detachEvents()
-
-      if (this.animate) {
-        this.options.element.classList.add('animate')
-      }
-
-      this.options.element.classList.remove('show')
-
-      if (this.useBackdrop) {
-        const backdrop = this.getBackdrop()
-
-        const onHidden = () => {
-          if (this.animate) {
-            this.options.element.classList.remove('animate')
-          }
-
-          backdrop.removeEventListener(Event.TRANSITION_END, onHidden)
-          this.triggerEvent(Event.HIDDEN)
-          this.removeBackdrop()
+      return new Promise(async (resolve, reject) => {
+        if (!this.options.element.classList.contains('show')) {
+          reject();
+          return;
         }
 
-        backdrop.addEventListener(Event.TRANSITION_END, onHidden)
-        backdrop.classList.add('fadeout')
+        this.triggerEvent(Event.HIDE)
+
+        this.detachEvents()
+
+        if (this.animate) {
+          this.options.element.classList.add('animate')
+        }
+
+        if (this.showAside) {
+          const container = this.getConfig('container', DEFAULT_PROPERTIES.container);
+          if (container.classList.contains('show')) {
+            container.classList.remove('show');
+          }
+        }
+
+        this.options.element.classList.remove('show')
+
+        resolve();
+
+        if (!this.showAside) {
+          const backdrop = this.getBackdrop()
+
+          const onHidden = () => {
+            if (this.animate) {
+              this.options.element.classList.remove('animate')
+            }
+
+            backdrop.removeEventListener(Event.TRANSITION_END, onHidden)
+            this.triggerEvent(Event.HIDDEN)
+            this.removeBackdrop()
+          }
+
+          backdrop.addEventListener(Event.TRANSITION_END, onHidden)
+          backdrop.classList.add('fadeout')
+        }
+      });
+    }
+
+    toggle() {
+      if (this.isVisible()) {
+        return this.hide();
       }
 
-      return true
+      return this.show();
     }
 
     createBackdrop() {
@@ -227,13 +272,10 @@ const OffCanvas = (($) => {
     }
 
     attachEvents() {
-      const dismissButtons = this.options.element.querySelectorAll('[data-dismiss]')
+      Array.from(this.options.element.querySelectorAll('[data-dismiss]') || [])
+        .forEach(button => this.registerElement({ target: button, event: 'click' }))
 
-      if (dismissButtons) {
-        Array.from(dismissButtons).forEach(button => this.registerElement({ target: button, event: 'click' }))
-      }
-
-      if (this.useBackdrop) {
+      if (!this.showAside) {
         const backdrop = this.getBackdrop()
         this.registerElement({ target: backdrop, event: Event.START })
       }
@@ -242,13 +284,14 @@ const OffCanvas = (($) => {
     }
 
     detachEvents() {
+      console.log('detch')
       const dismissButtons = this.options.element.querySelectorAll('[data-dismiss]')
 
       if (dismissButtons) {
         Array.from(dismissButtons).forEach(button => this.unregisterElement({ target: button, event: 'click' }))
       }
 
-      if (this.useBackdrop) {
+      if (!this.showAside) {
         const backdrop = this.getBackdrop()
         this.unregisterElement({ target: backdrop, event: Event.START })
       }
@@ -305,7 +348,7 @@ const OffCanvas = (($) => {
 
       target.blur()
 
-      component.offCanvas.show()
+      component.offCanvas.toggle()
     }
   })
 
