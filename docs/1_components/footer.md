@@ -4,7 +4,7 @@ title: Footer
 
 ## Introduction
 
-The footer is a container listed at the bottom of the page.
+A footer is a container listed at the bottom of the page.
 
 ## Markup
 

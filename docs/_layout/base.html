@@ -8,15 +8,15 @@
   {{#if icon}}
   <link rel="icon" href="{{{icon}}}" />
   {{/if}}
-  <style>
-    {{{css}}}
-  </style>
   {{#each htmlHeader}}
     {{{this}}}
   {{/each}}
+  <style>
+    {{{css}}}
+  </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="../site">
       <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="Phonon Framework Icon">
       Phonon
@@ -38,30 +38,38 @@
   </nav>
 
   <div class="main">
-    <section class="sidebar">
-      <ul class="menu">
-        {{#each pages}}
-        {{#if children}}
-        <li>
-          <a href="#{{slug}}">{{title}}</a>
-          <ul>
-            {{#each children}}
-            <li><a href="#{{slug}}">{{title}}</a></li>
-            {{/each}}
-          </ul>
-        </li>
-        {{else}}
-        <li><a href="#{{slug}}">{{title}}</a></li>
-        {{/if}}
-        {{/each}}
-      </ul>
-
-      <input class="search-input hide" placeholder="search">
-    </section>
+    <div class="offcanvas sidebar offcanvas-left" data-toggle="true" id="docOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="docOffCanvas">
+      <div class="offcanvas-inner">
+        <div class="offcanvas-content">
+          <div class="offcanvas-body">
+            <ul class="menu">
+              {{#each pages}}
+              {{#if children}}
+              <li>
+                <a href="#{{slug}}">{{title}}</a>
+                <ul>
+                  {{#each children}}
+                  <li><a href="#{{slug}}">{{title}}</a></li>
+                  {{/each}}
+                </ul>
+              </li>
+              {{else}}
+              <li><a href="#{{slug}}">{{title}}</a></li>
+              {{/if}}
+              {{/each}}
+            </ul>
+          </div>
+          <div class="offcanvas-footer">
+            <input class="search-input hide" placeholder="search">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="content">
       <div class="tools hide">
-        <button class="toggle-sidebar">☰</button>
+        <button data-toggle="offcanvas" data-target="#docOffCanvas">☰</button>
+
         <button class="toggle-light">
           <div class="raindrop icon"></div>
         </button>

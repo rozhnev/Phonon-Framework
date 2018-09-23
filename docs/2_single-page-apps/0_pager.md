@@ -37,20 +37,21 @@ A SPA page is defined by setting up the `app-page` class and a unique data-page 
 </div>
 ```
 
-## Page Navigation
+## Page navigation
 
 Page navigation works with the attribute `data-navigate`.
 
-```html
+```html!
 <button class="btn btn-primary" data-navigate="myPage">Go to page</button>
 ```
 
 If you want to force the back animation, you can use the attribute `data-pop-page`.
 
+```html!
 <button class="btn btn-primary" data-navigate="home" data-pop-page="true">Back to home</button>
+```
 
-
-## Page Selector
+## Page selector
 
 To work with pages, it is essential to use the `getPage()` method.
 
@@ -58,7 +59,7 @@ To work with pages, it is essential to use the `getPage()` method.
 pager.getPage('myPage');
 ```
 
-Once you selected pages programatically, you can **use a template** or **listen to events**.
+Once you selected pages programatically, you can **use a template**, **listen to events** and set a **route**.
 
 ## Page route
 
@@ -181,10 +182,6 @@ Returns the current hash parameters. For example, if the route is `/news/{id}`, 
 * returns: `<Object<Page>>`
 
 Returns the page object of `pageName`.
-
-## getPage(pageName)
-
-Alias of `getPage()`.
 
 ## getPages()
 

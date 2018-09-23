@@ -2,6 +2,7 @@
   --mainColor: #373f52;
   --secondaryColor: #d5dae6;
   --paddingNavbar: 56px;
+  --heightNavbar: 58px;
 }
 /*
 *, :after, :before {
@@ -25,32 +26,11 @@ body {
   justify-content: flex-end;
   padding-top: var(--paddingNavbar);
 }
-.sidebar {
-  padding-top: var(--paddingNavbar);
 
-  display: flex;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  min-height: 0;
-  flex-direction: column;
-  width: 270px;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 4;
-  font-size: 15px;
-  line-height: 18px;
+.sidebar {
   background: var(--mainColor);
-  color: var(--secondaryColor);
-  overflow: hidden;
-  transition: transform ease-in-out .25s;
-}
-.sidebar ul.menu {
-  margin-bottom: 44px;
-  overflow-y: auto;
+  top: var(--heightNavbar);
+  height: calc(100% - var(--heightNavbar));
 }
 .sidebar ul {
   list-style: none;
@@ -58,9 +38,9 @@ body {
   padding: 0;
 }
 .sidebar ul > li > ul a {
-  padding-left: 34px;
   height: 38px;
   line-height: 38px;
+  padding: 0 28px;
 }
 .sidebar ul li {
   margin: 0;
@@ -85,40 +65,20 @@ body {
   background: #ffffff0a;
   border-left: 2px solid rgba(255, 255, 255, .6);
 }
-.sidebar a:hover, .sidebar .header a:hover {
+.sidebar a:hover,
+.sidebar .header a:hover {
   color: #fff;
 }
 .sidebar ul a:hover {
   background: rgba(255, 255, 255, .08);
 }
-.sidebar .header a {
-  color: var(--secondaryColor);
-  text-decoration: none;
-}
-.sidebar .header {
-  padding: 0 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, .5);
-}
-
-.sidebar .logo {
-  margin-top: 15px;
-  float: right;
-  max-width: 120px;
-  display: block;
-  max-height: 50px;
-}
-
 .sidebar .search-input {
-  font-family: Lato, sans-serif;
   color: var(--secondaryColor);
   background-color: color(var(--mainColor) lightness(21%));
   border: 0;
   padding: 14px;
   font-size: 15px;
   font-weight: normal;
-  position: absolute;
-  bottom: 0;
   width: 100%;
   transition: box-shadow .15s ease;
   outline: none;
@@ -132,13 +92,10 @@ body {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, .5) inset;
 }
 
-.full-width .sidebar {
-  transform: translateX(-270px);
-  will-change: transform;
-}
-
-.full-width .content {
-  margin-left: 0;
+.sidebar .offcanvas-footer {
+  border-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .content {
@@ -146,7 +103,6 @@ body {
   font-size: 1em;
   line-height: 1.6875em;
   width: 100%;
-  margin-left: 270px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   height: 100%;

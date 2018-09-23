@@ -10,39 +10,35 @@ A loader is typically used to show an animation while loading.
 
 ```html
 <div class="loader">
-  <div class="loader-spinner"></div>
+  <div class="loader-spinner loader-primary"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-primary"></div>
+  <div class="loader-spinner loader-secondary"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-secondary"></div>
+  <div class="loader-spinner loader-success"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-success"></div>
+  <div class="loader-spinner loader-danger"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-danger"></div>
+  <div class="loader-spinner loader-warning"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-warning"></div>
+  <div class="loader-spinner loader-info"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-info"></div>
+  <div class="loader-spinner loader-light"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-light"></div>
-</div>
-
-<div class="loader">
-  <div class="loader-spinner color-dark"></div>
+  <div class="loader-spinner loader-dark"></div>
 </div>
 ```
 

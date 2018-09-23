@@ -26,7 +26,7 @@ title: Collapse
 ## External content
 
 ```html
-<div class="pos-f-t">
+<div>
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
       <h5 class="text-white h4">Collapsed content</h5>

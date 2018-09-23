@@ -6,6 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Phonon</title>
   <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAEJgAABCYBCwj/ZAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAASASURBVHic5ZpNiBtVHMB/bzLZSZNNtroqrVrb2g+tuAjKIsKeCh5aUIsXZS8FDyJ66anFi5f1JPQgeBERFfHQCmoPQg891EOxighVa93tQbtdrJt0d5vNR5PJzDwPaWySmSST+YiZ5HcIZObNey+/vPfPe/8XceDoGalltqGoCcYNaeqoeiGLqZeJp+4jviUzXiKkQAUwq0UATKNKTNXGRoQU1AXAXQkAZiE3NiLU5jcNCYqWxjSqYyFCbb/QLAEYaRECBwFglwCjK8JRADhLgBETIURnAdBZAoyICNllBDToJgEiLkK4EAC9JUA0RUhcCoDuEvY+lOaLt59rvSjuvAjhqn7LktwqmeRLBss3dS4uFvhhqchG0XDbxb4RbqZAM50kxBRBJhX33aGtKRXQeGp3ihdm70E3JF9fXOeTc1lymzXf9Tuh9PuAWS1iVQth9MXGhCp4ZW6a08f3M7tvMvgGhOhfAAxWAkAmGeOD13cz90Qm8Lr7mgLN9AqMm6Uap79b7vi8UGIoqoZQ7nYhOaGwd3uCmV1J4rHW2KHGBAvzO5g/eZUbG7rXbrf3wrsAaN5A2b+ZjaLOyS//6FmH06/GdFrlzcPbOPLsvS1lM8kYx17czonPrvnpdhPS2xRoxqwWsfSS9+eNKpVCjmohi2VUAFgrGCycWuHjc1lb+YMzGR65X/PcXjNCeAiCTlh62XcdTiI+PLvKcq7aUk5RBIef2eq7vToeg2CYNIuo6bc5+/MtW5mnH00F1t7QCWjQEPHL1X9s957cmXS7vuqKZIgFNFjP2+OLFleYTMQCqT88AdIKpBrTko7Xp5JDLkBKK9TFklFe/y9YeqVjRigo3Owie9Fprq/li1RKNZ+7T58LITf4lTDlsMkyTEmhXN8l+t2Ghy4A/El4bId9lXn5rzyWbI0NnkS4TYgEgRcJQsCh2Qdt139aXOvcTj8i+s0H+KVfCfMHd3Fgp30EfPvj373bciFC9kqKhoEbCVpc4bVDe3jrpX22exd+y3Hl2qb79rqIEMjwBKSTE7z6/OMd7yuqhoi3fiuTCZX9D6eZm3mA6cyE7ZmKbvLeqSue+uMsIsQRMD21hXffmAusPilh4fPLLK34W1s0RChqAlVLDX4KeEE3LN759FfOXFgJrE7LqKDXSsMtQEo4f2mV979aYvG6+3nvvoH/IQh2o2ZYbBR1/rxR4vvfb3L+UjacD34HKUIMgtdXCxw5/o3r8qZpcdvSfC2b+yfEEWBaFvlitXfBFuq5/4FJkEOYDxhkyl2IAJKiYTBICUMpAAYlYQiTos2ELmEYY0A7oUrwejY4aMKSIIM4GRoUYUmIjAAIR0KkBEDQEiISA9oJSoKIUgxoJxgJER0BDYKQEGkB4F9C5AWADwlB/UFiGPAqIZB8gGlJ296/WA7nf31d+9HnuYOUIPa8/JHz+XOEiWmTLiVE+GewG/1Mh5EUAC4lRGE77IeeEqKyHfZDLwkjLwC6SRjRIOiEo4RRjwHt2CSMQwxop13C2AmAVglDdTg6SOrLZsG/Pz1YgsHJJOIAAAAASUVORK5CYII=" />
+    <link rel="stylesheet" href="../dist/css/phonon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   <style>
     /*
 *, :after, :before {
@@ -31,38 +34,11 @@ body {
           justify-content: flex-end;
   padding-top: 56px;
 }
+
 .sidebar {
-  padding-top: 56px;
-
-  display: -webkit-box;
-
-  display: -ms-flexbox;
-
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  min-height: 0;
-  -ms-flex-direction: column;
-      flex-direction: column;
-  width: 270px;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 4;
-  font-size: 15px;
-  line-height: 18px;
   background: #373f52;
-  color: #d5dae6;
-  overflow: hidden;
-  -webkit-transition: -webkit-transform ease-in-out .25s;
-  transition: -webkit-transform ease-in-out .25s;
-  transition: transform ease-in-out .25s;
-  transition: transform ease-in-out .25s, -webkit-transform ease-in-out .25s;
-}
-.sidebar ul.menu {
-  margin-bottom: 44px;
-  overflow-y: auto;
+  top: 58px;
+  height: calc(100% - 58px);
 }
 .sidebar ul {
   list-style: none;
@@ -70,9 +46,9 @@ body {
   padding: 0;
 }
 .sidebar ul > li > ul a {
-  padding-left: 34px;
   height: 38px;
   line-height: 38px;
+  padding: 0 28px;
 }
 .sidebar ul li {
   margin: 0;
@@ -97,40 +73,20 @@ body {
   background: rgba(255, 255, 255, 0.03922);
   border-left: 2px solid rgba(255, 255, 255, .6);
 }
-.sidebar a:hover, .sidebar .header a:hover {
+.sidebar a:hover,
+.sidebar .header a:hover {
   color: #fff;
 }
 .sidebar ul a:hover {
   background: rgba(255, 255, 255, .08);
 }
-.sidebar .header a {
-  color: #d5dae6;
-  text-decoration: none;
-}
-.sidebar .header {
-  padding: 0 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, .5);
-}
-
-.sidebar .logo {
-  margin-top: 15px;
-  float: right;
-  max-width: 120px;
-  display: block;
-  max-height: 50px;
-}
-
 .sidebar .search-input {
-  font-family: Lato, sans-serif;
   color: #d5dae6;
   background-color: rgb(43, 49, 64);
   border: 0;
   padding: 14px;
   font-size: 15px;
   font-weight: normal;
-  position: absolute;
-  bottom: 0;
   width: 100%;
   -webkit-transition: -webkit-box-shadow .15s ease;
   transition: -webkit-box-shadow .15s ease;
@@ -148,14 +104,10 @@ body {
           box-shadow: 0 0 0 1px rgba(255, 255, 255, .5) inset;
 }
 
-.full-width .sidebar {
-  -webkit-transform: translateX(-270px);
-          transform: translateX(-270px);
-  will-change: transform;
-}
-
-.full-width .content {
-  margin-left: 0;
+.sidebar .offcanvas-footer {
+  border-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 .content {
@@ -163,7 +115,6 @@ body {
   font-size: 1em;
   line-height: 1.6875em;
   width: 100%;
-  margin-left: 270px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   height: 100%;
@@ -319,12 +270,9 @@ body {
 }
 
   </style>
-    <link rel="stylesheet" href="../dist/css/phonon.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="../site">
       <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="Phonon Framework Icon">
       Phonon
@@ -346,66 +294,74 @@ body {
   </nav>
 
   <div class="main">
-    <section class="sidebar">
-      <ul class="menu">
-        <li>
-          <a href="#0_getting-started">Getting started</a>
-          <ul>
-            <li><a href="#0_getting-started/0_quick-start">Quick start</a></li>
-            <li><a href="#0_getting-started/1_custom-build">Custom builds</a></li>
-            <li><a href="#0_getting-started/2_theming">Theming</a></li>
-            <li><a href="#0_getting-started/3_migration">Migration</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#1_components">Components</a>
-          <ul>
-            <li><a href="#1_components/accordion">Accordion</a></li>
-            <li><a href="#1_components/alert">Alert</a></li>
-            <li><a href="#1_components/button">Button</a></li>
-            <li><a href="#1_components/code">Code</a></li>
-            <li><a href="#1_components/collapse">Collapse</a></li>
-            <li><a href="#1_components/footer">Footer</a></li>
-            <li><a href="#1_components/form">Form</a></li>
-            <li><a href="#1_components/grid">Grid</a></li>
-            <li><a href="#1_components/loader">Loader</a></li>
-            <li><a href="#1_components/modal">Modal</a></li>
-            <li><a href="#1_components/nav">Nav</a></li>
-            <li><a href="#1_components/navbar">Navbar</a></li>
-            <li><a href="#1_components/notification">Notification</a></li>
-            <li><a href="#1_components/off-canvas">offcanvas</a></li>
-            <li><a href="#1_components/progress">Progress</a></li>
-            <li><a href="#1_components/selectbox">Selectbox</a></li>
-            <li><a href="#1_components/tab">Tab</a></li>
-            <li><a href="#1_components/table">Table</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#2_single-page-apps">Single-page apps</a>
-          <ul>
-            <li><a href="#2_single-page-apps/0_pager">Pager</a></li>
-            <li><a href="#2_single-page-apps/1_i18n">Internationalization (i18n)</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#3_utilities">Utilities</a>
-          <ul>
-            <li><a href="#3_utilities/borders">Borders</a></li>
-            <li><a href="#3_utilities/clearfix">Clearfix</a></li>
-            <li><a href="#3_utilities/close-icon">Close icon</a></li>
-            <li><a href="#3_utilities/network">Network</a></li>
-            <li><a href="#3_utilities/spacing">Spacing</a></li>
-            <li><a href="#3_utilities/unselectable">Unselectable</a></li>
-          </ul>
-        </li>
-      </ul>
-
-      <input class="search-input hide" placeholder="search">
-    </section>
+    <div class="offcanvas sidebar offcanvas-left" data-toggle="true" id="docOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="docOffCanvas">
+      <div class="offcanvas-inner">
+        <div class="offcanvas-content">
+          <div class="offcanvas-body">
+            <ul class="menu">
+              <li>
+                <a href="#0_getting-started">Getting started</a>
+                <ul>
+                  <li><a href="#0_getting-started/0_quick-start">Quick start</a></li>
+                  <li><a href="#0_getting-started/1_custom-build">Custom builds</a></li>
+                  <li><a href="#0_getting-started/2_theming">Theming</a></li>
+                  <li><a href="#0_getting-started/3_migration">Migration</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#1_components">Components</a>
+                <ul>
+                  <li><a href="#1_components/accordion">Accordion</a></li>
+                  <li><a href="#1_components/alert">Alert</a></li>
+                  <li><a href="#1_components/button">Button</a></li>
+                  <li><a href="#1_components/code">Code</a></li>
+                  <li><a href="#1_components/collapse">Collapse</a></li>
+                  <li><a href="#1_components/footer">Footer</a></li>
+                  <li><a href="#1_components/form">Form</a></li>
+                  <li><a href="#1_components/grid">Grid</a></li>
+                  <li><a href="#1_components/loader">Loader</a></li>
+                  <li><a href="#1_components/modal">Modal</a></li>
+                  <li><a href="#1_components/nav">Nav</a></li>
+                  <li><a href="#1_components/navbar">Navbar</a></li>
+                  <li><a href="#1_components/notification">Notification</a></li>
+                  <li><a href="#1_components/off-canvas">Off-Canvas</a></li>
+                  <li><a href="#1_components/progress">Progress</a></li>
+                  <li><a href="#1_components/selectbox">Selectbox</a></li>
+                  <li><a href="#1_components/tab">Tab</a></li>
+                  <li><a href="#1_components/table">Table</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#2_single-page-apps">Single-page apps</a>
+                <ul>
+                  <li><a href="#2_single-page-apps/0_pager">Pager</a></li>
+                  <li><a href="#2_single-page-apps/1_i18n">Internationalization (i18n)</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#3_utilities">Utilities</a>
+                <ul>
+                  <li><a href="#3_utilities/borders">Borders</a></li>
+                  <li><a href="#3_utilities/clearfix">Clearfix</a></li>
+                  <li><a href="#3_utilities/close-icon">Close icon</a></li>
+                  <li><a href="#3_utilities/network">Network</a></li>
+                  <li><a href="#3_utilities/spacing">Spacing</a></li>
+                  <li><a href="#3_utilities/unselectable">Unselectable</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="offcanvas-footer">
+            <input class="search-input hide" placeholder="search">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <section class="content">
       <div class="tools hide">
-        <button class="toggle-sidebar">☰</button>
+        <button data-toggle="offcanvas" data-target="#docOffCanvas">☰</button>
+
         <button class="toggle-light">
           <div class="raindrop icon"></div>
         </button>
@@ -417,18 +373,17 @@ body {
 
       <div class="page" id="0_getting-started">
         <h1 class="heading">Getting started</h1>
-        <p>Welcome! Please, visit <a href="#0_getting-started/0_quick-start">Quick start</a>.</p>
-<p>Because Phonon uses the heart of <a href="http://getbootstrap.com">Bootstrap</a> SCSS, we have used many examples of the <a href="http://getbootstrap.com/docs/4.1/getting-started/introduction/">official documentation</a> as a basis for considering all use cases.
-Please, read the <a href="https://creativecommons.org/licenses/by/3.0/">license</a> for more information.</p>
+        <p>Welcome!</p>
+<p>If you want to start quickly, go to <a href="#0_getting-started/0_quick-start">Quick start</a> or if you would
+like to create custom builds, please visit <a href="#0_getting-started/1_custom-build">Custom builds</a>.</p>
 
       </div>
 
       <div class="page" id="0_getting-started/0_quick-start">
         <h1 class="heading">Quick start</h1>
-        <p>Phonon builds are ready to use components. They are located in the <code>dist/</code> directory.
+        <p>Phonon builds are located in the <code>dist/</code> directory.
 They provide convenient solutions that can be installed with no effort and that satisfy the most common editing use cases.</p>
-<p>Please, read more about <a href="#0_getting-started/1_custom-build">custom builds</a> if you would like to optimize the size of Phonon by
-importing required components only.</p>
+<p>Please, read more about <a href="#0_getting-started/1_custom-build">custom builds</a> if you would like to optimize the size of Phonon by importing required components only.</p>
 <h2>Installation</h2>
 <p>The installation can take place in several ways:</p>
 <ul>
@@ -494,13 +449,27 @@ dist/css/phonon.min.css
 import 'phonon/dist/js/phonon'
 
 // import required components for your project
-const Selectbox = require('phonon/dist/js/components/selectbox');
+const Alert = require('phonon/dist/components/alert');
+const Modal = require('phonon/dist/components/modal');
+const ModalPrompt = require('phonon/dist/components/modal/prompt');
+const ModalConfirm = require('phonon/dist/components/modal/confirm');
+const ModalLoader = require('phonon/dist/components/modal/loader');
+const Notification = require('phonon/dist/components/notification');
+const Collapse = require('phonon/dist/components/collapse');
+const Accordion = require('phonon/dist/components/accordion');
+const Tab = require('phonon/dist/components/tab');
+const Progress = require('phonon/dist/components/progress');
+const Loader = require('phonon/dist/components/loader');
+const OffCanvas = require('phonon/dist/components/off-canvas');
+const Selectbox = require('phonon/dist/components/selectbox');
+const SelectboxSearch = require('phonon/dist/components/selectbox/search');
+const Dropdown = require('phonon/dist/components/dropdown');
 </code></pre>
 
       </div>
       <div class="page" id="0_getting-started/2_theming">
         <h1 class="heading">Theming</h1>
-        <p>Phonon uses the heart of Bootstrap SCSS. We really like the notation.
+        <p>Phonon uses the heart of Bootstrap SCSS.
 As with Bootstrap 4, you can edit SCSS variables.</p>
 <p>Example:</p>
 <pre><code class="language-scss">$blue:    #3271d1;
@@ -509,7 +478,7 @@ As with Bootstrap 4, you can edit SCSS variables.</p>
 <pre><code class="language-scss">@import 'path/to/custom.scss'; // my custom SCSS
 @import 'phonon/src/scss/phonon.scss';
 </code></pre>
-<p>When you run the build command <code>node ./build/css.js</code>, the CSS output will take into account your new values.</p>
+<p>When you run the build command <code>node ./build/css</code>, the CSS output will take into account your new values.</p>
 
       </div>
       <div class="page" id="0_getting-started/3_migration">
@@ -704,7 +673,7 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
 <p>An accordion is a component that displays one of the collapsible elements in a limited amout of space.</p>
 <h2>Markup</h2>
 <p>You can use links and buttons to toggle the collapsible elements.</p>
-<pre></pre><div class="accordion" id="exampleAccordion" role="tablist">
+<pre></pre> <div class="example"><div class="accordion" id="exampleAccordion" role="tablist">
   <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
     Collapsible Group Item #1
   </a>
@@ -723,7 +692,7 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
     </div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;accordion&quot; id=&quot;exampleAccordion&quot; role=&quot;tablist&quot;&gt;
   &lt;a class=&quot;d-block&quot; data-toggle=&quot;accordion&quot; href=&quot;#collapseOne&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;collapseOne&quot;&gt;
     Collapsible Group Item #1
@@ -779,7 +748,7 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
         <h2>Introduction</h2>
 <p>An alert displays a box with a specified message.</p>
 <h2>Markup</h2>
-<pre></pre><div class="alert alert-primary" role="alert">
+<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
   A simple primary alert—check it out!
 </div>
 <div class="alert alert-secondary" role="alert">
@@ -803,7 +772,7 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 <div class="alert alert-dark" role="alert">
   A simple dark alert—check it out!
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert—check it out!
 &lt;/div&gt;
@@ -830,7 +799,7 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Link color</h3>
-<pre></pre><div class="alert alert-primary" role="alert">
+<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
   A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
 </div>
 <div class="alert alert-secondary" role="alert">
@@ -854,7 +823,7 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 <div class="alert alert-dark" role="alert">
   A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
 &lt;/div&gt;
@@ -881,13 +850,13 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Dismissable</h3>
-<pre></pre><div class="alert alert-warning" id="exampleAlert" role="alert">
+<pre></pre> <div class="example"><div class="alert alert-warning" id="exampleAlert" role="alert">
   <strong>Holy guacamole!</strong> You should check in on some of those fields below.
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-warning&quot; id=&quot;exampleAlert&quot; role=&quot;alert&quot;&gt;
   &lt;strong&gt;Holy guacamole!&lt;/strong&gt; You should check in on some of those fields below.
   &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;
@@ -1005,7 +974,7 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
         <h2>Introduction</h2>
 <p>A button is a clickable element that allows the user to do an action.</p>
 <h2>Markup</h2>
-<pre></pre><button type="button" class="btn btn-primary">Primary</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary">Primary</button>
 <button type="button" class="btn btn-secondary">Secondary</button>
 <button type="button" class="btn btn-success">Success</button>
 <button type="button" class="btn btn-danger">Danger</button>
@@ -1015,7 +984,7 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
 <button type="button" class="btn btn-dark">Dark</button>
 
 <button type="button" class="btn btn-link">Link</button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;Primary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Secondary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-success&quot;&gt;Success&lt;/button&gt;
@@ -1027,7 +996,7 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
 
 &lt;button type=&quot;button&quot; class=&quot;btn btn-link&quot;&gt;Link&lt;/button&gt;
 </code></pre>
-<pre></pre><button type="button" class="btn btn-outline-primary">Primary</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-outline-primary">Primary</button>
 <button type="button" class="btn btn-outline-secondary">Secondary</button>
 <button type="button" class="btn btn-outline-success">Success</button>
 <button type="button" class="btn btn-outline-danger">Danger</button>
@@ -1035,7 +1004,7 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
 <button type="button" class="btn btn-outline-info">Info</button>
 <button type="button" class="btn btn-outline-light">Light</button>
 <button type="button" class="btn btn-outline-dark">Dark</button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-primary&quot;&gt;Primary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-secondary&quot;&gt;Secondary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-success&quot;&gt;Success&lt;/button&gt;
@@ -1047,12 +1016,12 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
 </code></pre>
 <h3>Tag compatibility</h3>
 <p>You can use different tags.</p>
-<pre></pre><a class="btn btn-primary" href="#" role="button">Link</a>
+<pre></pre> <div class="example"><a class="btn btn-primary" href="#" role="button">Link</a>
 <button class="btn btn-primary" type="submit">Button</button>
 <input class="btn btn-primary" type="button" value="Input">
 <input class="btn btn-primary" type="submit" value="Submit">
 <input class="btn btn-primary" type="reset" value="Reset">
-
+</div>
 <pre><code class="language-html">&lt;a class=&quot;btn btn-primary&quot; href=&quot;#&quot; role=&quot;button&quot;&gt;Link&lt;/a&gt;
 &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Button&lt;/button&gt;
 &lt;input class=&quot;btn btn-primary&quot; type=&quot;button&quot; value=&quot;Input&quot;&gt;
@@ -1060,52 +1029,52 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () =&gt; {
 &lt;input class=&quot;btn btn-primary&quot; type=&quot;reset&quot; value=&quot;Reset&quot;&gt;
 </code></pre>
 <h2>Sizing</h2>
-<pre></pre><button type="button" class="btn btn-primary btn-lg">Large button</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg">Large button</button>
 <button type="button" class="btn btn-secondary btn-lg">Large button</button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;Large button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot;&gt;Large button&lt;/button&gt;
 </code></pre>
-<pre></pre><button type="button" class="btn btn-primary btn-sm">Small button</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-sm">Small button</button>
 <button type="button" class="btn btn-secondary btn-sm">Small button</button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-sm&quot;&gt;Small button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm&quot;&gt;Small button&lt;/button&gt;
 </code></pre>
 <h2>Block</h2>
-<pre></pre><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
 <button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
 </code></pre>
 <h2>Active state</h2>
-<pre></pre><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
+<pre></pre> <div class="example"><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
 <a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Link</a>
-
+</div>
 <pre><code class="language-html">&lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Primary link&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-secondary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Link&lt;/a&gt;
 </code></pre>
 <h2>Disabled state</h2>
 <p>Disabled buttons with the <code>&lt;a&gt;</code> tag need the class <code>.disabled</code> and <code>aria-disabled=&quot;true&quot;</code> attribue.
 Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard focus on the element.</p>
-<pre></pre><button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
+<pre></pre> <div class="example"><button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
 <button type="button" class="btn btn-secondary btn-lg" disabled>Button</button>
 <a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Primary link</a>
 <a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Link</a>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-lg btn-primary&quot; disabled&gt;Primary button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot; disabled&gt;Button&lt;/button&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-lg disabled&quot; tabindex=&quot;-1&quot; role=&quot;button&quot; aria-disabled=&quot;true&quot;&gt;Primary link&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-secondary btn-lg disabled&quot; tabindex=&quot;-1&quot; role=&quot;button&quot; aria-disabled=&quot;true&quot;&gt;Link&lt;/a&gt;
 </code></pre>
 <h2>Button group</h2>
-<pre></pre><div class="btn-group" role="group" aria-label="Basic example">
+<pre></pre> <div class="example"><div class="btn-group" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary">Left</button>
   <button type="button" class="btn btn-secondary">Middle</button>
   <button type="button" class="btn btn-secondary">Right</button>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1113,12 +1082,12 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h3>Vertical button group</h3>
-<pre></pre><div class="btn-group-vertical" role="group" aria-label="Basic example">
+<pre></pre> <div class="example"><div class="btn-group-vertical" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary">Left</button>
   <button type="button" class="btn btn-secondary">Middle</button>
   <button type="button" class="btn btn-secondary">Right</button>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group-vertical&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1126,7 +1095,7 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h2>Button toolbar</h2>
-<pre></pre><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+<pre></pre> <div class="example"><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
   <div class="btn-group mr-2" role="group" aria-label="First group">
     <button type="button" class="btn btn-secondary">1</button>
     <button type="button" class="btn btn-secondary">2</button>
@@ -1142,7 +1111,7 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
     <button type="button" class="btn btn-secondary">8</button>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-toolbar&quot; role=&quot;toolbar&quot; aria-label=&quot;Toolbar with button groups&quot;&gt;
   &lt;div class=&quot;btn-group mr-2&quot; role=&quot;group&quot; aria-label=&quot;First group&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;1&lt;/button&gt;
@@ -1161,7 +1130,7 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h2>Sizing</h2>
-<pre></pre><div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+<pre></pre> <div class="example"><div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
   <button type="button" class="btn btn-secondary">Left</button>
   <button type="button" class="btn btn-secondary">Middle</button>
   <button type="button" class="btn btn-secondary">Right</button>
@@ -1178,7 +1147,7 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
   <button type="button" class="btn btn-secondary">Middle</button>
   <button type="button" class="btn btn-secondary">Right</button>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group btn-group-lg&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1207,29 +1176,29 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
         <h1>Introduction</h1>
 <p>[WIP]</p>
 <h1>Inline code</h1>
-<pre></pre>For example, <code>&lt;section&gt;</code> should be wrapped as inline.
-
+<pre></pre> <div class="example">For example, <code>&lt;section&gt;</code> should be wrapped as inline.
+</div>
 <pre><code class="language-html">For example, &lt;code&gt;&amp;lt;section&amp;gt;&lt;/code&gt; should be wrapped as inline.
 </code></pre>
 <h1>Code blocks</h1>
-<pre></pre><pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
+<pre></pre> <div class="example"><pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
 &lt;p&gt;And another line of sample text here...&lt;/p&gt;
 </code></pre>
-
+</div>
 <pre><code class="language-html">&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Sample text here...&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;And another line of sample text here...&amp;lt;/p&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 <h1>User input</h1>
-<pre></pre>To switch directories, type <kbd>cd</kbd> followed by the name of the directory.<br>
+<pre></pre> <div class="example">To switch directories, type <kbd>cd</kbd> followed by the name of the directory.<br>
 To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
-
+</div>
 <pre><code class="language-html">To switch directories, type &lt;kbd&gt;cd&lt;/kbd&gt; followed by the name of the directory.&lt;br&gt;
 To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt;/kbd&gt;&lt;/kbd&gt;
 </code></pre>
 <h1>Sample output</h1>
-<pre></pre><samp>This text is meant to be treated as sample output from a computer program.</samp>
-
+<pre></pre> <div class="example"><samp>This text is meant to be treated as sample output from a computer program.</samp>
+</div>
 <pre><code class="language-html">&lt;samp&gt;This text is meant to be treated as sample output from a computer program.&lt;/samp&gt;
 </code></pre>
 <div class="alert alert-secondary" role="alert">
@@ -1242,7 +1211,7 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Markup</h2>
-<pre></pre><p>
+<pre></pre> <div class="example"><p>
   <a class="btn btn-primary" data-toggle="collapse" href="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
     Link with href
   </a>
@@ -1254,7 +1223,7 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
 <div class="collapse" id="exampleCollapse">
   Collapse content.
 </div>
-
+</div>
 <pre><code class="language-html">&lt;p&gt;
   &lt;a class=&quot;btn btn-primary&quot; data-toggle=&quot;collapse&quot; href=&quot;#exampleCollapse&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;exampleCollapse&quot;&gt;
     Link with href
@@ -1269,7 +1238,7 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
 &lt;/div&gt;
 </code></pre>
 <h2>External content</h2>
-<pre></pre><div class="pos-f-t">
+<pre></pre> <div class="example"><div>
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
       <h5 class="text-white h4">Collapsed content</h5>
@@ -1282,8 +1251,8 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
     </button>
   </nav>
 </div>
-
-<pre><code class="language-html">&lt;div class=&quot;pos-f-t&quot;&gt;
+</div>
+<pre><code class="language-html">&lt;div&gt;
   &lt;div class=&quot;collapse&quot; id=&quot;navbarToggleExternalContent&quot;&gt;
     &lt;div class=&quot;bg-dark p-4&quot;&gt;
       &lt;h5 class=&quot;text-white h4&quot;&gt;Collapsed content&lt;/h5&gt;
@@ -1414,9 +1383,9 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
       <div class="page" id="1_components/footer">
         <h1 class="heading">Footer</h1>
         <h2>Introduction</h2>
-<p>The footer is a container listed at the bottom of the page.</p>
+<p>A footer is a container listed at the bottom of the page.</p>
 <h2>Markup</h2>
-<pre></pre><footer class="footer bg-primary">
+<pre></pre> <div class="example"><footer class="footer bg-primary">
   <div class="container">
     <div class="row align-items-end">
       <div class="col-sm-6">
@@ -1447,7 +1416,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     </div>
   </div>
 </footer>
-
+</div>
 <pre><code class="language-html">&lt;footer class=&quot;footer bg-primary&quot;&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;row align-items-end&quot;&gt;
@@ -1487,13 +1456,13 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
         <h2>Introduction</h2>
 <p>A form contains inputs to collect user input.</p>
 <h2>Input</h2>
-<pre></pre><form>
+<pre></pre> <div class="example"><form>
   <div class="form-group">
     <label for="exampleFormControlInput1">Email address</label>
     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
   </div>
 </form>
-
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;exampleFormControlInput1&quot;&gt;Email address&lt;/label&gt;
@@ -1502,26 +1471,26 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h3>Sizing</h3>
-<pre></pre><input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+<pre></pre> <div class="example"><input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
 <input class="form-control" type="text" placeholder="Default input">
 <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
-
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control form-control-lg&quot; type=&quot;text&quot; placeholder=&quot;.form-control-lg&quot;&gt;
 &lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Default input&quot;&gt;
 &lt;input class=&quot;form-control form-control-sm&quot; type=&quot;text&quot; placeholder=&quot;.form-control-sm&quot;&gt;
 </code></pre>
 <h3>Readonly</h3>
-<pre></pre><input class="form-control" type="text" placeholder="Readonly input here…" readonly>
-
+<pre></pre> <div class="example"><input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Readonly input here…&quot; readonly&gt;
 </code></pre>
 <h3>Disabled</h3>
-<pre></pre><input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
-
+<pre></pre> <div class="example"><input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; id=&quot;disabledInput&quot; type=&quot;text&quot; placeholder=&quot;Disabled input here...&quot; disabled&gt;
 </code></pre>
 <h3>Readonly plain text</h3>
-<pre></pre><form>
+<pre></pre> <div class="example"><form>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
@@ -1535,7 +1504,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     </div>
   </div>
 </form>
-
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;staticEmail&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1552,7 +1521,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h2>Form with grid</h2>
-<pre></pre><form>
+<pre></pre> <div class="example"><form>
   <div class="row">
     <div class="col">
       <input type="text" class="form-control" placeholder="First name">
@@ -1562,7 +1531,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     </div>
   </div>
 </form>
-
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1575,7 +1544,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <p>More compact with <code>.form-row</code>.</p>
-<pre></pre><form>
+<pre></pre> <div class="example"><form>
   <div class="form-row">
     <div class="col">
       <input type="text" class="form-control" placeholder="First name">
@@ -1585,7 +1554,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     </div>
   </div>
 </form>
-
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1598,7 +1567,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h2>Horizontal form</h2>
-<pre></pre><form>
+<pre></pre> <div class="example"><form>
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
@@ -1612,7 +1581,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     </div>
   </div>
 </form>
-
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;inputEmail3&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1630,12 +1599,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </code></pre>
 <h2>Validation</h2>
 <h3>Info</h3>
-<pre></pre><label for="inputPassword4">Password</label>
+<pre></pre> <div class="example"><label for="inputPassword4">Password</label>
 <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpBlock">
 <small id="passwordHelpBlock" class="form-text text-muted">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
-
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword4&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword4&quot; class=&quot;form-control&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;form-text text-muted&quot;&gt;
@@ -1643,12 +1612,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/small&gt;
 </code></pre>
 <h3>Error</h3>
-<pre></pre><label for="inputPassword5">Password</label>
+<pre></pre> <div class="example"><label for="inputPassword5">Password</label>
 <input type="password" id="inputPassword5" class="form-control is-invalid" aria-describedby="passwordHelpBlock">
 <small id="passwordHelpBlock" class="invalid-feedback">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
-
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword5&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword5&quot; class=&quot;form-control is-invalid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;invalid-feedback&quot;&gt;
@@ -1656,12 +1625,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/small&gt;
 </code></pre>
 <h3>Success</h3>
-<pre></pre><label for="inputPassword6">Password</label>
+<pre></pre> <div class="example"><label for="inputPassword6">Password</label>
 <input type="password" id="inputPassword6" class="form-control is-valid" aria-describedby="passwordHelpBlock">
 <small id="passwordHelpBlock" class="valid-feedback">
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </small>
-
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword6&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword6&quot; class=&quot;form-control is-valid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;valid-feedback&quot;&gt;
@@ -1670,7 +1639,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </code></pre>
 <h2>Selectboxes</h2>
 <p>Alternatively, you can use our advanced <a href="#1_components/selectbox">selectbox</a> that supports a filter.</p>
-<pre></pre><label for="exampleFormControlSelect1">Example select</label>
+<pre></pre> <div class="example"><label for="exampleFormControlSelect1">Example select</label>
 <select class="form-control" id="exampleFormControlSelect1">
   <option>1</option>
   <option>2</option>
@@ -1678,7 +1647,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
   <option>4</option>
   <option>5</option>
 </select>
-
+</div>
 <pre><code class="language-html">&lt;label for=&quot;exampleFormControlSelect1&quot;&gt;Example select&lt;/label&gt;
 &lt;select class=&quot;form-control&quot; id=&quot;exampleFormControlSelect1&quot;&gt;
   &lt;option&gt;1&lt;/option&gt;
@@ -1689,12 +1658,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/select&gt;
 </code></pre>
 <h2>Checkboxes</h2>
-<pre></pre><label class="custom-control custom-checkbox">
+<pre></pre> <div class="example"><label class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input">
   <span class="custom-control-indicator"></span>
   <span class="custom-control-description">Check this custom checkbox</span>
 </label>
-
+</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-control custom-checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
@@ -1702,7 +1671,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/label&gt;
 </code></pre>
 <h2>Radios</h2>
-<pre></pre><label class="custom-control custom-radio">
+<pre></pre> <div class="example"><label class="custom-control custom-radio">
   <input id="radio1" name="radio" type="radio" class="custom-control-input">
   <span class="custom-control-indicator"></span>
   <span class="custom-control-description">Toggle this custom radio</span>
@@ -1712,7 +1681,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
   <span class="custom-control-indicator"></span>
   <span class="custom-control-description">Or toggle this other custom radio</span>
 </label>
-
+</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-control custom-radio&quot;&gt;
   &lt;input id=&quot;radio1&quot; name=&quot;radio&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
@@ -1725,7 +1694,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/label&gt;
 </code></pre>
 <h3>Stacked</h3>
-<pre></pre><div class="custom-controls-stacked">
+<pre></pre> <div class="example"><div class="custom-controls-stacked">
   <label class="custom-control custom-radio">
     <input id="radioStacked3" name="radio-stacked" type="radio" class="custom-control-input">
     <span class="custom-control-indicator"></span>
@@ -1737,7 +1706,7 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
     <span class="custom-control-description">Or toggle this other custom radio</span>
   </label>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-controls-stacked&quot;&gt;
   &lt;label class=&quot;custom-control custom-radio&quot;&gt;
     &lt;input id=&quot;radioStacked3&quot; name=&quot;radio-stacked&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
@@ -1752,11 +1721,11 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/div&gt;
 </code></pre>
 <h2>File browser</h2>
-<pre></pre><label class="custom-file">
+<pre></pre> <div class="example"><label class="custom-file">
   <input type="file" id="file2" class="custom-file-input">
   <span class="custom-file-control"></span>
 </label>
-
+</div>
 <pre><code class="language-html">&lt;label class=&quot;custom-file&quot;&gt;
   &lt;input type=&quot;file&quot; id=&quot;file2&quot; class=&quot;custom-file-input&quot;&gt;
   &lt;span class=&quot;custom-file-control&quot;&gt;&lt;/span&gt;
@@ -1781,83 +1750,75 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
         <h2>Introduction</h2>
 <p>A loader is typically used to show an animation while loading.</p>
 <h2>Markup</h2>
-<pre></pre><div class="loader">
-  <div class="loader-spinner"></div>
+<pre></pre> <div class="example"><div class="loader">
+  <div class="loader-spinner loader-primary"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-primary"></div>
+  <div class="loader-spinner loader-secondary"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-secondary"></div>
+  <div class="loader-spinner loader-success"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-success"></div>
+  <div class="loader-spinner loader-danger"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-danger"></div>
+  <div class="loader-spinner loader-warning"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-warning"></div>
+  <div class="loader-spinner loader-info"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-info"></div>
+  <div class="loader-spinner loader-light"></div>
 </div>
 
 <div class="loader">
-  <div class="loader-spinner color-light"></div>
+  <div class="loader-spinner loader-dark"></div>
 </div>
-
-<div class="loader">
-  <div class="loader-spinner color-dark"></div>
 </div>
-
 <pre><code class="language-html">&lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-primary&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-primary&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-secondary&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-secondary&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-success&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-success&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-danger&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-danger&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-warning&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-warning&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-info&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-info&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-light&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-light&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;loader&quot;&gt;
-  &lt;div class=&quot;loader-spinner color-dark&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;loader-spinner loader-dark&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <p>it may be useful not to show the loader, but after a while. For this, we add the <code>hide</code> class.</p>
-<pre></pre><div class="loader hide">
+<pre></pre> <div class="example"><div class="loader hide">
   <div class="loader-spinner"></div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;loader hide&quot;&gt;
   &lt;div class=&quot;loader-spinner&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -2182,7 +2143,7 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Brand</h2>
-<pre></pre><!-- As a link -->
+<pre></pre> <div class="example"><!-- As a link -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
 </nav>
@@ -2191,7 +2152,7 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 <nav class="navbar navbar-light bg-light">
   <span class="navbar-brand mb-0 h1">Navbar</span>
 </nav>
-
+</div>
 <pre><code class="language-html">&lt;!-- As a link --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
@@ -2202,13 +2163,13 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
   &lt;span class=&quot;navbar-brand mb-0 h1&quot;&gt;Navbar&lt;/span&gt;
 &lt;/nav&gt;
 </code></pre>
-<pre></pre><!-- Just an image -->
+<pre></pre> <div class="example"><!-- Just an image -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img src="../site/icon.svg" width="30" height="30" alt="">
   </a>
 </nav>
-
+</div>
 <pre><code class="language-html">&lt;!-- Just an image --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;
@@ -2216,14 +2177,14 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
   &lt;/a&gt;
 &lt;/nav&gt;
 </code></pre>
-<pre></pre><!-- Image and text -->
+<pre></pre> <div class="example"><!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Phonon
   </a>
 </nav>
-
+</div>
 <pre><code class="language-html">&lt;!-- Image and text --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;
@@ -2233,7 +2194,7 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/nav&gt;
 </code></pre>
 <h2>Nav items</h2>
-<pre></pre><nav class="navbar navbar-expand-lg navbar-light bg-light">
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -2247,7 +2208,7 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
     </div>
   </div>
 </nav>
-
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavAltMarkup&quot; aria-controls=&quot;navbarNavAltMarkup&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
@@ -2264,7 +2225,7 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/nav&gt;
 </code></pre>
 <h2>Dropdown</h2>
-<pre></pre><nav class="navbar navbar-expand-lg navbar-light bg-light">
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -2294,8 +2255,8 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
     </ul>
   </div>
 </nav>
-
-<pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
+</div>
+<pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavDropdown&quot; aria-controls=&quot;navbarNavDropdown&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
     &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
@@ -2338,7 +2299,7 @@ dropdowns.forEach(function (dropdown) {
 </script>
 <h2>Vertical collapse</h2>
 <p><code>.collapse</code>.</p>
-<pre></pre><nav class="navbar navbar-expand-lg navbar-light bg-light">
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavCollapse" aria-controls="navbarNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -2367,7 +2328,7 @@ dropdowns.forEach(function (dropdown) {
     </ul>
   </div>
 </nav>
-
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavCollapse&quot; aria-controls=&quot;navbarNavCollapse&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
@@ -2518,22 +2479,32 @@ This is particularly useful if you want to set up a notification without worryin
   document.querySelector('#notificationDemo').addEventListener('click', function() {
     phonon.notification({
       message: 'Hello',
-      timeout: 2000,
+      directionY: 'top',
+      directionX: 'right',
+      timeout: 1500,
     }).show();
   });
 </script>
 <pre><code class="language-js">const notif = phonon.notification({
   message: 'Hello',
+  directionY: 'top',
+  directionX: 'right',
+  offsetY: 0,
+  offsetX: 0,
 });
 
 // jQuery support
 const notif = $().notification({
   message: 'Hello',
+  directionY: 'top',
+  directionX: 'right',
+  offsetY: 0,
+  offsetX: 0,
 });
 </code></pre>
 <h2>Custom Notification</h2>
 <p>Conversely, you can create your own notification by specifying the <code>element</code> property.</p>
-<pre></pre><div class="notification" id="myNotification">
+<pre></pre> <div class="example"><div class="notification" id="myNotification">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
     <button type="button" class="close" data-dismiss="notification" aria-label="Close">
@@ -2541,7 +2512,7 @@ const notif = $().notification({
     </button>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;notification&quot; id=&quot;myNotification&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
@@ -2553,121 +2524,121 @@ const notif = $().notification({
 </code></pre>
 <p>Then, you can work with it by using the correct <code>element</code> property.</p>
 <h2>Colors</h2>
-<div class="notification show bg-primary" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-primary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-secondary" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-secondary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-success" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-success" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-danger" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-danger" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-warning" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-warning" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-info" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-info" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-light text-dark" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-light" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<div class="notification show bg-dark" style="top:0;left:auto;bottom:auto;position:relative">
+<div class="notification notification-dark" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
 </div>
-<pre></pre><div class="notification bg-primary">
+<pre></pre> <div class="example"><div class="notification notification-primary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-secondary">
+<div class="notification notification-secondary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-success">
+<div class="notification notification-success">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-danger">
+<div class="notification notification-danger">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-warning">
+<div class="notification notification-warning">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-info">
+<div class="notification notification-info">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-light text-dark">
+<div class="notification notification-light">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
 
-<div class="notification bg-dark">
+<div class="notification notification-dark">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
   </div>
 </div>
-
-<pre><code class="language-html">&lt;div class=&quot;notification bg-primary&quot;&gt;
+</div>
+<pre><code class="language-html">&lt;div class=&quot;notification notification-primary&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-secondary&quot;&gt;
+&lt;div class=&quot;notification notification-secondary&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-success&quot;&gt;
+&lt;div class=&quot;notification notification-success&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-danger&quot;&gt;
+&lt;div class=&quot;notification notification-danger&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-warning&quot;&gt;
+&lt;div class=&quot;notification notification-warning&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-info&quot;&gt;
+&lt;div class=&quot;notification notification-info&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-light text-dark&quot;&gt;
+&lt;div class=&quot;notification notification-light&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notification bg-dark&quot;&gt;
+&lt;div class=&quot;notification notification-dark&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
   &lt;/div&gt;
@@ -2696,16 +2667,40 @@ const notif = $().notification({
 <td>yes <code>data-message</code></td>
 </tr>
 <tr>
-<td>showButton</td>
+<td>button</td>
 <td>If it is set to true, it will show a close button. Otherwise, it will not display the button.</td>
-<td>''</td>
-<td>no</td>
+<td>true</td>
+<td>yes <code>data-button</code></td>
 </tr>
 <tr>
 <td>timeout</td>
 <td>The display time before making the notification invisible.</td>
 <td>null</td>
 <td>yes <code>data-timeout</code></td>
+</tr>
+<tr>
+<td>directionX</td>
+<td>The horizontal direction such as <code>left</code> or <code>right</code>.</td>
+<td>right</td>
+<td>no</td>
+</tr>
+<tr>
+<td>directionY</td>
+<td>The vertical direction such as <code>top</code> or <code>bottom</code>.</td>
+<td>top</td>
+<td>no</td>
+</tr>
+<tr>
+<td>offsetX</td>
+<td>The horizontal offset in pixel.</td>
+<td>0</td>
+<td>no</td>
+</tr>
+<tr>
+<td>offsetY</td>
+<td>The vertical offset in pixel.</td>
+<td>0</td>
+<td>no</td>
 </tr>
 <tr>
 <td>background</td>
@@ -2799,36 +2794,34 @@ notification.addEventListener('hidden.ph.notification', () =&gt; {
 
       </div>
       <div class="page" id="1_components/off-canvas">
-        <h1 class="heading">offcanvas</h1>
+        <h1 class="heading">Off-Canvas</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
-<h2>Markup</h2>
-<p>Add the class <code>offcanvas-left</code> if you want that the offcanvas appears from the left.
-Add the class <code>offcanvas-right</code> if you want that the offcanvas appears from the right.</p>
-<pre></pre><!-- Button trigger offcanvas -->
-<button class="btn btn-primary" data-toggle="offcanvas" data-target="#exampleOffCanvas">Launch demo offcanvas</button>
-
-<!-- offcanvas, left direction -->
-<div class="offcanvas offcanvas-left" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
-  <div class="offcanvas-inner">
-    <div class="offcanvas-content">
-      <div class="offcanvas-header">
-        <h1 class="offcanvas-title">Title</h1>
-        <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="offcanvas-body">
-        <p>Content</p>
-      </div>
-      <div class="offcanvas-footer">
-        <p>Footer</p>
+<p>An off-canvas is a sidebar visible from the left or the right.</p>
+<div style="width:100%;padding:8px;height:500px;background:#eee;position:relative;">
+  <div class="offcanvas offcanvas-left" style="position:static" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
+    <div class="offcanvas-inner">
+      <div class="offcanvas-content">
+        <div class="offcanvas-header">
+          <h1 class="offcanvas-title">Title</h1>
+          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="offcanvas-body">
+          <p>Content</p>
+        </div>
+        <div class="offcanvas-footer">
+          <p>Footer</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-<pre><code class="language-html">&lt;!-- Button trigger offcanvas --&gt;
+<h2>Markup</h2>
+<p>Add the class <code>offcanvas-left</code> if you want that the offcanvas appears from the left.
+Add the class <code>offcanvas-right</code> if you want that the offcanvas appears from the right.</p>
+<p><button class="btn btn-primary" data-toggle="offcanvas" data-target="#exampleOffCanvas">Launch demo offcanvas</button></p>
+<pre><code class="language-html!">&lt;!-- Button trigger offcanvas --&gt;
 &lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;offcanvas&quot; data-target=&quot;#exampleOffCanvas&quot;&gt;Launch demo offcanvas&lt;/button&gt;
 
 &lt;!-- offcanvas, left direction --&gt;
@@ -2851,19 +2844,75 @@ Add the class <code>offcanvas-right</code> if you want that the offcanvas appear
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+<h2>Floating and static off-canvas</h2>
+<p>By default, the off-canvas menu is displayed at the top of the page (floating) if the screen size is <code>md</code> or <code>sm</code>.
+If the screen size is <code>lg</code> or <code>xl</code>, the menu will push the container to display next to it.</p>
 <h2>JavaScript</h2>
-<p>Note that you can add the class <code>offcanvas-aside</code> in the body element so that the correct view in CSS is already ready before the JavaScript API adds it.</p>
 <pre><code class="language-js">const offcanvas = phonon.offcanvas({
   element: '#exampleOffCanvas',
+  container: document.body,
+  toggle: false,
+  aside: {
+    md: false,
+    lg: true,
+    xl: true,
+  },
 });
 
 // jQuery support
-const offcanvas = $('#exampleOffCanvas').offcanvas();
+const offcanvas = $('#exampleOffCanvas').offcanvas({
+  container: document.body,
+  toggle: false,
+  aside: {
+    md: false,
+    lg: true,
+    xl: true,
+  },
+});
 </code></pre>
 <h3>Options</h3>
-<ul>
-<li>aside</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aside.md</td>
+<td>Displays the off-canvas menu next to the container when the screen size is <code>md</code> size.</td>
+<td>false</td>
+<td>yes <code>data-aside-md</code></td>
+</tr>
+<tr>
+<td>aside.lg</td>
+<td>Displays the off-canvas menu next to the container when the screen size is <code>lg</code> size.</td>
+<td>true</td>
+<td>yes <code>data-aside-lg</code></td>
+</tr>
+<tr>
+<td>aside.xl</td>
+<td>Displays the off-canvas menu next to the container when the screen size is <code>xl</code> size.</td>
+<td>true</td>
+<td>yes <code>data-aside-xl</code></td>
+</tr>
+<tr>
+<td>toggle</td>
+<td>Toggles the off-canvas menu when it is initialized.</td>
+<td>false</td>
+<td>yes <code>data-toggle</code></td>
+</tr>
+<tr>
+<td>container</td>
+<td>The container that will be moved to the right or left if the off-canvas menu is displayed in aside mode.</td>
+<td>body</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
 <h3>Methods</h3>
 <h4>show()</h4>
 <p>Any off canvas can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
@@ -2906,56 +2955,56 @@ For this, you can use object and DOM events.</p>
 <pre><code class="language-js">phonon.offcanvas({
   element: '#exampleOffCanvas',
   show: () =&gt; { // or onShow
-    console.log('It works!')
+    console.log('It works!');
   },
   shown: () =&gt; { // or onShown
-    console.log('It works!')
+    console.log('It works!');
   },
   hide: () =&gt; { // or onHide
-    console.log('It works!')
+    console.log('It works!');
   },
   hidden: () =&gt; { // or onHidden
-    console.log('It works!')
-  }
-})
+    console.log('It works!');
+  },
+});
 </code></pre>
 <h4>DOM Events</h4>
 <pre><code class="language-js">document.querySelector('.offcanvas').addEventListener('show.ph.offcanvas', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.offcanvas').addEventListener('shown.ph.offcanvas', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.offcanvas').addEventListener('hide.ph.offcanvas', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 
 document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () =&gt; {
-  console.log('It works!')
-})
+  console.log('It works!');
+});
 </code></pre>
 
       </div>
       <div class="page" id="1_components/progress">
         <h1 class="heading">Progress</h1>
         <h2>Introduction</h2>
-<p>A progress indicates the completion status of a task or a process with a horizontal bar.</p>
+<p>A progress indicates the completion status of a task or of a process with a horizontal bar.</p>
 <h2>Markup</h2>
-<pre></pre><div class="progress" id="myProgress">
+<pre></pre> <div class="example"><div class="progress" id="myProgress">
   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <p>You can specify the height and the value of the progress in HTML if you don't want to use JavaScript:</p>
-<pre></pre><div class="progress" id="myProgress" style="height: 8px">
+<pre></pre> <div class="example"><div class="progress" id="myProgress" style="height: 8px">
   <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot; style=&quot;height: 8px&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; style=&quot;width: 50%&quot; aria-valuenow=&quot;50&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -3127,7 +3176,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
         <h2>Introduction</h2>
 <p>A selectbox is an element to choose a value in a list of selection items.</p>
 <h2>Markup</h2>
-<pre></pre><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
   <input type="hidden" name="color">
   <i class="selectbox-icon"></i>
   <div class="default-text">Blue</div>
@@ -3140,7 +3189,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
     </div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3157,7 +3206,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 </code></pre>
 <h3>Selectbox with invalid item</h3>
 <p>Add the class <code>disabled</code> to the item.</p>
-<pre></pre><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
   <input type="hidden" name="color">
   <i class="selectbox-icon"></i>
   <div class="default-text">Blue</div>
@@ -3167,7 +3216,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
     <div class="item disabled">Invalid item</div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3180,7 +3229,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with header</h3>
-<pre></pre><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
   <input type="hidden" name="color">
   <i class="selectbox-icon"></i>
   <div class="default-text">Blue</div>
@@ -3190,7 +3239,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
     <div class="item" data-value="red">Red</div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3203,7 +3252,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with divider</h3>
-<pre></pre><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
   <input type="hidden" name="color">
   <i class="selectbox-icon"></i>
   <div class="default-text">Blue</div>
@@ -3215,7 +3264,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
     <div class="item" data-value="yellow">Yellow</div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3230,7 +3279,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with search input</h3>
-<pre></pre><div class="selectbox" role="button" tabindex="0" data-search="true" data-toggle="selectbox">
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-search="true" data-toggle="selectbox">
   <input type="hidden" name="color">
   <i class="selectbox-icon"></i>
   <div class="default-text">Blue</div>
@@ -3243,7 +3292,7 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =&
     <div class="item" data-value="green">Green</div>
   </div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-search=&quot;true&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3441,7 +3490,7 @@ document.querySelector('.selectbox').addEventListener('hidden.ph.selectbox', () 
 <p>A tab is made up of 2 elements. One is a clickable button and the other is the content.
 It is used to show a fragment of content.</p>
 <h2>Markup</h2>
-<pre></pre><ul class="nav nav-tabs" id="myTab" role="tablist">
+<pre></pre> <div class="example"><ul class="nav nav-tabs" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="news-tab" data-toggle="tab" href="#news" role="tab" aria-controls="news" aria-selected="true">News</a>
   </li>
@@ -3453,7 +3502,7 @@ It is used to show a fragment of content.</p>
   <div class="tab-pane fade show active" id="news" role="tabpanel" aria-labelledby="news-tab">News</div>
   <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">Settings</div>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-tabs&quot; id=&quot;myTab&quot; role=&quot;tablist&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; id=&quot;news-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#news&quot; role=&quot;tab&quot; aria-controls=&quot;news&quot; aria-selected=&quot;true&quot;&gt;News&lt;/a&gt;
@@ -3562,7 +3611,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
         <h2>Introduction</h2>
 <p>A table permits to arrange data into rows and columns of cells.</p>
 <h2>Markup</h2>
-<pre></pre><table class="table">
+<pre></pre> <div class="example"><table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -3592,7 +3641,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3625,7 +3674,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Invert colors</h2>
-<pre></pre><table class="table table-dark">
+<pre></pre> <div class="example"><table class="table table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -3655,7 +3704,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3688,7 +3737,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Head</h2>
-<pre></pre><table class="table">
+<pre></pre> <div class="example"><table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -3718,7 +3767,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead class=&quot;thead-dark&quot;&gt;
     &lt;tr&gt;
@@ -3750,7 +3799,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
   &lt;/tbody&gt;
 &lt;/table&gt;
 </code></pre>
-<pre></pre><table class="table">
+<pre></pre> <div class="example"><table class="table">
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
@@ -3780,7 +3829,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead class=&quot;thead-light&quot;&gt;
     &lt;tr&gt;
@@ -3813,7 +3862,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Striped rows</h2>
-<pre></pre><table class="table table-striped">
+<pre></pre> <div class="example"><table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -3843,7 +3892,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-striped&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3876,7 +3925,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark striped rows.</p>
-<pre></pre><table class="table table-striped table-dark">
+<pre></pre> <div class="example"><table class="table table-striped table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -3906,7 +3955,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-striped table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3939,7 +3988,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Borders</h2>
-<pre></pre><table class="table table-bordered">
+<pre></pre> <div class="example"><table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -3968,7 +4017,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-bordered&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4000,7 +4049,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
-<pre></pre><table class="table table-bordered table-dark">
+<pre></pre> <div class="example"><table class="table table-bordered table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4029,7 +4078,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-bordered table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4061,7 +4110,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Borderless</h2>
-<pre></pre><table class="table table-borderless">
+<pre></pre> <div class="example"><table class="table table-borderless">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4090,7 +4139,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-borderless&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4122,7 +4171,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
-<pre></pre><table class="table table-borderless table-dark">
+<pre></pre> <div class="example"><table class="table table-borderless table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4151,7 +4200,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-borderless table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4183,7 +4232,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Rows with hover</h2>
-<pre></pre><table class="table table-hover">
+<pre></pre> <div class="example"><table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4212,7 +4261,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-hover&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4244,7 +4293,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
-<pre></pre><table class="table table-hover table-dark">
+<pre></pre> <div class="example"><table class="table table-hover table-dark">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4273,7 +4322,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-hover table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4305,7 +4354,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Sizing</h2>
-<pre></pre><table class="table table-sm">
+<pre></pre> <div class="example"><table class="table table-sm">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -4334,7 +4383,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-sm&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4366,7 +4415,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Contextual</h2>
-<pre></pre><!-- On rows -->
+<pre></pre> <div class="example"><!-- On rows -->
 <table>
   <tr class="table-active">...</tr>
 
@@ -4393,7 +4442,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     <td class="table-dark">...</td>
   </tr>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;!-- On rows --&gt;
 &lt;table&gt;
   &lt;tr class=&quot;table-active&quot;&gt;...&lt;/tr&gt;
@@ -4423,7 +4472,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Caption</h2>
-<pre></pre><table class="table">
+<pre></pre> <div class="example"><table class="table">
   <caption>List of users</caption>
   <thead>
     <tr>
@@ -4454,7 +4503,7 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
     </tr>
   </tbody>
 </table>
-
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;caption&gt;List of users&lt;/caption&gt;
   &lt;thead&gt;
@@ -4490,12 +4539,12 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 <h2>Responsive</h2>
 <h3>Always responsive</h3>
 <p>Horizontal scrolling.</p>
-<pre></pre><div class="table-responsive">
+<pre></pre> <div class="example"><div class="table-responsive">
   <table class="table">
     ...
   </table>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;table-responsive&quot;&gt;
   &lt;table class=&quot;table&quot;&gt;
     ...
@@ -4504,12 +4553,12 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 </code></pre>
 <h2>Breakpoint</h2>
 <p><code>.table-responsive{-sm|-md|-lg|-xl}</code>.</p>
-<pre></pre><div class="table-responsive-sm">
+<pre></pre> <div class="example"><div class="table-responsive-sm">
   <table class="table">
     ...
   </table>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;table-responsive-sm&quot;&gt;
   &lt;table class=&quot;table&quot;&gt;
     ...
@@ -4524,6 +4573,12 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
       <div class="page" id="2_single-page-apps">
         <h1 class="heading">Single-page apps</h1>
         <p>This section is useful if you would like to build a <a href="https://en.wikipedia.org/wiki/Single-page_application">single-page application</a>.</p>
+<h2>Examples</h2>
+<p>We provide 2 examples:</p>
+<ul>
+<li><a href="https://github.com/quark-dev/Phonon-Framework/tree/master/examples/single-page-apps/standalone">Standalone example</a></li>
+<li><a href="https://github.com/quark-dev/Phonon-Framework/tree/master/examples/single-page-apps/webpack">Webpack example</a></li>
+</ul>
 
       </div>
 
@@ -4553,19 +4608,18 @@ pager.start();
   &lt;div class=&quot;app-page&quot; data-page=&quot;myThirdPage&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<h2>Page Navigation</h2>
+<h2>Page navigation</h2>
 <p>Page navigation works with the attribute <code>data-navigate</code>.</p>
-<pre></pre><button class="btn btn-primary" data-navigate="myPage">Go to page</button>
-
-<pre><code class="language-html">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;myPage&quot;&gt;Go to page&lt;/button&gt;
+<pre><code class="language-html!">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;myPage&quot;&gt;Go to page&lt;/button&gt;
 </code></pre>
 <p>If you want to force the back animation, you can use the attribute <code>data-pop-page</code>.</p>
-<p><button class="btn btn-primary" data-navigate="home" data-pop-page="true">Back to home</button></p>
-<h2>Page Selector</h2>
+<pre><code class="language-html!">&lt;button class=&quot;btn btn-primary&quot; data-navigate=&quot;home&quot; data-pop-page=&quot;true&quot;&gt;Back to home&lt;/button&gt;
+</code></pre>
+<h2>Page selector</h2>
 <p>To work with pages, it is essential to use the <code>getPage()</code> method.</p>
 <pre><code class="language-js">pager.getPage('myPage');
 </code></pre>
-<p>Once you selected pages programatically, you can <strong>use a template</strong> or <strong>listen to events</strong>.</p>
+<p>Once you selected pages programatically, you can <strong>use a template</strong>, <strong>listen to events</strong> and set a <strong>route</strong>.</p>
 <h2>Page route</h2>
 <p>By default, the router will create a route with the page name.
 For example, the default route of myPage would be <code>/myPage</code>.</p>
@@ -4582,10 +4636,10 @@ in the HTML view.</p>
 <pre><code class="language-js">pager.getPage('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
-<pre></pre><div data-push-template>
+<pre></pre> <div class="example"><div data-push-template>
   <!-- The template will be injected here -->
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div data-push-template&gt;
   &lt;!-- The template will be injected here --&gt;
 &lt;/div&gt;
@@ -4658,8 +4712,6 @@ pager.showPage('myPage', null, true);
 <li>returns: <code>&lt;Object&lt;Page&gt;&gt;</code></li>
 </ul>
 <p>Returns the page object of <code>pageName</code>.</p>
-<h2>getPage(pageName)</h2>
-<p>Alias of <code>getPage()</code>.</p>
 <h2>getPages()</h2>
 <ul>
 <li>returns: <code>Array</code></li>
@@ -4772,10 +4824,10 @@ window.addEventListener('myPage.hash', (event) =&gt; {
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
 <p>If the locale is <code>en</code>, the result would be:</p>
-<pre></pre><h1 data-t="text: welcome">Welcome</h1>
+<pre></pre> <div class="example"><h1 data-t="text: welcome">Welcome</h1>
 <input type="text" class="form-control" data-t="value: welcome" value="Welcome">
 <input type="text" class="form-control" data-attr="Welcome" placeholder="Welcome" data-t="data-attr: welcome, placeholder: welcome" value="">
-
+</div>
 <pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;Welcome&quot;&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-attr=&quot;Welcome&quot; placeholder=&quot;Welcome&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
@@ -4851,12 +4903,12 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Add borders</h2>
-<pre></pre><span class="border"></span>
+<pre></pre> <div class="example"><span class="border"></span>
 <span class="border-top"></span>
 <span class="border-right"></span>
 <span class="border-bottom"></span>
 <span class="border-left"></span>
-
+</div>
 <pre><code class="language-html">&lt;span class=&quot;border&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-top&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-right&quot;&gt;&lt;/span&gt;
@@ -4864,12 +4916,12 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border-left&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Remove borders</h2>
-<pre></pre><span class="border-0"></span>
+<pre></pre> <div class="example"><span class="border-0"></span>
 <span class="border-top-0"></span>
 <span class="border-right-0"></span>
 <span class="border-bottom-0"></span>
 <span class="border-left-0"></span>
-
+</div>
 <pre><code class="language-html">&lt;span class=&quot;border-0&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-top-0&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border-right-0&quot;&gt;&lt;/span&gt;
@@ -4877,7 +4929,7 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border-left-0&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Colors</h2>
-<pre></pre><span class="border border-primary"></span>
+<pre></pre> <div class="example"><span class="border border-primary"></span>
 <span class="border border-secondary"></span>
 <span class="border border-success"></span>
 <span class="border border-danger"></span>
@@ -4886,7 +4938,7 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 <span class="border border-light"></span>
 <span class="border border-dark"></span>
 <span class="border border-white"></span>
-
+</div>
 <pre><code class="language-html">&lt;span class=&quot;border border-primary&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border border-secondary&quot;&gt;&lt;/span&gt;
 &lt;span class=&quot;border border-success&quot;&gt;&lt;/span&gt;
@@ -4898,14 +4950,14 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 &lt;span class=&quot;border border-white&quot;&gt;&lt;/span&gt;
 </code></pre>
 <h2>Corners (radius)</h2>
-<pre></pre><img src="..." alt="..." class="rounded">
+<pre></pre> <div class="example"><img src="..." alt="..." class="rounded">
 <img src="..." alt="..." class="rounded-top">
 <img src="..." alt="..." class="rounded-right">
 <img src="..." alt="..." class="rounded-bottom">
 <img src="..." alt="..." class="rounded-left">
 <img src="..." alt="..." class="rounded-circle">
 <img src="..." alt="..." class="rounded-0">
-
+</div>
 <pre><code class="language-html">&lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded&quot;&gt;
 &lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-top&quot;&gt;
 &lt;img src=&quot;...&quot; alt=&quot;...&quot; class=&quot;rounded-right&quot;&gt;
@@ -4921,11 +4973,11 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Example</h2>
-<pre></pre><div class="bg-info clearfix">
+<pre></pre> <div class="example"><div class="bg-info clearfix">
   <button type="button" class="btn btn-secondary float-left">Example Button floated left</button>
   <button type="button" class="btn btn-secondary float-right">Example Button floated right</button>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;bg-info clearfix&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-left&quot;&gt;Example Button floated left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-right&quot;&gt;Example Button floated right&lt;/button&gt;
@@ -4938,10 +4990,10 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
         <h2>Introduction</h2>
 <p>[WIP]</p>
 <h2>Example</h2>
-<pre></pre><button type="button" class="close" aria-label="Close">
+<pre></pre> <div class="example"><button type="button" class="close" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button>
-
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;close&quot; aria-label=&quot;Close&quot;&gt;
   &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
 &lt;/button&gt;
@@ -5042,10 +5094,10 @@ auto sets margin or padding to <code>auto</code></p>
 <code>my-{size}</code> - sets both margin-top and margin-bottom of size <code>{size}</code>
 <code>m-{size}</code> - sets margin in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre><div class="mt-2 mr-1 mb-1 mr-1 bg-primary" style="height: 50px"></div>
+<pre></pre> <div class="example"><div class="mt-2 mr-1 mb-1 mr-1 bg-primary" style="height: 50px"></div>
 
 <div class="mx-2 my-4 bg-secondary" style="height: 50px"></div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1 bg-primary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;mx-2 my-4 bg-secondary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
@@ -5060,19 +5112,19 @@ auto sets margin or padding to <code>auto</code></p>
 <code>py-{size}</code> - sets both padding-top and padding-bottom of size <code>{size}</code>
 <code>p-{size}</code> - sets padding in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
-<pre></pre><div class="pt-2 pr-1 pb-1 pr-1 bg-primary"></div>
+<pre></pre> <div class="example"><div class="pt-2 pr-1 pb-1 pr-1 bg-primary"></div>
 
 <div class="px-2 py-4 bg-secondary"></div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1 bg-primary&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;px-2 py-4 bg-secondary&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2>Horizontal centering</h2>
-<pre></pre><div class="mx-auto" style="width: 200px;">
+<pre></pre> <div class="example"><div class="mx-auto" style="width: 200px;">
   Centered element
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;mx-auto&quot; style=&quot;width: 200px;&quot;&gt;
   Centered element
 &lt;/div&gt;
@@ -5086,10 +5138,10 @@ auto sets margin or padding to <code>auto</code></p>
 <p>This class improves the user experience on mobile by reducing user frustration from
 unintended selections.</p>
 <h2>Markup</h2>
-<pre></pre><div class="unselectable">
+<pre></pre> <div class="example"><div class="unselectable">
   <p>I am unselectable.</p>
 </div>
-
+</div>
 <pre><code class="language-html">&lt;div class=&quot;unselectable&quot;&gt;
   &lt;p&gt;I am unselectable.&lt;/p&gt;
 &lt;/div&gt;
@@ -5098,7 +5150,7 @@ unintended selections.</p>
       </div>
 
       <footer class="docs-footer">
-        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.2
+        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.3
       </footer>
     </section>
   </div>
@@ -5139,7 +5191,11 @@ unintended selections.</p>
  * @param {number} index
  */var addClassSidebarIndex=function addClassSidebarIndex(index,className){sidebarLinks[index].classList.add(className)};/**
  * Remove highlights from sidebar
- */var removeClassesSidebar=function removeClassesSidebar(className){sidebarLinks.forEach(function(link){return link.classList.remove(className)})};var toggleActiveLinkSidebar=function toggleActiveLinkSidebar(index){sidebarLinks.forEach(function(link,i){if(i===index){link.classList.add("active")}else{link.classList.remove("active")}})};var main=document.querySelector(".main");document.querySelector("button.toggle-sidebar").onclick=function(){toggleClass(main,"full-width")};document.querySelector("button.toggle-light").onclick=function(){toggleClass(main,"dark")};document.querySelector("button.next-page").onclick=function(){var nextIndex=Math.min(getCurrentPageIndex(currentHash())+1,pageEls.length-1);window.location.hash="#".concat(pageEls[nextIndex].id)};document.querySelector("button.previous-page").onclick=function(){var prevIndex=Math.max(0,getCurrentPageIndex(currentHash())-1);window.location.hash="#".concat(pageEls[prevIndex].id)};document.querySelector(".tools").classList.remove("hide");var searchInputEl=document.querySelector(".search-input");searchInputEl.classList.remove("hide");var highlightClass="highlight";searchInputEl.addEventListener("keypress",function(e){var key=e.which||e.keyCode;if(key===13){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .highlight")));removeClassesSidebar(highlightClass);pageEls.forEach(function(el,pIndex){if(highlightWord(el,searchInputEl.value)){addClassSidebarIndex(pIndex,highlightClass)}})}});searchInputEl.addEventListener("keyup",function(e){var key=e.which||e.keyCode;if(key!==13&&searchInputEl.value.length<1){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .".concat(highlightClass))));removeClassesSidebar(highlightClass)}});var showPageFromCurrentHash=function showPageFromCurrentHash(){var index=showPageFromHash(currentHash());toggleActiveLinkSidebar(index)};// Listen for hash change
+ */var removeClassesSidebar=function removeClassesSidebar(className){sidebarLinks.forEach(function(link){return link.classList.remove(className)})};var toggleActiveLinkSidebar=function toggleActiveLinkSidebar(index){sidebarLinks.forEach(function(link,i){if(i===index){link.classList.add("active")}else{link.classList.remove("active")}})};var main=document.querySelector(".main");/*
+document.querySelector('button.toggle-sidebar').onclick = () => {
+  toggleClass(main, 'full-width');
+};
+*/document.querySelector("button.toggle-light").onclick=function(){toggleClass(main,"dark")};document.querySelector("button.next-page").onclick=function(){var nextIndex=Math.min(getCurrentPageIndex(currentHash())+1,pageEls.length-1);window.location.hash="#".concat(pageEls[nextIndex].id)};document.querySelector("button.previous-page").onclick=function(){var prevIndex=Math.max(0,getCurrentPageIndex(currentHash())-1);window.location.hash="#".concat(pageEls[prevIndex].id)};document.querySelector(".tools").classList.remove("hide");var searchInputEl=document.querySelector(".search-input");searchInputEl.classList.remove("hide");var highlightClass="highlight";searchInputEl.addEventListener("keypress",function(e){var key=e.which||e.keyCode;if(key===13){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .highlight")));removeClassesSidebar(highlightClass);pageEls.forEach(function(el,pIndex){if(highlightWord(el,searchInputEl.value)){addClassSidebarIndex(pIndex,highlightClass)}})}});searchInputEl.addEventListener("keyup",function(e){var key=e.which||e.keyCode;if(key!==13&&searchInputEl.value.length<1){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .".concat(highlightClass))));removeClassesSidebar(highlightClass)}});var showPageFromCurrentHash=function showPageFromCurrentHash(){var index=showPageFromHash(currentHash());toggleActiveLinkSidebar(index)};// Listen for hash change
 window.onhashchange=function(){showPageFromCurrentHash()};showPageFromCurrentHash();
   </script>
     <script src="../dist/js/phonon.js"></script>

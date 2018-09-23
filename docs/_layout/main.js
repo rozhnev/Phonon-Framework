@@ -146,9 +146,11 @@ const toggleActiveLinkSidebar = (index) => {
 };
 
 const main = document.querySelector('.main');
+/*
 document.querySelector('button.toggle-sidebar').onclick = () => {
   toggleClass(main, 'full-width');
 };
+*/
 
 document.querySelector('button.toggle-light').onclick = () => {
   toggleClass(main, 'dark');

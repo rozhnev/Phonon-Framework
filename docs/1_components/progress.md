@@ -4,7 +4,7 @@ title: Progress
 
 ## Introduction
 
-A progress indicates the completion status of a task or a process with a horizontal bar.
+A progress indicates the completion status of a task or of a process with a horizontal bar.
 
 ## Markup
 
