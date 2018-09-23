@@ -20,7 +20,7 @@ $loader-display: inline-block;
   }
 
   @each $color, $value in $theme-colors {
-    .color-#{$color} {
+    .loader-#{$color} {
       border-top-color: $value;
       border-right-color: $value;
       border-bottom-color: $value;
