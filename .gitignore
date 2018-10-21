@@ -13,6 +13,7 @@
 !.sass-lint.yml
 
 examples/webpack/dist
+coverage
 
 # OS
 __*
