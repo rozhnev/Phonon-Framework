@@ -2,6 +2,8 @@
 
 > Phonon: the light weight, scalable, flexible and customizable HTML5 Web - Mobile Framework.
 
+[![Travis (.org)](https://img.shields.io/travis/quark-dev/Phonon-Framework.svg?style=flat-square)](https://travis-ci.org/quark-dev/Phonon-Framework)
+[![Codecov](https://img.shields.io/codecov/c/github/quark-dev/Phonon-Framework.svg?style=flat-square)](https://codecov.io/gh/quark-dev/Phonon-Framework)
 [![npm](https://img.shields.io/npm/v/phonon.svg?style=flat-square)]()
 [![license](https://img.shields.io/github/license/quark-dev/phonon.svg?style=flat-square)]()
 [![GitHub contributors](https://img.shields.io/github/contributors/quark-dev/phonon.svg?style=flat-square)]()

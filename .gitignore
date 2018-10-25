@@ -11,8 +11,10 @@
 !.eslintignore
 !.eslintrc
 !.sass-lint.yml
+!.travis.yml
 
 examples/webpack/dist
+coverage
 
 # OS
 __*
