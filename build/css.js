@@ -12,7 +12,7 @@ const outputSourceMapFile = `${outputCSSFile}.map`;
 const outputCSSFileMinified = `${outputDir}/phonon.min.css`;
 const outputSourceMapFileMinified = `${outputCSSFileMinified}.map`;
 
-(async () => {
+module.exports = async function () {
   console.log('Building CSS...');
 
   const start = new Date();
@@ -54,4 +54,4 @@ const outputSourceMapFileMinified = `${outputCSSFileMinified}.map`;
   const end = new Date();
 
   console.log(`Done in ${(end.getTime() - start.getTime()) / 1000}s.`);
-})();
+}

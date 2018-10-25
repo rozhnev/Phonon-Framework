@@ -15,8 +15,8 @@ const I18n = (() => {
   const NAME = 'i18n';
   const VERSION = '2.0.0';
   const DEFAULT_PROPERTIES = {
-    fallbackLocale: 'en',
-    locale: 'en',
+    fallbackLocale: 'en-US',
+    locale: 'en-US',
     bind: false,
     data: null,
   };

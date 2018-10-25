@@ -2,7 +2,6 @@
 * Script to build our plugins to use them separately.
 * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
 */
-
 const rollup  = require('rollup')
 const path    = require('path')
 const babel   = require('rollup-plugin-babel')
@@ -46,7 +45,7 @@ async function asyncForEach(array, callback) {
   }
 }
 
-(async () => {
+module.exports = async function () {
   console.log('Building components...');
   const start = new Date();
 
@@ -78,4 +77,4 @@ async function asyncForEach(array, callback) {
   const end = new Date();
 
   console.log(`Done in ${(end.getTime() - start.getTime()) / 1000}s.`);
-})();
+}

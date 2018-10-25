@@ -1,19 +1,14 @@
-const rollup  = require('rollup')
-const path    = require('path')
-const babel   = require('rollup-plugin-babel')
-const resolve = require('rollup-plugin-node-resolve')
+const rollup  = require('rollup');
+const path    = require('path');
+const babel   = require('rollup-plugin-babel');
+const resolve = require('rollup-plugin-node-resolve');
 const UglifyJS = require('uglify-js');
 const fs = require('fs');
 const regenerator = require('rollup-plugin-regenerator');
+const pkg     = require(path.resolve(__dirname, '../package.json'));
+const year    = new Date().getFullYear();
 
-const pkg     = require(path.resolve(__dirname, '../package.json'))
-const year    = new Date().getFullYear()
-
-let fileName = 'phonon'
-const fileDest  = `${fileName}.js`
-const fileDestMin = `${fileName}.min.js`
-const format = 'umd'
-
+const format = 'umd';
 const plugins = [
   resolve({
     module: true,
@@ -25,12 +20,15 @@ const plugins = [
   regenerator(),
 ];
 
-(async () => {
-  console.log(`Building Phonon package...`);
+module.exports = async function (fileName, srcFile) {
+  const fileDest  = `${fileName}.js`
+  const fileDestMin = `${fileName}.min.js`
+
+  console.log(`Building ${fileName} package...`);
 
   const start = new Date();
   const bundle = await rollup.rollup({
-    input: path.resolve(__dirname, '../src/js/phonon.js'),
+    input: path.resolve(__dirname, srcFile),
     plugins,
   });
 
@@ -74,4 +72,4 @@ const plugins = [
   } catch(err) {
     console.error(`${fileName}: ${err}`);
   }
-})();
+}
