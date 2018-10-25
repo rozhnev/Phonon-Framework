@@ -25,6 +25,7 @@ const SelectboxSearch = (($) => {
     'selectable',
     'search',
   ];
+  const components = [];
 
   /**
    * ------------------------------------------------------------------------
@@ -46,12 +47,13 @@ const SelectboxSearch = (($) => {
 
 
         this.getItems().forEach((item) => {
+          const itemEl = item;
           const fn = typeof this.options.filterItems === 'function' ? this.options.filterItems : this.filterItems;
 
-          if (fn(search, item)) {
-            item.element.style.display = 'block';
+          if (fn(search, itemEl)) {
+            itemEl.element.style.display = 'block';
           } else {
-            item.element.style.display = 'none';
+            itemEl.element.style.display = 'none';
           }
         });
       };
@@ -85,14 +87,6 @@ const SelectboxSearch = (($) => {
     }
 
     /**
-     * Shows the search selectbox
-     * @returns {Promise} Promise object represents the completed animation
-     */
-    async show() {
-      return super.hide();
-    }
-
-    /**
      * Hides the search selectbox
      * @returns {Promise} Promise object represents the completed animation
      */
@@ -109,7 +103,7 @@ const SelectboxSearch = (($) => {
     }
 
     static DOMInterface(options) {
-      return new SelectboxSearch(options);
+      return new SelectboxSearch(options, components);
     }
   }
 
@@ -125,7 +119,6 @@ const SelectboxSearch = (($) => {
    * DOM Api implementation
    * ------------------------------------------------------------------------
    */
-  const components = [];
   const selectboxes = Array.from(document.querySelectorAll(`.${NAME}`) || []);
 
   selectboxes.filter(d => !d.classList.contains('nav-item')).forEach((element) => {
@@ -138,29 +131,27 @@ const SelectboxSearch = (($) => {
     }
   });
 
-  if (selectboxes) {
-    document.addEventListener('click', (event) => {
-      const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
-      if (selectboxMenu) {
-        return;
-      }
+  document.addEventListener('click', (event) => {
+    const selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
+    if (selectboxMenu) {
+      return;
+    }
 
-      const selectbox = findTargetByClass(event.target, 'selectbox');
+    const selectbox = findTargetByClass(event.target, 'selectbox');
 
-      if (selectbox) {
-        const dataToggleAttr = selectbox.getAttribute('data-toggle');
-        if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
-          const component = components.find(c => c.getElement() === selectbox);
+    if (selectbox) {
+      const dataToggleAttr = selectbox.getAttribute('data-toggle');
+      if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+        const component = components.find(c => c.getElement() === selectbox);
 
-          if (!component) {
-            return;
-          }
-
-          component.toggle();
+        if (!component) {
+          return;
         }
+
+        component.toggle();
       }
-    });
-  }
+    }
+  });
 
   return SelectboxSearch;
 })(window.$ ? window.$ : null);
