@@ -331,7 +331,7 @@
     <script src="github.js"></script>
 
     <script>
-      getLastCommit().then(function (data) {
+      getLastCommit(function (data) {
         const link = `https://github.com/quark-dev/Phonon-Framework/commit/${data.sha}`;
         document.querySelector('.commit .sha').innerHTML = `Last commit ` +
           `<a href="${link}" target="_blank">${data.sha.substring(0, 7)}</a>`;
@@ -339,7 +339,7 @@
         document.querySelector('.commit .date').innerHTML = data.date;
       });
 
-      getLastRelease().then(function (data) {
+      getLastRelease(function (data) {
         const link = `https://github.com/quark-dev/Phonon-Framework/releases/tag/${data.tag}`;
         document.querySelector('.release .tag').innerHTML = `Currently ` +
           `<a href="${link}" target="_blank">${data.tag}</a>`;
