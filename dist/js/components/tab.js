@@ -1463,7 +1463,7 @@ var Tab = function ($) {
     }
     /**
      * Shows the tab
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
 
 
@@ -1472,137 +1472,102 @@ var Tab = function ($) {
       value: function show() {
         var _this = this;
 
-        return new Promise(
+        if (this.options.element.classList.contains('active')) {
+          return false;
+        }
+
+        var id = this.options.element.getAttribute('href');
+        var nav = findTargetByClass(this.options.element, 'nav');
+        var navTabs = nav ? nav.querySelectorAll("[data-toggle=\"".concat(NAME, "\"]")) : null;
+
+        if (navTabs) {
+          Array.from(navTabs).forEach(function (tab) {
+            if (tab.classList.contains('active')) {
+              tab.classList.remove('active');
+            }
+
+            tab.setAttribute('aria-selected', false);
+          });
+        }
+
+        this.options.element.classList.add('active');
+        this.options.element.setAttribute('aria-selected', true);
+        var tabContent = document.querySelector(id);
+        var tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
+
+        if (tabContents) {
+          Array.from(tabContents).forEach(function (tab) {
+            if (tab.classList.contains('active')) {
+              tab.classList.remove('active');
+            }
+          });
+        }
+
+        tabContent.classList.add('showing');
+        this.triggerEvent(Event.SHOW);
+
+        var onShowed = function onShowed() {
+          tabContent.classList.remove('animate');
+          tabContent.classList.add('active');
+          tabContent.classList.remove('showing');
+
+          _this.triggerEvent(Event.SHOWN);
+
+          tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
+        };
+
+        _asyncToGenerator(
         /*#__PURE__*/
-        function () {
-          var _ref = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(resolve, reject) {
-            var id, nav, navTabs, tabContent, tabContents, onShowed;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (!_this.options.element.classList.contains('active')) {
-                      _context.next = 3;
-                      break;
-                    }
-
-                    reject();
-                    return _context.abrupt("return");
-
-                  case 3:
-                    id = _this.options.element.getAttribute('href');
-                    nav = findTargetByClass(_this.options.element, 'nav');
-                    navTabs = nav ? nav.querySelectorAll("[data-toggle=\"".concat(NAME, "\"]")) : null;
-
-                    if (navTabs) {
-                      Array.from(navTabs).forEach(function (tab) {
-                        if (tab.classList.contains('active')) {
-                          tab.classList.remove('active');
-                        }
-
-                        tab.setAttribute('aria-selected', false);
-                      });
-                    }
-
-                    _this.options.element.classList.add('active');
-
-                    _this.options.element.setAttribute('aria-selected', true);
-
-                    tabContent = document.querySelector(id);
-                    tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
-
-                    if (tabContents) {
-                      Array.from(tabContents).forEach(function (tab) {
-                        if (tab.classList.contains('active')) {
-                          tab.classList.remove('active');
-                        }
-                      });
-                    }
-
-                    tabContent.classList.add('showing');
-
-                    _this.triggerEvent(Event.SHOW);
-
-                    onShowed = function onShowed() {
-                      tabContent.classList.remove('animate');
-                      tabContent.classList.add('active');
-                      tabContent.classList.remove('showing');
-
-                      _this.triggerEvent(Event.SHOWN);
-
-                      tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
-                      resolve();
-                    };
-
-                    _context.next = 17;
-                    return sleep(20);
-
-                  case 17:
-                    tabContent.addEventListener(Event.TRANSITION_END, onShowed);
-                    tabContent.classList.add('animate');
-
-                  case 19:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function (_x, _x2) {
-            return _ref.apply(this, arguments);
-          };
-        }());
-      }
-    }, {
-      key: "hide",
-      value: function () {
-        var _hide = _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee2() {
-          var id, tabContent;
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        regeneratorRuntime.mark(function _callee() {
+          return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context.prev = _context.next) {
                 case 0:
-                  if (this.options.element.classList.contains('active')) {
-                    _context2.next = 2;
-                    break;
-                  }
-
-                  throw new Error('The tab is not active');
+                  _context.next = 2;
+                  return sleep(20);
 
                 case 2:
-                  if (this.options.element.classList.contains('active')) {
-                    this.options.element.classList.remove('active');
-                  }
+                  tabContent.addEventListener(Event.TRANSITION_END, onShowed);
+                  tabContent.classList.add('animate');
 
-                  this.triggerEvent(Event.HIDE);
-                  this.options.element.setAttribute('aria-selected', false);
-                  id = this.options.element.getAttribute('href');
-                  tabContent = document.querySelector(id);
-
-                  if (tabContent.classList.contains('active')) {
-                    tabContent.classList.remove('active');
-                  }
-
-                  this.triggerEvent(Event.HIDDEN);
-                  return _context2.abrupt("return", true);
-
-                case 10:
+                case 4:
                 case "end":
-                  return _context2.stop();
+                  return _context.stop();
               }
             }
-          }, _callee2, this);
-        }));
+          }, _callee, this);
+        }))();
 
-        return function hide() {
-          return _hide.apply(this, arguments);
-        };
-      }()
+        return true;
+      }
+      /**
+       * Hides the tab
+       * @returns {Boolean}
+       */
+
+    }, {
+      key: "hide",
+      value: function hide() {
+        if (!this.options.element.classList.contains('active')) {
+          return false;
+        }
+
+        if (this.options.element.classList.contains('active')) {
+          this.options.element.classList.remove('active');
+        }
+
+        this.triggerEvent(Event.HIDE);
+        this.options.element.setAttribute('aria-selected', false);
+        var id = this.options.element.getAttribute('href');
+        var tabContent = document.querySelector(id);
+
+        if (tabContent.classList.contains('active')) {
+          tabContent.classList.remove('active');
+        }
+
+        this.triggerEvent(Event.HIDDEN);
+        return true;
+      }
     }], [{
       key: "identifier",
       value: function identifier() {

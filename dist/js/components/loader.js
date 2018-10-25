@@ -743,42 +743,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1478,46 +1442,26 @@ var Loader = function ($) {
       }
     }, {
       key: "show",
-      value: function () {
-        var _show = _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee() {
-          var size, loaderSpinner;
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  if (this.options.element.classList.contains('hide')) {
-                    this.options.element.classList.remove('hide');
-                  }
+      value: function show() {
+        if (this.options.element.classList.contains('hide')) {
+          this.options.element.classList.remove('hide');
+        }
 
-                  this.triggerEvent(Event.SHOW);
-                  size = this.getClientSize();
-                  this.options.size = size;
+        this.triggerEvent(Event.SHOW);
+        var size = this.getClientSize();
+        this.options.size = size;
 
-                  if (this.customSize) {
-                    this.options.element.style.width = "".concat(this.options.size, "px");
-                    this.options.element.style.height = "".concat(this.options.size, "px");
-                    loaderSpinner = this.getSpinner();
-                    loaderSpinner.style.width = "".concat(this.options.size, "px");
-                    loaderSpinner.style.height = "".concat(this.options.size, "px");
-                  }
+        if (this.customSize) {
+          this.options.element.style.width = "".concat(this.options.size, "px");
+          this.options.element.style.height = "".concat(this.options.size, "px");
+          var loaderSpinner = this.getSpinner();
+          loaderSpinner.style.width = "".concat(this.options.size, "px");
+          loaderSpinner.style.height = "".concat(this.options.size, "px");
+        }
 
-                  this.triggerEvent(Event.SHOWN);
-                  return _context.abrupt("return", true);
-
-                case 7:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee, this);
-        }));
-
-        return function show() {
-          return _show.apply(this, arguments);
-        };
-      }()
+        this.triggerEvent(Event.SHOWN);
+        return true;
+      }
     }, {
       key: "animate",
       value: function animate() {
@@ -1544,34 +1488,15 @@ var Loader = function ($) {
       }
     }, {
       key: "hide",
-      value: function () {
-        var _hide = _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee2() {
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  if (!this.options.element.classList.contains('hide')) {
-                    this.options.element.classList.add('hide');
-                  }
+      value: function hide() {
+        if (!this.options.element.classList.contains('hide')) {
+          this.options.element.classList.add('hide');
+        }
 
-                  this.triggerEvent(Event.HIDE);
-                  this.triggerEvent(Event.HIDDEN);
-                  return _context2.abrupt("return", true);
-
-                case 4:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, this);
-        }));
-
-        return function hide() {
-          return _hide.apply(this, arguments);
-        };
-      }()
+        this.triggerEvent(Event.HIDE);
+        this.triggerEvent(Event.HIDDEN);
+        return true;
+      }
     }], [{
       key: "identifier",
       value: function identifier() {

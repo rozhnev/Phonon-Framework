@@ -1439,7 +1439,8 @@ var Notification = function ($) {
     directionX: 'right',
     directionY: 'top',
     offsetX: 0,
-    offsetY: 0
+    offsetY: 0,
+    appendIn: document.body
   };
   var DATA_ATTRS_PROPERTIES = ['message', 'button', 'timeout', 'background'];
   /**
@@ -1484,16 +1485,16 @@ var Notification = function ($) {
           this.options.element.querySelector('button').style.display = 'none';
         }
 
-        document.body.appendChild(this.options.element);
+        this.getConfig('appendIn', DEFAULT_PROPERTIES.appendIn).appendChild(this.options.element);
         this.setAttributes();
       }
     }, {
       key: "setPosition",
       value: function setPosition() {
-        var x = this.getConfig('directionX', 'right');
-        var y = this.getConfig('directionY', 'top');
-        var offsetX = this.getConfig('offsetX', 0);
-        var offsetY = this.getConfig('offsetY', 0);
+        var x = this.getConfig('directionX', DEFAULT_PROPERTIES.directionX);
+        var y = this.getConfig('directionY', DEFAULT_PROPERTIES.directionY);
+        var offsetX = this.getConfig('offsetX', DEFAULT_PROPERTIES.offsetX);
+        var offsetY = this.getConfig('offsetY', DEFAULT_PROPERTIES.offsetY);
         var notification = this.options.element;
         var directions = ['top', 'right', 'bottom', 'left'];
         directions.forEach(function (d) {
@@ -1501,13 +1502,29 @@ var Notification = function ($) {
             notification.classList.remove(d);
           }
         });
-        notification.classList.add(x);
-        notification.classList.add(y);
-        notification.style.marginRight = "".concat(offsetX, "px");
+        notification.style.marginLeft = '0px';
+        notification.style.marginRight = '0px';
+        notification.classList.add("notification-".concat(x));
+        notification.classList.add("notification-".concat(y));
+        var activeNotifications = document.querySelectorAll('.notification.show') || [];
+        var totalNotifY = 0;
+        activeNotifications.forEach(function (n) {
+          if (notification !== n) {
+            var style = getComputedStyle(n);
+            totalNotifY += n.offsetHeight + parseInt(style.marginTop, 10) + parseInt(style.marginBottom, 10);
+          }
+        });
+        notification.style.transform = "translateY(".concat(y === 'top' ? '' : '-').concat(totalNotifY, "px)");
+        notification.style["margin".concat(x.replace(/^\w/, function (c) {
+          return c.toUpperCase();
+        }))] = "".concat(offsetX, "px");
+        notification.style["margin".concat(y.replace(/^\w/, function (c) {
+          return c.toUpperCase();
+        }))] = "".concat(offsetY, "px");
       }
       /**
        * Shows the notification
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1515,108 +1532,78 @@ var Notification = function ($) {
       value: function show() {
         var _this2 = this;
 
-        return new Promise(
+        if (this.options.element === null) {
+          // build and insert a new DOM element
+          this.build();
+        }
+
+        if (this.options.element.classList.contains('show')) {
+          return false;
+        } // reset color
+
+
+        if (this.options.background) {
+          this.options.element.removeAttribute('class');
+          this.options.element.setAttribute('class', 'notification');
+          this.options.element.classList.add("notification-".concat(this.options.background));
+          this.options.element.querySelector('button').classList.add("btn-".concat(this.options.background));
+        }
+
+        this.setPosition();
+
+        if (this.options.button) {
+          // attach the button handler
+          var buttonElement = this.options.element.querySelector('button');
+          this.registerElement({
+            target: buttonElement,
+            event: 'click'
+          });
+        }
+
+        _asyncToGenerator(
         /*#__PURE__*/
-        function () {
-          var _ref = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(resolve, reject) {
-            var buttonElement, activeNotifications, pushDistance, onShown;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (_this2.options.element === null) {
-                      // build and insert a new DOM element
-                      _this2.build();
-                    }
+        regeneratorRuntime.mark(function _callee() {
+          var onShown;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return sleep(20);
 
-                    if (!_this2.options.element.classList.contains('show')) {
-                      _context.next = 4;
-                      break;
-                    }
+                case 2:
+                  if (Number.isInteger(_this2.options.timeout) && _this2.options.timeout > 0) {
+                    // if there is a timeout, auto hide the notification
+                    _this2.timeoutCallback = setTimeout(function () {
+                      _this2.hide();
+                    }, _this2.options.timeout + 1);
+                  }
 
-                    reject(new Error('The notification is already active'));
-                    return _context.abrupt("return");
+                  _this2.options.element.classList.add('show');
 
-                  case 4:
-                    _this2.setPosition(); // reset color
+                  _this2.triggerEvent(Event.SHOW);
 
+                  onShown = function onShown() {
+                    _this2.triggerEvent(Event.SHOWN);
 
-                    if (_this2.options.background) {
-                      _this2.options.element.removeAttribute('class');
+                    _this2.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                  };
 
-                      _this2.options.element.setAttribute('class', 'notification');
+                  _this2.options.element.addEventListener(Event.TRANSITION_END, onShown);
 
-                      _this2.options.element.classList.add("notification-".concat(_this2.options.background));
-
-                      _this2.options.element.querySelector('button').classList.add("btn-".concat(_this2.options.background));
-                    }
-
-                    if (_this2.options.button) {
-                      // attach the button handler
-                      buttonElement = _this2.options.element.querySelector('button');
-
-                      _this2.registerElement({
-                        target: buttonElement,
-                        event: 'click'
-                      });
-                    }
-
-                    _context.next = 9;
-                    return sleep(20);
-
-                  case 9:
-                    if (Number.isInteger(_this2.options.timeout) && _this2.options.timeout > 0) {
-                      // if there is a timeout, auto hide the notification
-                      _this2.timeoutCallback = setTimeout(function () {
-                        _this2.hide();
-                      }, _this2.options.timeout + 1);
-                    }
-
-                    _this2.options.element.classList.add('show'); // set position
-
-
-                    activeNotifications = document.querySelectorAll('.notification.show') || [];
-                    pushDistance = 0;
-                    activeNotifications.forEach(function (notification) {
-                      if (_this2.options.element !== notification) {
-                        var style = getComputedStyle(notification);
-                        pushDistance += notification.offsetHeight + parseInt(style.marginBottom, 10);
-                      }
-                    });
-                    _this2.options.element.style.transform = "translateY(".concat(pushDistance, "px)");
-
-                    _this2.triggerEvent(Event.SHOW);
-
-                    onShown = function onShown() {
-                      _this2.triggerEvent(Event.SHOWN);
-
-                      _this2.options.element.removeEventListener(Event.TRANSITION_END, onShown);
-
-                      resolve();
-                    };
-
-                    _this2.options.element.addEventListener(Event.TRANSITION_END, onShown);
-
-                    return _context.abrupt("return", true);
-
-                  case 19:
-                  case "end":
-                    return _context.stop();
-                }
+                case 7:
+                case "end":
+                  return _context.stop();
               }
-            }, _callee, this);
-          }));
+            }
+          }, _callee, this);
+        }))();
 
-          return function (_x, _x2) {
-            return _ref.apply(this, arguments);
-          };
-        }());
+        return true;
       }
       /**
        * Hides the notification
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1624,53 +1611,47 @@ var Notification = function ($) {
       value: function hide() {
         var _this3 = this;
 
-        return new Promise(function (resolve, reject) {
-          /*
-          * prevent to close a notification with a timeout
-          * if the user has already clicked on the button
-          */
-          if (_this3.timeoutCallback) {
-            clearTimeout(_this3.timeoutCallback);
-            _this3.timeoutCallback = null;
+        /*
+        * prevent to close a notification with a timeout
+        * if the user has already clicked on the button
+        */
+        if (this.timeoutCallback) {
+          clearTimeout(this.timeoutCallback);
+          this.timeoutCallback = null;
+        }
+
+        if (!this.options.element.classList.contains('show')) {
+          return false;
+        }
+
+        this.triggerEvent(Event.HIDE);
+
+        if (this.options.button) {
+          var buttonElement = this.options.element.querySelector('button');
+          this.unregisterElement({
+            target: buttonElement,
+            event: 'click'
+          });
+        }
+
+        this.options.element.classList.remove('show');
+        this.options.element.classList.add('hide');
+
+        var onHidden = function onHidden() {
+          _this3.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
+
+          _this3.options.element.classList.remove('hide');
+
+          _this3.triggerEvent(Event.HIDDEN);
+
+          if (_this3.dynamicElement) {
+            document.body.removeChild(_this3.options.element);
+            _this3.options.element = null;
           }
+        };
 
-          if (!_this3.options.element.classList.contains('show')) {
-            reject(new Error('The notification is not active'));
-            return;
-          }
-
-          _this3.triggerEvent(Event.HIDE);
-
-          if (_this3.options.button) {
-            var buttonElement = _this3.options.element.querySelector('button');
-
-            _this3.unregisterElement({
-              target: buttonElement,
-              event: 'click'
-            });
-          }
-
-          _this3.options.element.classList.remove('show');
-
-          _this3.options.element.classList.add('hide');
-
-          var onHidden = function onHidden() {
-            _this3.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
-
-            _this3.options.element.classList.remove('hide');
-
-            _this3.triggerEvent(Event.HIDDEN);
-
-            if (_this3.dynamicElement) {
-              document.body.removeChild(_this3.options.element);
-              _this3.options.element = null;
-            }
-
-            resolve();
-          };
-
-          _this3.options.element.addEventListener(Event.TRANSITION_END, onHidden);
-        });
+        this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
+        return true;
       }
     }, {
       key: "onElementEvent",

@@ -743,6 +743,42 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1001,6 +1037,11 @@ function createJqueryPlugin() {
   $.fn[name] = mainFn;
   $.fn[name].Constructor = obj;
   $.fn[name].noConflict = mainFn;
+}
+function sleep(timeout) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, timeout);
+  });
 }
 
 var getAttribute = function getAttribute(first, second) {
@@ -1401,13 +1442,15 @@ var OffCanvas = function ($) {
   var BACKDROP_SELECTOR = 'offcanvas-backdrop';
   var DEFAULT_PROPERTIES = {
     element: null,
+    container: document.body,
+    toggle: false,
     aside: {
       md: false,
-      lg: false,
-      xl: false
+      lg: true,
+      xl: true
     }
   };
-  var DATA_ATTRS_PROPERTIES = ['aside'];
+  var DATA_ATTRS_PROPERTIES = ['aside', 'toggle'];
   var components = [];
   /**
    * ------------------------------------------------------------------------
@@ -1428,9 +1471,9 @@ var OffCanvas = function ($) {
       _classCallCheck(this, OffCanvas);
 
       _this = _possibleConstructorReturn(this, _getPrototypeOf(OffCanvas).call(this, NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, true));
-      _this.useBackdrop = true;
-      _this.currentWidth = null;
+      _this.currentWidthName = null;
       _this.animate = true;
+      _this.showAside = false;
       _this.directions = ['left', 'right'];
       var sm = {
         name: 'sm',
@@ -1453,6 +1496,10 @@ var OffCanvas = function ($) {
       _this.checkDirection();
 
       _this.checkWidth();
+
+      if (_this.options.toggle) {
+        _this.toggle();
+      }
 
       window.addEventListener('resize', function () {
         return _this.checkWidth();
@@ -1477,58 +1524,61 @@ var OffCanvas = function ($) {
     }, {
       key: "checkWidth",
       value: function checkWidth() {
-        var _this3 = this;
-
         if (!('matchMedia' in window)) {
           return;
         }
 
-        this.sizes.every(function (size) {
+        var size = this.sizes.find(function (size) {
           var match = size.media.media.match(/[a-z]?-width:\s?([0-9]+)/);
-
-          if (match) {
-            if (size.media.matches) {
-              if (_this3.currentWidth !== size.name) {
-                _this3.setAside(size.name);
-              }
-
-              _this3.currentWidth = size.name;
-              return false;
-            }
-          }
-
-          return true;
+          return match && size.media.matches;
         });
-      }
-    }, {
-      key: "preventClosable",
-      value: function preventClosable() {
-        return _get(_getPrototypeOf(OffCanvas.prototype), "preventClosable", this).call(this) || this.options.aside[this.currentWidth] === true;
+
+        if (!size) {
+          return;
+        }
+
+        this.setAside(size.name);
       }
     }, {
       key: "setAside",
       value: function setAside(name) {
-        var content = document.body;
+        if (this.currentWidthName === name) {
+          return;
+        }
+
+        this.currentWidthName = name;
+        var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+        this.showAside = this.options.aside[name] === true;
 
         if (this.options.aside[name] === true) {
           if (!content.classList.contains("offcanvas-aside-".concat(this.direction))) {
             content.classList.add("offcanvas-aside-".concat(this.direction));
+          } // avoid animation by setting animate to false
+
+
+          this.animate = false; // remove previous backdrop
+
+          if (this.getBackdrop()) {
+            this.removeBackdrop();
+          } // in case of many visible or hidden off-canvas
+
+
+          if (this.visibleOffCanvas > 0 && !content.classList.contains('show')) {
+            content.classList.add('show');
+          } else if (this.visibleOffCanvas === 0 && content.classList.contains('show')) {
+            content.classList.remove('show');
           }
-
-          this.useBackdrop = false; // avoid animation by setting animate to false
-
-          this.animate = false;
-          this.show(); // remove previous backdrop
-
-          this.removeBackdrop();
         } else {
           if (content.classList.contains("offcanvas-aside-".concat(this.direction))) {
             content.classList.remove("offcanvas-aside-".concat(this.direction));
           }
 
-          this.hide();
-          this.useBackdrop = true;
           this.animate = true;
+
+          if (!this.getBackdrop() && this.isVisible()) {
+            this.createBackdrop();
+            this.attachEvents();
+          }
         }
       }
     }, {
@@ -1542,52 +1592,100 @@ var OffCanvas = function ($) {
         this.hide();
       }
     }, {
+      key: "isVisible",
+      value: function isVisible() {
+        return this.options.element.classList.contains('show');
+      }
+    }, {
+      key: "visibleOffCanvas",
+      value: function visibleOffCanvas() {
+        var offCanvas = Array.from(document.querySelectorAll(".".concat(NAME, ".show")) || []);
+        return offCanvas.length;
+      }
+      /**
+       * Shows the off-canvas
+       * @returns {Boolean}
+       */
+
+    }, {
       key: "show",
       value: function show() {
-        var _this4 = this;
+        var _this3 = this;
 
         if (this.options.element.classList.contains('show')) {
           return false;
+        }
+
+        this.triggerEvent(Event.SHOW);
+
+        if (!this.showAside) {
+          this.createBackdrop();
         } // add a timeout so that the CSS animation works
 
 
-        setTimeout(function () {
-          _this4.triggerEvent(Event.SHOW);
+        _asyncToGenerator(
+        /*#__PURE__*/
+        regeneratorRuntime.mark(function _callee() {
+          var onShown, container;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return sleep(20);
 
-          var onShown = function onShown() {
-            _this4.triggerEvent(Event.SHOWN);
+                case 2:
+                  // attach event
+                  _this3.attachEvents();
 
-            if (_this4.animate) {
-              _this4.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                  onShown = function onShown() {
+                    _this3.triggerEvent(Event.SHOWN);
 
-              _this4.options.element.classList.remove('animate');
+                    if (_this3.animate) {
+                      _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+
+                      _this3.options.element.classList.remove('animate');
+                    }
+                  };
+
+                  if (_this3.showAside) {
+                    container = _this3.getConfig('container', DEFAULT_PROPERTIES.container);
+
+                    if (!container.classList.contains('show')) {
+                      container.classList.add('show');
+                    }
+                  }
+
+                  if (_this3.animate) {
+                    _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
+
+                    _this3.options.element.classList.add('animate');
+                  } else {
+                    // directly trigger the onShown
+                    onShown();
+                  }
+
+                  _this3.options.element.classList.add('show');
+
+                case 7:
+                case "end":
+                  return _context.stop();
+              }
             }
-          };
+          }, _callee, this);
+        }))();
 
-          if (_this4.useBackdrop) {
-            _this4.createBackdrop();
-          }
-
-          if (_this4.animate) {
-            _this4.options.element.addEventListener(Event.TRANSITION_END, onShown);
-
-            _this4.options.element.classList.add('animate');
-          } else {
-            // directly trigger the onShown
-            onShown();
-          }
-
-          _this4.options.element.classList.add('show'); // attach event
-
-
-          _this4.attachEvents();
-        }, 1);
         return true;
       }
+      /**
+       * Hides the off-canvas
+       * @returns {Boolean}
+       */
+
     }, {
       key: "hide",
       value: function hide() {
-        var _this5 = this;
+        var _this4 = this;
 
         if (!this.options.element.classList.contains('show')) {
           return false;
@@ -1600,21 +1698,29 @@ var OffCanvas = function ($) {
           this.options.element.classList.add('animate');
         }
 
+        if (this.showAside) {
+          var container = this.getConfig('container', DEFAULT_PROPERTIES.container);
+
+          if (container.classList.contains('show')) {
+            container.classList.remove('show');
+          }
+        }
+
         this.options.element.classList.remove('show');
 
-        if (this.useBackdrop) {
+        if (!this.showAside) {
           var backdrop = this.getBackdrop();
 
           var onHidden = function onHidden() {
-            if (_this5.animate) {
-              _this5.options.element.classList.remove('animate');
+            if (_this4.animate) {
+              _this4.options.element.classList.remove('animate');
             }
 
             backdrop.removeEventListener(Event.TRANSITION_END, onHidden);
 
-            _this5.triggerEvent(Event.HIDDEN);
+            _this4.triggerEvent(Event.HIDDEN);
 
-            _this5.removeBackdrop();
+            _this4.removeBackdrop();
           };
 
           backdrop.addEventListener(Event.TRANSITION_END, onHidden);
@@ -1622,6 +1728,15 @@ var OffCanvas = function ($) {
         }
 
         return true;
+      }
+    }, {
+      key: "toggle",
+      value: function toggle() {
+        if (this.isVisible()) {
+          return this.hide();
+        }
+
+        return this.show();
       }
     }, {
       key: "createBackdrop",
@@ -1648,20 +1763,16 @@ var OffCanvas = function ($) {
     }, {
       key: "attachEvents",
       value: function attachEvents() {
-        var _this6 = this;
+        var _this5 = this;
 
-        var dismissButtons = this.options.element.querySelectorAll('[data-dismiss]');
-
-        if (dismissButtons) {
-          Array.from(dismissButtons).forEach(function (button) {
-            return _this6.registerElement({
-              target: button,
-              event: 'click'
-            });
+        Array.from(this.options.element.querySelectorAll('[data-dismiss]') || []).forEach(function (button) {
+          return _this5.registerElement({
+            target: button,
+            event: 'click'
           });
-        }
+        });
 
-        if (this.useBackdrop) {
+        if (!this.showAside) {
           var backdrop = this.getBackdrop();
           this.registerElement({
             target: backdrop,
@@ -1677,20 +1788,20 @@ var OffCanvas = function ($) {
     }, {
       key: "detachEvents",
       value: function detachEvents() {
-        var _this7 = this;
+        var _this6 = this;
 
         var dismissButtons = this.options.element.querySelectorAll('[data-dismiss]');
 
         if (dismissButtons) {
           Array.from(dismissButtons).forEach(function (button) {
-            return _this7.unregisterElement({
+            return _this6.unregisterElement({
               target: button,
               event: 'click'
             });
           });
         }
 
-        if (this.useBackdrop) {
+        if (!this.showAside) {
           var backdrop = this.getBackdrop();
           this.unregisterElement({
             target: backdrop,
@@ -1761,7 +1872,7 @@ var OffCanvas = function ($) {
       }
 
       target.blur();
-      component.offCanvas.show();
+      component.offCanvas.toggle();
     }
   });
   return OffCanvas;

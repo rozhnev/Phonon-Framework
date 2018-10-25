@@ -903,305 +903,59 @@
       detail: detail
     }));
   }
-  function dispatchPageEvent(eventName, pageName) {
-    var detail = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    var fullEventName = "".concat(pageName, ".").concat(eventName);
-    window.dispatchEvent(new CustomEvent(fullEventName, {
-      detail: detail
-    }));
-    document.dispatchEvent(new CustomEvent(fullEventName, {
-      detail: detail
-    }));
+
+  function generateId() {
+    return Math.random().toString(36).substr(2, 10);
   }
+  function findTargetByClass(target, parentClass) {
+    for (; target && target !== document; target = target.parentNode) {
+      if (target.classList.contains(parentClass)) {
+        return target;
+      }
+    }
 
-  var Page = function () {
-    /**
-     * ------------------------------------------------------------------------
-     * Constants
-     * ------------------------------------------------------------------------
-     */
-    var NAME = 'page';
-    var VERSION = '2.0.0';
-    var TEMPLATE_SELECTOR = '[data-template]';
-    /**
-     * ------------------------------------------------------------------------
-     * Class Definition
-     * ------------------------------------------------------------------------
-     */
+    return null;
+  }
+  function findTargetByAttr(target, attr) {
+    for (; target && target !== document; target = target.parentNode) {
+      if (target.getAttribute(attr) !== null) {
+        return target;
+      }
+    }
 
-    var Page =
-    /*#__PURE__*/
-    function () {
-      /**
-       * Creates an instance of Page.
-       * @param {string} pageName
-       */
-      function Page(pageName) {
-        _classCallCheck(this, Page);
+    return null;
+  }
+  /* eslint no-param-reassign: 0 */
 
-        this.name = pageName;
-        this.events = [];
-        this.templatePath = null;
-        this.renderFunction = null;
-        this.route = "/".concat(pageName);
-        this.routeRegex = null;
-        this.routeParams = [];
-        this.setRoute("/".concat(pageName));
-      } // getters
+  function createJqueryPlugin() {
+    var $ = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var name = arguments.length > 1 ? arguments[1] : undefined;
+    var obj = arguments.length > 2 ? arguments[2] : undefined;
 
+    if (!$) {
+      return;
+    }
 
-      _createClass(Page, [{
-        key: "getEvents",
+    var mainFn = function mainFn() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var opts = options;
 
-        /**
-         * Get events
-         * @returns {Function[]}
-         */
-        value: function getEvents() {
-          return this.events;
-        }
-        /**
-         * Get template
-         * @returns {string}
-         */
+      if (this[0]) {
+        opts.element = this[0];
+      }
 
-      }, {
-        key: "getTemplate",
-        value: function getTemplate() {
-          return this.template;
-        }
-        /**
-         * Get route
-         * @returns {string}
-         */
+      return obj.DOMInterface(opts);
+    };
 
-      }, {
-        key: "getRoute",
-        value: function getRoute() {
-          return {
-            route: this.route,
-            regex: this.routeRegex,
-            params: this.routeParams
-          };
-        }
-        /**
-         * Set route
-         * @returns {undefined}
-         */
-
-      }, {
-        key: "setRoute",
-        value: function setRoute(route) {
-          var regParams = /{(.*?)}/g;
-          this.route = route;
-          this.routeRegex = "".concat(route.replace(/({.*?})/g, '(.*?)'), "$");
-          this.routeParams = (route.match(regParams) || []).map(function (e) {
-            return e.replace(regParams, '$1');
-          });
-        }
-      }, {
-        key: "getRouteLink",
-        value: function getRouteLink() {
-          var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var reg = /{(.*?)}/g;
-
-          var _this$getRoute = this.getRoute(),
-              route = _this$getRoute.route;
-
-          var linkWithParams = (route.match(reg) || []).reduce(function (cur, param) {
-            var paramName = param.replace(/{|}/g, '');
-            return cur.replace(new RegExp(param), params ? params[paramName] : 'null');
-          }, route);
-          return linkWithParams;
-        }
-      }, {
-        key: "validHash",
-        value: function validHash(hash) {
-          var link = this.getRouteLink(this.getParams(hash));
-          return link === hash;
-        }
-      }, {
-        key: "getParams",
-        value: function getParams(hash) {
-          var hashParams = {};
-
-          var _this$getRoute2 = this.getRoute(),
-              regex = _this$getRoute2.regex,
-              params = _this$getRoute2.params;
-
-          var hashValues = (new RegExp(regex, 'g').exec(hash) || []).slice(1);
-          params.forEach(function (p, i) {
-            hashParams[p] = hashValues[i];
-          });
-          return hashParams;
-        }
-        /**
-         * Get render function
-         * @returns {Function}
-         */
-
-      }, {
-        key: "getRenderFunction",
-        value: function getRenderFunction() {
-          return this.renderFunction;
-        }
-      }, {
-        key: "renderTemplate",
-        value: function () {
-          var _renderTemplate = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            var pageElement, render;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    pageElement = document.querySelector("[data-page=\"".concat(this.name, "\"]"));
-
-                    render =
-                    /*#__PURE__*/
-                    function () {
-                      var _ref = _asyncToGenerator(
-                      /*#__PURE__*/
-                      regeneratorRuntime.mark(function _callee(DOMPage, template, elements) {
-                        return regeneratorRuntime.wrap(function _callee$(_context) {
-                          while (1) {
-                            switch (_context.prev = _context.next) {
-                              case 0:
-                                if (elements) {
-                                  Array.from(elements).forEach(function (el) {
-                                    el.innerHTML = template;
-                                  });
-                                } else {
-                                  DOMPage.innerHTML = template;
-                                }
-
-                              case 1:
-                              case "end":
-                                return _context.stop();
-                            }
-                          }
-                        }, _callee, this);
-                      }));
-
-                      return function render(_x, _x2, _x3) {
-                        return _ref.apply(this, arguments);
-                      };
-                    }();
-
-                    if (this.getRenderFunction()) {
-                      render = this.getRenderFunction();
-                    }
-
-                    _context2.next = 5;
-                    return render(pageElement, this.getTemplate(), Array.from(pageElement.querySelectorAll(TEMPLATE_SELECTOR) || []));
-
-                  case 5:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function renderTemplate() {
-            return _renderTemplate.apply(this, arguments);
-          };
-        }() // public
-
-        /**
-         *
-         * @param {*} callbackFn
-         */
-
-      }, {
-        key: "addEvents",
-        value: function addEvents(callbackFn) {
-          this.events.push(callbackFn);
-        }
-        /**
-         * Use the given template
-         *
-         * @param {string} template
-         * @param {Function} renderFunction
-         */
-
-      }, {
-        key: "setTemplate",
-        value: function setTemplate() {
-          var template = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var renderFunction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-          if (typeof template !== 'string') {
-            throw new Error("The template path must be a string. ".concat(_typeof(template), " is given"));
-          }
-
-          this.template = template;
-
-          if (typeof renderFunction === 'function') {
-            this.renderFunction = renderFunction;
-          }
-        }
-        /**
-         * Add a transition handler
-         *
-         * @param {Function} fn
-         */
-
-      }, {
-        key: "preventTransition",
-        value: function preventTransition(fn) {
-          if (typeof fn !== 'function') {
-            throw new Error("".concat(NAME, ": invalid function to handle page transitions"));
-          }
-
-          this.preventTransitionFn = fn;
-        }
-      }, {
-        key: "getPreventTransition",
-        value: function getPreventTransition() {
-          return this.preventTransitionFn;
-        }
-        /**
-         * Trigger scopes
-         * @param {string} eventName
-         * @param {{}} [eventParams={}]
-         */
-
-      }, {
-        key: "triggerScopes",
-        value: function triggerScopes(eventName) {
-          var _this = this;
-
-          var eventParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-          var eventNameAlias = "on".concat(eventName.charAt(0).toUpperCase()).concat(eventName.slice(1));
-          this.events.forEach(function (scope) {
-            var scopeEvent = scope[eventName];
-            var scopeEventAlias = scope[eventNameAlias];
-
-            if (typeof scopeEvent === 'function') {
-              scopeEvent.apply(_this, [eventParams]);
-            } // trigger the event alias
-
-
-            if (typeof scopeEventAlias === 'function') {
-              scopeEventAlias.apply(_this, [eventParams]);
-            }
-          });
-          dispatchPageEvent(eventName, this.name, eventParams);
-        }
-      }], [{
-        key: "version",
-        get: function get() {
-          return "".concat(NAME, ".").concat(VERSION);
-        }
-      }]);
-
-      return Page;
-    }();
-
-    return Page;
-  }();
+    $.fn[name] = mainFn;
+    $.fn[name].Constructor = obj;
+    $.fn[name].noConflict = mainFn;
+  }
+  function sleep(timeout) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, timeout);
+    });
+  }
 
   // @todo keep ?
   if (typeof window !== 'undefined') {
@@ -1306,858 +1060,6 @@
     // selectbox
     ITEM_SELECTED: 'itemSelected'
   };
-
-  var Pager = function () {
-    /**
-     * ------------------------------------------------------------------------
-     * Constants
-     * ------------------------------------------------------------------------
-     */
-    var NAME = 'pager';
-    var VERSION = '2.0.0';
-    var DEFAULT_PROPERTIES = {
-      hashPrefix: '#!',
-      useHash: true,
-      defaultPage: null,
-      animatePages: true
-    };
-    var currentPage;
-    var lastHash = null;
-    /**
-     * ------------------------------------------------------------------------
-     * Class Definition
-     * ------------------------------------------------------------------------
-     */
-
-    var Pager =
-    /*#__PURE__*/
-    function () {
-      /**
-       * @constructor
-       *
-       * @param options {Object}
-       */
-      function Pager() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, Pager);
-
-        this.options = Object.assign(DEFAULT_PROPERTIES, options);
-        this.pages = [];
-        this.started = false; // add global listeners such ash hash change, navigation, etc.
-
-        this.addPagerEvents(); // faster way to init pages before the DOM is ready
-
-        this.onDOMLoaded();
-      } // private
-
-
-      _createClass(Pager, [{
-        key: "_",
-        value: function _(selector) {
-          return document.querySelector(selector);
-        }
-      }, {
-        key: "getRoute",
-        value: function getRoute() {
-          return window.location.hash.split(this.options.hashPrefix)[1];
-        }
-      }, {
-        key: "getHash",
-        value: function getHash() {
-          return window.location.hash;
-        }
-      }, {
-        key: "getHashParams",
-        value: function getHashParams() {
-          var page = this.getPageModel(currentPage);
-          return page.getParams(this.getHash());
-        }
-      }, {
-        key: "getPageFromHash",
-        value: function getPageFromHash() {
-          var hash = this.getHash() || '';
-          var page = this.getPages().find(function (p) {
-            return hash.match(p.getRoute().regex);
-          });
-          return page ? page.name : null;
-        }
-      }, {
-        key: "setHash",
-        value: function setHash(pageName) {
-          var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-          var page = this.getPageModel(pageName);
-
-          if (!page) {
-            throw new Error("Cannot change the route of unknown page ".concat(pageName));
-          }
-
-          window.location.hash = "".concat(this.options.hashPrefix).concat(page.getRouteLink(params));
-        }
-      }, {
-        key: "isPageOf",
-        value: function isPageOf(pageName1, pageName2) {
-          var page1 = this.getPageModel(pageName1);
-          var page2 = this.getPageModel(pageName2);
-          return page1 && page2 && page1.name === page2.name;
-        }
-        /**
-         * Attaches the main events for tracking hash changes,
-         * click on navigation buttons and links and back history
-         */
-
-      }, {
-        key: "addPagerEvents",
-        value: function addPagerEvents() {
-          var _this = this;
-
-          document.addEventListener('click', function (event) {
-            return _this.onClick(event);
-          });
-          document.addEventListener('DOMContentLoaded', function (event) {
-            return _this.onDOMLoaded(event);
-          });
-
-          if (this.options.useHash) {
-            window.addEventListener('hashchange', function (event) {
-              return _this.onHashChange(event);
-            });
-          }
-        } // getters
-
-      }, {
-        key: "preventChangePage",
-        value: function () {
-          var _preventChangePage = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(oldPageName, pageName, params) {
-            var oldPage, preventFn;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    oldPage = this.getPageModel(oldPageName);
-                    preventFn = oldPage.getPreventTransition();
-
-                    if (!(typeof preventFn === 'function')) {
-                      _context.next = 4;
-                      break;
-                    }
-
-                    return _context.abrupt("return", preventFn(oldPageName, pageName, params));
-
-                  case 4:
-                    return _context.abrupt("return", false);
-
-                  case 5:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function preventChangePage(_x, _x2, _x3) {
-            return _preventChangePage.apply(this, arguments);
-          };
-        }() // public
-
-      }, {
-        key: "showPage",
-        value: function () {
-          var _showPage = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2(pageName) {
-            var _this2 = this;
-
-            var params,
-                back,
-                oldPage,
-                oldPageName,
-                newPage,
-                pageModel,
-                hashParams,
-                onPageAnimationEnd,
-                _args2 = arguments;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    params = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
-                    back = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : false;
-
-                    if (!(this.options.useHash && this.getPageFromHash() !== pageName)) {
-                      _context2.next = 5;
-                      break;
-                    }
-
-                    this.setHash(pageName, params);
-                    return _context2.abrupt("return");
-
-                  case 5:
-                    oldPage = this._('.current');
-                    oldPageName = null;
-
-                    if (!oldPage) {
-                      _context2.next = 19;
-                      break;
-                    }
-
-                    oldPageName = oldPage.getAttribute('data-page');
-
-                    if (!this.isPageOf(pageName, oldPageName)) {
-                      _context2.next = 11;
-                      break;
-                    }
-
-                    return _context2.abrupt("return");
-
-                  case 11:
-                    _context2.next = 13;
-                    return this.preventChangePage(oldPageName, pageName, params);
-
-                  case 13:
-                    if (!_context2.sent) {
-                      _context2.next = 16;
-                      break;
-                    }
-
-                    if (this.options.useHash) {
-                      window.location.hash = lastHash;
-                    }
-
-                    return _context2.abrupt("return");
-
-                  case 16:
-                    oldPage.classList.remove('current'); // history
-
-                    window.history.replaceState({
-                      page: pageName
-                    }, oldPageName);
-                    this.triggerPageEvent(oldPageName, Event.HIDE);
-
-                  case 19:
-                    currentPage = pageName; // new page
-
-                    newPage = this._("[data-page=\"".concat(currentPage, "\"]"));
-                    newPage.classList.add('current'); // render template
-
-                    pageModel = this.getPageModel(currentPage);
-                    hashParams = pageModel.getParams(this.getHash());
-                    this.triggerPageEvent(currentPage, Event.SHOW, hashParams);
-
-                    if (!(pageModel && pageModel.getTemplate())) {
-                      _context2.next = 28;
-                      break;
-                    }
-
-                    _context2.next = 28;
-                    return pageModel.renderTemplate();
-
-                  case 28:
-                    if (oldPage) {
-                      // use of prototype-oriented language
-                      oldPage.back = back;
-                      oldPage.previousPageName = oldPageName;
-
-                      onPageAnimationEnd = function onPageAnimationEnd() {
-                        if (oldPage.classList.contains('animate')) {
-                          oldPage.classList.remove('animate');
-                        }
-
-                        oldPage.classList.remove(oldPage.back ? 'pop-page' : 'push-page');
-
-                        _this2.triggerPageEvent(currentPage, Event.SHOWN, hashParams);
-
-                        _this2.triggerPageEvent(oldPage.previousPageName, Event.HIDDEN);
-
-                        oldPage.removeEventListener(Event.ANIMATION_END, onPageAnimationEnd);
-                      };
-
-                      if (this.options.animatePages) {
-                        oldPage.addEventListener(Event.ANIMATION_END, onPageAnimationEnd);
-                        oldPage.classList.add('animate');
-                      } else {
-                        onPageAnimationEnd();
-                      }
-
-                      oldPage.classList.add(back ? 'pop-page' : 'push-page');
-                    }
-
-                    lastHash = this.getHash();
-
-                  case 30:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function showPage(_x4) {
-            return _showPage.apply(this, arguments);
-          };
-        }()
-      }, {
-        key: "addUniquePageModel",
-        value: function addUniquePageModel(pageName) {
-          if (!this.getPageModel(pageName)) {
-            this.getPages().push(new Page(pageName));
-          }
-        }
-      }, {
-        key: "getPageModel",
-        value: function getPageModel(pageName) {
-          return this.getPages().find(function (page) {
-            return page.name === pageName;
-          });
-        }
-      }, {
-        key: "triggerPageEvent",
-        value: function triggerPageEvent(pageName, eventName) {
-          var eventParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-          var pageModel = this.getPageModel(pageName);
-
-          if (pageModel) {
-            pageModel.triggerScopes(eventName, eventParams);
-          }
-        }
-      }, {
-        key: "onClick",
-        value: function onClick(event) {
-          var pageName = event.target.getAttribute('data-navigate');
-          var backAnimation = event.target.getAttribute('data-pop-page') === 'true';
-
-          if (!pageName) {
-            return;
-          }
-
-          this.showPage(pageName, null, backAnimation);
-        }
-      }, {
-        key: "onHashChange",
-        value: function onHashChange() {
-          var params = this.getHashParams();
-          var navPage = this.getPageFromHash(); // avoid concurrent pages if prevent page change is defined
-
-          if (navPage === currentPage) {
-            this.triggerPageEvent(currentPage, Event.HASH, params);
-          }
-
-          if (navPage) {
-            this.showPage(navPage, null, false, params);
-          }
-        }
-        /**
-         * Queries the page nodes in the DOM
-         */
-
-      }, {
-        key: "onDOMLoaded",
-        value: function onDOMLoaded() {
-          var _this3 = this;
-
-          var pages = document.querySelectorAll('[data-page]');
-
-          if (!pages) {
-            return;
-          }
-
-          pages.forEach(function (page) {
-            /*
-             * the page name can be given with the attribute data-page
-             * or with its node name
-             */
-            var pageName = page.getAttribute('data-page') || page.nodeName;
-
-            _this3.addUniquePageModel(pageName);
-          });
-        }
-      }, {
-        key: "getPage",
-        value: function getPage(pageName) {
-          var addPageModel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-          if (addPageModel) {
-            this.addUniquePageModel(pageName);
-          }
-
-          return this.getPageModel(pageName);
-        }
-      }, {
-        key: "getPages",
-        value: function getPages() {
-          return this.pages;
-        }
-      }, {
-        key: "start",
-        value: function start() {
-          var forceDefaultPage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-          var force = forceDefaultPage; // check if the app has been already started
-
-          if (this.started) {
-            throw new Error("".concat(NAME, ". The app has been already started."));
-          }
-
-          this.started = true; // force default page on Cordova
-
-          if (window.cordova) {
-            force = true;
-          }
-
-          var pageName = this.getPageFromHash();
-
-          if (!this.getPageModel(pageName)) {
-            pageName = this.options.defaultPage;
-          }
-
-          var page = this.getPageModel(pageName);
-
-          if (force && !this.options.defaultPage) {
-            throw new Error("".concat(NAME, ". The default page must exist for forcing its launch!"));
-          }
-          /*
-           * if the app is configurated to use hash tracking
-           * we add the page dynamically in the url
-           */
-
-
-          if (this.options.useHash) {
-            if (!page.validHash(this.getRoute())) {
-              this.setHash(pageName);
-            }
-          }
-
-          this.showPage(force ? this.options.defaultPage : pageName);
-        } // static
-
-      }], [{
-        key: "DOMInterface",
-        value: function DOMInterface(options) {
-          return new Pager(options);
-        }
-      }, {
-        key: "version",
-        get: function get() {
-          return "".concat(NAME, ".").concat(VERSION);
-        }
-      }]);
-
-      return Pager;
-    }();
-
-    return Pager;
-  }();
-
-  /**
-  * --------------------------------------------------------------------------
-  * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
-  * --------------------------------------------------------------------------
-  */
-  var Binder = function () {
-    /**
-    * ------------------------------------------------------------------------
-    * Constants
-    * ------------------------------------------------------------------------
-    */
-    var NAME = 'i18n-binder';
-    var VERSION = '2.0.0';
-    /**
-     * ------------------------------------------------------------------------
-     * Class Definition
-     * ------------------------------------------------------------------------
-     */
-
-    var Binder =
-    /*#__PURE__*/
-    function () {
-      /**
-       * @param {HTMLElement} element
-       * @param {Object} data
-       */
-      function Binder(element, data) {
-        _classCallCheck(this, Binder);
-
-        this.element = element;
-        this.data = data;
-
-        if (!this.isElement(this.element)) {
-          console.log('Warning, an element is invalid');
-          return;
-        } // array of HTMLElement
-
-
-        if (this.element.length && this.element.length > 0) {
-          this.setNodes(this.element);
-        } else {
-          // single HTMLElement
-          this.setNode(this.element);
-        }
-      } // getters
-
-
-      _createClass(Binder, [{
-        key: "isElement",
-
-        /**
-         * Checks if the given argument is a DOM element
-         * @param {Element} the argument to test
-         * @returns {boolean} true if the object is a DOM element, false otherwise
-         */
-        value: function isElement(element) {
-          if (element === null) {
-            return false;
-          }
-
-          return element instanceof Node || element instanceof NodeList;
-        }
-        /**
-        * Binds some text to the given DOM element
-        * @param {HTMLElement} element
-        * @param {String} text
-        */
-
-      }, {
-        key: "setText",
-        value: function setText(element, text) {
-          if (!('textContent' in element)) {
-            element.innerText = text;
-          } else {
-            element.textContent = text;
-          }
-        }
-        /**
-         * Binds some html to the given DOM element
-         * @param {HTMLElement} element
-         * @param {String} text
-         */
-
-      }, {
-        key: "setHtml",
-        value: function setHtml(element, text) {
-          element.innerHTML = text;
-        }
-        /**
-         * Binds custom attributes to the given DOM element
-         * @param {HTMLElement} element
-         * @param {String} attr
-         * @param {String} text
-         */
-
-      }, {
-        key: "setAttribute",
-        value: function setAttribute(element, attr, text) {
-          element.setAttribute(attr, text);
-        }
-        /**
-         * Binds DOM elements
-         * @param {HTMLElement} element
-         */
-
-      }, {
-        key: "setNode",
-        value: function setNode(element) {
-          var attr = element.getAttribute('data-t');
-
-          if (!attr) {
-            return;
-          }
-
-          attr = attr.trim();
-          var r = /(?:\s|^)([A-Za-z-_0-9]+):\s*(.*?)(?=\s+\w+:|$)/g;
-          var m;
-
-          while (m = r.exec(attr)) {
-            var key = m[1].trim();
-            var value = m[2].trim().replace(',', '');
-            var i18nValue = this.data[value];
-
-            if (!this.data[value]) {
-              console.log("".concat(NAME, ". Warning, ").concat(value, " does not exist."));
-              i18nValue = value;
-            }
-
-            var methodName = "set".concat(key.charAt(0).toUpperCase()).concat(key.slice(1));
-
-            if (this[methodName]) {
-              this[methodName](element, i18nValue);
-            } else {
-              this.setAttribute(element, key, i18nValue);
-            }
-          }
-        }
-        /**
-         * Binds DOM elements
-         * @param {HTMLElement} element
-         */
-
-      }, {
-        key: "setNodes",
-        value: function setNodes(element) {
-          var _this = this;
-
-          Array.from(element).forEach(function (el) {
-            return _this.setNode(el);
-          });
-        }
-      }], [{
-        key: "version",
-        get: function get() {
-          return "".concat(NAME, ".").concat(VERSION);
-        }
-      }]);
-
-      return Binder;
-    }();
-
-    return Binder;
-  }();
-
-  var I18n = function () {
-    /**
-     * ------------------------------------------------------------------------
-     * Constants
-     * ------------------------------------------------------------------------
-     */
-    var NAME = 'i18n';
-    var VERSION = '2.0.0';
-    var DEFAULT_PROPERTIES = {
-      fallbackLocale: 'en',
-      locale: 'en',
-      bind: false,
-      data: null
-    };
-    /**
-     * ------------------------------------------------------------------------
-     * Class Definition
-     * ------------------------------------------------------------------------
-     */
-
-    var I18n =
-    /*#__PURE__*/
-    function () {
-      /**
-       * Creates an instance of I18n.
-       * @param {fallbackLocale: string, locale: string, bind: boolean, data: {[lang: string]: {[key: string]: string}}}
-       */
-      function I18n() {
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, I18n);
-
-        this.options = Object.assign(DEFAULT_PROPERTIES, options);
-
-        if (typeof this.options.fallbackLocale !== 'string') {
-          throw new Error("".concat(NAME, ". The fallback locale is mandatory and must be a string."));
-        }
-
-        if (this.options.data === null) {
-          throw new Error("".concat(NAME, ". There is no translation data."));
-        }
-
-        if (_typeof(this.options.data[this.options.fallbackLocale]) !== 'object') {
-          throw new Error("".concat(NAME, ". The fallback locale must necessarily have translation data."));
-        }
-
-        this.setLocale(this.options.locale, this.options.bind);
-      }
-
-      _createClass(I18n, [{
-        key: "getLocale",
-        value: function getLocale() {
-          return this.options.locale;
-        }
-      }, {
-        key: "getFallbackLocale",
-        value: function getFallbackLocale() {
-          return this.options.fallbackLocale;
-        }
-        /**
-         * Set default locale
-         * @param {string} locale
-         * @param {boolean} [bind=true]
-         */
-
-      }, {
-        key: "setLocale",
-        value: function setLocale(locale) {
-          var bind = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-          if (_typeof(this.options.data[locale]) !== 'object') {
-            console.error("".concat(NAME, ". ").concat(locale, " has no data, fallback in ").concat(this.options.fallbackLocale, "."));
-          } else {
-            this.options.locale = locale;
-          }
-
-          if (bind) {
-            this.updateHtml();
-          }
-        }
-      }, {
-        key: "getLanguages",
-        value: function getLanguages() {
-          return Object.keys(this.options.data);
-        }
-      }, {
-        key: "insertValues",
-        value: function insertValues() {
-          var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var injectableValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-          if (typeof value !== 'string') {
-            return undefined;
-          }
-
-          var match = value.match(/:([a-zA-Z-_0-9]+)/);
-
-          if (match) {
-            value = value.replace(match[0], injectableValues[match[1]]);
-          }
-
-          if (value.match(/:([a-zA-Z-_0-9]+)/)) {
-            return this.insertValues(value, injectableValues);
-          }
-
-          return value;
-        }
-      }, {
-        key: "translate",
-        value: function translate() {
-          var _this = this;
-
-          var keyName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var inject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-          var data = this.options.data[this.options.locale];
-
-          if (!data) {
-            data = this.options.data[this.options.fallbackLocale];
-          }
-
-          if (keyName === null || keyName === '*' || Array.isArray(keyName)) {
-            if (Array.isArray(keyName)) {
-              var keys = Object.keys(data).filter(function (key) {
-                return keyName.indexOf(key) > -1;
-              });
-              var filteredData = {};
-              keys.forEach(function (key) {
-                filteredData[key] = _this.insertValues(data[key], inject);
-              });
-              data = filteredData;
-            }
-
-            var dataMap = {};
-
-            for (var key in data) {
-              dataMap[key] = this.insertValues(data[key], inject);
-            }
-
-            return dataMap;
-          }
-
-          return this.insertValues(data[keyName], inject);
-        } // alias of t()
-
-      }, {
-        key: "t",
-        value: function t() {
-          var keyName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var inject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-          return this.translate(keyName, inject);
-        }
-        /**
-         * Updates the HTML views
-         * @param {HTMLElement} element
-         */
-
-      }, {
-        key: "updateHtml",
-        value: function updateHtml() {
-          var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-          var el = element;
-
-          if (!el) {
-            el = document.querySelectorAll('[data-t]');
-          }
-
-          if (typeof el === 'string') {
-            el = document.querySelector(el);
-          }
-          /* eslint no-new: 0 */
-
-
-          new Binder(el, this.t());
-        } // static
-
-      }], [{
-        key: "DOMInterface",
-        value: function DOMInterface(options) {
-          return new I18n(options);
-        }
-      }, {
-        key: "version",
-        get: function get() {
-          return "".concat(NAME, ".").concat(VERSION);
-        }
-      }]);
-
-      return I18n;
-    }();
-
-    return I18n;
-  }();
-
-  function generateId() {
-    return Math.random().toString(36).substr(2, 10);
-  }
-  function findTargetByClass(target, parentClass) {
-    for (; target && target !== document; target = target.parentNode) {
-      if (target.classList.contains(parentClass)) {
-        return target;
-      }
-    }
-
-    return null;
-  }
-  function findTargetByAttr(target, attr) {
-    for (; target && target !== document; target = target.parentNode) {
-      if (target.getAttribute(attr) !== null) {
-        return target;
-      }
-    }
-
-    return null;
-  }
-  /* eslint no-param-reassign: 0 */
-
-  function createJqueryPlugin() {
-    var $ = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-    var name = arguments.length > 1 ? arguments[1] : undefined;
-    var obj = arguments.length > 2 ? arguments[2] : undefined;
-
-    if (!$) {
-      return;
-    }
-
-    var mainFn = function mainFn() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      var opts = options;
-
-      if (this[0]) {
-        opts.element = this[0];
-      }
-
-      return obj.DOMInterface(opts);
-    };
-
-    $.fn[name] = mainFn;
-    $.fn[name].Constructor = obj;
-    $.fn[name].noConflict = mainFn;
-  }
-  function sleep(timeout) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, timeout);
-    });
-  }
 
   var getAttribute = function getAttribute(first, second) {
     if (first === '') {
@@ -2546,160 +1448,6 @@
     return Component;
   }();
 
-  var Network = function () {
-    /**
-     * ------------------------------------------------------------------------
-     * Constants
-     * ------------------------------------------------------------------------
-     */
-    var NAME = 'network';
-    var VERSION = '2.0.0';
-    var DEFAULT_PROPERTIES = {
-      element: null,
-      initialDelay: 3000,
-      delay: 5000
-    };
-    var DATA_ATTRS_PROPERTIES = [];
-    /**
-     * ------------------------------------------------------------------------
-     * Class Definition
-     * ------------------------------------------------------------------------
-     */
-
-    var Network =
-    /*#__PURE__*/
-    function (_Component) {
-      _inherits(Network, _Component);
-
-      /**
-       * Creates an instance of Network.
-       * @param {{}} [options={}]
-       */
-      function Network() {
-        var _this;
-
-        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, Network);
-
-        _this = _possibleConstructorReturn(this, _getPrototypeOf(Network).call(this, NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, false));
-        _this.xhr = null;
-        _this.checkInterval = null;
-
-        _this.setStatus(Event.NETWORK_ONLINE);
-
-        setTimeout(function () {
-          _this.startCheck();
-        }, _this.options.initialDelay);
-        return _this;
-      }
-
-      _createClass(Network, [{
-        key: "getStatus",
-        value: function getStatus() {
-          return this.status;
-        }
-      }, {
-        key: "setStatus",
-        value: function setStatus(status) {
-          this.status = status;
-        }
-      }, {
-        key: "startRequest",
-        value: function startRequest() {
-          var _this2 = this;
-
-          this.xhr = new XMLHttpRequest();
-          this.xhr.offline = false;
-          var url = "/favicon.ico?_=".concat(new Date().getTime());
-          this.triggerEvent(Event.NETWORK_RECONNECTING, {
-            date: new Date()
-          }, false);
-          this.xhr.open('HEAD', url, true);
-          this.xhr.timeout = this.options.delay - 1;
-
-          this.xhr.ontimeout = function () {
-            _this2.xhr.abort();
-
-            _this2.xhr = null;
-          };
-
-          this.xhr.onload = function () {
-            _this2.onUp();
-          };
-
-          this.xhr.onerror = function () {
-            _this2.onDown();
-          };
-
-          try {
-            this.xhr.send();
-          } catch (e) {
-            this.onDown();
-          }
-        }
-      }, {
-        key: "onUp",
-        value: function onUp() {
-          this.triggerEvent(Event.NETWORK_RECONNECTING_SUCCESS, {
-            date: new Date()
-          }, false);
-
-          if (this.getStatus() !== Event.NETWORK_ONLINE) {
-            this.triggerEvent(Event.NETWORK_ONLINE, {
-              date: new Date()
-            }, false);
-          }
-
-          this.setStatus(Event.NETWORK_ONLINE);
-        }
-      }, {
-        key: "onDown",
-        value: function onDown() {
-          this.triggerEvent(Event.NETWORK_RECONNECTING_FAILURE, {
-            date: new Date()
-          }, false);
-
-          if (this.getStatus() !== Event.NETWORK_OFFLINE) {
-            this.triggerEvent(Event.NETWORK_OFFLINE, {
-              date: new Date()
-            }, false);
-          }
-
-          this.setStatus(Event.NETWORK_OFFLINE);
-        }
-      }, {
-        key: "startCheck",
-        value: function startCheck() {
-          var _this3 = this;
-
-          this.stopCheck();
-          this.startRequest();
-          this.checkInterval = setInterval(function () {
-            _this3.startRequest();
-          }, this.options.delay);
-        }
-      }, {
-        key: "stopCheck",
-        value: function stopCheck() {
-          if (this.checkInterval !== null) {
-            clearInterval(this.checkInterval);
-            this.checkInterval = null;
-          }
-        }
-      }], [{
-        key: "DOMInterface",
-        value: function DOMInterface(options) {
-          return _get(_getPrototypeOf(Network), "DOMInterface", this).call(this, Network, options);
-        }
-      }]);
-
-      return Network;
-    }(Component);
-
-    return Network;
-  }();
-
   var Alert = function ($) {
     /**
      * ------------------------------------------------------------------------
@@ -2738,7 +1486,7 @@
       }
       /**
        * Shows the alert
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
 
@@ -2747,48 +1495,45 @@
         value: function show() {
           var _this2 = this;
 
-          return new Promise(function (resolve, reject) {
-            if (_this2.onTransition) {
-              reject();
+          if (this.onTransition) {
+            return false;
+          }
+
+          if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+            return false;
+          }
+
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
+
+          var onShow = function onShow() {
+            _this2.triggerEvent(Event.SHOWN);
+
+            if (_this2.options.element.classList.contains('fade')) {
+              _this2.options.element.classList.remove('fade');
             }
 
-            if (_this2.options.element.classList.contains('show') && _this2.getOpacity() !== 0) {
-              reject();
-            }
+            _this2.options.element.removeEventListener(Event.TRANSITION_END, onShow);
 
-            _this2.onTransition = true;
+            _this2.onTransition = false;
+          };
 
-            _this2.triggerEvent(Event.SHOW);
+          if (this.options.fade && !this.options.element.classList.contains('fade')) {
+            this.options.element.classList.add('fade');
+          }
 
-            var onShow = function onShow() {
-              _this2.triggerEvent(Event.SHOWN);
+          this.options.element.classList.add('show');
+          this.options.element.addEventListener(Event.TRANSITION_END, onShow);
 
-              if (_this2.options.element.classList.contains('fade')) {
-                _this2.options.element.classList.remove('fade');
-              }
+          if (this.options.element.classList.contains('hide')) {
+            this.options.element.classList.remove('hide');
+          }
 
-              _this2.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+          if (!this.options.fade) {
+            onShow();
+          }
 
-              _this2.onTransition = false;
-              resolve();
-            };
-
-            if (_this2.options.fade && !_this2.options.element.classList.contains('fade')) {
-              _this2.options.element.classList.add('fade');
-            }
-
-            _this2.options.element.classList.add('show');
-
-            _this2.options.element.addEventListener(Event.TRANSITION_END, onShow);
-
-            if (_this2.options.element.classList.contains('hide')) {
-              _this2.options.element.classList.remove('hide');
-            }
-
-            if (!_this2.options.fade) {
-              onShow();
-            }
-          });
+          return true;
         }
       }, {
         key: "getOpacity",
@@ -2800,7 +1545,7 @@
         }
         /**
          * Hides the alert
-         * @returns {Promise} Promise object represents the end of the animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -2808,48 +1553,44 @@
         value: function hide() {
           var _this3 = this;
 
-          return new Promise(function (resolve, reject) {
-            if (_this3.onTransition) {
-              reject();
-              return;
-            }
+          if (this.onTransition) {
+            return false;
+          }
 
-            if (_this3.getOpacity() === 0) {
-              reject();
-              return;
-            }
+          if (this.getOpacity() === 0) {
+            return false;
+          }
 
-            _this3.onTransition = true;
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
 
-            _this3.triggerEvent(Event.HIDE);
+          var onHide = function onHide() {
+            _this3.triggerEvent(Event.HIDDEN);
 
-            var onHide = function onHide() {
-              _this3.triggerEvent(Event.HIDDEN);
+            _this3.options.element.removeEventListener(Event.TRANSITION_END, onHide);
 
-              _this3.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+            _this3.onTransition = false;
+          };
 
-              _this3.onTransition = false;
-              resolve();
-            };
+          if (this.options.fade && !this.options.element.classList.contains('fade')) {
+            this.options.element.classList.add('fade');
+          }
 
-            if (_this3.options.fade && !_this3.options.element.classList.contains('fade')) {
-              _this3.options.element.classList.add('fade');
-            }
+          this.options.element.addEventListener(Event.TRANSITION_END, onHide);
 
-            _this3.options.element.addEventListener(Event.TRANSITION_END, onHide);
+          if (!this.options.element.classList.contains('hide')) {
+            this.options.element.classList.add('hide');
+          }
 
-            if (!_this3.options.element.classList.contains('hide')) {
-              _this3.options.element.classList.add('hide');
-            }
+          if (this.options.element.classList.contains('show')) {
+            this.options.element.classList.remove('show');
+          }
 
-            if (_this3.options.element.classList.contains('show')) {
-              _this3.options.element.classList.remove('show');
-            }
+          if (!this.options.fade) {
+            onHide();
+          }
 
-            if (!_this3.options.fade) {
-              onHide();
-            }
-          });
+          return true;
         }
       }], [{
         key: "identifier",
@@ -3051,73 +1792,66 @@
           var top = window.innerHeight / 2 - height / 2;
           this.options.element.style.top = "".concat(top, "px");
         }
+        /**
+         * Shows the modal
+         * @returns {Boolean}
+         */
+
       }, {
         key: "show",
         value: function show() {
           var _this3 = this;
 
-          return new Promise(
+          if (this.options.element === null) {
+            // build and insert a new DOM element
+            this.build();
+          }
+
+          if (this.options.element.classList.contains('show')) {
+            return false;
+          } // add a timeout so that the CSS animation works
+
+
+          _asyncToGenerator(
           /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var onShown;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (_this3.options.element === null) {
-                        // build and insert a new DOM element
-                        _this3.build();
-                      }
+          regeneratorRuntime.mark(function _callee() {
+            var onShown;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return sleep(20);
 
-                      if (!_this3.options.element.classList.contains('show')) {
-                        _context.next = 4;
-                        break;
-                      }
+                  case 2:
+                    _this3.triggerEvent(Event.SHOW);
 
-                      reject(new Error('The modal is already active'));
-                      return _context.abrupt("return");
-
-                    case 4:
-                      _context.next = 6;
-                      return sleep(20);
-
-                    case 6:
-                      _this3.triggerEvent(Event.SHOW);
-
-                      _this3.buildBackdrop(); // attach event
+                    _this3.buildBackdrop(); // attach event
 
 
-                      _this3.attachEvents();
+                    _this3.attachEvents();
 
-                      onShown = function onShown() {
-                        _this3.triggerEvent(Event.SHOWN);
+                    onShown = function onShown() {
+                      _this3.triggerEvent(Event.SHOWN);
 
-                        _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                      _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                    };
 
-                        resolve();
-                      };
+                    _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
 
-                      _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
+                    _this3.options.element.classList.add('show');
 
-                      _this3.options.element.classList.add('show');
+                    _this3.center();
 
-                      _this3.center();
-
-                    case 13:
-                    case "end":
-                      return _context.stop();
-                  }
+                  case 9:
+                  case "end":
+                    return _context.stop();
                 }
-              }, _callee, this);
-            }));
+              }
+            }, _callee, this);
+          }))();
 
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
+          return true;
         }
       }, {
         key: "onElementEvent",
@@ -3155,7 +1889,7 @@
         }
         /**
          * Hides the modal
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -3163,42 +1897,34 @@
         value: function hide() {
           var _this4 = this;
 
-          return new Promise(function (resolve, reject) {
-            if (!_this4.options.element.classList.contains('show')) {
-              reject(new Error('The modal is not active'));
-              return;
+          if (!this.options.element.classList.contains('show')) {
+            return false;
+          }
+
+          this.triggerEvent(Event.HIDE);
+          this.detachEvents();
+          this.options.element.classList.add('hide');
+          this.options.element.classList.remove('show');
+          var backdrop = this.getBackdrop();
+
+          var onHidden = function onHidden() {
+            document.body.removeChild(backdrop);
+
+            _this4.options.element.classList.remove('hide');
+
+            _this4.triggerEvent(Event.HIDDEN);
+
+            backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+            if (_this4.dynamicElement) {
+              document.body.removeChild(_this4.options.element);
+              _this4.options.element = null;
             }
+          };
 
-            _this4.triggerEvent(Event.HIDE);
-
-            _this4.detachEvents();
-
-            _this4.options.element.classList.add('hide');
-
-            _this4.options.element.classList.remove('show');
-
-            var backdrop = _this4.getBackdrop();
-
-            var onHidden = function onHidden() {
-              document.body.removeChild(backdrop);
-
-              _this4.options.element.classList.remove('hide');
-
-              _this4.triggerEvent(Event.HIDDEN);
-
-              backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
-
-              if (_this4.dynamicElement) {
-                document.body.removeChild(_this4.options.element);
-                _this4.options.element = null;
-              }
-
-              resolve();
-            };
-
-            backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-            backdrop.classList.add('fadeout');
-          });
+          backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+          backdrop.classList.add('fadeout');
+          return true;
         }
       }, {
         key: "attachEvents",
@@ -3291,10 +2017,7 @@
     modals.forEach(function (element) {
       var config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
       config.element = element;
-      components.push({
-        element: element,
-        modal: new Modal(config)
-      });
+      components.push(new Modal(config));
     });
     document.addEventListener('click', function (event) {
       var dataToggleAttr = event.target.getAttribute('data-toggle');
@@ -3370,67 +2093,29 @@
       }
       /**
        * Shows the prompt
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
 
       _createClass(Prompt, [{
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _get(_getPrototypeOf(Prompt.prototype), "show", this).call(this);
+        value: function show() {
+          _get(_getPrototypeOf(Prompt.prototype), "show", this).call(this);
 
-                    this.attachInputEvent();
-
-                  case 2:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
+          this.attachInputEvent();
+        }
         /**
          * Hides the prompt
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    _get(_getPrototypeOf(Prompt.prototype), "hide", this).call(this);
+        value: function hide() {
+          _get(_getPrototypeOf(Prompt.prototype), "hide", this).call(this);
 
-                    this.detachInputEvent();
-
-                  case 2:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          this.detachInputEvent();
+        }
       }, {
         key: "getInput",
         value: function getInput() {
@@ -3715,46 +2400,26 @@
         }
       }, {
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            var size, loaderSpinner;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (this.options.element.classList.contains('hide')) {
-                      this.options.element.classList.remove('hide');
-                    }
+        value: function show() {
+          if (this.options.element.classList.contains('hide')) {
+            this.options.element.classList.remove('hide');
+          }
 
-                    this.triggerEvent(Event.SHOW);
-                    size = this.getClientSize();
-                    this.options.size = size;
+          this.triggerEvent(Event.SHOW);
+          var size = this.getClientSize();
+          this.options.size = size;
 
-                    if (this.customSize) {
-                      this.options.element.style.width = "".concat(this.options.size, "px");
-                      this.options.element.style.height = "".concat(this.options.size, "px");
-                      loaderSpinner = this.getSpinner();
-                      loaderSpinner.style.width = "".concat(this.options.size, "px");
-                      loaderSpinner.style.height = "".concat(this.options.size, "px");
-                    }
+          if (this.customSize) {
+            this.options.element.style.width = "".concat(this.options.size, "px");
+            this.options.element.style.height = "".concat(this.options.size, "px");
+            var loaderSpinner = this.getSpinner();
+            loaderSpinner.style.width = "".concat(this.options.size, "px");
+            loaderSpinner.style.height = "".concat(this.options.size, "px");
+          }
 
-                    this.triggerEvent(Event.SHOWN);
-                    return _context.abrupt("return", true);
-
-                  case 7:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
+          this.triggerEvent(Event.SHOWN);
+          return true;
+        }
       }, {
         key: "animate",
         value: function animate() {
@@ -3781,34 +2446,15 @@
         }
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    if (!this.options.element.classList.contains('hide')) {
-                      this.options.element.classList.add('hide');
-                    }
+        value: function hide() {
+          if (!this.options.element.classList.contains('hide')) {
+            this.options.element.classList.add('hide');
+          }
 
-                    this.triggerEvent(Event.HIDE);
-                    this.triggerEvent(Event.HIDDEN);
-                    return _context2.abrupt("return", true);
-
-                  case 4:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          this.triggerEvent(Event.HIDE);
+          this.triggerEvent(Event.HIDDEN);
+          return true;
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -3882,60 +2528,22 @@
 
       _createClass(Loader$$1, [{
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    _get(_getPrototypeOf(Loader$$1.prototype), "show", this).call(this);
+        value: function show() {
+          _get(_getPrototypeOf(Loader$$1.prototype), "show", this).call(this);
 
-                    this.spinner = new Loader({
-                      element: this.getElement().querySelector('.loader')
-                    });
-                    this.spinner.animate(true);
-
-                  case 3:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
+          this.spinner = new Loader({
+            element: this.getElement().querySelector('.loader')
+          });
+          this.spinner.animate(true);
+        }
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    _get(_getPrototypeOf(Loader$$1.prototype), "hide", this).call(this);
+        value: function hide() {
+          _get(_getPrototypeOf(Loader$$1.prototype), "hide", this).call(this);
 
-                    this.spinner.animate(false);
-                    this.spinner = null;
-
-                  case 3:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          this.spinner.animate(false);
+          this.spinner = null;
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -4103,7 +2711,7 @@
         }
         /**
          * Shows the notification
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -4111,97 +2719,78 @@
         value: function show() {
           var _this2 = this;
 
-          return new Promise(
+          if (this.options.element === null) {
+            // build and insert a new DOM element
+            this.build();
+          }
+
+          if (this.options.element.classList.contains('show')) {
+            return false;
+          } // reset color
+
+
+          if (this.options.background) {
+            this.options.element.removeAttribute('class');
+            this.options.element.setAttribute('class', 'notification');
+            this.options.element.classList.add("notification-".concat(this.options.background));
+            this.options.element.querySelector('button').classList.add("btn-".concat(this.options.background));
+          }
+
+          this.setPosition();
+
+          if (this.options.button) {
+            // attach the button handler
+            var buttonElement = this.options.element.querySelector('button');
+            this.registerElement({
+              target: buttonElement,
+              event: 'click'
+            });
+          }
+
+          _asyncToGenerator(
           /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var buttonElement, onShown;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (_this2.options.element === null) {
-                        // build and insert a new DOM element
-                        _this2.build();
-                      }
+          regeneratorRuntime.mark(function _callee() {
+            var onShown;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return sleep(20);
 
-                      if (!_this2.options.element.classList.contains('show')) {
-                        _context.next = 4;
-                        break;
-                      }
+                  case 2:
+                    if (Number.isInteger(_this2.options.timeout) && _this2.options.timeout > 0) {
+                      // if there is a timeout, auto hide the notification
+                      _this2.timeoutCallback = setTimeout(function () {
+                        _this2.hide();
+                      }, _this2.options.timeout + 1);
+                    }
 
-                      reject(new Error('The notification is already active'));
-                      return _context.abrupt("return");
+                    _this2.options.element.classList.add('show');
 
-                    case 4:
-                      // reset color
-                      if (_this2.options.background) {
-                        _this2.options.element.removeAttribute('class');
+                    _this2.triggerEvent(Event.SHOW);
 
-                        _this2.options.element.setAttribute('class', 'notification');
+                    onShown = function onShown() {
+                      _this2.triggerEvent(Event.SHOWN);
 
-                        _this2.options.element.classList.add("notification-".concat(_this2.options.background));
+                      _this2.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                    };
 
-                        _this2.options.element.querySelector('button').classList.add("btn-".concat(_this2.options.background));
-                      }
+                    _this2.options.element.addEventListener(Event.TRANSITION_END, onShown);
 
-                      _this2.setPosition();
-
-                      if (_this2.options.button) {
-                        // attach the button handler
-                        buttonElement = _this2.options.element.querySelector('button');
-
-                        _this2.registerElement({
-                          target: buttonElement,
-                          event: 'click'
-                        });
-                      }
-
-                      _context.next = 9;
-                      return sleep(20);
-
-                    case 9:
-                      if (Number.isInteger(_this2.options.timeout) && _this2.options.timeout > 0) {
-                        // if there is a timeout, auto hide the notification
-                        _this2.timeoutCallback = setTimeout(function () {
-                          _this2.hide();
-                        }, _this2.options.timeout + 1);
-                      }
-
-                      _this2.options.element.classList.add('show');
-
-                      _this2.triggerEvent(Event.SHOW);
-
-                      onShown = function onShown() {
-                        _this2.triggerEvent(Event.SHOWN);
-
-                        _this2.options.element.removeEventListener(Event.TRANSITION_END, onShown);
-
-                        resolve();
-                      };
-
-                      _this2.options.element.addEventListener(Event.TRANSITION_END, onShown);
-
-                      return _context.abrupt("return", true);
-
-                    case 15:
-                    case "end":
-                      return _context.stop();
-                  }
+                  case 7:
+                  case "end":
+                    return _context.stop();
                 }
-              }, _callee, this);
-            }));
+              }
+            }, _callee, this);
+          }))();
 
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
+          return true;
         }
         /**
          * Hides the notification
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -4209,53 +2798,47 @@
         value: function hide() {
           var _this3 = this;
 
-          return new Promise(function (resolve, reject) {
-            /*
-            * prevent to close a notification with a timeout
-            * if the user has already clicked on the button
-            */
-            if (_this3.timeoutCallback) {
-              clearTimeout(_this3.timeoutCallback);
-              _this3.timeoutCallback = null;
+          /*
+          * prevent to close a notification with a timeout
+          * if the user has already clicked on the button
+          */
+          if (this.timeoutCallback) {
+            clearTimeout(this.timeoutCallback);
+            this.timeoutCallback = null;
+          }
+
+          if (!this.options.element.classList.contains('show')) {
+            return false;
+          }
+
+          this.triggerEvent(Event.HIDE);
+
+          if (this.options.button) {
+            var buttonElement = this.options.element.querySelector('button');
+            this.unregisterElement({
+              target: buttonElement,
+              event: 'click'
+            });
+          }
+
+          this.options.element.classList.remove('show');
+          this.options.element.classList.add('hide');
+
+          var onHidden = function onHidden() {
+            _this3.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
+
+            _this3.options.element.classList.remove('hide');
+
+            _this3.triggerEvent(Event.HIDDEN);
+
+            if (_this3.dynamicElement) {
+              document.body.removeChild(_this3.options.element);
+              _this3.options.element = null;
             }
+          };
 
-            if (!_this3.options.element.classList.contains('show')) {
-              reject(new Error('The notification is not active'));
-              return;
-            }
-
-            _this3.triggerEvent(Event.HIDE);
-
-            if (_this3.options.button) {
-              var buttonElement = _this3.options.element.querySelector('button');
-
-              _this3.unregisterElement({
-                target: buttonElement,
-                event: 'click'
-              });
-            }
-
-            _this3.options.element.classList.remove('show');
-
-            _this3.options.element.classList.add('hide');
-
-            var onHidden = function onHidden() {
-              _this3.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
-
-              _this3.options.element.classList.remove('hide');
-
-              _this3.triggerEvent(Event.HIDDEN);
-
-              if (_this3.dynamicElement) {
-                document.body.removeChild(_this3.options.element);
-                _this3.options.element = null;
-              }
-
-              resolve();
-            };
-
-            _this3.options.element.addEventListener(Event.TRANSITION_END, onHidden);
-          });
+          this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
+          return true;
         }
       }, {
         key: "onElementEvent",
@@ -4345,7 +2928,7 @@
         }
         /**
          * Shows the collapse
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -4353,99 +2936,56 @@
         value: function show() {
           var _this2 = this;
 
-          return new Promise(
-          /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var onCollapsed, height;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (!_this2.onTransition) {
-                        _context.next = 3;
-                        break;
-                      }
+          if (this.onTransition) {
+            return false;
+          }
 
-                      reject();
-                      return _context.abrupt("return");
+          if (this.options.element.classList.contains('show')) {
+            return false;
+          }
 
-                    case 3:
-                      if (!_this2.options.element.classList.contains('show')) {
-                        _context.next = 6;
-                        break;
-                      }
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
 
-                      reject();
-                      return _context.abrupt("return");
+          var onCollapsed = function onCollapsed() {
+            _this2.triggerEvent(Event.SHOWN);
 
-                    case 6:
-                      _this2.onTransition = true;
+            _this2.options.element.classList.add('show');
 
-                      _this2.triggerEvent(Event.SHOW);
+            _this2.options.element.classList.remove('collapsing');
 
-                      onCollapsed = function onCollapsed() {
-                        _this2.triggerEvent(Event.SHOWN);
+            _this2.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
 
-                        _this2.options.element.classList.add('show');
+            _this2.options.element.setAttribute('aria-expanded', true);
 
-                        _this2.options.element.classList.remove('collapsing');
+            _this2.onTransition = false; // reset the normal height after the animation
 
-                        _this2.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+            _this2.options.element.style.height = 'auto';
+          };
 
-                        _this2.options.element.setAttribute('aria-expanded', true);
+          if (!this.options.element.classList.contains('collapsing')) {
+            this.options.element.classList.add('collapsing');
+          }
 
-                        _this2.onTransition = false; // reset the normal height after the animation
+          this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-                        _this2.options.element.style.height = 'auto';
-                        resolve();
-                      };
+          if (!this.isVerticalCollapse()) {
+            // expandableElement
+            this.options.element.classList.add('slide');
+          } else {
+            // get real height
+            var height = this.getHeight();
+            this.options.element.style.height = '0px';
+            setTimeout(function () {
+              _this2.options.element.style.height = "".concat(height, "px");
+            }, 20);
+          }
 
-                      if (!_this2.options.element.classList.contains('collapsing')) {
-                        _this2.options.element.classList.add('collapsing');
-                      }
-
-                      _this2.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-                      if (_this2.isVerticalCollapse()) {
-                        _context.next = 15;
-                        break;
-                      }
-
-                      // expandableElement
-                      _this2.options.element.classList.add('slide');
-
-                      _context.next = 20;
-                      break;
-
-                    case 15:
-                      // get real height
-                      height = _this2.getHeight();
-                      _this2.options.element.style.height = '0px';
-                      _context.next = 19;
-                      return sleep(20);
-
-                    case 19:
-                      _this2.options.element.style.height = "".concat(height, "px");
-
-                    case 20:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
+          return true;
         }
         /**
          * Hides the collapse
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -4453,52 +2993,51 @@
         value: function hide() {
           var _this3 = this;
 
-          return new Promise(function (resolve, reject) {
-            if (_this3.onTransition) {
-              reject();
-              return;
+          if (this.onTransition) {
+            return false;
+          }
+
+          if (!this.options.element.classList.contains('show')) {
+            return false;
+          }
+
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
+
+          var onCollapsed = function onCollapsed() {
+            _this3.triggerEvent(Event.HIDDEN);
+
+            _this3.options.element.classList.remove('collapsing');
+
+            _this3.options.element.style.height = 'auto';
+
+            _this3.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+
+            _this3.options.element.setAttribute('aria-expanded', false);
+
+            _this3.onTransition = false;
+          };
+
+          if (!this.isVerticalCollapse()) {
+            if (this.options.element.classList.contains('slide')) {
+              this.options.element.classList.remove('slide');
             }
-
-            if (!_this3.options.element.classList.contains('show')) {
-              reject();
-              return;
-            }
-
-            _this3.onTransition = true;
-
-            _this3.triggerEvent(Event.HIDE);
-
-            var onCollapsed = function onCollapsed() {
-              _this3.triggerEvent(Event.HIDDEN);
-
-              _this3.options.element.classList.remove('collapsing');
-
-              _this3.options.element.style.height = 'auto';
-
-              _this3.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-
-              _this3.options.element.setAttribute('aria-expanded', false);
-
-              _this3.onTransition = false;
-              resolve();
-            };
-
-            _this3.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-            if (!_this3.isVerticalCollapse()) {
-              if (_this3.options.element.classList.contains('slide')) {
-                _this3.options.element.classList.remove('slide');
-              }
-            } else {
+          } else {
+            // transform auto height by real height in px
+            this.options.element.style.height = "".concat(this.options.element.offsetHeight, "px");
+            setTimeout(function () {
               _this3.options.element.style.height = '0px';
-            }
+            }, 20);
+          }
 
-            if (!_this3.options.element.classList.contains('collapsing')) {
-              _this3.options.element.classList.add('collapsing');
-            }
+          this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-            _this3.options.element.classList.remove('show');
-          });
+          if (!this.options.element.classList.contains('collapsing')) {
+            this.options.element.classList.add('collapsing');
+          }
+
+          this.options.element.classList.remove('show');
+          return true;
         }
       }, {
         key: "isVerticalCollapse",
@@ -4668,95 +3207,47 @@
         /**
          * Shows the collapse element
          * @param {(string|Element)} collapseEl
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(collapseEl) {
-            var collapse;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    collapse = collapseEl;
+        value: function show(collapseEl) {
+          var collapse = collapseEl;
 
-                    if (typeof collapseEl === 'string') {
-                      collapse = document.querySelector(collapseEl);
-                    }
+          if (typeof collapseEl === 'string') {
+            collapse = document.querySelector(collapseEl);
+          }
 
-                    if (collapse) {
-                      _context.next = 4;
-                      break;
-                    }
+          if (!collapse) {
+            throw new Error("".concat(NAME, ". The collapsible ").concat(collapseEl, " is an invalid HTMLElement."));
+          }
 
-                    throw new Error("".concat(NAME, ". The collapsible ").concat(collapseEl, " is an invalid HTMLElement."));
-
-                  case 4:
-                    this.setCollapses(collapse);
-                    return _context.abrupt("return", true);
-
-                  case 6:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show(_x) {
-            return _show.apply(this, arguments);
-          };
-        }()
+          this.setCollapses(collapse);
+          return true;
+        }
         /**
          * Hides the collapse element
          * @param {(string|Element)} collapseEl
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2(collapseEl) {
-            var collapse, collapseObj;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    collapse = collapseEl;
+        value: function hide(collapseEl) {
+          var collapse = collapseEl;
 
-                    if (typeof collapseEl === 'string') {
-                      collapse = document.querySelector(collapseEl);
-                    }
+          if (typeof collapseEl === 'string') {
+            collapse = document.querySelector(collapseEl);
+          }
 
-                    if (collapse) {
-                      _context2.next = 4;
-                      break;
-                    }
+          if (!collapse) {
+            throw new Error("".concat(NAME, ". The collapsible ").concat(collapseEl, " is an invalid HTMLElement."));
+          }
 
-                    throw new Error("".concat(NAME, ". The collapsible ").concat(collapseEl, " is an invalid HTMLElement."));
-
-                  case 4:
-                    collapseObj = this.getCollapse(collapse);
-                    return _context2.abrupt("return", collapseObj.hide());
-
-                  case 6:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide(_x2) {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          var collapseObj = this.getCollapse(collapse);
+          return collapseObj.hide();
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -4859,7 +3350,7 @@
       }
       /**
        * Shows the tab
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
 
@@ -4868,137 +3359,102 @@
         value: function show() {
           var _this = this;
 
-          return new Promise(
+          if (this.options.element.classList.contains('active')) {
+            return false;
+          }
+
+          var id = this.options.element.getAttribute('href');
+          var nav = findTargetByClass(this.options.element, 'nav');
+          var navTabs = nav ? nav.querySelectorAll("[data-toggle=\"".concat(NAME, "\"]")) : null;
+
+          if (navTabs) {
+            Array.from(navTabs).forEach(function (tab) {
+              if (tab.classList.contains('active')) {
+                tab.classList.remove('active');
+              }
+
+              tab.setAttribute('aria-selected', false);
+            });
+          }
+
+          this.options.element.classList.add('active');
+          this.options.element.setAttribute('aria-selected', true);
+          var tabContent = document.querySelector(id);
+          var tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
+
+          if (tabContents) {
+            Array.from(tabContents).forEach(function (tab) {
+              if (tab.classList.contains('active')) {
+                tab.classList.remove('active');
+              }
+            });
+          }
+
+          tabContent.classList.add('showing');
+          this.triggerEvent(Event.SHOW);
+
+          var onShowed = function onShowed() {
+            tabContent.classList.remove('animate');
+            tabContent.classList.add('active');
+            tabContent.classList.remove('showing');
+
+            _this.triggerEvent(Event.SHOWN);
+
+            tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
+          };
+
+          _asyncToGenerator(
           /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var id, nav, navTabs, tabContent, tabContents, onShowed;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (!_this.options.element.classList.contains('active')) {
-                        _context.next = 3;
-                        break;
-                      }
-
-                      reject();
-                      return _context.abrupt("return");
-
-                    case 3:
-                      id = _this.options.element.getAttribute('href');
-                      nav = findTargetByClass(_this.options.element, 'nav');
-                      navTabs = nav ? nav.querySelectorAll("[data-toggle=\"".concat(NAME, "\"]")) : null;
-
-                      if (navTabs) {
-                        Array.from(navTabs).forEach(function (tab) {
-                          if (tab.classList.contains('active')) {
-                            tab.classList.remove('active');
-                          }
-
-                          tab.setAttribute('aria-selected', false);
-                        });
-                      }
-
-                      _this.options.element.classList.add('active');
-
-                      _this.options.element.setAttribute('aria-selected', true);
-
-                      tabContent = document.querySelector(id);
-                      tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
-
-                      if (tabContents) {
-                        Array.from(tabContents).forEach(function (tab) {
-                          if (tab.classList.contains('active')) {
-                            tab.classList.remove('active');
-                          }
-                        });
-                      }
-
-                      tabContent.classList.add('showing');
-
-                      _this.triggerEvent(Event.SHOW);
-
-                      onShowed = function onShowed() {
-                        tabContent.classList.remove('animate');
-                        tabContent.classList.add('active');
-                        tabContent.classList.remove('showing');
-
-                        _this.triggerEvent(Event.SHOWN);
-
-                        tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
-                        resolve();
-                      };
-
-                      _context.next = 17;
-                      return sleep(20);
-
-                    case 17:
-                      tabContent.addEventListener(Event.TRANSITION_END, onShowed);
-                      tabContent.classList.add('animate');
-
-                    case 19:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
-        }
-      }, {
-        key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            var id, tabContent;
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          regeneratorRuntime.mark(function _callee() {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
-                switch (_context2.prev = _context2.next) {
+                switch (_context.prev = _context.next) {
                   case 0:
-                    if (this.options.element.classList.contains('active')) {
-                      _context2.next = 2;
-                      break;
-                    }
-
-                    throw new Error('The tab is not active');
+                    _context.next = 2;
+                    return sleep(20);
 
                   case 2:
-                    if (this.options.element.classList.contains('active')) {
-                      this.options.element.classList.remove('active');
-                    }
+                    tabContent.addEventListener(Event.TRANSITION_END, onShowed);
+                    tabContent.classList.add('animate');
 
-                    this.triggerEvent(Event.HIDE);
-                    this.options.element.setAttribute('aria-selected', false);
-                    id = this.options.element.getAttribute('href');
-                    tabContent = document.querySelector(id);
-
-                    if (tabContent.classList.contains('active')) {
-                      tabContent.classList.remove('active');
-                    }
-
-                    this.triggerEvent(Event.HIDDEN);
-                    return _context2.abrupt("return", true);
-
-                  case 10:
+                  case 4:
                   case "end":
-                    return _context2.stop();
+                    return _context.stop();
                 }
               }
-            }, _callee2, this);
-          }));
+            }, _callee, this);
+          }))();
 
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          return true;
+        }
+        /**
+         * Hides the tab
+         * @returns {Boolean}
+         */
+
+      }, {
+        key: "hide",
+        value: function hide() {
+          if (!this.options.element.classList.contains('active')) {
+            return false;
+          }
+
+          if (this.options.element.classList.contains('active')) {
+            this.options.element.classList.remove('active');
+          }
+
+          this.triggerEvent(Event.HIDE);
+          this.options.element.setAttribute('aria-selected', false);
+          var id = this.options.element.getAttribute('href');
+          var tabContent = document.querySelector(id);
+
+          if (tabContent.classList.contains('active')) {
+            tabContent.classList.remove('active');
+          }
+
+          this.triggerEvent(Event.HIDDEN);
+          return true;
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -5170,68 +3626,30 @@
         }
         /**
          * Shows the progress bar
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    this.options.element.style.height = "".concat(this.options.height, "px");
-                    this.triggerEvent(Event.SHOW);
-                    this.triggerEvent(Event.SHOWN);
-                    return _context.abrupt("return", true);
-
-                  case 4:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
+        value: function show() {
+          this.options.element.style.height = "".concat(this.options.height, "px");
+          this.triggerEvent(Event.SHOW);
+          this.triggerEvent(Event.SHOWN);
+          return true;
+        }
         /**
          * Hides the progress bar
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    this.options.element.style.height = '0px';
-                    this.triggerEvent(Event.HIDE);
-                    this.triggerEvent(Event.HIDDEN);
-                    return _context2.abrupt("return", true);
-
-                  case 4:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+        value: function hide() {
+          this.options.element.style.height = '0px';
+          this.triggerEvent(Event.HIDE);
+          this.triggerEvent(Event.HIDDEN);
+          return true;
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -5297,7 +3715,7 @@
         _classCallCheck(this, OffCanvas);
 
         _this = _possibleConstructorReturn(this, _getPrototypeOf(OffCanvas).call(this, NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, false, true));
-        _this.currentWidth = null;
+        _this.currentWidthName = null;
         _this.animate = true;
         _this.showAside = false;
         _this.directions = ['left', 'right'];
@@ -5350,32 +3768,29 @@
       }, {
         key: "checkWidth",
         value: function checkWidth() {
-          var _this3 = this;
-
           if (!('matchMedia' in window)) {
             return;
           }
 
-          this.sizes.every(function (size) {
+          var size = this.sizes.find(function (size) {
             var match = size.media.media.match(/[a-z]?-width:\s?([0-9]+)/);
-
-            if (match) {
-              if (size.media.matches) {
-                if (_this3.currentWidth !== size.name) {
-                  _this3.setAside(size.name);
-                }
-
-                _this3.currentWidth = size.name;
-                return false;
-              }
-            }
-
-            return true;
+            return match && size.media.matches;
           });
+
+          if (!size) {
+            return;
+          }
+
+          this.setAside(size.name);
         }
       }, {
         key: "setAside",
         value: function setAside(name) {
+          if (this.currentWidthName === name) {
+            return;
+          }
+
+          this.currentWidthName = name;
           var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
           this.showAside = this.options.aside[name] === true;
 
@@ -5389,11 +3804,12 @@
 
             if (this.getBackdrop()) {
               this.removeBackdrop();
-            }
+            } // in case of many visible or hidden off-canvas
 
-            if (this.isVisible() && !content.classList.contains('show')) {
+
+            if (this.visibleOffCanvas > 0 && !content.classList.contains('show')) {
               content.classList.add('show');
-            } else if (!this.isVisible() && content.classList.contains('show')) {
+            } else if (this.visibleOffCanvas === 0 && content.classList.contains('show')) {
               content.classList.remove('show');
             }
           } else {
@@ -5425,166 +3841,137 @@
           return this.options.element.classList.contains('show');
         }
       }, {
+        key: "visibleOffCanvas",
+        value: function visibleOffCanvas() {
+          var offCanvas = Array.from(document.querySelectorAll(".".concat(NAME, ".show")) || []);
+          return offCanvas.length;
+        }
+        /**
+         * Shows the off-canvas
+         * @returns {Boolean}
+         */
+
+      }, {
         key: "show",
         value: function show() {
-          var _this4 = this;
+          var _this3 = this;
 
-          return new Promise(
+          if (this.options.element.classList.contains('show')) {
+            return false;
+          }
+
+          this.triggerEvent(Event.SHOW);
+
+          if (!this.showAside) {
+            this.createBackdrop();
+          } // add a timeout so that the CSS animation works
+
+
+          _asyncToGenerator(
           /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var onShown, container;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (!_this4.options.element.classList.contains('show')) {
-                        _context.next = 3;
-                        break;
+          regeneratorRuntime.mark(function _callee() {
+            var onShown, container;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return sleep(20);
+
+                  case 2:
+                    // attach event
+                    _this3.attachEvents();
+
+                    onShown = function onShown() {
+                      _this3.triggerEvent(Event.SHOWN);
+
+                      if (_this3.animate) {
+                        _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+
+                        _this3.options.element.classList.remove('animate');
                       }
+                    };
 
-                      reject();
-                      return _context.abrupt("return");
+                    if (_this3.showAside) {
+                      container = _this3.getConfig('container', DEFAULT_PROPERTIES.container);
 
-                    case 3:
-                      _this4.triggerEvent(Event.SHOW);
-
-                      if (!_this4.showAside) {
-                        _this4.createBackdrop();
-                      } // add a timeout so that the CSS animation works
-
-
-                      _context.next = 7;
-                      return sleep(20);
-
-                    case 7:
-                      // attach event
-                      console.log('attach events');
-
-                      _this4.attachEvents();
-
-                      onShown = function onShown() {
-                        _this4.triggerEvent(Event.SHOWN);
-
-                        if (_this4.animate) {
-                          _this4.options.element.removeEventListener(Event.TRANSITION_END, onShown);
-
-                          _this4.options.element.classList.remove('animate');
-                        }
-
-                        resolve();
-                      };
-
-                      if (_this4.showAside) {
-                        container = _this4.getConfig('container', DEFAULT_PROPERTIES.container);
-
-                        if (!container.classList.contains('show')) {
-                          container.classList.add('show');
-                        }
+                      if (!container.classList.contains('show')) {
+                        container.classList.add('show');
                       }
+                    }
 
-                      if (_this4.animate) {
-                        _this4.options.element.addEventListener(Event.TRANSITION_END, onShown);
+                    if (_this3.animate) {
+                      _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
 
-                        _this4.options.element.classList.add('animate');
-                      } else {
-                        // directly trigger the onShown
-                        onShown();
-                      }
+                      _this3.options.element.classList.add('animate');
+                    } else {
+                      // directly trigger the onShown
+                      onShown();
+                    }
 
-                      _this4.options.element.classList.add('show');
+                    _this3.options.element.classList.add('show');
 
-                    case 13:
-                    case "end":
-                      return _context.stop();
-                  }
+                  case 7:
+                  case "end":
+                    return _context.stop();
                 }
-              }, _callee, this);
-            }));
+              }
+            }, _callee, this);
+          }))();
 
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
+          return true;
         }
+        /**
+         * Hides the off-canvas
+         * @returns {Boolean}
+         */
+
       }, {
         key: "hide",
         value: function hide() {
-          var _this5 = this;
+          var _this4 = this;
 
-          return new Promise(
-          /*#__PURE__*/
-          function () {
-            var _ref2 = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee2(resolve, reject) {
-              var container, backdrop, onHidden;
-              return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                while (1) {
-                  switch (_context2.prev = _context2.next) {
-                    case 0:
-                      if (_this5.options.element.classList.contains('show')) {
-                        _context2.next = 3;
-                        break;
-                      }
+          if (!this.options.element.classList.contains('show')) {
+            return false;
+          }
 
-                      reject();
-                      return _context2.abrupt("return");
+          this.triggerEvent(Event.HIDE);
+          this.detachEvents();
 
-                    case 3:
-                      _this5.triggerEvent(Event.HIDE);
+          if (this.animate) {
+            this.options.element.classList.add('animate');
+          }
 
-                      _this5.detachEvents();
+          if (this.showAside) {
+            var container = this.getConfig('container', DEFAULT_PROPERTIES.container);
 
-                      if (_this5.animate) {
-                        _this5.options.element.classList.add('animate');
-                      }
+            if (container.classList.contains('show')) {
+              container.classList.remove('show');
+            }
+          }
 
-                      if (_this5.showAside) {
-                        container = _this5.getConfig('container', DEFAULT_PROPERTIES.container);
+          this.options.element.classList.remove('show');
 
-                        if (container.classList.contains('show')) {
-                          container.classList.remove('show');
-                        }
-                      }
+          if (!this.showAside) {
+            var backdrop = this.getBackdrop();
 
-                      _this5.options.element.classList.remove('show');
+            var onHidden = function onHidden() {
+              if (_this4.animate) {
+                _this4.options.element.classList.remove('animate');
+              }
 
-                      resolve();
+              backdrop.removeEventListener(Event.TRANSITION_END, onHidden);
 
-                      if (!_this5.showAside) {
-                        backdrop = _this5.getBackdrop();
+              _this4.triggerEvent(Event.HIDDEN);
 
-                        onHidden = function onHidden() {
-                          if (_this5.animate) {
-                            _this5.options.element.classList.remove('animate');
-                          }
-
-                          backdrop.removeEventListener(Event.TRANSITION_END, onHidden);
-
-                          _this5.triggerEvent(Event.HIDDEN);
-
-                          _this5.removeBackdrop();
-                        };
-
-                        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-                        backdrop.classList.add('fadeout');
-                      }
-
-                    case 10:
-                    case "end":
-                      return _context2.stop();
-                  }
-                }
-              }, _callee2, this);
-            }));
-
-            return function (_x3, _x4) {
-              return _ref2.apply(this, arguments);
+              _this4.removeBackdrop();
             };
-          }());
+
+            backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+            backdrop.classList.add('fadeout');
+          }
+
+          return true;
         }
       }, {
         key: "toggle",
@@ -5620,10 +4007,10 @@
       }, {
         key: "attachEvents",
         value: function attachEvents() {
-          var _this6 = this;
+          var _this5 = this;
 
           Array.from(this.options.element.querySelectorAll('[data-dismiss]') || []).forEach(function (button) {
-            return _this6.registerElement({
+            return _this5.registerElement({
               target: button,
               event: 'click'
             });
@@ -5645,14 +4032,13 @@
       }, {
         key: "detachEvents",
         value: function detachEvents() {
-          var _this7 = this;
+          var _this6 = this;
 
-          console.log('detch');
           var dismissButtons = this.options.element.querySelectorAll('[data-dismiss]');
 
           if (dismissButtons) {
             Array.from(dismissButtons).forEach(function (button) {
-              return _this7.unregisterElement({
+              return _this6.unregisterElement({
                 target: button,
                 event: 'click'
               });
@@ -5911,104 +4297,57 @@
         }
         /**
          * Shows the selectbox
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            var selectboxMenu;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (!this.options.element.classList.contains('active')) {
-                      _context.next = 2;
-                      break;
-                    }
+        value: function show() {
+          if (this.options.element.classList.contains('active')) {
+            return false;
+          }
 
-                    return _context.abrupt("return", false);
+          this.options.element.classList.add('active');
+          var selectboxMenu = this.options.element.querySelector('.selectbox-menu'); // scroll to top
 
-                  case 2:
-                    this.options.element.classList.add('active');
-                    selectboxMenu = this.options.element.querySelector('.selectbox-menu'); // scroll to top
-
-                    selectboxMenu.scrollTop = 0;
-                    this.triggerEvent(Event.SHOW);
-                    this.triggerEvent(Event.SHOWN);
-                    this.registerElement({
-                      target: selectboxMenu,
-                      event: 'click'
-                    });
-                    this.registerElement({
-                      target: document.body,
-                      event: Event.START
-                    });
-                    return _context.abrupt("return", true);
-
-                  case 10:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
+          selectboxMenu.scrollTop = 0;
+          this.triggerEvent(Event.SHOW);
+          this.triggerEvent(Event.SHOWN);
+          this.registerElement({
+            target: selectboxMenu,
+            event: 'click'
+          });
+          this.registerElement({
+            target: document.body,
+            event: Event.START
+          });
+          return true;
+        }
         /**
          * Hides the selectbox
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
         key: "hide",
-        value: function () {
-          var _hide = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    if (this.options.element.classList.contains('active')) {
-                      _context2.next = 2;
-                      break;
-                    }
+        value: function hide() {
+          if (!this.options.element.classList.contains('active')) {
+            return false;
+          }
 
-                    throw new Error('The selectbox is not active');
-
-                  case 2:
-                    this.options.element.classList.remove('active');
-                    this.triggerEvent(Event.HIDE);
-                    this.triggerEvent(Event.HIDDEN);
-                    this.unregisterElement({
-                      target: this.options.element.querySelector('.selectbox-menu'),
-                      event: 'click'
-                    });
-                    this.unregisterElement({
-                      target: document.body,
-                      event: Event.START
-                    });
-                    return _context2.abrupt("return", true);
-
-                  case 8:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function hide() {
-            return _hide.apply(this, arguments);
-          };
-        }()
+          this.options.element.classList.remove('active');
+          this.triggerEvent(Event.HIDE);
+          this.triggerEvent(Event.HIDDEN);
+          this.unregisterElement({
+            target: this.options.element.querySelector('.selectbox-menu'),
+            event: 'click'
+          });
+          this.unregisterElement({
+            target: document.body,
+            event: Event.START
+          });
+          return true;
+        }
       }], [{
         key: "identifier",
         value: function identifier() {
@@ -6083,6 +4422,7 @@
       filterItems: null
     };
     var DATA_ATTRS_PROPERTIES = ['selectable', 'search'];
+    var components = [];
     /**
      * ------------------------------------------------------------------------
      * Class Definition
@@ -6113,12 +4453,13 @@
           }
 
           _this.getItems().forEach(function (item) {
+            var itemEl = item;
             var fn = typeof _this.options.filterItems === 'function' ? _this.options.filterItems : _this.filterItems;
 
-            if (fn(search, item)) {
-              item.element.style.display = 'block';
+            if (fn(search, itemEl)) {
+              itemEl.element.style.display = 'block';
             } else {
-              item.element.style.display = 'none';
+              itemEl.element.style.display = 'none';
             }
           });
         };
@@ -6166,35 +4507,6 @@
           return this.options.element.querySelector('.selectbox-menu input');
         }
         /**
-         * Shows the search selectbox
-         * @returns {Promise} Promise object represents the completed animation
-         */
-
-      }, {
-        key: "show",
-        value: function () {
-          var _show = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee() {
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    return _context.abrupt("return", _get(_getPrototypeOf(SelectboxSearch.prototype), "hide", this).call(this));
-
-                  case 1:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function show() {
-            return _show.apply(this, arguments);
-          };
-        }()
-        /**
          * Hides the search selectbox
          * @returns {Promise} Promise object represents the completed animation
          */
@@ -6204,12 +4516,12 @@
         value: function () {
           var _hide = _asyncToGenerator(
           /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          regeneratorRuntime.mark(function _callee() {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
               while (1) {
-                switch (_context2.prev = _context2.next) {
+                switch (_context.prev = _context.next) {
                   case 0:
-                    _context2.next = 2;
+                    _context.next = 2;
                     return _get(_getPrototypeOf(SelectboxSearch.prototype), "hide", this).call(this);
 
                   case 2:
@@ -6217,14 +4529,14 @@
                     this.getSearchInput().value = ''; // show all items
 
                     this.showItems();
-                    return _context2.abrupt("return", true);
+                    return _context.abrupt("return", true);
 
                   case 5:
                   case "end":
-                    return _context2.stop();
+                    return _context.stop();
                 }
               }
-            }, _callee2, this);
+            }, _callee, this);
           }));
 
           return function hide() {
@@ -6234,7 +4546,7 @@
       }], [{
         key: "DOMInterface",
         value: function DOMInterface(options) {
-          return new SelectboxSearch(options);
+          return new SelectboxSearch(options, components);
         }
       }]);
 
@@ -6254,7 +4566,6 @@
      * ------------------------------------------------------------------------
      */
 
-    var components = [];
     var selectboxes = Array.from(document.querySelectorAll(".".concat(NAME)) || []);
     selectboxes.filter(function (d) {
       return !d.classList.contains('nav-item');
@@ -6267,35 +4578,31 @@
         components.push(new SelectboxSearch(config));
       }
     });
+    document.addEventListener('click', function (event) {
+      var selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
 
-    if (selectboxes) {
-      document.addEventListener('click', function (event) {
-        var selectboxMenu = findTargetByClass(event.target, 'selectbox-menu');
+      if (selectboxMenu) {
+        return;
+      }
 
-        if (selectboxMenu) {
-          return;
-        }
+      var selectbox = findTargetByClass(event.target, 'selectbox');
 
-        var selectbox = findTargetByClass(event.target, 'selectbox');
+      if (selectbox) {
+        var dataToggleAttr = selectbox.getAttribute('data-toggle');
 
-        if (selectbox) {
-          var dataToggleAttr = selectbox.getAttribute('data-toggle');
+        if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
+          var component = components.find(function (c) {
+            return c.getElement() === selectbox;
+          });
 
-          if (dataToggleAttr && dataToggleAttr === NAME && selectbox) {
-            var component = components.find(function (c) {
-              return c.getElement() === selectbox;
-            });
-
-            if (!component) {
-              return;
-            }
-
-            component.toggle();
+          if (!component) {
+            return;
           }
-        }
-      });
-    }
 
+          component.toggle();
+        }
+      }
+    });
     return SelectboxSearch;
   }(window.$ ? window.$ : null);
 
@@ -6347,11 +4654,11 @@
             event: 'mouseleave'
           });
 
-          _this.options.element.addEventListener('mouseover', function (event) {
+          _this.options.element.addEventListener('mouseover', function () {
             _this.show();
           });
 
-          _this.options.element.addEventListener('mouseleave', function (event) {
+          _this.options.element.addEventListener('mouseleave', function () {
             _this.hide();
           });
         }
@@ -6373,7 +4680,7 @@
         }
         /**
          * Shows the dropdown
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -6381,82 +4688,44 @@
         value: function show() {
           var _this2 = this;
 
-          return new Promise(
-          /*#__PURE__*/
-          function () {
-            var _ref = _asyncToGenerator(
-            /*#__PURE__*/
-            regeneratorRuntime.mark(function _callee(resolve, reject) {
-              var onShow, dropdownMenu;
-              return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                  switch (_context.prev = _context.next) {
-                    case 0:
-                      if (!_this2.onTransition) {
-                        _context.next = 3;
-                        break;
-                      }
+          if (this.onTransition) {
+            return false;
+          }
 
-                      reject();
-                      return _context.abrupt("return");
+          if (this.options.element.classList.contains('show')) {
+            return false;
+          }
 
-                    case 3:
-                      if (!_this2.options.element.classList.contains('show')) {
-                        _context.next = 6;
-                        break;
-                      }
+          this.onTransition = true;
+          this.triggerEvent(Event.SHOW);
 
-                      reject();
-                      return _context.abrupt("return");
+          var onShow = function onShow() {
+            // dropdown menu
+            _this2.triggerEvent(Event.SHOWN);
 
-                    case 6:
-                      _this2.onTransition = true;
+            _this2.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
 
-                      _this2.triggerEvent(Event.SHOW);
-
-                      onShow = function onShow() {
-                        // dropdown menu
-                        _this2.triggerEvent(Event.SHOWN);
-
-                        _this2.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
-
-                        _this2.onTransition = false;
-                        resolve();
-                      }; // dropdown handler
+            _this2.onTransition = false;
+          }; // dropdown handler
 
 
-                      _this2.options.element.classList.add('show');
+          this.options.element.classList.add('show');
+          var dropdownMenu = this.getMenu();
+          dropdownMenu.classList.add('show');
 
-                      dropdownMenu = _this2.getMenu();
-                      dropdownMenu.classList.add('show');
+          if (dropdownMenu.clientWidth > this.options.element.clientWidth && !dropdownMenu.classList.contains('force-left')) {
+            // move the caret to the left
+            dropdownMenu.classList.add('force-left');
+          } else if (dropdownMenu.clientWidth < this.options.element.clientWidth && dropdownMenu.classList.contains('force-left')) {
+            // set default position for the caret
+            dropdownMenu.classList.remove('force-left');
+          }
 
-                      if (dropdownMenu.clientWidth > _this2.options.element.clientWidth && !dropdownMenu.classList.contains('force-left')) {
-                        // move the caret to the left
-                        dropdownMenu.classList.add('force-left');
-                      } else if (dropdownMenu.clientWidth < _this2.options.element.clientWidth && dropdownMenu.classList.contains('force-left')) {
-                        // set default position for the caret
-                        dropdownMenu.classList.remove('force-left');
-                      }
-
-                      dropdownMenu.addEventListener(Event.TRANSITION_END, onShow);
-                      _context.next = 16;
-                      return sleep(20);
-
-                    case 16:
-                      dropdownMenu.classList.add('animate');
-
-                    case 17:
-                    case "end":
-                      return _context.stop();
-                  }
-                }
-              }, _callee, this);
-            }));
-
-            return function (_x, _x2) {
-              return _ref.apply(this, arguments);
-            };
-          }());
+          dropdownMenu.addEventListener(Event.TRANSITION_END, onShow);
+          setTimeout(function () {
+            dropdownMenu.classList.add('animate');
+          }, 20);
+          return true;
         }
       }, {
         key: "getMenu",
@@ -6465,45 +4734,16 @@
         }
       }, {
         key: "toggle",
-        value: function () {
-          var _toggle = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee2() {
-            return regeneratorRuntime.wrap(function _callee2$(_context2) {
-              while (1) {
-                switch (_context2.prev = _context2.next) {
-                  case 0:
-                    if (!this.options.element.classList.contains('show')) {
-                      _context2.next = 5;
-                      break;
-                    }
-
-                    _context2.next = 3;
-                    return this.hide();
-
-                  case 3:
-                    _context2.next = 7;
-                    break;
-
-                  case 5:
-                    _context2.next = 7;
-                    return this.show();
-
-                  case 7:
-                  case "end":
-                    return _context2.stop();
-                }
-              }
-            }, _callee2, this);
-          }));
-
-          return function toggle() {
-            return _toggle.apply(this, arguments);
-          };
-        }()
+        value: function toggle() {
+          if (this.options.element.classList.contains('show')) {
+            this.hide();
+          } else {
+            this.show();
+          }
+        }
         /**
          * Hides the collapse
-         * @returns {Promise} Promise object represents the completed animation
+         * @returns {Boolean}
          */
 
       }, {
@@ -6511,40 +4751,33 @@
         value: function hide() {
           var _this3 = this;
 
-          return new Promise(function (resolve, reject) {
-            if (_this3.onTransition) {
-              reject();
-              return;
-            }
+          if (this.onTransition) {
+            return false;
+          }
 
-            if (!_this3.options.element.classList.contains('show')) {
-              reject();
-              return;
-            }
+          if (!this.options.element.classList.contains('show')) {
+            return false;
+          }
 
-            _this3.onTransition = true;
+          this.onTransition = true;
+          this.triggerEvent(Event.HIDE);
 
-            _this3.triggerEvent(Event.HIDE);
+          var onHide = function onHide() {
+            // dropdown menu
+            _this3.getMenu().classList.remove('show');
 
-            var onHide = function onHide() {
-              // dropdown menu
-              _this3.getMenu().classList.remove('show');
+            _this3.triggerEvent(Event.HIDDEN);
 
-              _this3.triggerEvent(Event.HIDDEN);
+            _this3.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
 
-              _this3.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
-
-              _this3.onTransition = false;
-              resolve();
-            }; // dropdown handler
+            _this3.onTransition = false;
+          }; // dropdown handler
 
 
-            _this3.options.element.classList.remove('show');
-
-            _this3.getMenu().addEventListener(Event.TRANSITION_END, onHide);
-
-            _this3.getMenu().classList.remove('animate');
-          });
+          this.options.element.classList.remove('show');
+          this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+          this.getMenu().classList.remove('animate');
+          return true;
         }
       }], [{
         key: "identifier",
@@ -6618,34 +4851,166 @@
     return Dropdown;
   }(window.$ ? window.$ : null);
 
+  var Network = function () {
+    /**
+     * ------------------------------------------------------------------------
+     * Constants
+     * ------------------------------------------------------------------------
+     */
+    var NAME = 'network';
+    var VERSION = '2.0.0';
+    var DEFAULT_PROPERTIES = {
+      element: null,
+      initialDelay: 3000,
+      delay: 5000
+    };
+    var DATA_ATTRS_PROPERTIES = [];
+    /**
+     * ------------------------------------------------------------------------
+     * Class Definition
+     * ------------------------------------------------------------------------
+     */
+
+    var Network =
+    /*#__PURE__*/
+    function (_Component) {
+      _inherits(Network, _Component);
+
+      /**
+       * Creates an instance of Network.
+       * @param {{}} [options={}]
+       */
+      function Network() {
+        var _this;
+
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        _classCallCheck(this, Network);
+
+        _this = _possibleConstructorReturn(this, _getPrototypeOf(Network).call(this, NAME, VERSION, DEFAULT_PROPERTIES, options, DATA_ATTRS_PROPERTIES, true, false));
+        _this.xhr = null;
+        _this.checkInterval = null;
+
+        _this.setStatus(Event.NETWORK_ONLINE);
+
+        setTimeout(function () {
+          _this.startCheck();
+        }, _this.options.initialDelay);
+        return _this;
+      }
+
+      _createClass(Network, [{
+        key: "getStatus",
+        value: function getStatus() {
+          return this.status;
+        }
+      }, {
+        key: "setStatus",
+        value: function setStatus(status) {
+          this.status = status;
+        }
+      }, {
+        key: "startRequest",
+        value: function startRequest() {
+          var _this2 = this;
+
+          this.xhr = new XMLHttpRequest();
+          this.xhr.offline = false;
+          var url = "/favicon.ico?_=".concat(new Date().getTime());
+          this.triggerEvent(Event.NETWORK_RECONNECTING, {
+            date: new Date()
+          }, false);
+          this.xhr.open('HEAD', url, true);
+          this.xhr.timeout = this.options.delay - 1;
+
+          this.xhr.ontimeout = function () {
+            _this2.xhr.abort();
+
+            _this2.xhr = null;
+          };
+
+          this.xhr.onload = function () {
+            _this2.onUp();
+          };
+
+          this.xhr.onerror = function () {
+            _this2.onDown();
+          };
+
+          try {
+            this.xhr.send();
+          } catch (e) {
+            this.onDown();
+          }
+        }
+      }, {
+        key: "onUp",
+        value: function onUp() {
+          this.triggerEvent(Event.NETWORK_RECONNECTING_SUCCESS, {
+            date: new Date()
+          }, false);
+
+          if (this.getStatus() !== Event.NETWORK_ONLINE) {
+            this.triggerEvent(Event.NETWORK_ONLINE, {
+              date: new Date()
+            }, false);
+          }
+
+          this.setStatus(Event.NETWORK_ONLINE);
+        }
+      }, {
+        key: "onDown",
+        value: function onDown() {
+          this.triggerEvent(Event.NETWORK_RECONNECTING_FAILURE, {
+            date: new Date()
+          }, false);
+
+          if (this.getStatus() !== Event.NETWORK_OFFLINE) {
+            this.triggerEvent(Event.NETWORK_OFFLINE, {
+              date: new Date()
+            }, false);
+          }
+
+          this.setStatus(Event.NETWORK_OFFLINE);
+        }
+      }, {
+        key: "startCheck",
+        value: function startCheck() {
+          var _this3 = this;
+
+          this.stopCheck();
+          this.startRequest();
+          this.checkInterval = setInterval(function () {
+            _this3.startRequest();
+          }, this.options.delay);
+        }
+      }, {
+        key: "stopCheck",
+        value: function stopCheck() {
+          if (this.checkInterval !== null) {
+            clearInterval(this.checkInterval);
+            this.checkInterval = null;
+          }
+        }
+      }], [{
+        key: "DOMInterface",
+        value: function DOMInterface(options) {
+          return _get(_getPrototypeOf(Network), "DOMInterface", this).call(this, Network, options);
+        }
+      }]);
+
+      return Network;
+    }(Component);
+
+    return Network;
+  }();
+
   /**
    * --------------------------------------------------------------------------
    * Licensed under MIT (https://github.com/quark-dev/Phonon-Framework/blob/master/LICENSE)
    * --------------------------------------------------------------------------
    */
   var api = {};
-  /**
-   * ------------------------------------------------------------------------
-   * Pager
-   * ------------------------------------------------------------------------
-   */
-
-  api.pager = function (options) {
-    /* eslint no-underscore-dangle: 0 */
-    if (typeof api._pager === 'undefined') {
-      api._pager = Pager.DOMInterface(options);
-    }
-
-    return api._pager;
-  };
-  /**
-   * ------------------------------------------------------------------------
-   * i18n
-   * ------------------------------------------------------------------------
-   */
-
-
-  api.i18n = I18n.DOMInterface;
   /**
    * ------------------------------------------------------------------------
    * Network
@@ -6745,8 +5110,7 @@
    */
 
 
-  api.dropdown = Dropdown.DOMInterface; // Make the API live
-
+  api.dropdown = Dropdown.DOMInterface;
   window.phonon = api;
 
   return api;

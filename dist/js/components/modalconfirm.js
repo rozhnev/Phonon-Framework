@@ -1562,73 +1562,66 @@ var Modal = function ($) {
         var top = window.innerHeight / 2 - height / 2;
         this.options.element.style.top = "".concat(top, "px");
       }
+      /**
+       * Shows the modal
+       * @returns {Boolean}
+       */
+
     }, {
       key: "show",
       value: function show() {
         var _this3 = this;
 
-        return new Promise(
+        if (this.options.element === null) {
+          // build and insert a new DOM element
+          this.build();
+        }
+
+        if (this.options.element.classList.contains('show')) {
+          return false;
+        } // add a timeout so that the CSS animation works
+
+
+        _asyncToGenerator(
         /*#__PURE__*/
-        function () {
-          var _ref = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(resolve, reject) {
-            var onShown;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (_this3.options.element === null) {
-                      // build and insert a new DOM element
-                      _this3.build();
-                    }
+        regeneratorRuntime.mark(function _callee() {
+          var onShown;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return sleep(20);
 
-                    if (!_this3.options.element.classList.contains('show')) {
-                      _context.next = 4;
-                      break;
-                    }
+                case 2:
+                  _this3.triggerEvent(Event.SHOW);
 
-                    reject(new Error('The modal is already active'));
-                    return _context.abrupt("return");
-
-                  case 4:
-                    _context.next = 6;
-                    return sleep(20);
-
-                  case 6:
-                    _this3.triggerEvent(Event.SHOW);
-
-                    _this3.buildBackdrop(); // attach event
+                  _this3.buildBackdrop(); // attach event
 
 
-                    _this3.attachEvents();
+                  _this3.attachEvents();
 
-                    onShown = function onShown() {
-                      _this3.triggerEvent(Event.SHOWN);
+                  onShown = function onShown() {
+                    _this3.triggerEvent(Event.SHOWN);
 
-                      _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                    _this3.options.element.removeEventListener(Event.TRANSITION_END, onShown);
+                  };
 
-                      resolve();
-                    };
+                  _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
 
-                    _this3.options.element.addEventListener(Event.TRANSITION_END, onShown);
+                  _this3.options.element.classList.add('show');
 
-                    _this3.options.element.classList.add('show');
+                  _this3.center();
 
-                    _this3.center();
-
-                  case 13:
-                  case "end":
-                    return _context.stop();
-                }
+                case 9:
+                case "end":
+                  return _context.stop();
               }
-            }, _callee, this);
-          }));
+            }
+          }, _callee, this);
+        }))();
 
-          return function (_x, _x2) {
-            return _ref.apply(this, arguments);
-          };
-        }());
+        return true;
       }
     }, {
       key: "onElementEvent",
@@ -1666,7 +1659,7 @@ var Modal = function ($) {
       }
       /**
        * Hides the modal
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1674,42 +1667,34 @@ var Modal = function ($) {
       value: function hide() {
         var _this4 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (!_this4.options.element.classList.contains('show')) {
-            reject(new Error('The modal is not active'));
-            return;
+        if (!this.options.element.classList.contains('show')) {
+          return false;
+        }
+
+        this.triggerEvent(Event.HIDE);
+        this.detachEvents();
+        this.options.element.classList.add('hide');
+        this.options.element.classList.remove('show');
+        var backdrop = this.getBackdrop();
+
+        var onHidden = function onHidden() {
+          document.body.removeChild(backdrop);
+
+          _this4.options.element.classList.remove('hide');
+
+          _this4.triggerEvent(Event.HIDDEN);
+
+          backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
+
+          if (_this4.dynamicElement) {
+            document.body.removeChild(_this4.options.element);
+            _this4.options.element = null;
           }
+        };
 
-          _this4.triggerEvent(Event.HIDE);
-
-          _this4.detachEvents();
-
-          _this4.options.element.classList.add('hide');
-
-          _this4.options.element.classList.remove('show');
-
-          var backdrop = _this4.getBackdrop();
-
-          var onHidden = function onHidden() {
-            document.body.removeChild(backdrop);
-
-            _this4.options.element.classList.remove('hide');
-
-            _this4.triggerEvent(Event.HIDDEN);
-
-            backdrop.removeEventListener(Event.TRANSITION_END, onHidden); // remove generated modals from the DOM
-
-            if (_this4.dynamicElement) {
-              document.body.removeChild(_this4.options.element);
-              _this4.options.element = null;
-            }
-
-            resolve();
-          };
-
-          backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-          backdrop.classList.add('fadeout');
-        });
+        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+        backdrop.classList.add('fadeout');
+        return true;
       }
     }, {
       key: "attachEvents",
@@ -1802,10 +1787,7 @@ var Modal = function ($) {
   modals.forEach(function (element) {
     var config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
     config.element = element;
-    components.push({
-      element: element,
-      modal: new Modal(config)
-    });
+    components.push(new Modal(config));
   });
   document.addEventListener('click', function (event) {
     var dataToggleAttr = event.target.getAttribute('data-toggle');

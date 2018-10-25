@@ -1437,7 +1437,7 @@ var Alert = function ($) {
     }
     /**
      * Shows the alert
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
 
 
@@ -1446,48 +1446,45 @@ var Alert = function ($) {
       value: function show() {
         var _this2 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (_this2.onTransition) {
-            reject();
+        if (this.onTransition) {
+          return false;
+        }
+
+        if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+          return false;
+        }
+
+        this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
+
+        var onShow = function onShow() {
+          _this2.triggerEvent(Event.SHOWN);
+
+          if (_this2.options.element.classList.contains('fade')) {
+            _this2.options.element.classList.remove('fade');
           }
 
-          if (_this2.options.element.classList.contains('show') && _this2.getOpacity() !== 0) {
-            reject();
-          }
+          _this2.options.element.removeEventListener(Event.TRANSITION_END, onShow);
 
-          _this2.onTransition = true;
+          _this2.onTransition = false;
+        };
 
-          _this2.triggerEvent(Event.SHOW);
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
 
-          var onShow = function onShow() {
-            _this2.triggerEvent(Event.SHOWN);
+        this.options.element.classList.add('show');
+        this.options.element.addEventListener(Event.TRANSITION_END, onShow);
 
-            if (_this2.options.element.classList.contains('fade')) {
-              _this2.options.element.classList.remove('fade');
-            }
+        if (this.options.element.classList.contains('hide')) {
+          this.options.element.classList.remove('hide');
+        }
 
-            _this2.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+        if (!this.options.fade) {
+          onShow();
+        }
 
-            _this2.onTransition = false;
-            resolve();
-          };
-
-          if (_this2.options.fade && !_this2.options.element.classList.contains('fade')) {
-            _this2.options.element.classList.add('fade');
-          }
-
-          _this2.options.element.classList.add('show');
-
-          _this2.options.element.addEventListener(Event.TRANSITION_END, onShow);
-
-          if (_this2.options.element.classList.contains('hide')) {
-            _this2.options.element.classList.remove('hide');
-          }
-
-          if (!_this2.options.fade) {
-            onShow();
-          }
-        });
+        return true;
       }
     }, {
       key: "getOpacity",
@@ -1499,7 +1496,7 @@ var Alert = function ($) {
       }
       /**
        * Hides the alert
-       * @returns {Promise} Promise object represents the end of the animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1507,48 +1504,44 @@ var Alert = function ($) {
       value: function hide() {
         var _this3 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (_this3.onTransition) {
-            reject();
-            return;
-          }
+        if (this.onTransition) {
+          return false;
+        }
 
-          if (_this3.getOpacity() === 0) {
-            reject();
-            return;
-          }
+        if (this.getOpacity() === 0) {
+          return false;
+        }
 
-          _this3.onTransition = true;
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
 
-          _this3.triggerEvent(Event.HIDE);
+        var onHide = function onHide() {
+          _this3.triggerEvent(Event.HIDDEN);
 
-          var onHide = function onHide() {
-            _this3.triggerEvent(Event.HIDDEN);
+          _this3.options.element.removeEventListener(Event.TRANSITION_END, onHide);
 
-            _this3.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+          _this3.onTransition = false;
+        };
 
-            _this3.onTransition = false;
-            resolve();
-          };
+        if (this.options.fade && !this.options.element.classList.contains('fade')) {
+          this.options.element.classList.add('fade');
+        }
 
-          if (_this3.options.fade && !_this3.options.element.classList.contains('fade')) {
-            _this3.options.element.classList.add('fade');
-          }
+        this.options.element.addEventListener(Event.TRANSITION_END, onHide);
 
-          _this3.options.element.addEventListener(Event.TRANSITION_END, onHide);
+        if (!this.options.element.classList.contains('hide')) {
+          this.options.element.classList.add('hide');
+        }
 
-          if (!_this3.options.element.classList.contains('hide')) {
-            _this3.options.element.classList.add('hide');
-          }
+        if (this.options.element.classList.contains('show')) {
+          this.options.element.classList.remove('show');
+        }
 
-          if (_this3.options.element.classList.contains('show')) {
-            _this3.options.element.classList.remove('show');
-          }
+        if (!this.options.fade) {
+          onHide();
+        }
 
-          if (!_this3.options.fade) {
-            onHide();
-          }
-        });
+        return true;
       }
     }], [{
       key: "identifier",

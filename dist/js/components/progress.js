@@ -743,42 +743,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1530,68 +1494,30 @@ var Progress = function ($) {
       }
       /**
        * Shows the progress bar
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
       key: "show",
-      value: function () {
-        var _show = _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee() {
-          return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-              switch (_context.prev = _context.next) {
-                case 0:
-                  this.options.element.style.height = "".concat(this.options.height, "px");
-                  this.triggerEvent(Event.SHOW);
-                  this.triggerEvent(Event.SHOWN);
-                  return _context.abrupt("return", true);
-
-                case 4:
-                case "end":
-                  return _context.stop();
-              }
-            }
-          }, _callee, this);
-        }));
-
-        return function show() {
-          return _show.apply(this, arguments);
-        };
-      }()
+      value: function show() {
+        this.options.element.style.height = "".concat(this.options.height, "px");
+        this.triggerEvent(Event.SHOW);
+        this.triggerEvent(Event.SHOWN);
+        return true;
+      }
       /**
        * Hides the progress bar
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
       key: "hide",
-      value: function () {
-        var _hide = _asyncToGenerator(
-        /*#__PURE__*/
-        regeneratorRuntime.mark(function _callee2() {
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  this.options.element.style.height = '0px';
-                  this.triggerEvent(Event.HIDE);
-                  this.triggerEvent(Event.HIDDEN);
-                  return _context2.abrupt("return", true);
-
-                case 4:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2, this);
-        }));
-
-        return function hide() {
-          return _hide.apply(this, arguments);
-        };
-      }()
+      value: function hide() {
+        this.options.element.style.height = '0px';
+        this.triggerEvent(Event.HIDE);
+        this.triggerEvent(Event.HIDDEN);
+        return true;
+      }
     }], [{
       key: "identifier",
       value: function identifier() {

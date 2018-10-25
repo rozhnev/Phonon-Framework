@@ -743,42 +743,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
-
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
-
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
-      }
-
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -933,11 +897,6 @@ function createJqueryPlugin() {
   $.fn[name] = mainFn;
   $.fn[name].Constructor = obj;
   $.fn[name].noConflict = mainFn;
-}
-function sleep(timeout) {
-  return new Promise(function (resolve) {
-    setTimeout(resolve, timeout);
-  });
 }
 
 // @todo keep ?
@@ -1489,7 +1448,7 @@ var Collapse = function ($) {
       }
       /**
        * Shows the collapse
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1497,98 +1456,56 @@ var Collapse = function ($) {
       value: function show() {
         var _this2 = this;
 
-        return new Promise(
-        /*#__PURE__*/
-        function () {
-          var _ref = _asyncToGenerator(
-          /*#__PURE__*/
-          regeneratorRuntime.mark(function _callee(resolve, reject) {
-            var onCollapsed, height;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-              while (1) {
-                switch (_context.prev = _context.next) {
-                  case 0:
-                    if (!_this2.onTransition) {
-                      _context.next = 3;
-                      break;
-                    }
+        if (this.onTransition) {
+          return false;
+        }
 
-                    reject();
-                    return _context.abrupt("return");
+        if (this.options.element.classList.contains('show')) {
+          return false;
+        }
 
-                  case 3:
-                    if (!_this2.options.element.classList.contains('show')) {
-                      _context.next = 6;
-                      break;
-                    }
+        this.onTransition = true;
+        this.triggerEvent(Event.SHOW);
 
-                    reject();
-                    return _context.abrupt("return");
+        var onCollapsed = function onCollapsed() {
+          _this2.triggerEvent(Event.SHOWN);
 
-                  case 6:
-                    _this2.onTransition = true;
+          _this2.options.element.classList.add('show');
 
-                    _this2.triggerEvent(Event.SHOW);
+          _this2.options.element.classList.remove('collapsing');
 
-                    onCollapsed = function onCollapsed() {
-                      _this2.triggerEvent(Event.SHOWN);
+          _this2.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
 
-                      _this2.options.element.classList.add('show');
+          _this2.options.element.setAttribute('aria-expanded', true);
 
-                      _this2.options.element.classList.remove('collapsing');
+          _this2.onTransition = false; // reset the normal height after the animation
 
-                      _this2.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+          _this2.options.element.style.height = 'auto';
+        };
 
-                      _this2.options.element.setAttribute('aria-expanded', true);
+        if (!this.options.element.classList.contains('collapsing')) {
+          this.options.element.classList.add('collapsing');
+        }
 
-                      _this2.onTransition = false; // reset the normal height after the animation
+        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-                      _this2.options.element.style.height = 'auto';
-                      resolve();
-                    };
+        if (!this.isVerticalCollapse()) {
+          // expandableElement
+          this.options.element.classList.add('slide');
+        } else {
+          // get real height
+          var height = this.getHeight();
+          this.options.element.style.height = '0px';
+          setTimeout(function () {
+            _this2.options.element.style.height = "".concat(height, "px");
+          }, 20);
+        }
 
-                    if (!_this2.options.element.classList.contains('collapsing')) {
-                      _this2.options.element.classList.add('collapsing');
-                    }
-
-                    _this2.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-                    if (_this2.isVerticalCollapse()) {
-                      _context.next = 15;
-                      break;
-                    }
-
-                    _this2.options.element.classList.add('slide');
-
-                    _context.next = 20;
-                    break;
-
-                  case 15:
-                    // get real height
-                    height = _this2.getHeight();
-                    _this2.options.element.style.height = '0px';
-                    _context.next = 19;
-                    return sleep(20);
-
-                  case 19:
-                    _this2.options.element.style.height = "".concat(height, "px");
-
-                  case 20:
-                  case "end":
-                    return _context.stop();
-                }
-              }
-            }, _callee, this);
-          }));
-
-          return function (_x, _x2) {
-            return _ref.apply(this, arguments);
-          };
-        }());
+        return true;
       }
       /**
        * Hides the collapse
-       * @returns {Promise} Promise object represents the completed animation
+       * @returns {Boolean}
        */
 
     }, {
@@ -1596,52 +1513,51 @@ var Collapse = function ($) {
       value: function hide() {
         var _this3 = this;
 
-        return new Promise(function (resolve, reject) {
-          if (_this3.onTransition) {
-            reject();
-            return;
+        if (this.onTransition) {
+          return false;
+        }
+
+        if (!this.options.element.classList.contains('show')) {
+          return false;
+        }
+
+        this.onTransition = true;
+        this.triggerEvent(Event.HIDE);
+
+        var onCollapsed = function onCollapsed() {
+          _this3.triggerEvent(Event.HIDDEN);
+
+          _this3.options.element.classList.remove('collapsing');
+
+          _this3.options.element.style.height = 'auto';
+
+          _this3.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+
+          _this3.options.element.setAttribute('aria-expanded', false);
+
+          _this3.onTransition = false;
+        };
+
+        if (!this.isVerticalCollapse()) {
+          if (this.options.element.classList.contains('slide')) {
+            this.options.element.classList.remove('slide');
           }
-
-          if (!_this3.options.element.classList.contains('show')) {
-            reject();
-            return;
-          }
-
-          _this3.onTransition = true;
-
-          _this3.triggerEvent(Event.HIDE);
-
-          var onCollapsed = function onCollapsed() {
-            _this3.triggerEvent(Event.HIDDEN);
-
-            _this3.options.element.classList.remove('collapsing');
-
-            _this3.options.element.style.height = 'auto';
-
-            _this3.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-
-            _this3.options.element.setAttribute('aria-expanded', false);
-
-            _this3.onTransition = false;
-            resolve();
-          };
-
-          _this3.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-          if (!_this3.isVerticalCollapse()) {
-            if (_this3.options.element.classList.contains('slide')) {
-              _this3.options.element.classList.remove('slide');
-            }
-          } else {
+        } else {
+          // transform auto height by real height in px
+          this.options.element.style.height = "".concat(this.options.element.offsetHeight, "px");
+          setTimeout(function () {
             _this3.options.element.style.height = '0px';
-          }
+          }, 20);
+        }
 
-          if (!_this3.options.element.classList.contains('collapsing')) {
-            _this3.options.element.classList.add('collapsing');
-          }
+        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-          _this3.options.element.classList.remove('show');
-        });
+        if (!this.options.element.classList.contains('collapsing')) {
+          this.options.element.classList.add('collapsing');
+        }
+
+        this.options.element.classList.remove('show');
+        return true;
       }
     }, {
       key: "isVerticalCollapse",
