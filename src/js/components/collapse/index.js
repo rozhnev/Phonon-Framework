@@ -57,113 +57,110 @@ const Collapse = (($) => {
 
     /**
      * Shows the collapse
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     show() {
-      return new Promise(async (resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+      if (this.onTransition) {
+        return false;
+      }
 
-        if (this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
+      if (this.options.element.classList.contains('show')) {
+        return false;
+      }
 
-        this.onTransition = true;
+      this.onTransition = true;
 
-        this.triggerEvent(Event.SHOW);
+      this.triggerEvent(Event.SHOW);
 
-        const onCollapsed = () => {
-          this.triggerEvent(Event.SHOWN);
+      const onCollapsed = () => {
+        this.triggerEvent(Event.SHOWN);
 
-          this.options.element.classList.add('show');
-          this.options.element.classList.remove('collapsing');
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+        this.options.element.classList.add('show');
+        this.options.element.classList.remove('collapsing');
+        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
 
-          this.options.element.setAttribute('aria-expanded', true);
+        this.options.element.setAttribute('aria-expanded', true);
 
-          this.onTransition = false;
+        this.onTransition = false;
 
-          // reset the normal height after the animation
-          this.options.element.style.height = 'auto';
+        // reset the normal height after the animation
+        this.options.element.style.height = 'auto';
+      };
 
-          resolve();
-        };
+      if (!this.options.element.classList.contains('collapsing')) {
+        this.options.element.classList.add('collapsing');
+      }
 
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
+      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
+      if (!this.isVerticalCollapse()) {
+        // expandableElement
+        this.options.element.classList.add('slide');
+      } else {
+        // get real height
+        const height = this.getHeight();
 
-        if (!this.isVerticalCollapse()) {
-          // expandableElement
-          this.options.element.classList.add('slide');
-        } else {
-          // get real height
-          const height = this.getHeight();
+        this.options.element.style.height = '0px';
 
-          this.options.element.style.height = '0px';
-
-          await sleep(20);
-
+        setTimeout(() => {
           this.options.element.style.height = `${height}px`;
-        }
-      });
+        }, 20);
+      }
+
+      return true;
     }
 
     /**
      * Hides the collapse
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     hide() {
-      return new Promise((resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
+      if (this.onTransition) {
+        return false;
+      }
+
+      if (!this.options.element.classList.contains('show')) {
+        return false;
+      }
+
+      this.onTransition = true;
+
+      this.triggerEvent(Event.HIDE);
+
+      const onCollapsed = () => {
+        this.triggerEvent(Event.HIDDEN);
+
+        this.options.element.classList.remove('collapsing');
+        this.options.element.style.height = 'auto';
+        this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
+
+        this.options.element.setAttribute('aria-expanded', false);
+
+        this.onTransition = false;
+      };
+
+      if (!this.isVerticalCollapse()) {
+        if (this.options.element.classList.contains('slide')) {
+          this.options.element.classList.remove('slide');
         }
+      } else {
+        // transform auto height by real height in px
+        this.options.element.style.height = `${this.options.element.offsetHeight}px`;
 
-        if (!this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
-
-        this.onTransition = true;
-
-        this.triggerEvent(Event.HIDE);
-
-        const onCollapsed = () => {
-          this.triggerEvent(Event.HIDDEN);
-
-          this.options.element.classList.remove('collapsing');
-          this.options.element.style.height = 'auto';
-          this.options.element.removeEventListener(Event.TRANSITION_END, onCollapsed);
-
-          this.options.element.setAttribute('aria-expanded', false);
-
-          this.onTransition = false;
-
-          resolve();
-        };
-
-        this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
-
-        if (!this.isVerticalCollapse()) {
-          if (this.options.element.classList.contains('slide')) {
-            this.options.element.classList.remove('slide');
-          }
-        } else {
+        setTimeout(() => {
           this.options.element.style.height = '0px';
-        }
+        }, 20);
+      }
 
-        if (!this.options.element.classList.contains('collapsing')) {
-          this.options.element.classList.add('collapsing');
-        }
+      this.options.element.addEventListener(Event.TRANSITION_END, onCollapsed);
 
-        this.options.element.classList.remove('show');
-      });
+      if (!this.options.element.classList.contains('collapsing')) {
+        this.options.element.classList.add('collapsing');
+      }
+
+      this.options.element.classList.remove('show');
+
+      return true;
     }
 
     isVerticalCollapse() {
