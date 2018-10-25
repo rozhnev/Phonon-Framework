@@ -68,6 +68,7 @@ $selectbox-menu-description-color: gray('600');
   border-color: $selectbox-border-color;
   background-color: $selectbox-background;
   cursor: pointer;
+  user-select: none;
 
   padding: $selectbox-padding-y $selectbox-padding-x;
   width: $selectbox-width;
