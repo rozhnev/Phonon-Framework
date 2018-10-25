@@ -74,18 +74,18 @@ const Prompt = (($) => {
 
     /**
      * Shows the prompt
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async show() {
+    show() {
       super.show();
       this.attachInputEvent();
     }
 
     /**
      * Hides the prompt
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async hide() {
+    hide() {
       super.hide();
       this.detachInputEvent();
     }

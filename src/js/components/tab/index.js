@@ -38,68 +38,70 @@ const Tab = (($) => {
 
     /**
      * Shows the tab
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     show() {
-      return new Promise(async (resolve, reject) => {
-        if (this.options.element.classList.contains('active')) {
-          reject();
-          return;
-        }
+      if (this.options.element.classList.contains('active')) {
+        return false;
+      }
 
-        const id = this.options.element.getAttribute('href');
-        const nav = findTargetByClass(this.options.element, 'nav');
-        const navTabs = nav ? nav.querySelectorAll(`[data-toggle="${NAME}"]`) : null;
+      const id = this.options.element.getAttribute('href');
+      const nav = findTargetByClass(this.options.element, 'nav');
+      const navTabs = nav ? nav.querySelectorAll(`[data-toggle="${NAME}"]`) : null;
 
-        if (navTabs) {
-          Array.from(navTabs).forEach((tab) => {
-            if (tab.classList.contains('active')) {
-              tab.classList.remove('active');
-            }
-            tab.setAttribute('aria-selected', false);
-          });
-        }
+      if (navTabs) {
+        Array.from(navTabs).forEach((tab) => {
+          if (tab.classList.contains('active')) {
+            tab.classList.remove('active');
+          }
+          tab.setAttribute('aria-selected', false);
+        });
+      }
 
-        this.options.element.classList.add('active');
-        this.options.element.setAttribute('aria-selected', true);
+      this.options.element.classList.add('active');
+      this.options.element.setAttribute('aria-selected', true);
 
-        const tabContent = document.querySelector(id);
-        const tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
+      const tabContent = document.querySelector(id);
+      const tabContents = tabContent.parentNode.querySelectorAll(TAB_CONTENT_SELECTOR);
 
-        if (tabContents) {
-          Array.from(tabContents).forEach((tab) => {
-            if (tab.classList.contains('active')) {
-              tab.classList.remove('active');
-            }
-          });
-        }
+      if (tabContents) {
+        Array.from(tabContents).forEach((tab) => {
+          if (tab.classList.contains('active')) {
+            tab.classList.remove('active');
+          }
+        });
+      }
 
-        tabContent.classList.add('showing');
+      tabContent.classList.add('showing');
 
-        this.triggerEvent(Event.SHOW);
+      this.triggerEvent(Event.SHOW);
 
-        const onShowed = () => {
-          tabContent.classList.remove('animate');
-          tabContent.classList.add('active');
-          tabContent.classList.remove('showing');
+      const onShowed = () => {
+        tabContent.classList.remove('animate');
+        tabContent.classList.add('active');
+        tabContent.classList.remove('showing');
 
-          this.triggerEvent(Event.SHOWN);
+        this.triggerEvent(Event.SHOWN);
 
-          tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
+        tabContent.removeEventListener(Event.TRANSITION_END, onShowed);
+      };
 
-          resolve();
-        };
-
+      (async () => {
         await sleep(20);
-
         tabContent.addEventListener(Event.TRANSITION_END, onShowed);
         tabContent.classList.add('animate');
-      });
+      })();
+
+      return true;
     }
 
-    async hide() {
+    /**
+     * Hides the tab
+     * @returns {Boolean}
+     */
+    hide() {
       if (!this.options.element.classList.contains('active')) {
-        throw new Error('The tab is not active');
+        return false;
       }
 
       if (this.options.element.classList.contains('active')) {

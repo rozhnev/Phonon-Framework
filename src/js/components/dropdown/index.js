@@ -7,7 +7,7 @@ import Component from '../component';
 import { getAttributesConfig } from '../componentManager';
 import Event from '../../common/events';
 import {
-  findTargetByClass, createJqueryPlugin, sleep,
+  findTargetByClass, createJqueryPlugin,
 } from '../../common/utils';
 
 const Dropdown = (($) => {
@@ -46,11 +46,11 @@ const Dropdown = (($) => {
         this.registerElement({ target: this.options.element, event: 'mouseover' });
         this.registerElement({ target: this.options.element, event: 'mouseleave' });
 
-        this.options.element.addEventListener('mouseover', (event) => {
+        this.options.element.addEventListener('mouseover', () => {
           this.show();
         });
 
-        this.options.element.addEventListener('mouseleave', (event) => {
+        this.options.element.addEventListener('mouseleave', () => {
           this.hide();
         });
       }
@@ -69,108 +69,100 @@ const Dropdown = (($) => {
 
     /**
      * Shows the dropdown
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     show() {
-      return new Promise(async (resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+      if (this.onTransition) {
+        return false;
+      }
 
-        if (this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
+      if (this.options.element.classList.contains('show')) {
+        return false;
+      }
 
-        this.onTransition = true;
+      this.onTransition = true;
 
-        this.triggerEvent(Event.SHOW);
+      this.triggerEvent(Event.SHOW);
 
-        const onShow = () => {
-          // dropdown menu
-          this.triggerEvent(Event.SHOWN);
+      const onShow = () => {
+        // dropdown menu
+        this.triggerEvent(Event.SHOWN);
 
-          this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
-          this.onTransition = false;
+        this.getMenu().removeEventListener(Event.TRANSITION_END, onShow);
+        this.onTransition = false;
+      };
 
-          resolve();
-        };
+      // dropdown handler
+      this.options.element.classList.add('show');
 
-        // dropdown handler
-        this.options.element.classList.add('show');
+      const dropdownMenu = this.getMenu();
 
-        const dropdownMenu = this.getMenu();
+      dropdownMenu.classList.add('show');
 
-        dropdownMenu.classList.add('show');
+      if (dropdownMenu.clientWidth > this.options.element.clientWidth
+        && !dropdownMenu.classList.contains('force-left')) {
+        // move the caret to the left
+        dropdownMenu.classList.add('force-left');
+      } else if (dropdownMenu.clientWidth < this.options.element.clientWidth
+        && dropdownMenu.classList.contains('force-left')) {
+        // set default position for the caret
+        dropdownMenu.classList.remove('force-left');
+      }
 
-        if (dropdownMenu.clientWidth > this.options.element.clientWidth
-          && !dropdownMenu.classList.contains('force-left')) {
-          // move the caret to the left
-          dropdownMenu.classList.add('force-left');
-        } else if (dropdownMenu.clientWidth < this.options.element.clientWidth
-          && dropdownMenu.classList.contains('force-left')) {
-          // set default position for the caret
-          dropdownMenu.classList.remove('force-left');
-        }
+      dropdownMenu.addEventListener(Event.TRANSITION_END, onShow);
 
-        dropdownMenu.addEventListener(Event.TRANSITION_END, onShow);
-
-        await sleep(20);
-
+      setTimeout(() => {
         dropdownMenu.classList.add('animate');
-      });
+      }, 20);
+
+      return true;
     }
 
     getMenu() {
       return this.options.element.querySelector(`.${MENU}`);
     }
 
-    async toggle() {
+    toggle() {
       if (this.options.element.classList.contains('show')) {
-        await this.hide();
+        this.hide();
       } else {
-        await this.show();
+        this.show();
       }
     }
 
     /**
      * Hides the collapse
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     hide() {
-      return new Promise((resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+      if (this.onTransition) {
+        return false;
+      }
 
-        if (!this.options.element.classList.contains('show')) {
-          reject();
-          return;
-        }
+      if (!this.options.element.classList.contains('show')) {
+        return false;
+      }
 
-        this.onTransition = true;
-        this.triggerEvent(Event.HIDE);
+      this.onTransition = true;
+      this.triggerEvent(Event.HIDE);
 
-        const onHide = () => {
-          // dropdown menu
-          this.getMenu().classList.remove('show');
+      const onHide = () => {
+        // dropdown menu
+        this.getMenu().classList.remove('show');
 
-          this.triggerEvent(Event.HIDDEN);
-          this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
-          this.onTransition = false;
+        this.triggerEvent(Event.HIDDEN);
+        this.getMenu().removeEventListener(Event.TRANSITION_END, onHide);
+        this.onTransition = false;
+      };
 
-          resolve();
-        };
+      // dropdown handler
+      this.options.element.classList.remove('show');
 
-        // dropdown handler
-        this.options.element.classList.remove('show');
+      this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
 
-        this.getMenu().addEventListener(Event.TRANSITION_END, onHide);
+      this.getMenu().classList.remove('animate');
 
-        this.getMenu().classList.remove('animate');
-      });
+      return true;
     }
 
     static identifier() {

@@ -157,9 +157,9 @@ const Selectbox = (() => {
 
     /**
      * Shows the selectbox
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async show() {
+    show() {
       if (this.options.element.classList.contains('active')) {
         return false;
       }
@@ -182,11 +182,11 @@ const Selectbox = (() => {
 
     /**
      * Hides the selectbox
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async hide() {
+    hide() {
       if (!this.options.element.classList.contains('active')) {
-        throw new Error('The selectbox is not active');
+        return false;
       }
 
       this.options.element.classList.remove('active');

@@ -119,9 +119,9 @@ const Progress = (($) => {
 
     /**
      * Shows the progress bar
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async show() {
+    show() {
       this.options.element.style.height = `${this.options.height}px`;
       this.triggerEvent(Event.SHOW);
       this.triggerEvent(Event.SHOWN);
@@ -131,9 +131,9 @@ const Progress = (($) => {
 
     /**
      * Hides the progress bar
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async hide() {
+    hide() {
       this.options.element.style.height = '0px';
       this.triggerEvent(Event.HIDE);
       this.triggerEvent(Event.HIDDEN);

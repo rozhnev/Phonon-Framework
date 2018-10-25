@@ -97,9 +97,9 @@ const Accordion = (($) => {
     /**
      * Shows the collapse element
      * @param {(string|Element)} collapseEl
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async show(collapseEl) {
+    show(collapseEl) {
       let collapse = collapseEl;
       if (typeof collapseEl === 'string') {
         collapse = document.querySelector(collapseEl);
@@ -117,9 +117,9 @@ const Accordion = (($) => {
     /**
      * Hides the collapse element
      * @param {(string|Element)} collapseEl
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
-    async hide(collapseEl) {
+    hide(collapseEl) {
       let collapse = collapseEl;
       if (typeof collapseEl === 'string') {
         collapse = document.querySelector(collapseEl);

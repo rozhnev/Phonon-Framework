@@ -67,14 +67,14 @@ const Loader = (($) => {
       this.spinner = null;
     }
 
-    async show() {
+    show() {
       super.show();
 
       this.spinner = new Spinner({ element: this.getElement().querySelector('.loader') });
       this.spinner.animate(true);
     }
 
-    async hide() {
+    hide() {
       super.hide();
 
       this.spinner.animate(false);

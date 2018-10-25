@@ -40,51 +40,49 @@ const Alert = (($) => {
 
     /**
      * Shows the alert
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     show() {
-      return new Promise((resolve, reject) => {
-        if (this.onTransition) {
-          reject();
+      if (this.onTransition) {
+        return false;
+      }
+
+      if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
+        return false;
+      }
+
+      this.onTransition = true;
+
+      this.triggerEvent(Event.SHOW);
+
+      const onShow = () => {
+        this.triggerEvent(Event.SHOWN);
+
+        if (this.options.element.classList.contains('fade')) {
+          this.options.element.classList.remove('fade');
         }
 
-        if (this.options.element.classList.contains('show') && this.getOpacity() !== 0) {
-          reject();
-        }
+        this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
+        this.onTransition = false;
+      };
 
-        this.onTransition = true;
+      if (this.options.fade && !this.options.element.classList.contains('fade')) {
+        this.options.element.classList.add('fade');
+      }
 
-        this.triggerEvent(Event.SHOW);
+      this.options.element.classList.add('show');
 
-        const onShow = () => {
-          this.triggerEvent(Event.SHOWN);
+      this.options.element.addEventListener(Event.TRANSITION_END, onShow);
 
-          if (this.options.element.classList.contains('fade')) {
-            this.options.element.classList.remove('fade');
-          }
+      if (this.options.element.classList.contains('hide')) {
+        this.options.element.classList.remove('hide');
+      }
 
-          this.options.element.removeEventListener(Event.TRANSITION_END, onShow);
-          this.onTransition = false;
+      if (!this.options.fade) {
+        onShow();
+      }
 
-          resolve();
-        };
-
-        if (this.options.fade && !this.options.element.classList.contains('fade')) {
-          this.options.element.classList.add('fade');
-        }
-
-        this.options.element.classList.add('show');
-
-        this.options.element.addEventListener(Event.TRANSITION_END, onShow);
-
-        if (this.options.element.classList.contains('hide')) {
-          this.options.element.classList.remove('hide');
-        }
-
-        if (!this.options.fade) {
-          onShow();
-        }
-      });
+      return true;
     }
 
     getOpacity() {
@@ -94,48 +92,45 @@ const Alert = (($) => {
 
     /**
      * Hides the alert
-     * @returns {Promise} Promise object represents the end of the animation
+     * @returns {Boolean}
      */
     hide() {
-      return new Promise((resolve, reject) => {
-        if (this.onTransition) {
-          reject();
-          return;
-        }
+      if (this.onTransition) {
+        return false;
+      }
 
-        if (this.getOpacity() === 0) {
-          reject();
-          return;
-        }
+      if (this.getOpacity() === 0) {
+        return false;
+      }
 
-        this.onTransition = true;
-        this.triggerEvent(Event.HIDE);
+      this.onTransition = true;
+      this.triggerEvent(Event.HIDE);
 
-        const onHide = () => {
-          this.triggerEvent(Event.HIDDEN);
-          this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
-          this.onTransition = false;
-          resolve();
-        };
+      const onHide = () => {
+        this.triggerEvent(Event.HIDDEN);
+        this.options.element.removeEventListener(Event.TRANSITION_END, onHide);
+        this.onTransition = false;
+      };
 
-        if (this.options.fade && !this.options.element.classList.contains('fade')) {
-          this.options.element.classList.add('fade');
-        }
+      if (this.options.fade && !this.options.element.classList.contains('fade')) {
+        this.options.element.classList.add('fade');
+      }
 
-        this.options.element.addEventListener(Event.TRANSITION_END, onHide);
+      this.options.element.addEventListener(Event.TRANSITION_END, onHide);
 
-        if (!this.options.element.classList.contains('hide')) {
-          this.options.element.classList.add('hide');
-        }
+      if (!this.options.element.classList.contains('hide')) {
+        this.options.element.classList.add('hide');
+      }
 
-        if (this.options.element.classList.contains('show')) {
-          this.options.element.classList.remove('show');
-        }
+      if (this.options.element.classList.contains('show')) {
+        this.options.element.classList.remove('show');
+      }
 
-        if (!this.options.fade) {
-          onHide();
-        }
-      });
+      if (!this.options.fade) {
+        onHide();
+      }
+
+      return true;
     }
 
     static identifier() {

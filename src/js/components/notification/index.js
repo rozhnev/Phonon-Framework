@@ -120,37 +120,36 @@ const Notification = (($) => {
 
     /**
      * Shows the notification
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     show() {
-      return new Promise(async (resolve, reject) => {
-        if (this.options.element === null) {
-          // build and insert a new DOM element
-          this.build();
-        }
+      if (this.options.element === null) {
+        // build and insert a new DOM element
+        this.build();
+      }
 
-        if (this.options.element.classList.contains('show')) {
-          reject(new Error('The notification is already active'));
-          return;
-        }
+      if (this.options.element.classList.contains('show')) {
+        return false;
+      }
 
-        // reset color
-        if (this.options.background) {
-          this.options.element.removeAttribute('class');
-          this.options.element.setAttribute('class', 'notification');
+      // reset color
+      if (this.options.background) {
+        this.options.element.removeAttribute('class');
+        this.options.element.setAttribute('class', 'notification');
 
-          this.options.element.classList.add(`notification-${this.options.background}`);
-          this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
-        }
+        this.options.element.classList.add(`notification-${this.options.background}`);
+        this.options.element.querySelector('button').classList.add(`btn-${this.options.background}`);
+      }
 
-        this.setPosition();
+      this.setPosition();
 
-        if (this.options.button) {
-          // attach the button handler
-          const buttonElement = this.options.element.querySelector('button');
-          this.registerElement({ target: buttonElement, event: 'click' });
-        }
+      if (this.options.button) {
+        // attach the button handler
+        const buttonElement = this.options.element.querySelector('button');
+        this.registerElement({ target: buttonElement, event: 'click' });
+      }
 
+      (async () => {
         await sleep(20);
 
         if (Number.isInteger(this.options.timeout) && this.options.timeout > 0) {
@@ -167,62 +166,57 @@ const Notification = (($) => {
         const onShown = () => {
           this.triggerEvent(Event.SHOWN);
           this.options.element.removeEventListener(Event.TRANSITION_END, onShown);
-
-          resolve();
         };
 
         this.options.element.addEventListener(Event.TRANSITION_END, onShown);
+      })();
 
-        return true;
-      });
+      return true;
     }
 
     /**
      * Hides the notification
-     * @returns {Promise} Promise object represents the completed animation
+     * @returns {Boolean}
      */
     hide() {
-      return new Promise((resolve, reject) => {
-        /*
-        * prevent to close a notification with a timeout
-        * if the user has already clicked on the button
-        */
-        if (this.timeoutCallback) {
-          clearTimeout(this.timeoutCallback);
-          this.timeoutCallback = null;
+      /*
+      * prevent to close a notification with a timeout
+      * if the user has already clicked on the button
+      */
+      if (this.timeoutCallback) {
+        clearTimeout(this.timeoutCallback);
+        this.timeoutCallback = null;
+      }
+
+      if (!this.options.element.classList.contains('show')) {
+        return false;
+      }
+
+      this.triggerEvent(Event.HIDE);
+
+      if (this.options.button) {
+        const buttonElement = this.options.element.querySelector('button');
+        this.unregisterElement({ target: buttonElement, event: 'click' });
+      }
+
+      this.options.element.classList.remove('show');
+      this.options.element.classList.add('hide');
+
+      const onHidden = () => {
+        this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
+        this.options.element.classList.remove('hide');
+
+        this.triggerEvent(Event.HIDDEN);
+
+        if (this.dynamicElement) {
+          document.body.removeChild(this.options.element);
+          this.options.element = null;
         }
+      };
 
-        if (!this.options.element.classList.contains('show')) {
-          reject(new Error('The notification is not active'));
-          return;
-        }
+      this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
 
-        this.triggerEvent(Event.HIDE);
-
-        if (this.options.button) {
-          const buttonElement = this.options.element.querySelector('button');
-          this.unregisterElement({ target: buttonElement, event: 'click' });
-        }
-
-        this.options.element.classList.remove('show');
-        this.options.element.classList.add('hide');
-
-        const onHidden = () => {
-          this.options.element.removeEventListener(Event.TRANSITION_END, onHidden);
-          this.options.element.classList.remove('hide');
-
-          this.triggerEvent(Event.HIDDEN);
-
-          if (this.dynamicElement) {
-            document.body.removeChild(this.options.element);
-            this.options.element = null;
-          }
-
-          resolve();
-        };
-
-        this.options.element.addEventListener(Event.TRANSITION_END, onHidden);
-      });
+      return true;
     }
 
     onElementEvent() {

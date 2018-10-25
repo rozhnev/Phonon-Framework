@@ -56,7 +56,7 @@ const Loader = (($) => {
       return this.options.element.querySelector('.loader-spinner');
     }
 
-    async show() {
+    show() {
       if (this.options.element.classList.contains('hide')) {
         this.options.element.classList.remove('hide');
       }
@@ -103,7 +103,7 @@ const Loader = (($) => {
       return true;
     }
 
-    async hide() {
+    hide() {
       if (!this.options.element.classList.contains('hide')) {
         this.options.element.classList.add('hide');
       }
