@@ -31,11 +31,19 @@ It is used to show a fragment of content.
 ## JavaScript
 
 ```js
+// ES6
+import Tab from 'phonon/dist/js/components/tab';
+
+const tab = new Tab({
+  element: '#settings-tab',
+});
+
+// ES5
 const tab = phonon.tab({
   element: '#settings-tab',
 });
 
-// jQuery support
+// jQuery
 const tab = $('#settings-tab').tab();
 ```
 

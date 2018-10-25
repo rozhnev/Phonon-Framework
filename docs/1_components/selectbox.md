@@ -116,14 +116,43 @@ Add the class `selectbox-sm` to reduce the size.
 
 ## JavaScript
 
+### Selectbox (list)
+
 ```js
+// ES6
+import Selectbox from 'phonon/dist/js/components/selectbox';
+
+const selectbox = new Selectbox({
+  element: '.selectbox',
+});
+
+// ES5
 const selectbox = phonon.selectbox({
   element: '.selectbox',
 });
 
-// or for a search selectbox
+// jQuery
+const selectbox = $('.selectbox').selectbox();
+```
+
+### Search selectbox
+
+```js
+// ES6
+import SelectboxSearch from 'phonon/dist/js/components/selectbox/search';
+
+const searchSelectbox = new SelectboxSearch({
+  element: '.selectbox',
+});
+
+// ES5
 const searchSelectbox = phonon.selectbox({
-  element: '.selectbox-search',
+  element: '.selectbox',
+  search: true,
+});
+
+// jQuery
+const searchSelectbox = $('.selectbox').selectbox({
   search: true,
 });
 ```
@@ -156,7 +185,7 @@ Where:
 
 #### getSelected()
 
-* returns: `<String>`
+* returns: `String`
 
 Returns the selected value.
 

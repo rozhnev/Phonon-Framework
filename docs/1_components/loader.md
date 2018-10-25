@@ -53,14 +53,27 @@ it may be useful not to show the loader, but after a while. For this, we add the
 ## JavaScript
 
 ```js
+// ES6
+import Loader from 'phonon/dist/js/components/loader';
+
+const loader = new Loader({
+  element: '.loader',
+  color: null,
+  size: null,
+});
+
+// ES5
 const loader = phonon.loader({
   element: '.loader',
   color: null,
   size: null,
 });
 
-// jQuery support
-const loader = $('.loader').loader();
+// jQuery
+const loader = $('.loader').loader({
+  color: null,
+  size: null,
+});
 ```
 
 ### Options

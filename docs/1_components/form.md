@@ -152,55 +152,224 @@ Alternatively, you can use our advanced [selectbox](#1_components/selectbox) tha
 </select>
 ```
 
-## Checkboxes
+## Input group
+
+Input groups are extendable inputs containing before and after elements.
+You can add one or many elements in `.input-group-prepend` or `.input-group-append`.
 
 ```html
-<label class="custom-control custom-checkbox">
-  <input type="checkbox" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Check this custom checkbox</span>
-</label>
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">@</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
 ```
 
-## Radios
+### Sizing
 
 ```html
-<label class="custom-control custom-radio">
-  <input id="radio1" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Toggle this custom radio</span>
-</label>
-<label class="custom-control custom-radio">
-  <input id="radio2" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Or toggle this other custom radio</span>
-</label>
+<div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+
+<div class="input-group input-group-lg">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Large</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+</div>
 ```
 
-### Stacked
+### Checkboxes and radios
 
 ```html
-<div class="custom-controls-stacked">
-  <label class="custom-control custom-radio">
-    <input id="radioStacked3" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Toggle this custom radio</span>
-  </label>
-  <label class="custom-control custom-radio">
-    <input id="radioStacked4" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Or toggle this other custom radio</span>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" aria-label="Checkbox for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with checkbox">
+</div>
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div>
+```
+
+### Buttons
+
+```html
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+  </div>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+</div>
+```
+
+### Custom select
+
+
+```html
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01">
+    <option selected>Choose...</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Button</button>
+  </div>
+</div>
+```
+
+
+## Checkboxes and radios
+
+### Default checkbox
+
+```html
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Default checkbox
   </label>
 </div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+  <label class="form-check-label" for="defaultCheck2">
+    Disabled checkbox
+  </label>
+</div>
+```
+
+### Custom checkbox
+
+```html
+<div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheck1">
+  <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+</div>
+```
+
+### Default radios
+
+```html
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Second default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+  <label class="form-check-label" for="exampleRadios3">
+    Disabled radio
+  </label>
+</div>
+```
+
+### Custom radios
+
+```html
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+</div>
+```
+
+### Inline
+
+```html
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+</div>
+```
+
+### Disabled
+
+```html
+<div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheckDisabled" disabled>
+  <label class="custom-control-label" for="customCheckDisabled">Check this custom checkbox</label>
+</div>
+
+<div class="custom-control custom-radio">
+  <input type="radio" id="radio3" name="radioDisabled" id="customRadioDisabled" class="custom-control-input" disabled>
+  <label class="custom-control-label" for="customRadioDisabled">Toggle this custom radio</label>
+</div>
+```
+
+## Range
+
+By default, the `min` value is 0, the `max` value is 100 and `step` is 1.
+
+```html
+<label for="customRange1">Example range</label>
+<input type="range" class="custom-range" id="customRange1">
+```
+
+### Custom min and max
+
+You can also define the `min` and `max` attributes.
+
+```html
+<label for="customRange2">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" id="customRange2">
+```
+
+### Custom step
+
+You may want to change the `step` value.
+
+```html
+<label for="customRange3">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
 ```
 
 ## File browser
 
 ```html
-<label class="custom-file">
-  <input type="file" id="file2" class="custom-file-input">
-  <span class="custom-file-control"></span>
-</label>
+<div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
 ```
 
 <div class="alert alert-secondary" role="alert">

@@ -35,6 +35,17 @@ This is particularly useful if you want to set up a notification without worryin
 </script>
 
 ```js
+import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
+  message: 'Hello',
+  directionY: 'top',
+  directionX: 'right',
+  offsetY: 0,
+  offsetX: 0,
+});
+
+// ES5
 const notif = phonon.notification({
   message: 'Hello',
   directionY: 'top',
@@ -43,7 +54,7 @@ const notif = phonon.notification({
   offsetX: 0,
 });
 
-// jQuery support
+// jQuery
 const notif = $().notification({
   message: 'Hello',
   directionY: 'top',

@@ -99,7 +99,6 @@ body {
 }
 
 .content {
-  /* font-family: Merriweather, 'Book Antiqua', Georgia, 'Century Schoolbook', serif; */
   font-size: 1em;
   line-height: 1.6875em;
   width: 100%;
@@ -114,37 +113,49 @@ body {
 }
 
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6 {
+  /*
   font-family: Lato, sans-serif;
   font-weight: 700;
   line-height: 1.5em;
+  */
   word-wrap: break-word;
 }
 
+.content h1 {
+  margin: 1em 0 .5em;
+}
+
+/*
 .content h1 {font-size:2em; margin:1em 0 .5em}
 .content h1.heading {color: #666; margin: 1.25em 0 .5em}
 .content h1 small {font-weight:300}
 .content h1 a.view-source {font-size:1.2rem}
 .content h2 {font-size:1.6em;margin:1em 0 .5em;font-weight:700}
 .content h3 {font-size:1.3em; margin:1em 0 .5em; font-weight:700}
+*/
 .content ul li {line-height:1.5em}
 .content ul li>p {margin:0}
 .content blockquote {font-style:italic;margin:.5em 0;padding:.25em 1.5em;border-left:3px solid #e1e1e1;display:inline-block}
 .content blockquote :first-child {padding-top:0;margin-top:0}
 .content blockquote :last-child {padding-bottom:0;margin-bottom:0}
 .content code {font-weight:400;background-color:#f7f9fc;vertical-align:baseline;border-radius:2px;padding:.1em .2em;border:1px solid #d2ddee}
-.content pre {margin:1.5em 0}
+/* .content pre {margin:1.5em 0} */
 .content img {max-width: 100%}
 
+/*
 .content table {
   border-collapse: collapse;
   width: 100%;
 }
+*/
 
+/*
 .content th, .content td {
   padding: 0.3rem 0.5rem;
   text-align: left;
   border-bottom: 1px solid #e1e1e1;
 }
+*/
 
 .content .page {
   padding: 15px 0;

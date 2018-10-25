@@ -34,7 +34,7 @@ This is particularly useful if you want to set up a modal without worrying about
 ### Simple modal
 
 ```js
-// es6
+// ES6
 const Modal = require('phonon/dist/js/components/modal');
 
 const modal = new Modal({
@@ -42,13 +42,13 @@ const modal = new Modal({
   message: 'Modal body text goes here.',
 });
 
-// es5
+// ES5
 const modal = phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
 });
 
-// jQuery support
+// jQuery
 const modal = $().modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
@@ -176,10 +176,13 @@ const modal = $('#exampleModal').modal();
 
 ## Options
 
-- title
-- message
-- cancelable
-- cancelableKeyCodes [array] (by default, Enter and Escape are shortcuts to hide the modal)
+|     Name     |     Description      |     Default value      |     Available as a data attribute      |
+|----------------|----------------------|-------------------------|-------------------------------------|
+|    title      |  The modal title. | null | no |
+|    message      |  The modal message. | null | no |
+|    cancelable      |  Determines if a modal is cancelable or not cancelable by pressing a key or by clicking outside of the modal. | true | yes `data-cancelable` |
+|    cancelableKeyCodes   |  Array of keys that allow to hide the modal. Default keys are escape and enter. | [27, 13] | no |
+
 
 ## Methods
 
@@ -206,13 +209,17 @@ modal.hide();
 
 ### getInputValue()
 
+* returns: `String`
+
 It is possible to retrieve the text field value of any prompt type.
 
 ```js
 const value = modal.getInputValue();
 ```
 
-### setInputValue()
+### setInputValue(value)
+
+* `value` (String) - the input value.
 
 It is possible to set the text field value of any prompt type.
 

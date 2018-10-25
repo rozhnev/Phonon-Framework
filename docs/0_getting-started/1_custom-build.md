@@ -44,19 +44,19 @@ Please, see the source code of [phonon.scss](https://github.com/quark-dev/Phonon
 import 'phonon/dist/js/phonon'
 
 // import required components for your project
-const Alert = require('phonon/dist/components/alert');
-const Modal = require('phonon/dist/components/modal');
-const ModalPrompt = require('phonon/dist/components/modal/prompt');
-const ModalConfirm = require('phonon/dist/components/modal/confirm');
-const ModalLoader = require('phonon/dist/components/modal/loader');
-const Notification = require('phonon/dist/components/notification');
-const Collapse = require('phonon/dist/components/collapse');
-const Accordion = require('phonon/dist/components/accordion');
-const Tab = require('phonon/dist/components/tab');
-const Progress = require('phonon/dist/components/progress');
-const Loader = require('phonon/dist/components/loader');
-const OffCanvas = require('phonon/dist/components/off-canvas');
-const Selectbox = require('phonon/dist/components/selectbox');
-const SelectboxSearch = require('phonon/dist/components/selectbox/search');
-const Dropdown = require('phonon/dist/components/dropdown');
+const Alert = require('phonon/dist/js/components/alert');
+const Modal = require('phonon/dist/js/components/modal');
+const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
+const ModalConfirm = require('phonon/dist/js/components/modal/confirm');
+const ModalLoader = require('phonon/dist/js/components/modal/loader');
+const Notification = require('phonon/dist/js/components/notification');
+const Collapse = require('phonon/dist/js/components/collapse');
+const Accordion = require('phonon/dist/js/components/accordion');
+const Tab = require('phonon/dist/js/components/tab');
+const Progress = require('phonon/dist/js/components/progress');
+const Loader = require('phonon/dist/js/components/loader');
+const OffCanvas = require('phonon/dist/js/components/off-canvas');
+const Selectbox = require('phonon/dist/js/components/selectbox');
+const SelectboxSearch = require('phonon/dist/js/components/selectbox/search');
+const Dropdown = require('phonon/dist/js/components/dropdown');
 ```

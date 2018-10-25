@@ -25,6 +25,20 @@ You can specify the height and the value of the progress in HTML if you don't wa
 ## JavaScript
 
 ```js
+// ES6
+import Progress from 'phonon/dist/js/components/progress';
+
+const progress = new Progress({
+  element: '#myProgress',
+  height: 5,
+  min: 0,
+  max: 100,
+  label: false,
+  striped: false,
+  background: null,
+});
+
+// ES5
 const progress = phonon.progress({
   element: '#myProgress',
   height: 5,
@@ -35,7 +49,7 @@ const progress = phonon.progress({
   background: null,
 });
 
-// jQuery support
+// jQuery
 $('#myProgress').progress({
   height: 5,
   min: 0,

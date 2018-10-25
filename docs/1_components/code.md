@@ -34,5 +34,9 @@ To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
 ```
 
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+
+This documentation "Code" is a derivative of "[Code](http://getbootstrap.com/docs/4.1/content/code/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Code" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+
 </div>

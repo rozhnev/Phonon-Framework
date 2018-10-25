@@ -4,7 +4,7 @@ title: Borders
 
 ## Introduction
 
-[WIP]
+Border utility classes.
 
 ## Add borders
 

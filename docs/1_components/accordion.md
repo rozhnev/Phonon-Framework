@@ -35,11 +35,19 @@ You can use links and buttons to toggle the collapsible elements.
 ## JavaScript
 
 ```js
+// ES6
+import Accordion from 'phonon/dist/js/components/accordion';
+
+const accordion = new Accordion({
+  element: '#exampleAccordion',
+});
+
+// ES5
 const accordion = phonon.accordion({
   element: '#exampleAccordion',
 });
 
-// jQuery support
+// jQuery
 const accordion = $('#exampleAccordion').accordion();
 ```
 
@@ -47,8 +55,8 @@ const accordion = $('#exampleAccordion').accordion();
 
 #### show(collapse)
 
-* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
-* returns: `<Promise<Boolean>>`
+* `collapse` `<HTMLElement>|<string>` - if `collapse` is a String, it is interpreted as a selector. Otherwise, it is expected that it is a HTML element.
+* returns: `<boolean>`
 
 ```js
 accordion.show('#collapseTwo');
@@ -56,8 +64,8 @@ accordion.show('#collapseTwo');
 
 #### hide(collapse)
 
-* `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
-* returns: `<Promise<Boolean>>`
+* `collapse` `<HTMLElement>|<string>` - if `collapse` is a String, it is interpreted as a selector. Otherwise, it is expected that it is a HTML element.
+* returns: `<boolean>`
 
 ```js
 accordion.hide('#collapseTwo');

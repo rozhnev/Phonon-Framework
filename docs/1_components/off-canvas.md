@@ -69,6 +69,21 @@ If the screen size is `lg` or `xl`, the menu will push the container to display 
 ## JavaScript
 
 ```js
+// ES6
+import OffCanvas from 'phonon/dist/js/components/off-canvas';
+
+const offcanvas = new OffCanvas({
+  element: '#exampleOffCanvas',
+  container: document.body,
+  toggle: false,
+  aside: {
+    md: false,
+    lg: true,
+    xl: true,
+  },
+});
+
+// ES5
 const offcanvas = phonon.offcanvas({
   element: '#exampleOffCanvas',
   container: document.body,
@@ -80,7 +95,7 @@ const offcanvas = phonon.offcanvas({
   },
 });
 
-// jQuery support
+// jQuery
 const offcanvas = $('#exampleOffCanvas').offcanvas({
   container: document.body,
   toggle: false,

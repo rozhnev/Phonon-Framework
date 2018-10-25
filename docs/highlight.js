@@ -1,26 +1,30 @@
 var codes = document.querySelectorAll('pre code');
 
 function addButton(id) {
+  var container = document.createElement('div');
+  container.classList.add('w-100');
+  container.classList.add('mt-3');
+  container.classList.add('text-right');
+
   var btn = document.createElement('button');
   btn.classList.add('btn');
   btn.classList.add('btn-sm');
   btn.classList.add('btn-secondary');
-  btn.classList.add('float-right');
 
   btn.setAttribute('id', id);
 
-  btn.style.width = '60px';
-
   btn.innerHTML = 'Copy';
 
-  return btn;
+  container.appendChild(btn);
+
+  return container;
 }
 
 function setPosition(btn) {
   var rect = btn.getBoundingClientRect();
   var el = btn;
 
-  el.style.marginLeft = '-' + rect.width + 'px';
+  // el.style.marginLeft = '-' + rect.width + 'px';
 }
 
 function setListener(btnId, code) {

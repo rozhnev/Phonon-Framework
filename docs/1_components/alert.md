@@ -79,8 +79,22 @@ An alert displays a box with a specified message.
 ## JavaScript
 
 ```js
+// ES6
+import Alert from 'phonon/dist/js/components/alert';
+
+const alert = new Alert({
+  element: '#exampleAlert',
+  fade: true,
+});
+
+// ES5
 const alert = phonon.alert({
   element: '#exampleAlert',
+  fade: true,
+});
+
+// jQuery
+const alert = $('#exampleAlert').alert({
   fade: true,
 });
 ```

@@ -25,6 +25,16 @@ const pager = phonon.pager({
 pager.start();
 ```
 
+## Options
+
+|      Name      |     Description      |     Default value      |
+|----------------|----------------------|-------------------------|
+|    hashPrefix      |  The default hash prefix. | #! |
+|    useHash      |  Determines if pager listens to hash events and update the current page in the hash. | true |
+|    defaultPage      | The default page. | null |
+|    animatePages   |  Determines if pager animates page transitions. | true |
+
+
 ## Markup
 
 A SPA page is defined by setting up the `app-page` class and a unique data-page attribute.
