@@ -36,27 +36,21 @@ function when(commitDate) {
   return `${differenceInDays} days ago`;
 }
 
-function getLastCommit() {
-  return new Promise((resolve) => {
-    axios({
-      url: `https://api.github.com/repos/${info.user}/${info.repo}/commits?sha=${info.branch}`,
-      method: 'get'
-    }).then((response) => {
-      const commits = response.data;
-      const cur = commits[0];
-      resolve({ sha: cur.sha, date: when(cur.commit.committer.date) });
-    });
+function getLastCommit(callback) {
+  axios({
+    url: `https://api.github.com/repos/${info.user}/${info.repo}/commits?sha=${info.branch}`,
+    method: 'get',
+  }).then((response) => {
+    const cur = response.data[0];
+    callback({ sha: cur.sha, date: when(cur.commit.committer.date) });
   });
 }
 
-function getLastRelease() {
-  return new Promise((resolve) => {
-    axios({
-      url: `https://api.github.com/repos/${info.user}/${info.repo}/releases/latest`,
-      method: 'get'
-    }).then((response) => {
-      const data = response.data;
-      resolve({ tag: data.tag_name, date: when(data.published_at) });
-    });
+function getLastRelease(callback) {
+  axios({
+    url: `https://api.github.com/repos/${info.user}/${info.repo}/releases/latest`,
+    method: 'get',
+  }).then((response) => {
+    callback({ tag: response.data.tag_name, date: when(response.data.published_at) });
   });
 }
