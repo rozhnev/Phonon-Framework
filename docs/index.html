@@ -111,7 +111,6 @@ body {
 }
 
 .content {
-  /* font-family: Merriweather, 'Book Antiqua', Georgia, 'Century Schoolbook', serif; */
   font-size: 1em;
   line-height: 1.6875em;
   width: 100%;
@@ -128,38 +127,49 @@ body {
 }
 
 .content h1,.content h2,.content h3,.content h4,.content h5,.content h6 {
+  /*
   font-family: Lato, sans-serif;
   font-weight: 700;
   line-height: 1.5em;
+  */
   word-wrap: break-word;
 }
 
+.content h1 {
+  margin: 1em 0 .5em;
+}
+
+/*
 .content h1 {font-size:2em; margin:1em 0 .5em}
 .content h1.heading {color: #666; margin: 1.25em 0 .5em}
 .content h1 small {font-weight:300}
-.content h1 a.view-source {font-size:19.2px;font-size:1.2rem}
+.content h1 a.view-source {font-size:1.2rem}
 .content h2 {font-size:1.6em;margin:1em 0 .5em;font-weight:700}
 .content h3 {font-size:1.3em; margin:1em 0 .5em; font-weight:700}
+*/
 .content ul li {line-height:1.5em}
 .content ul li>p {margin:0}
 .content blockquote {font-style:italic;margin:.5em 0;padding:.25em 1.5em;border-left:3px solid #e1e1e1;display:inline-block}
 .content blockquote :first-child {padding-top:0;margin-top:0}
 .content blockquote :last-child {padding-bottom:0;margin-bottom:0}
 .content code {font-weight:400;background-color:#f7f9fc;vertical-align:baseline;border-radius:2px;padding:.1em .2em;border:1px solid #d2ddee}
-.content pre {margin:1.5em 0}
+/* .content pre {margin:1.5em 0} */
 .content img {max-width: 100%}
 
+/*
 .content table {
   border-collapse: collapse;
   width: 100%;
 }
+*/
 
+/*
 .content th, .content td {
-  padding: 4.8px 8px;
   padding: 0.3rem 0.5rem;
   text-align: left;
   border-bottom: 1px solid #e1e1e1;
 }
+*/
 
 .content .page {
   padding: 15px 0;
@@ -344,6 +354,9 @@ body {
                   <li><a href="#3_utilities/borders">Borders</a></li>
                   <li><a href="#3_utilities/clearfix">Clearfix</a></li>
                   <li><a href="#3_utilities/close-icon">Close icon</a></li>
+                  <li><a href="#3_utilities/colors">Colors</a></li>
+                  <li><a href="#3_utilities/display">Display</a></li>
+                  <li><a href="#3_utilities/embed">Embeds</a></li>
                   <li><a href="#3_utilities/network">Network</a></li>
                   <li><a href="#3_utilities/spacing">Spacing</a></li>
                   <li><a href="#3_utilities/unselectable">Unselectable</a></li>
@@ -394,7 +407,7 @@ They provide convenient solutions that can be installed with no effort and that 
 <li>Install with <a href="https://bower.io">Bower</a>: <code>bower install phonon</code>.</li>
 <li>Use <a href="https://cdnjs.com/libraries/PhononJs">CDNJS</a>.</li>
 </ul>
-<h2>Starter Template</h2>
+<h2>Starter Template (website)</h2>
 <pre><code class="language-html!">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
   &lt;head&gt;
@@ -412,6 +425,29 @@ They provide convenient solutions that can be installed with no effort and that 
 
     &lt;!-- Optional JavaScript --&gt;
     &lt;script src=&quot;phonon/dist/js/phonon.js&quot;&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>Starter Template (SPA)</h2>
+<p>In addition to the <code>phonon.js</code> base file that contains the visual components,
+you need to include the SPA modules <code>phonon-spa.js</code>.</p>
+<pre><code class="language-html!">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;!-- Required meta tags --&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;
+
+    &lt;!-- Phonon CSS --&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;phonon/dist/css/phonon.css&quot;&gt;
+
+    &lt;title&gt;Hello, world!&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+    &lt;script src=&quot;phonon/dist/js/phonon.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;phonon/dist/js/phonon-spa.js&quot;&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -449,21 +485,21 @@ dist/css/phonon.min.css
 import 'phonon/dist/js/phonon'
 
 // import required components for your project
-const Alert = require('phonon/dist/components/alert');
-const Modal = require('phonon/dist/components/modal');
-const ModalPrompt = require('phonon/dist/components/modal/prompt');
-const ModalConfirm = require('phonon/dist/components/modal/confirm');
-const ModalLoader = require('phonon/dist/components/modal/loader');
-const Notification = require('phonon/dist/components/notification');
-const Collapse = require('phonon/dist/components/collapse');
-const Accordion = require('phonon/dist/components/accordion');
-const Tab = require('phonon/dist/components/tab');
-const Progress = require('phonon/dist/components/progress');
-const Loader = require('phonon/dist/components/loader');
-const OffCanvas = require('phonon/dist/components/off-canvas');
-const Selectbox = require('phonon/dist/components/selectbox');
-const SelectboxSearch = require('phonon/dist/components/selectbox/search');
-const Dropdown = require('phonon/dist/components/dropdown');
+const Alert = require('phonon/dist/js/components/alert');
+const Modal = require('phonon/dist/js/components/modal');
+const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
+const ModalConfirm = require('phonon/dist/js/components/modal/confirm');
+const ModalLoader = require('phonon/dist/js/components/modal/loader');
+const Notification = require('phonon/dist/js/components/notification');
+const Collapse = require('phonon/dist/js/components/collapse');
+const Accordion = require('phonon/dist/js/components/accordion');
+const Tab = require('phonon/dist/js/components/tab');
+const Progress = require('phonon/dist/js/components/progress');
+const Loader = require('phonon/dist/js/components/loader');
+const OffCanvas = require('phonon/dist/js/components/off-canvas');
+const Selectbox = require('phonon/dist/js/components/selectbox');
+const SelectboxSearch = require('phonon/dist/js/components/selectbox/search');
+const Dropdown = require('phonon/dist/js/components/dropdown');
 </code></pre>
 
       </div>
@@ -478,7 +514,7 @@ As with Bootstrap 4, you can edit SCSS variables.</p>
 <pre><code class="language-scss">@import 'path/to/custom.scss'; // my custom SCSS
 @import 'phonon/src/scss/phonon.scss';
 </code></pre>
-<p>When you run the build command <code>node ./build/css</code>, the CSS output will take into account your new values.</p>
+<p>Run <code>node ./build/css</code> to apply your custom values and generate you CSS files.</p>
 
       </div>
       <div class="page" id="0_getting-started/3_migration">
@@ -714,25 +750,33 @@ Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const accordion = phonon.accordion({
+<pre><code class="language-js">// ES6
+import Accordion from 'phonon/dist/js/components/accordion';
+
+const accordion = new Accordion({
   element: '#exampleAccordion',
 });
 
-// jQuery support
+// ES5
+const accordion = phonon.accordion({
+  element: '#exampleAccordion',
+});
+
+// jQuery
 const accordion = $('#exampleAccordion').accordion();
 </code></pre>
 <h3>Methods</h3>
 <h4>show(collapse)</h4>
 <ul>
-<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li><code>collapse</code> <code>&lt;HTMLElement&gt;|&lt;string&gt;</code> - if <code>collapse</code> is a String, it is interpreted as a selector. Otherwise, it is expected that it is a HTML element.</li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">accordion.show('#collapseTwo');
 </code></pre>
 <h4>hide(collapse)</h4>
 <ul>
-<li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li><code>collapse</code> <code>&lt;HTMLElement&gt;|&lt;string&gt;</code> - if <code>collapse</code> is a String, it is interpreted as a selector. Otherwise, it is expected that it is a HTML element.</li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">accordion.hide('#collapseTwo');
 </code></pre>
@@ -865,8 +909,22 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const alert = phonon.alert({
+<pre><code class="language-js">// ES6
+import Alert from 'phonon/dist/js/components/alert';
+
+const alert = new Alert({
   element: '#exampleAlert',
+  fade: true,
+});
+
+// ES5
+const alert = phonon.alert({
+  element: '#exampleAlert',
+  fade: true,
+});
+
+// jQuery
+const alert = $('#exampleAlert').alert({
   fade: true,
 });
 </code></pre>
@@ -1202,7 +1260,9 @@ To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt
 <pre><code class="language-html">&lt;samp&gt;This text is meant to be treated as sample output from a computer program.&lt;/samp&gt;
 </code></pre>
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+<p>This documentation &quot;Code&quot; is a derivative of &quot;<a href="http://getbootstrap.com/docs/4.1/content/code/">Code</a>&quot;
+by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+&quot;Code&quot; is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> by Bootstrap.</p>
 </div>
 
       </div>
@@ -1657,79 +1717,320 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
   &lt;option&gt;5&lt;/option&gt;
 &lt;/select&gt;
 </code></pre>
-<h2>Checkboxes</h2>
-<pre></pre> <div class="example"><label class="custom-control custom-checkbox">
-  <input type="checkbox" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Check this custom checkbox</span>
-</label>
+<h2>Input group</h2>
+<p>Input groups are extendable inputs containing before and after elements.
+You can add one or many elements in <code>.input-group-prepend</code> or <code>.input-group-append</code>.</p>
+<pre></pre> <div class="example"><div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">@</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
 </div>
-<pre><code class="language-html">&lt;label class=&quot;custom-control custom-checkbox&quot;&gt;
-  &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot;&gt;
-  &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
-  &lt;span class=&quot;custom-control-description&quot;&gt;Check this custom checkbox&lt;/span&gt;
-&lt;/label&gt;
+</div>
+<pre><code class="language-html">&lt;div class=&quot;input-group&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;basic-addon1&quot;&gt;@&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;Username&quot; aria-label=&quot;Username&quot; aria-describedby=&quot;basic-addon1&quot;&gt;
+&lt;/div&gt;
 </code></pre>
-<h2>Radios</h2>
-<pre></pre> <div class="example"><label class="custom-control custom-radio">
-  <input id="radio1" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Toggle this custom radio</span>
-</label>
-<label class="custom-control custom-radio">
-  <input id="radio2" name="radio" type="radio" class="custom-control-input">
-  <span class="custom-control-indicator"></span>
-  <span class="custom-control-description">Or toggle this other custom radio</span>
-</label>
+<h3>Sizing</h3>
+<pre></pre> <div class="example"><div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
 </div>
-<pre><code class="language-html">&lt;label class=&quot;custom-control custom-radio&quot;&gt;
-  &lt;input id=&quot;radio1&quot; name=&quot;radio&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
-  &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
-  &lt;span class=&quot;custom-control-description&quot;&gt;Toggle this custom radio&lt;/span&gt;
-&lt;/label&gt;
-&lt;label class=&quot;custom-control custom-radio&quot;&gt;
-  &lt;input id=&quot;radio2&quot; name=&quot;radio&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
-  &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
-  &lt;span class=&quot;custom-control-description&quot;&gt;Or toggle this other custom radio&lt;/span&gt;
-&lt;/label&gt;
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+
+<div class="input-group input-group-lg">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Large</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;input-group input-group-sm mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;inputGroup-sizing-sm&quot;&gt;Small&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Sizing example input&quot; aria-describedby=&quot;inputGroup-sizing-sm&quot;&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;inputGroup-sizing-default&quot;&gt;Default&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Sizing example input&quot; aria-describedby=&quot;inputGroup-sizing-default&quot;&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;input-group input-group-lg&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;span class=&quot;input-group-text&quot; id=&quot;inputGroup-sizing-lg&quot;&gt;Large&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Sizing example input&quot; aria-describedby=&quot;inputGroup-sizing-lg&quot;&gt;
+&lt;/div&gt;
 </code></pre>
-<h3>Stacked</h3>
-<pre></pre> <div class="example"><div class="custom-controls-stacked">
-  <label class="custom-control custom-radio">
-    <input id="radioStacked3" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Toggle this custom radio</span>
+<h3>Checkboxes and radios</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" aria-label="Checkbox for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with checkbox">
+</div>
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;div class=&quot;input-group-text&quot;&gt;
+      &lt;input type=&quot;checkbox&quot; aria-label=&quot;Checkbox for following text input&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Text input with checkbox&quot;&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;input-group&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;div class=&quot;input-group-text&quot;&gt;
+      &lt;input type=&quot;radio&quot; aria-label=&quot;Radio button for following text input&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; aria-label=&quot;Text input with radio button&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Buttons</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+  </div>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;button class=&quot;btn btn-outline-secondary&quot; type=&quot;button&quot; id=&quot;button-addon1&quot;&gt;Button&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;input type=&quot;text&quot; class=&quot;form-control&quot; placeholder=&quot;&quot; aria-label=&quot;Example text with button addon&quot; aria-describedby=&quot;button-addon1&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Custom select</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01">
+    <option selected>Choose...</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Button</button>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
+  &lt;div class=&quot;input-group-prepend&quot;&gt;
+    &lt;label class=&quot;input-group-text&quot; for=&quot;inputGroupSelect01&quot;&gt;Options&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;select class=&quot;custom-select&quot; id=&quot;inputGroupSelect01&quot;&gt;
+    &lt;option selected&gt;Choose...&lt;/option&gt;
+    &lt;option value=&quot;1&quot;&gt;One&lt;/option&gt;
+    &lt;option value=&quot;2&quot;&gt;Two&lt;/option&gt;
+    &lt;option value=&quot;3&quot;&gt;Three&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;div class=&quot;input-group-append&quot;&gt;
+    &lt;button class=&quot;btn btn-outline-secondary&quot; type=&quot;button&quot;&gt;Button&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Checkboxes and radios</h2>
+<h3>Default checkbox</h3>
+<pre></pre> <div class="example"><div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Default checkbox
   </label>
-  <label class="custom-control custom-radio">
-    <input id="radioStacked4" name="radio-stacked" type="radio" class="custom-control-input">
-    <span class="custom-control-indicator"></span>
-    <span class="custom-control-description">Or toggle this other custom radio</span>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+  <label class="form-check-label" for="defaultCheck2">
+    Disabled checkbox
   </label>
 </div>
 </div>
-<pre><code class="language-html">&lt;div class=&quot;custom-controls-stacked&quot;&gt;
-  &lt;label class=&quot;custom-control custom-radio&quot;&gt;
-    &lt;input id=&quot;radioStacked3&quot; name=&quot;radio-stacked&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
-    &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;custom-control-description&quot;&gt;Toggle this custom radio&lt;/span&gt;
+<pre><code class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;defaultCheck1&quot;&gt;
+  &lt;label class=&quot;form-check-label&quot; for=&quot;defaultCheck1&quot;&gt;
+    Default checkbox
   &lt;/label&gt;
-  &lt;label class=&quot;custom-control custom-radio&quot;&gt;
-    &lt;input id=&quot;radioStacked4&quot; name=&quot;radio-stacked&quot; type=&quot;radio&quot; class=&quot;custom-control-input&quot;&gt;
-    &lt;span class=&quot;custom-control-indicator&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;custom-control-description&quot;&gt;Or toggle this other custom radio&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;defaultCheck2&quot; disabled&gt;
+  &lt;label class=&quot;form-check-label&quot; for=&quot;defaultCheck2&quot;&gt;
+    Disabled checkbox
   &lt;/label&gt;
 &lt;/div&gt;
 </code></pre>
-<h2>File browser</h2>
-<pre></pre> <div class="example"><label class="custom-file">
-  <input type="file" id="file2" class="custom-file-input">
-  <span class="custom-file-control"></span>
-</label>
+<h3>Custom checkbox</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheck1">
+  <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
 </div>
-<pre><code class="language-html">&lt;label class=&quot;custom-file&quot;&gt;
-  &lt;input type=&quot;file&quot; id=&quot;file2&quot; class=&quot;custom-file-input&quot;&gt;
-  &lt;span class=&quot;custom-file-control&quot;&gt;&lt;/span&gt;
-&lt;/label&gt;
+</div>
+<pre><code class="language-html">&lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;customCheck1&quot;&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customCheck1&quot;&gt;Check this custom checkbox&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Default radios</h3>
+<pre></pre> <div class="example"><div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Second default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+  <label class="form-check-label" for="exampleRadios3">
+    Disabled radio
+  </label>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input class=&quot;form-check-input&quot; type=&quot;radio&quot; name=&quot;exampleRadios&quot; id=&quot;exampleRadios1&quot; value=&quot;option1&quot; checked&gt;
+  &lt;label class=&quot;form-check-label&quot; for=&quot;exampleRadios1&quot;&gt;
+    Default radio
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input class=&quot;form-check-input&quot; type=&quot;radio&quot; name=&quot;exampleRadios&quot; id=&quot;exampleRadios2&quot; value=&quot;option2&quot;&gt;
+  &lt;label class=&quot;form-check-label&quot; for=&quot;exampleRadios2&quot;&gt;
+    Second default radio
+  &lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;form-check&quot;&gt;
+  &lt;input class=&quot;form-check-input&quot; type=&quot;radio&quot; name=&quot;exampleRadios&quot; id=&quot;exampleRadios3&quot; value=&quot;option3&quot; disabled&gt;
+  &lt;label class=&quot;form-check-label&quot; for=&quot;exampleRadios3&quot;&gt;
+    Disabled radio
+  &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Custom radios</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;custom-control custom-radio&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;customRadio1&quot; name=&quot;customRadio&quot; class=&quot;custom-control-input&quot;&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadio1&quot;&gt;Toggle this custom radio&lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;custom-control custom-radio&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;customRadio2&quot; name=&quot;customRadio&quot; class=&quot;custom-control-input&quot;&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadio2&quot;&gt;Or toggle this other custom radio&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Inline</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;custom-control custom-radio custom-control-inline&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;customRadioInline1&quot; name=&quot;customRadioInline1&quot; class=&quot;custom-control-input&quot;&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadioInline1&quot;&gt;Toggle this custom radio&lt;/label&gt;
+&lt;/div&gt;
+&lt;div class=&quot;custom-control custom-radio custom-control-inline&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;customRadioInline2&quot; name=&quot;customRadioInline1&quot; class=&quot;custom-control-input&quot;&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadioInline2&quot;&gt;Or toggle this other custom radio&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Disabled</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheckDisabled" disabled>
+  <label class="custom-control-label" for="customCheckDisabled">Check this custom checkbox</label>
+</div>
+
+<div class="custom-control custom-radio">
+  <input type="radio" id="radio3" name="radioDisabled" id="customRadioDisabled" class="custom-control-input" disabled>
+  <label class="custom-control-label" for="customRadioDisabled">Toggle this custom radio</label>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;customCheckDisabled&quot; disabled&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customCheckDisabled&quot;&gt;Check this custom checkbox&lt;/label&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;custom-control custom-radio&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;radio3&quot; name=&quot;radioDisabled&quot; id=&quot;customRadioDisabled&quot; class=&quot;custom-control-input&quot; disabled&gt;
+  &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadioDisabled&quot;&gt;Toggle this custom radio&lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Range</h2>
+<p>By default, the <code>min</code> value is 0, the <code>max</code> value is 100 and <code>step</code> is 1.</p>
+<pre></pre> <div class="example"><label for="customRange1">Example range</label>
+<input type="range" class="custom-range" id="customRange1">
+</div>
+<pre><code class="language-html">&lt;label for=&quot;customRange1&quot;&gt;Example range&lt;/label&gt;
+&lt;input type=&quot;range&quot; class=&quot;custom-range&quot; id=&quot;customRange1&quot;&gt;
+</code></pre>
+<h3>Custom min and max</h3>
+<p>You can also define the <code>min</code> and <code>max</code> attributes.</p>
+<pre></pre> <div class="example"><label for="customRange2">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" id="customRange2">
+</div>
+<pre><code class="language-html">&lt;label for=&quot;customRange2&quot;&gt;Example range&lt;/label&gt;
+&lt;input type=&quot;range&quot; class=&quot;custom-range&quot; min=&quot;0&quot; max=&quot;5&quot; id=&quot;customRange2&quot;&gt;
+</code></pre>
+<h3>Custom step</h3>
+<p>You may want to change the <code>step</code> value.</p>
+<pre></pre> <div class="example"><label for="customRange3">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
+</div>
+<pre><code class="language-html">&lt;label for=&quot;customRange3&quot;&gt;Example range&lt;/label&gt;
+&lt;input type=&quot;range&quot; class=&quot;custom-range&quot; min=&quot;0&quot; max=&quot;5&quot; step=&quot;0.5&quot; id=&quot;customRange3&quot;&gt;
+</code></pre>
+<h2>File browser</h2>
+<pre></pre> <div class="example"><div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;custom-file&quot;&gt;
+  &lt;input type=&quot;file&quot; class=&quot;custom-file-input&quot; id=&quot;customFile&quot;&gt;
+  &lt;label class=&quot;custom-file-label&quot; for=&quot;customFile&quot;&gt;Choose file&lt;/label&gt;
+&lt;/div&gt;
 </code></pre>
 <div class="alert alert-secondary" role="alert">
   This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
@@ -1824,14 +2125,27 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const loader = phonon.loader({
+<pre><code class="language-js">// ES6
+import Loader from 'phonon/dist/js/components/loader';
+
+const loader = new Loader({
   element: '.loader',
   color: null,
   size: null,
 });
 
-// jQuery support
-const loader = $('.loader').loader();
+// ES5
+const loader = phonon.loader({
+  element: '.loader',
+  color: null,
+  size: null,
+});
+
+// jQuery
+const loader = $('.loader').loader({
+  color: null,
+  size: null,
+});
 </code></pre>
 <h3>Options</h3>
 <ul>
@@ -1920,7 +2234,7 @@ For this, you can use object and DOM events.</p>
 <p>By not using the <code>element</code> property, it will create a modal's HTMLElement dynamically.
 This is particularly useful if you want to set up a modal without worrying about its HTML code.</p>
 <h3>Simple modal</h3>
-<pre><code class="language-js">// es6
+<pre><code class="language-js">// ES6
 const Modal = require('phonon/dist/js/components/modal');
 
 const modal = new Modal({
@@ -1928,13 +2242,13 @@ const modal = new Modal({
   message: 'Modal body text goes here.',
 });
 
-// es5
+// ES5
 const modal = phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
 });
 
-// jQuery support
+// jQuery
 const modal = $().modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
@@ -2034,12 +2348,42 @@ In the following example, we trigger the event called <code>neutralAnswer</code>
 const modal = $('#exampleModal').modal();
 </code></pre>
 <h2>Options</h2>
-<ul>
-<li>title</li>
-<li>message</li>
-<li>cancelable</li>
-<li>cancelableKeyCodes [array] (by default, Enter and Escape are shortcuts to hide the modal)</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>The modal title.</td>
+<td>null</td>
+<td>no</td>
+</tr>
+<tr>
+<td>message</td>
+<td>The modal message.</td>
+<td>null</td>
+<td>no</td>
+</tr>
+<tr>
+<td>cancelable</td>
+<td>Determines if a modal is cancelable or not cancelable by pressing a key or by clicking outside of the modal.</td>
+<td>true</td>
+<td>yes <code>data-cancelable</code></td>
+</tr>
+<tr>
+<td>cancelableKeyCodes</td>
+<td>Array of keys that allow to hide the modal. Default keys are escape and enter.</td>
+<td>[27, 13]</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
 <h2>Methods</h2>
 <h3>show()</h3>
 <ul>
@@ -2056,10 +2400,16 @@ const modal = $('#exampleModal').modal();
 <pre><code class="language-js">modal.hide();
 </code></pre>
 <h3>getInputValue()</h3>
+<ul>
+<li>returns: <code>String</code></li>
+</ul>
 <p>It is possible to retrieve the text field value of any prompt type.</p>
 <pre><code class="language-js">const value = modal.getInputValue();
 </code></pre>
-<h3>setInputValue()</h3>
+<h3>setInputValue(value)</h3>
+<ul>
+<li><code>value</code> (String) - the input value.</li>
+</ul>
 <p>It is possible to set the text field value of any prompt type.</p>
 <pre><code class="language-js">modal.setInputValue('Hello World');
 </code></pre>
@@ -2297,7 +2647,7 @@ dropdowns.forEach(function (dropdown) {
   dropdown.addEventListener('click', prevent);
 });
 </script>
-<h2>Vertical collapse</h2>
+<h2>Collapse</h2>
 <p><code>.collapse</code>.</p>
 <pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -2335,70 +2685,6 @@ dropdowns.forEach(function (dropdown) {
     &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
   &lt;/button&gt;
   &lt;div class=&quot;collapse navbar-collapse&quot; id=&quot;navbarNavCollapse&quot;&gt;
-    &lt;ul class=&quot;navbar-nav&quot;&gt;
-      &lt;li class=&quot;nav-item active&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Features&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item&quot;&gt;
-        &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Pricing&lt;/a&gt;
-      &lt;/li&gt;
-      &lt;li class=&quot;nav-item dropdown&quot;&gt;
-        &lt;a class=&quot;nav-link dropdown-toggle&quot; href=&quot;#&quot; id=&quot;navbarDropdownMenuLink&quot; role=&quot;button&quot; data-toggle=&quot;dropdown&quot; aria-haspopup=&quot;true&quot; aria-expanded=&quot;false&quot;&gt;
-          Dropdown link
-        &lt;/a&gt;
-        &lt;div class=&quot;dropdown-menu&quot; aria-labelledby=&quot;navbarDropdownMenuLink&quot;&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;
-          &lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;
-        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/div&gt;
-&lt;/nav&gt;
-</code></pre>
-<h2>Horizontal collapse</h2>
-<p>Appearing from the left <code>.collapse-l</code>.
-Appearing from the right <code>.collapse-r</code>.</p>
-<div style="position:relative;height:250px;overflow: hidden;">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavCollapseH" aria-controls="navbarNavCollapseH" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse collapse-l h-100" style="position:absolute" id="navbarNavCollapseH">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</div>
-<pre><code class="language-html!">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
-  &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
-  &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavCollapseH&quot; aria-controls=&quot;navbarNavCollapseH&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
-    &lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;div class=&quot;collapse navbar-collapse collapse-l&quot; id=&quot;navbarNavCollapseH&quot;&gt;
     &lt;ul class=&quot;navbar-nav&quot;&gt;
       &lt;li class=&quot;nav-item active&quot;&gt;
         &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Home &lt;span class=&quot;sr-only&quot;&gt;(current)&lt;/span&gt;&lt;/a&gt;
@@ -2485,7 +2771,9 @@ This is particularly useful if you want to set up a notification without worryin
     }).show();
   });
 </script>
-<pre><code class="language-js">const notif = phonon.notification({
+<pre><code class="language-js">import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
   message: 'Hello',
   directionY: 'top',
   directionX: 'right',
@@ -2493,7 +2781,16 @@ This is particularly useful if you want to set up a notification without worryin
   offsetX: 0,
 });
 
-// jQuery support
+// ES5
+const notif = phonon.notification({
+  message: 'Hello',
+  directionY: 'top',
+  directionX: 'right',
+  offsetY: 0,
+  offsetX: 0,
+});
+
+// jQuery
 const notif = $().notification({
   message: 'Hello',
   directionY: 'top',
@@ -2848,7 +3145,10 @@ Add the class <code>offcanvas-right</code> if you want that the offcanvas appear
 <p>By default, the off-canvas menu is displayed at the top of the page (floating) if the screen size is <code>md</code> or <code>sm</code>.
 If the screen size is <code>lg</code> or <code>xl</code>, the menu will push the container to display next to it.</p>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const offcanvas = phonon.offcanvas({
+<pre><code class="language-js">// ES6
+import OffCanvas from 'phonon/dist/js/components/off-canvas';
+
+const offcanvas = new OffCanvas({
   element: '#exampleOffCanvas',
   container: document.body,
   toggle: false,
@@ -2859,7 +3159,19 @@ If the screen size is <code>lg</code> or <code>xl</code>, the menu will push the
   },
 });
 
-// jQuery support
+// ES5
+const offcanvas = phonon.offcanvas({
+  element: '#exampleOffCanvas',
+  container: document.body,
+  toggle: false,
+  aside: {
+    md: false,
+    lg: true,
+    xl: true,
+  },
+});
+
+// jQuery
 const offcanvas = $('#exampleOffCanvas').offcanvas({
   container: document.body,
   toggle: false,
@@ -3010,7 +3322,10 @@ document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () 
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const progress = phonon.progress({
+<pre><code class="language-js">// ES6
+import Progress from 'phonon/dist/js/components/progress';
+
+const progress = new Progress({
   element: '#myProgress',
   height: 5,
   min: 0,
@@ -3020,7 +3335,18 @@ document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () 
   background: null,
 });
 
-// jQuery support
+// ES5
+const progress = phonon.progress({
+  element: '#myProgress',
+  height: 5,
+  min: 0,
+  max: 100,
+  label: false,
+  striped: false,
+  background: null,
+});
+
+// jQuery
 $('#myProgress').progress({
   height: 5,
   min: 0,
@@ -3322,13 +3648,38 @@ By default, the module will try to find the text node otherwise, it will check i
 &lt;/div&gt;
 </code></pre>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const selectbox = phonon.selectbox({
+<h3>Selectbox (list)</h3>
+<pre><code class="language-js">// ES6
+import Selectbox from 'phonon/dist/js/components/selectbox';
+
+const selectbox = new Selectbox({
   element: '.selectbox',
 });
 
-// or for a search selectbox
+// ES5
+const selectbox = phonon.selectbox({
+  element: '.selectbox',
+});
+
+// jQuery
+const selectbox = $('.selectbox').selectbox();
+</code></pre>
+<h3>Search selectbox</h3>
+<pre><code class="language-js">// ES6
+import SelectboxSearch from 'phonon/dist/js/components/selectbox/search';
+
+const searchSelectbox = new SelectboxSearch({
+  element: '.selectbox',
+});
+
+// ES5
 const searchSelectbox = phonon.selectbox({
-  element: '.selectbox-search',
+  element: '.selectbox',
+  search: true,
+});
+
+// jQuery
+const searchSelectbox = $('.selectbox').selectbox({
   search: true,
 });
 </code></pre>
@@ -3377,7 +3728,7 @@ const searchSelectbox = phonon.selectbox({
 <h3>Methods</h3>
 <h4>getSelected()</h4>
 <ul>
-<li>returns: <code>&lt;String&gt;</code></li>
+<li>returns: <code>String</code></li>
 </ul>
 <p>Returns the selected value.</p>
 <h4>setSelected(value, text)</h4>
@@ -3519,11 +3870,19 @@ It is used to show a fragment of content.</p>
 <!-- fix for links -->
 <script>document.querySelector('.page .nav-tabs').addEventListener('click', function (event) { event.preventDefault()});</script>
 <h2>JavaScript</h2>
-<pre><code class="language-js">const tab = phonon.tab({
+<pre><code class="language-js">// ES6
+import Tab from 'phonon/dist/js/components/tab';
+
+const tab = new Tab({
   element: '#settings-tab',
 });
 
-// jQuery support
+// ES5
+const tab = phonon.tab({
+  element: '#settings-tab',
+});
+
+// jQuery
 const tab = $('#settings-tab').tab();
 </code></pre>
 <h3>Methods</h3>
@@ -4600,6 +4959,38 @@ It also offers a light and simple <strong>router</strong> for recovering paramet
 
 pager.start();
 </code></pre>
+<h2>Options</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hashPrefix</td>
+<td>The default hash prefix.</td>
+<td>#!</td>
+</tr>
+<tr>
+<td>useHash</td>
+<td>Determines if pager listens to hash events and update the current page in the hash.</td>
+<td>true</td>
+</tr>
+<tr>
+<td>defaultPage</td>
+<td>The default page.</td>
+<td>null</td>
+</tr>
+<tr>
+<td>animatePages</td>
+<td>Determines if pager animates page transitions.</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
 <h2>Markup</h2>
 <p>A SPA page is defined by setting up the <code>app-page</code> class and a unique data-page attribute.</p>
 <pre><code class="language-html!">&lt;div class=&quot;app-pages&quot;&gt;
@@ -4800,23 +5191,70 @@ window.addEventListener('myPage.hash', (event) =&gt; {
         <h2>Introduction</h2>
 <p>The internationalization plugin is meant to be simple and light to internationalize your application. You put the texts in each language as an object, the default language (fallback) as well as the user's preferred language and the plugin will display the text in the correct language in your views.</p>
 <h2>Configuration</h2>
+<p>We recommend to follow the representation of languages in standard <a href="https://en.wikipedia.org/wiki/ISO_3166">ISO 3166</a> and <a href="https://en.wikipedia.org/wiki/ISO_639-1">ISO 639-1</a>.</p>
+<p>Examples with <code>{country}</code>-<code>{language}</code> (ISO_3166 and ISO_639-1 standards combined):</p>
+<ul>
+<li>United States - English is represented by <code>US-en</code>.</li>
+<li>United Kingdom - English is represented by <code>GB-en</code>.</li>
+<li>France - French is represented by <code>FR-fr</code>.</li>
+<li>Italia - Italian is represented by <code>IT-it</code>.</li>
+</ul>
+<p>Examples with <code>{language}</code> (ISO_639-1 standard only):</p>
+<ul>
+<li>United States - English is represented by <code>en</code>.</li>
+<li>United Kingdom - English is represented by <code>en</code>.</li>
+<li>France - French is represented by <code>fr</code>.</li>
+<li>Italia - Italian is represented by <code>it</code>.</li>
+</ul>
 <pre><code class="language-js">const i18n = phonon.i18n({
-  fallbackLocale: 'en',
-  locale: 'en',
+  fallbackLocale: 'en-US',
+  locale: 'en-US',
   bind: true,
   data: {
     en: {
-      welcome: 'Hello (default)'
+      welcome: 'Hello (default)',
     },
     en_US: {
-      welcome: 'Hello US'
+      welcome: 'Hello US',
     },
     fr: {
-      welcome: 'Bonjour'
-    }
-  }
-})
+      welcome: 'Bonjour',
+    },
+  },
+});
 </code></pre>
+<h2>Options</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fallbackLocale</td>
+<td>The locale of fallback localization.</td>
+<td>'en-US'</td>
+</tr>
+<tr>
+<td>locale</td>
+<td>The locale of localization.</td>
+<td>'en-US'</td>
+</tr>
+<tr>
+<td>bind</td>
+<td>Determines if i18n should find the HTML elements immediately. Use <code>false</code> if you want to apply localized values later in your view.</td>
+<td>true</td>
+</tr>
+<tr>
+<td>data</td>
+<td>Translated locale messages.</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
 <h2>Markup</h2>
 <p>The HTML elements with the <code>data-t</code> attribute will be modified by the module. For example, <strong>text</strong> will insert the internationalized text into the element.</p>
 <pre><code class="language-html!">&lt;h1 data-t=&quot;text: welcome&quot;&gt;&lt;/h1&gt;
@@ -4834,27 +5272,47 @@ window.addEventListener('myPage.hash', (event) =&gt; {
 </code></pre>
 <h2>Methods</h2>
 <h3>getLocale()</h3>
+<ul>
+<li>returns: <code>String</code></li>
+</ul>
 <p>Returns the current locale.</p>
 <h3>getFallbackLocale()</h3>
+<ul>
+<li>returns: <code>String</code></li>
+</ul>
 <p>Returns the fallback locale.</p>
 <h3>getLanguages()</h3>
+<ul>
+<li>returns: <code>Array</code></li>
+</ul>
 <p>Returns the available languages.</p>
-<h3>setLocale(locale: string, updateHTML: boolean)</h3>
-<p>Updates the current locale with a new <code>locale</code>. By default, it will update the HTML,
-put false if you don't want to.</p>
-<pre><code class="language-js">i18n.setLocale('fr')
+<h3>setLocale(locale, updateHTML)</h3>
+<ul>
+<li><code>locale</code> (String) - the locale to update such as &quot;en&quot;.</li>
+<li><code>updateHTML</code> (Boolean) - By default, it will update all the nodes contained in the DOM. Set false if want to disable this.</li>
+<li>returns: <code>Array</code></li>
+</ul>
+<p>Changes the current <code>locale</code>. By default, it will update the HTML,
+pass <code>false</code> if you don't want to.</p>
+<pre><code class="language-js">i18n.setLocale('fr', false);
 </code></pre>
-<h3>updateHtml(HTMLElement?)</h3>
-<p>Updates the HTML. If no argument is passed, it will update all the nodes containing the attribute <code>data-t</code>.
-On the contrary, you can pass a desired HTML node.</p>
-<pre><code class="language-js">i18n.updateHtml() // update all the elements (nodes) containing data-t
-i18n.updateHtml('.my-element') // update the node .my-element
+<h3>updateHtml(element)</h3>
+<ul>
+<li><code>element</code> (HTMLElement) - the node element to update. If no argument is passed, it will update all the nodes containing the attribute <code>data-t</code>.</li>
+<li>returns: <code>Void</code></li>
+</ul>
+<pre><code class="language-js">i18n.updateHtml(); // update all the elements (nodes) containing data-t
+i18n.updateHtml('.my-element'); // update the node .my-element
 </code></pre>
-<h3>translate(keyName:string | array, values?)</h3>
-<p>This method returns the desired internationalized text in the current language by providing its key.</p>
-<pre><code class="language-js">i18n.translate('welcome') // one translation
-i18n.translate('*') // all available translations
-i18n.translate(['welcome', 'other']) // two translations
+<h3>translate(key)</h3>
+<ul>
+<li><code>key</code> (String|Array) - the key name to translate. You can pass a <code>&lt;String&gt;</code> or an <code>&lt;Array&gt;</code>.</li>
+<li>returns: <code>Object</code></li>
+</ul>
+<p>This method returns the desired internationalized text in the current locale by providing its key.</p>
+<pre><code class="language-js">i18n.translate('welcome'); // one translation
+i18n.translate('*'); // all available translations
+i18n.translate(['welcome', 'other']); // two translations
 </code></pre>
 <p>If the locale is <code>fr</code>, the result would be:</p>
 <pre><code>Bonjour
@@ -4863,11 +5321,11 @@ i18n.translate(['welcome', 'other']) // two translations
 </code></pre>
 <h3>t (alias of translate)</h3>
 <p>The code below is identical to the one displayed in <code>translate()</code>.</p>
-<pre><code class="language-js">i18n.t('welcome')
-i18n.t('*')
-i18n.t(['welcome', 'other'])
+<pre><code class="language-js">i18n.t('welcome');
+i18n.t('*');
+i18n.t(['welcome', 'other']);
 </code></pre>
-<h3>Advanced</h3>
+<h2>Advanced</h2>
 <p>You can also retrieve internationalized text by injecting values. For this, you need to add the prefix
 <strong>:</strong> following the name.
 In this example, we will show Hello following two names (name1 and name2).
@@ -4882,11 +5340,11 @@ We need to add <strong>:name1</strong> and <strong>:name2</strong> in our data c
     },
     fr: {
       welcome: 'Bonjour :name1 et :name2'
-    }
-  }
-})
+    },
+  },
+});
 
-i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
+i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'});
 </code></pre>
 <p>If the locale is <code>fr</code>, the result would be:</p>
 <pre><code>Bonjour Fabien et Ben
@@ -4901,7 +5359,7 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
       <div class="page" id="3_utilities/borders">
         <h1 class="heading">Borders</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>Border utility classes.</p>
 <h2>Add borders</h2>
 <pre></pre> <div class="example"><span class="border"></span>
 <span class="border-top"></span>
@@ -5000,74 +5458,336 @@ i18n.translate('welcome', {name1: 'Fabien', name2: 'Ben'})
 </code></pre>
 
       </div>
+      <div class="page" id="3_utilities/colors">
+        <h1 class="heading">Colors</h1>
+        <h2>Introduction</h2>
+<p>Color utility classes.</p>
+<h3>Color</h3>
+<pre></pre> <div class="example"><p class="text-primary">.text-primary</p>
+<p class="text-secondary">.text-secondary</p>
+<p class="text-success">.text-success</p>
+<p class="text-danger">.text-danger</p>
+<p class="text-warning">.text-warning</p>
+<p class="text-info">.text-info</p>
+<p class="text-light bg-dark">.text-light</p>
+<p class="text-dark">.text-dark</p>
+<p class="text-body">.text-body</p>
+<p class="text-muted">.text-muted</p>
+<p class="text-white bg-dark">.text-white</p>
+<p class="text-black-50">.text-black-50</p>
+<p class="text-white-50 bg-dark">.text-white-50</p>
+</div>
+<pre><code class="language-html">&lt;p class=&quot;text-primary&quot;&gt;.text-primary&lt;/p&gt;
+&lt;p class=&quot;text-secondary&quot;&gt;.text-secondary&lt;/p&gt;
+&lt;p class=&quot;text-success&quot;&gt;.text-success&lt;/p&gt;
+&lt;p class=&quot;text-danger&quot;&gt;.text-danger&lt;/p&gt;
+&lt;p class=&quot;text-warning&quot;&gt;.text-warning&lt;/p&gt;
+&lt;p class=&quot;text-info&quot;&gt;.text-info&lt;/p&gt;
+&lt;p class=&quot;text-light bg-dark&quot;&gt;.text-light&lt;/p&gt;
+&lt;p class=&quot;text-dark&quot;&gt;.text-dark&lt;/p&gt;
+&lt;p class=&quot;text-body&quot;&gt;.text-body&lt;/p&gt;
+&lt;p class=&quot;text-muted&quot;&gt;.text-muted&lt;/p&gt;
+&lt;p class=&quot;text-white bg-dark&quot;&gt;.text-white&lt;/p&gt;
+&lt;p class=&quot;text-black-50&quot;&gt;.text-black-50&lt;/p&gt;
+&lt;p class=&quot;text-white-50 bg-dark&quot;&gt;.text-white-50&lt;/p&gt;
+</code></pre>
+<h3>Link</h3>
+<pre></pre> <div class="example"><p><a href="#" class="text-primary">Primary link</a></p>
+<p><a href="#" class="text-secondary">Secondary link</a></p>
+<p><a href="#" class="text-success">Success link</a></p>
+<p><a href="#" class="text-danger">Danger link</a></p>
+<p><a href="#" class="text-warning">Warning link</a></p>
+<p><a href="#" class="text-info">Info link</a></p>
+<p><a href="#" class="text-light bg-dark">Light link</a></p>
+<p><a href="#" class="text-dark">Dark link</a></p>
+<p><a href="#" class="text-muted">Muted link</a></p>
+<p><a href="#" class="text-white bg-dark">White link</a></p>
+</div>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-primary&quot;&gt;Primary link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-secondary&quot;&gt;Secondary link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-success&quot;&gt;Success link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-danger&quot;&gt;Danger link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-warning&quot;&gt;Warning link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-info&quot;&gt;Info link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-light bg-dark&quot;&gt;Light link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-dark&quot;&gt;Dark link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-muted&quot;&gt;Muted link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-white bg-dark&quot;&gt;White link&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<h3>Background color</h3>
+<pre></pre> <div class="example"><div class="p-3 mb-2 bg-primary text-white">.bg-primary</div>
+<div class="p-3 mb-2 bg-secondary text-white">.bg-secondary</div>
+<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
+<div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
+<div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
+<div class="p-3 mb-2 bg-info text-white">.bg-info</div>
+<div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
+<div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
+<div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
+<div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;p-3 mb-2 bg-primary text-white&quot;&gt;.bg-primary&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-secondary text-white&quot;&gt;.bg-secondary&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-success text-white&quot;&gt;.bg-success&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-danger text-white&quot;&gt;.bg-danger&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-warning text-dark&quot;&gt;.bg-warning&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-info text-white&quot;&gt;.bg-info&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-light text-dark&quot;&gt;.bg-light&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-dark text-white&quot;&gt;.bg-dark&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-white text-dark&quot;&gt;.bg-white&lt;/div&gt;
+&lt;div class=&quot;p-3 mb-2 bg-transparent text-dark&quot;&gt;.bg-transparent&lt;/div&gt;
+</code></pre>
+
+      </div>
+      <div class="page" id="3_utilities/display">
+        <h1 class="heading">Display</h1>
+        <h2>Introduction</h2>
+<p>Responsive utility classes.</p>
+<h2>Notation</h2>
+<p><code>.d-{value}</code> for <code>xs</code>.</p>
+<p><code>.d-{breakpoint}-{value}</code> for <code>sm</code>, <code>md</code>, <code>lg</code>, and <code>xl</code>.</p>
+<p>Where <code>value</code></p>
+<p>none
+inline
+inline-block
+block
+table
+table-cell
+table-row
+flex
+inline-flex</p>
+<h3>Examples</h3>
+<pre></pre> <div class="example"><div class="d-inline p-2 bg-primary text-white">d-inline</div>
+<div class="d-inline p-2 bg-dark text-white">d-inline</div>
+
+<span class="d-block mt-2 p-2 bg-primary text-white">d-block</span>
+<span class="d-block mt-2 p-2 bg-dark text-white">d-block</span>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;d-inline p-2 bg-primary text-white&quot;&gt;d-inline&lt;/div&gt;
+&lt;div class=&quot;d-inline p-2 bg-dark text-white&quot;&gt;d-inline&lt;/div&gt;
+
+&lt;span class=&quot;d-block mt-2 p-2 bg-primary text-white&quot;&gt;d-block&lt;/span&gt;
+&lt;span class=&quot;d-block mt-2 p-2 bg-dark text-white&quot;&gt;d-block&lt;/span&gt;
+</code></pre>
+<h3>Responsive examples</h3>
+<pre></pre> <div class="example"><div class="d-lg-none">hide on screens wider than lg</div>
+<div class="d-none d-lg-block">hide on screens smaller than lg</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;d-lg-none&quot;&gt;hide on screens wider than lg&lt;/div&gt;
+&lt;div class=&quot;d-none d-lg-block&quot;&gt;hide on screens smaller than lg&lt;/div&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Screen Size</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hidden on all</td>
+<td><code>.d-none</code></td>
+</tr>
+<tr>
+<td>Hidden only on xs</td>
+<td><code>.d-none</code> <code>.d-sm-block</code></td>
+</tr>
+<tr>
+<td>Hidden only on sm</td>
+<td><code>.d-sm-none</code> <code>.d-md-block</code></td>
+</tr>
+<tr>
+<td>Hidden only on md</td>
+<td><code>.d-md-none</code> <code>.d-lg-block</code></td>
+</tr>
+<tr>
+<td>Hidden only on lg</td>
+<td><code>.d-lg-none</code> <code>.d-xl-block</code></td>
+</tr>
+<tr>
+<td>Hidden only on xl</td>
+<td><code>.d-xl-none</code></td>
+</tr>
+<tr>
+<td>Visible on all</td>
+<td><code>.d-block</code></td>
+</tr>
+<tr>
+<td>Visible only on xs</td>
+<td><code>.d-block</code> <code>.d-sm-none</code></td>
+</tr>
+<tr>
+<td>Visible only on sm</td>
+<td><code>.d-none</code> <code>.d-sm-block</code> <code>.d-md-none</code></td>
+</tr>
+<tr>
+<td>Visible only on md</td>
+<td><code>.d-none</code> <code>.d-md-block</code> <code>.d-lg-none</code></td>
+</tr>
+<tr>
+<td>Visible only on lg</td>
+<td><code>.d-none</code> <code>.d-lg-block</code> <code>.d-xl-none</code></td>
+</tr>
+<tr>
+<td>Visible only on xl</td>
+<td><code>.d-none</code> <code>.d-xl-block</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Display in print</h3>
+<ul>
+<li><code>.d-print-none</code></li>
+<li><code>.d-print-inline</code></li>
+<li><code>.d-print-inline-block</code></li>
+<li><code>.d-print-block</code></li>
+<li><code>.d-print-table</code></li>
+<li><code>.d-print-table-row</code></li>
+<li><code>.d-print-table-cell</code></li>
+<li><code>.d-print-flex</code></li>
+<li><code>.d-print-inline-flex</code></li>
+</ul>
+<p>Example</p>
+<pre></pre> <div class="example"><div class="d-print-none">Screen Only (Hide on print only)</div>
+<div class="d-none d-print-block">Print Only (Hide on screen only)</div>
+<div class="d-none d-lg-block d-print-block">Hide up to large on screen, but always show on print</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;d-print-none&quot;&gt;Screen Only (Hide on print only)&lt;/div&gt;
+&lt;div class=&quot;d-none d-print-block&quot;&gt;Print Only (Hide on screen only)&lt;/div&gt;
+&lt;div class=&quot;d-none d-lg-block d-print-block&quot;&gt;Hide up to large on screen, but always show on print&lt;/div&gt;
+</code></pre>
+
+      </div>
+      <div class="page" id="3_utilities/embed">
+        <h1 class="heading">Embeds</h1>
+        <h2>Introduction</h2>
+<p>Responsive content (video or slideshow) embeds based on a ratio.</p>
+<h3>Info</h3>
+<ul>
+<li>Rules are applied to <code>&lt;iframe&gt;</code>, <code>&lt;embed&gt;</code>, <code>&lt;video&gt;</code> and <code>&lt;object&gt;</code>.</li>
+<li>Use <code>.embed-responsive</code> for the parent element.</li>
+<li>Usage of <code>.embed-responsive-item</code> is recommended for the child (embed) element.</li>
+</ul>
+<h3>Example</h3>
+<pre></pre> <div class="example"><div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;https://www.youtube.com/embed/zpOULjyy-n8?rel=0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Aspects ratios</h3>
+<pre><code class="language-html!">&lt;!-- 21:9 aspect ratio --&gt;
+&lt;div class=&quot;embed-responsive embed-responsive-21by9&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;...&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- 16:9 aspect ratio --&gt;
+&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;...&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- 4:3 aspect ratio --&gt;
+&lt;div class=&quot;embed-responsive embed-responsive-4by3&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;...&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;!-- 1:1 aspect ratio --&gt;
+&lt;div class=&quot;embed-responsive embed-responsive-1by1&quot;&gt;
+  &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;...&quot;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+</code></pre>
+
+      </div>
       <div class="page" id="3_utilities/network">
         <h1 class="heading">Network</h1>
         <h2>Introduction</h2>
 <p>Network is a simple module to know the status of the network, i. e. whether the user has a working connection or not.</p>
+<h2>JavaScript</h2>
 <pre><code class="language-js">const network = phonon.network({
   initialDelay: 3000,
-  delay: 5000
-})
+  delay: 5000,
+});
 </code></pre>
-<h2>Options</h2>
-<ul>
-<li>initialDelay</li>
-<li>delay</li>
-</ul>
+<h3>Options</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+<th>Default value</th>
+<th>Available as a data attribute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>initialDelay</td>
+<td>Initial delay before checking for network changes.</td>
+<td>3000</td>
+<td>no</td>
+</tr>
+<tr>
+<td>delay</td>
+<td>Delay before calling network changes events.</td>
+<td>5000</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
 <h2>Events</h2>
 <h3>DOM Events</h3>
 <pre><code class="language-js">window.addEventListener('online.ph.network', (event) =&gt; {
-  console.log(`online ${event.detail.date}`)
-})
+  console.log(`online ${event.detail.date}`);
+});
 
 window.addEventListener('offline.ph.network', (event) =&gt; {
-  console.log(`offline ${event.detail.date}`)
-})
+  console.log(`offline ${event.detail.date}`);
+});
 
 window.addEventListener('reconnecting.ph.network', (event) =&gt; {
-  console.log(`reconnecting ${event.detail.date}`)
-})
+  console.log(`reconnecting ${event.detail.date}`);
+});
 
 window.addEventListener('reconnect.success.ph.network', (event) =&gt; {
-  console.log(`reconnect success ${event.detail.date}`)
-})
+  console.log(`reconnect success ${event.detail.date}`);
+});
 
 window.addEventListener('reconnect.failure.ph.network', (event) =&gt; {
-  console.log(`reconnect failure ${event.detail.date}`)
-})
+  console.log(`reconnect failure ${event.detail.date}`);
+});
 </code></pre>
 <h3>Object Events</h3>
 <pre><code class="language-js">phonon.network({
   online: (event) =&gt; {
-    console.log(`online ${event.date}`)
+    console.log(`online ${event.date}`);
   },
   offline: (event) =&gt; {
-    console.log(`offline ${event.date}`)
+    console.log(`offline ${event.date}`);
   },
   reconnecting: (event) =&gt; {
-    console.log(`reconnecting ${event.date}`)
+    console.log(`reconnecting ${event.date}`);
   },
   reconnectSuccess: (event) =&gt; {
-    console.log(`reconnect success ${event.date}`)
+    console.log(`reconnect success ${event.date}`);
   },
   reconnectFailure: (event) =&gt; {
-    console.log(`reconnect failure ${event.date}`)
-  }
-})
+    console.log(`reconnect failure ${event.date}`);
+  },
+});
 </code></pre>
 <h2>Use Case</h2>
 <p>It can be useful to notify the user of a network change with a notification.</p>
 <pre><code class="language-js">window.addEventListener('online.ph.network', (event) =&gt; {
   phonon.notification({
-    message: 'You are now online.'
-  }).show()
-})
+    message: 'You are now online.',
+  }).show();
+});
 
 window.addEventListener('offline.ph.network', (event) =&gt; {
   phonon.notification({
-    message: 'You are now offline.'
-  }).show()
-})
+    message: 'You are now offline.',
+  }).show();
+});
 </code></pre>
 
       </div>
@@ -5150,7 +5870,7 @@ unintended selections.</p>
       </div>
 
       <footer class="docs-footer">
-        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.3
+        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.2
       </footer>
     </section>
   </div>
