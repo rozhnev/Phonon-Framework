@@ -6,12 +6,15 @@ title: Off-Canvas
 
 An off-canvas is a sidebar visible from the left or the right.
 
-<div style="width:100%;padding:8px;height:500px;background:#eee;position:relative;">
+<div class="mb-3" id="defaultOffCanvasContainer" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
+  <div class="p-2">
+    <button class="btn btn-primary float-right" data-toggle="offcanvas" data-target="#exampleOffCanvas">Toggle static</button>
+  </div>
   <div class="offcanvas offcanvas-left" style="position:static" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
     <div class="offcanvas-inner">
       <div class="offcanvas-content">
         <div class="offcanvas-header">
-          <h1 class="offcanvas-title">Title</h1>
+          <h3 class="offcanvas-title">Title</h3>
           <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -27,13 +30,50 @@ An off-canvas is a sidebar visible from the left or the right.
   </div>
 </div>
 
+<div id="disableAside" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
+  <div class="p-2">
+    <button class="btn btn-primary float-right" data-target="#exampleOffCanvas2">Toggle floating</button>
+  </div>
+  <div class="offcanvas offcanvas-left" style="position:absolute" id="exampleOffCanvas2" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvas2Title" data-aside-lg="false" data-aside-xl="false">
+    <div class="offcanvas-inner">
+      <div class="offcanvas-content">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title">Title</h3>
+          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="offcanvas-body">
+          <p>Content</p>
+        </div>
+        <div class="offcanvas-footer">
+          <p>Footer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', function () {
+  document.querySelector('[data-target="#exampleOffCanvas2"]').addEventListener('click', function () {
+    var container = document.querySelector('#disableAside');
+    var offcanvas = phonon.offCanvas({ element: '#exampleOffCanvas2', container: container });
+    offcanvas.options.container = container;
+    offcanvas.toggle();
+
+    var backdrop = document.querySelector('.offcanvas-backdrop');
+    if (backdrop) {
+      backdrop.style.position = 'absolute';
+      backdrop.style.zIndex = '1';
+    }
+  });
+});
+</script>
+
 ## Markup
 
-Add the class `offcanvas-left` if you want that the offcanvas appears from the left.
-Add the class `offcanvas-right` if you want that the offcanvas appears from the right.
-
-<button class="btn btn-primary" data-toggle="offcanvas" data-target="#exampleOffCanvas">Launch demo offcanvas</button>
-
+Use `.offcanvas-left` or `.offcanvas-right` to determine the direction of the offcanvas.
 
 ```html!
 <!-- Button trigger offcanvas -->
@@ -84,7 +124,7 @@ const offcanvas = new OffCanvas({
 });
 
 // ES5
-const offcanvas = phonon.offcanvas({
+const offcanvas = phonon.offCanvas({
   element: '#exampleOffCanvas',
   container: document.body,
   toggle: false,
@@ -96,7 +136,7 @@ const offcanvas = phonon.offcanvas({
 });
 
 // jQuery
-const offcanvas = $('#exampleOffCanvas').offcanvas({
+const offcanvas = $('#exampleOffCanvas').offCanvas({
   container: document.body,
   toggle: false,
   aside: {
@@ -160,7 +200,7 @@ For this, you can use object and DOM events.
 #### Object Events
 
 ```js
-phonon.offcanvas({
+phonon.offCanvas({
   element: '#exampleOffCanvas',
   show: () => { // or onShow
     console.log('It works!');
