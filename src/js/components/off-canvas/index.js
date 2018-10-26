@@ -94,18 +94,18 @@ const OffCanvas = (($) => {
       this.setAside(size.name);
     }
 
-    setAside(name) {
-      if (this.currentWidthName === name) {
+    setAside(sizeName) {
+      if (this.currentWidthName === sizeName) {
         return;
       }
 
-      this.currentWidthName = name;
+      this.currentWidthName = sizeName;
 
       const content = this.getConfig('container', DEFAULT_PROPERTIES.container);
 
-      this.showAside = this.options.aside[name] === true;
+      this.showAside = this.options.aside[sizeName] === true;
 
-      if (this.options.aside[name] === true) {
+      if (this.options.aside[sizeName] === true) {
         if (!content.classList.contains(`offcanvas-aside-${this.direction}`)) {
           content.classList.add(`offcanvas-aside-${this.direction}`);
         }
@@ -117,14 +117,13 @@ const OffCanvas = (($) => {
           this.removeBackdrop();
         }
 
-        // in case of many visible or hidden off-canvas
-        if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
+        if (this.isVisible() && !content.classList.contains('show')) {
           content.classList.add('show');
-        } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
+        } else if (!this.isVisible() && content.classList.contains('show')) {
           content.classList.remove('show');
         }
       } else {
-        if (this.visibleOffCanvas() === 0 && content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+        if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
           content.classList.remove(`offcanvas-aside-${this.direction}`);
         }
 
@@ -148,11 +147,6 @@ const OffCanvas = (($) => {
 
     isVisible() {
       return this.options.element.classList.contains('show');
-    }
-
-    visibleOffCanvas() {
-      const offCanvas = Array.from(document.querySelectorAll(`.${NAME}.show`) || []);
-      return offCanvas.length;
     }
 
     /**
@@ -228,7 +222,7 @@ const OffCanvas = (($) => {
 
       if (this.showAside) {
         const container = this.getConfig('container', DEFAULT_PROPERTIES.container);
-        if (this.visibleOffCanvas() === 0 && container.classList.contains('show')) {
+        if (container.classList.contains('show')) {
           container.classList.remove('show');
         }
       }
