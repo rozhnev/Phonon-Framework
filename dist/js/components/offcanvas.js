@@ -1563,9 +1563,11 @@ var OffCanvas = function ($) {
           } // in case of many visible or hidden off-canvas
 
 
-          if (this.visibleOffCanvas > 0 && !content.classList.contains('show')) {
+          console.log('! ' + this.visibleOffCanvas());
+
+          if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
             content.classList.add('show');
-          } else if (this.visibleOffCanvas === 0 && content.classList.contains('show')) {
+          } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
             content.classList.remove('show');
           }
         } else {

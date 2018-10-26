@@ -3807,13 +3807,13 @@
             } // in case of many visible or hidden off-canvas
 
 
-            if (this.visibleOffCanvas > 0 && !content.classList.contains('show')) {
+            if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
               content.classList.add('show');
-            } else if (this.visibleOffCanvas === 0 && content.classList.contains('show')) {
+            } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
               content.classList.remove('show');
             }
           } else {
-            if (content.classList.contains("offcanvas-aside-".concat(this.direction))) {
+            if (this.visibleOffCanvas() === 0 && content.classList.contains("offcanvas-aside-".concat(this.direction))) {
               content.classList.remove("offcanvas-aside-".concat(this.direction));
             }
 
@@ -3942,15 +3942,15 @@
             this.options.element.classList.add('animate');
           }
 
+          this.options.element.classList.remove('show');
+
           if (this.showAside) {
             var container = this.getConfig('container', DEFAULT_PROPERTIES.container);
 
-            if (container.classList.contains('show')) {
+            if (this.visibleOffCanvas() === 0 && container.classList.contains('show')) {
               container.classList.remove('show');
             }
           }
-
-          this.options.element.classList.remove('show');
 
           if (!this.showAside) {
             var backdrop = this.getBackdrop();
@@ -3988,7 +3988,8 @@
           var backdrop = document.createElement('div');
           backdrop.setAttribute('data-id', this.id);
           backdrop.classList.add(BACKDROP_SELECTOR);
-          document.body.appendChild(backdrop);
+          var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+          content.appendChild(backdrop);
         }
       }, {
         key: "getBackdrop",
@@ -4001,7 +4002,8 @@
           var backdrop = this.getBackdrop();
 
           if (backdrop) {
-            document.body.removeChild(backdrop);
+            var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+            content.removeChild(backdrop);
           }
         }
       }, {
@@ -4090,10 +4092,7 @@
     offCanvas.forEach(function (element) {
       var config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
       config.element = element;
-      components.push({
-        element: element,
-        offCanvas: new OffCanvas(config)
-      });
+      components.push(new OffCanvas(config));
     });
     document.addEventListener('click', function (event) {
       var target = findTargetByAttr(event.target, 'data-toggle');
@@ -4108,7 +4107,7 @@
         var id = target.getAttribute('data-target');
         var element = document.querySelector(id);
         var component = components.find(function (c) {
-          return c.element === element;
+          return c.getElement() === element;
         });
 
         if (!component) {
@@ -4116,7 +4115,7 @@
         }
 
         target.blur();
-        component.offCanvas.toggle();
+        component.toggle();
       }
     });
     return OffCanvas;
