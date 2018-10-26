@@ -1793,6 +1793,7 @@ var Modal = function ($) {
     var dataToggleAttr = event.target.getAttribute('data-toggle');
 
     if (dataToggleAttr && dataToggleAttr === NAME) {
+      alert();
       var id = event.target.getAttribute('data-target');
       var element = document.querySelector(id);
       var component = components.find(function (c) {
@@ -1800,6 +1801,7 @@ var Modal = function ($) {
       });
 
       if (!component) {
+        alert('component not found');
         return;
       } // remove the focus state of the trigger
 

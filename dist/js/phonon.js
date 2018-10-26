@@ -2023,10 +2023,10 @@
       var dataToggleAttr = event.target.getAttribute('data-toggle');
 
       if (dataToggleAttr && dataToggleAttr === NAME) {
-        var id = event.target.getAttribute('data-target');
-        var element = document.querySelector(id);
+        var selector = event.target.getAttribute('data-target');
+        var element = document.querySelector(selector);
         var component = components.find(function (c) {
-          return c.element === element;
+          return c.getElement() === element;
         });
 
         if (!component) {
@@ -2035,7 +2035,7 @@
 
 
         event.target.blur();
-        component.modal.show();
+        component.show();
       }
     });
     return Modal;
