@@ -110,7 +110,7 @@ const alert = $('#exampleAlert').alert({
 
 #### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 ```js
 alert.show();
@@ -118,7 +118,7 @@ alert.show();
 
 #### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 ```js
 alert.hide();

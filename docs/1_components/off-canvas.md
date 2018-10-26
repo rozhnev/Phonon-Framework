@@ -122,6 +122,8 @@ const offcanvas = $('#exampleOffCanvas').offcanvas({
 
 #### show()
 
+* returns: `<boolean>`
+
 Any off canvas can be shown with JavaScript. For this, we call the `show()` method:
 
 ```js
@@ -130,6 +132,8 @@ offcanvas.show();
 
 
 #### hide()
+
+* returns: `<boolean>`
 
 Any off canvas can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 

@@ -97,7 +97,7 @@ loader.animate(false); // hide and stop the animation
 
 ### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any loader can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -107,7 +107,7 @@ loader.show();
 
 ### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any loader can be hidden with JavaScript. For this, we call the `hide()` method:
 

@@ -64,7 +64,7 @@ const collapse = $('#exampleCollapse').collapse();
 #### show(collapse)
 
 * `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 ```js
 collapse.show();
@@ -73,7 +73,7 @@ collapse.show();
 #### hide(collapse)
 
 * `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 ```js
 collapse.hide();
@@ -82,7 +82,7 @@ collapse.hide();
 #### toggle(collapse)
 
 * `collapse` (Element | String) - if `collapse` is a String, it is interpreted as a selector. If it is an object, it is expected that the `collapse` exists.
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 ```js
 collapse.toggle();

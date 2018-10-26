@@ -183,7 +183,7 @@ const notif = phonon.notification({
 
 ### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any notification can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -193,7 +193,7 @@ notif.show();
 
 ### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 

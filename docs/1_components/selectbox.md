@@ -209,7 +209,7 @@ selectbox.setSelected('green', 'Current text');
 
 #### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any selectbox can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -219,7 +219,7 @@ selectbox.show();
 
 #### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any selectbox can be hidden with JavaScript. For this, we call the `hide()` method:
 
@@ -229,7 +229,7 @@ selectbox.hide();
 
 #### toggle()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any selectbox can be toggled with JavaScript. For this, we call the `toggle()` method:
 

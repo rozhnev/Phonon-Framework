@@ -90,7 +90,7 @@ Animates the striped progress. The `striped` option must be set to true otherwis
 
 #### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any progress can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -100,7 +100,7 @@ progress.show();
 
 #### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any progress can be hidden with JavaScript. For this, we call the `hide()` method:
 

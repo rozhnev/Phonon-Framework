@@ -188,7 +188,7 @@ const modal = $('#exampleModal').modal();
 
 ### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any modal can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -199,7 +199,7 @@ modal.show();
 
 ### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the `hide()` method:
 

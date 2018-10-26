@@ -51,7 +51,7 @@ const tab = $('#settings-tab').tab();
 
 #### show()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any tab can be shown with JavaScript. For this, we call the `show()` method:
 
@@ -61,7 +61,7 @@ tab.show();
 
 #### hide()
 
-* returns: `<Promise<Boolean>>`
+* returns: `<boolean>`
 
 Any tab can be hidden with JavaScript. For this, we call the `hide()` method:
 
