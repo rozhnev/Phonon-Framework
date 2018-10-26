@@ -58,12 +58,25 @@ const modal = $().modal({
 ### Prompt modal
 
 ```js
+// ES6
+const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
+
+const prompt = new ModalPrompt({
+  title: 'Prompt title',
+  message: 'Prompt body text goes here.',
+});
+
+// ES5
 const prompt = phonon.prompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
 });
 
-prompt.show()
+// jQuery
+const prompt = $().prompt({
+  title: 'Prompt title',
+  message: 'Prompt body text goes here.',
+});
 
 prompt.setInputValue() // only available with prompts
 prompt.getInputValue() // only available with prompts
@@ -72,23 +85,49 @@ prompt.getInputValue() // only available with prompts
 ### Confirm modal
 
 ```js
+// ES6
+const ModalConfirm = require('phonon/dist/js/components/modal/confirm');
+
+const confirm = new ModalConfirm({
+  title: 'Confirm title',
+  message: 'Confirm body text goes here.',
+});
+
+// ES5
 const confirm = phonon.confirm({
   title: 'Confirm title',
   message: 'Confirm body text goes here.',
 });
 
-confirm.show()
+// jQuery
+const confirm = $().confirm({
+  title: 'Confirm title',
+  message: 'Confirm body text goes here.',
+});
 ```
 
 ### Loader modal
 
 ```js
+// ES6
+const ModalLoader = require('phonon/dist/js/components/modal/loader');
+
+const modalLoader = new ModalLoader({
+  title: 'Loader title',
+  message: 'Loader body text goes here.',
+});
+
+// ES5
 const modalLoader = phonon.modalLoader({
   title: 'Loader title',
   message: 'Loader body text goes here.',
 });
 
-modalLoader.show()
+// jQuery
+const modalLoader = $().modalLoader({
+  title: 'Loader title',
+  message: 'Loader body text goes here.',
+});
 ```
 
 ### Modal with custom buttons
