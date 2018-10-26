@@ -958,13 +958,13 @@ const alert = $('#exampleAlert').alert({
 <h3>Methods</h3>
 <h4>show()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">alert.show();
 </code></pre>
 <h4>hide()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">alert.hide();
 </code></pre>
@@ -1367,21 +1367,21 @@ const collapse = $('#exampleCollapse').collapse();
 <h4>show(collapse)</h4>
 <ul>
 <li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">collapse.show();
 </code></pre>
 <h4>hide(collapse)</h4>
 <ul>
 <li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">collapse.hide();
 </code></pre>
 <h4>toggle(collapse)</h4>
 <ul>
 <li><code>collapse</code> (Element | String) - if <code>collapse</code> is a String, it is interpreted as a selector. If it is an object, it is expected that the <code>collapse</code> exists.</li>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <pre><code class="language-js">collapse.toggle();
 </code></pre>
@@ -2180,14 +2180,14 @@ loader.animate(false); // hide and stop the animation
 </code></pre>
 <h3>show()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any loader can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">loader.show();
 </code></pre>
 <h3>hide()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any loader can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">loader.hide();
@@ -2403,14 +2403,14 @@ const modal = $('#exampleModal').modal();
 <h2>Methods</h2>
 <h3>show()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any modal can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">modal.show();
 </code></pre>
 <h3>hide()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any modal can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">modal.hide();
@@ -3030,14 +3030,14 @@ const notif = $().notification({
 <h2>Methods</h2>
 <h3>show()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any notification can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">notif.show();
 </code></pre>
 <h3>hide()</h3>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any notification can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">notif.hide();
@@ -3247,10 +3247,16 @@ const offcanvas = $('#exampleOffCanvas').offcanvas({
 </table>
 <h3>Methods</h3>
 <h4>show()</h4>
+<ul>
+<li>returns: <code>&lt;boolean&gt;</code></li>
+</ul>
 <p>Any off canvas can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">offcanvas.show();
 </code></pre>
 <h4>hide()</h4>
+<ul>
+<li>returns: <code>&lt;boolean&gt;</code></li>
+</ul>
 <p>Any off canvas can be hidden with JavaScript, not only by clicking on its buttons. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">offcanvas.hide();
 </code></pre>
@@ -3440,14 +3446,14 @@ $('#myProgress').progress({
 <p>Animates the striped progress. The <code>striped</code> option must be set to true otherwise it won't work.</p>
 <h4>show()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any progress can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">progress.show();
 </code></pre>
 <h4>hide()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any progress can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">progress.hide();
@@ -3770,21 +3776,21 @@ const searchSelectbox = $('.selectbox').selectbox({
 </code></pre>
 <h4>show()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any selectbox can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">selectbox.show();
 </code></pre>
 <h4>hide()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any selectbox can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">selectbox.hide();
 </code></pre>
 <h4>toggle()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any selectbox can be toggled with JavaScript. For this, we call the <code>toggle()</code> method:</p>
 <pre><code class="language-js">selectbox.toggle();
@@ -3913,14 +3919,14 @@ const tab = $('#settings-tab').tab();
 <h3>Methods</h3>
 <h4>show()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any tab can be shown with JavaScript. For this, we call the <code>show()</code> method:</p>
 <pre><code class="language-js">tab.show();
 </code></pre>
 <h4>hide()</h4>
 <ul>
-<li>returns: <code>&lt;Promise&lt;Boolean&gt;&gt;</code></li>
+<li>returns: <code>&lt;boolean&gt;</code></li>
 </ul>
 <p>Any tab can be hidden with JavaScript. For this, we call the <code>hide()</code> method:</p>
 <pre><code class="language-js">tab.hide();
