@@ -4,14 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="../dist/css/phonon.css">
-
+    <link rel="stylesheet" href="../dist/css/phonon.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/solid.css" integrity="sha384-osqezT+30O6N/vsMqwW8Ch6wKlMofqueuia2H7fePy42uC05rm1G+BUPSd2iBSJL" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/fontawesome.css" integrity="sha384-BzCy2fixOYd0HObpx3GMefNqdbA7Qjcc91RgYeDjrHTIEXqiF00jKvgQG0+zY/7I" crossorigin="anonymous">
     <title>Phonon v2</title>
 
     <style>
       .story {
         padding-top: 115px;
         padding-bottom: 115px;
+      }
+
+      .story h2 {
+        text-transform: uppercase;
+        font-weight: 900;
+      }
+
+      .story .headline {
+        text-transform: uppercase;
+      }
+
+      .fas {
+        text-align: center;
+        display: block;
+        font-size: 9em;
+        color: #333;
       }
     </style>
   </head>
@@ -51,14 +68,9 @@
             </h3>
 
             <div class="d-block mt-5">
-              <a href="#" class="btn btn-lg btn-primary">Getting started</a>
-              <a href="#" class="btn btn-lg btn-outline-primary" data-toggle="modal" data-target="#downloadModal">Download</a>
+              <a href="../docs/#0_getting-started" class="btn btn-lg btn-primary">Getting started</a>
+              <button class="btn btn-lg btn-outline-primary" data-toggle="modal" data-target="#downloadModal">Download</button>
             </div>
-
-            <div class="d-block mt-5 text-center w-100">
-              <a href="#" class="btn btn-lg btn-primary">About</a>
-            </div>
-
           </div>
           <div class="col-sm-4 d-none d-sm-block">
             <img src="./icon.svg" width="100%" alt="">
@@ -71,17 +83,23 @@
               <div class="float-right date"></div>
             </div>
           </div>
+          <div class="col-sm-12">
+            <div class="d-block mt-3 text-center">
+              <a class="text-primary" href="#about" style="text-decoration:none">
+                <span class="fas fa-chevron-down" style="font-size:3em"></span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </header>
-
     <main>
 
-      <div class="story bg-light">
+      <div class="story bg-light" id="about">
         <div class="container">
           <h1>About</h1>
 
-          <p>Originally, Phonon has been created for building
+          <p class="text-justify">Originally, Phonon has been created for building
             <strong>hybrid apps with Apache Cordova</strong> by using <strong>web technologies
             such as HTML, CSS and JavaScript</strong>. Of course, there are many frameworks well known,
             but Phonon gives an intuitive and amuzing way of building apps.
@@ -97,33 +115,36 @@
         <div class="container">
           <h1>v2.0.0 is here!</h1>
 
-          <p>
+          <p class="text-justify">
             After more than 250 commits after the latest v1 commit,
             we are happy to announce a new experience starting with Phonon 2!<br />
             The framework has been completely rewritten to make substantive improvements
-            and making full use of ECMAScript 6 features (ES6).<br />
-            Please find the main features below.
+            and making full use of ECMAScript 6 features (ES6).
           </p>
         </div>
       </div>
 
       <div class="story">
         <div class="container">
-          <h2>Key features</h2>
-
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Easy to use</h3>
+              <h2>Easy to use and setup</h2>
+              <h3 class="headline text-primary">Rich Docs & JavaScript or HTML based</h3>
 
-              <p>
+              <p class="text-justify">
                 The documentation is filled with examples and shows the visual result of the components.
-                For many front components, it is not mandatory to define the HTML markup.
-                You can use the JavaScript API directly to display components.
-                This is the case for modals (generic, confirmation, prompt, loader) and notifications).
+              </p>
+
+              <p class="text-justify">
+                <b>JavaScript approach:</b> Many components such as modals and notifications don't require any HTML markup. Use the JavaScript API directly to display components.
+              </p>
+              <p class="text-justify">
+                <b>HTML approach:</b> Most component options are read directly from the markup.
+                This eliminates the need to define the component markup and setup its JavaScript configuration.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-drum"></span>
             </div>
           </div>
         </div>
@@ -131,16 +152,18 @@
 
       <div class="story">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>User interface framework</h3>
+              <h2>User interface framework</h2>
+              <h3 class="headline text-primary">Frontend components</h3>
 
-              <p>
-                Rich components designed for desktop, tablets and smartphones.
+              <p class="text-justify">
+                The UI components are designed to support use cases on different device formats
+                such as desktop, tablets and smartphones.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-vihara"></span>
             </div>
           </div>
         </div>
@@ -148,17 +171,18 @@
 
       <div class="story bg-light">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Light weight framework</h3>
+              <h2>Light weight framework</h2>
+              <h3 class="headline text-primary">CommonJS components</h3>
 
-              <p>
-                Import the required components and files that you need for your project.
-                For more information, please read "Custom builds".
+              <p class="text-justify">
+                Include the components used in your project in ES6+ in order to reduce the size or import the minified files.
+                For more information, please read <a href="../docs/#0_getting-started/1_custom-build">Custom builds</a>.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-feather-alt"></span>
             </div>
           </div>
         </div>
@@ -166,16 +190,19 @@
 
       <div class="story">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Free and open source code (MIT License)</h3>
+              <h2>Free and open source code</h2>
+              <h3 class="headline text-primary">Under MIT License</h3>
 
-              <p>
-                The MIT License is a permissive free software license. Phonon is completely open source. Build free or paid apps!
+              <p class="text-justify">
+                The MIT License is a permissive free software license.
+                Phonon is completely open source.
+                Feel free to use Phonon for your free and paid projects.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+                <span class="fas fa-share-alt"></span>
             </div>
           </div>
         </div>
@@ -183,18 +210,26 @@
 
       <div class="story bg-light">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Library agnostic</h3>
+              <h2>Library agnostic</h2>
+              <h3 class="headline text-primary">No dependency</h3>
 
               <p>Phonon does not use and does not depend on any JavaScript third party libraries.</p>
-              <p>
+              <p class="text-justify">
                 Choose the right framework according to your needs and your project's size
-                such as React, Angular, Vue, jQuery, Zepto, Riot or work with pure JavaScript.
+                such as
+                <a href="https://reactjs.org" target="_blank">React</a>,
+                <a href="https://angular.io" target="_blank">Angular</a>,
+                <a href="https://vuejs.org" target="_blank">Vue.js</a>,
+                <a href="https://jquery.com" target="_blank">jQuery</a>,
+                <a href="https://zeptojs.com" target="_blank">Zepto.js</a>,
+                <a href="https://riot.js.org" target="_blank">Riot.js</a>
+                or work with pure JavaScript.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-shapes"></span>
             </div>
           </div>
         </div>
@@ -202,16 +237,18 @@
 
       <div class="story">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Site framework</h3>
-              <p>
+              <h2>Site framework</h2>
+              <h3 class="headline text-primary">From prototyping to production</h3>
+
+              <p class="text-justify">
                 Use Phonon as a prototyping website and apps toolkit to show your drafts and mockups
-                or build amazing websites!
+                or build amazing websites.
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-sitemap"></span>
             </div>
           </div>
         </div>
@@ -219,28 +256,32 @@
 
       <div class="story bg-light">
         <div class="container">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-sm-8">
-              <h3>Hybrid app framework</h3>
-              <p>Also known as single page applications, you can use
-                Phonon Hybrid JavaScript to create your app. Phonon brings you
-                a simple router called pager to connect pages together and support navigation
-                through the different pages.<br />
-                Also, there is an easy plugin to internationalize your app.
-              </p>
+              <h2>Hybrid app framework</h2>
+              <h3 class="headline text-primary">Painless SPA</h3>
 
-              <p>Furthermore, you can define page event callbacks in order to organize tasks
-                at a specific moment. The Navigator module is the master of page events:
-                onCreate, onReady, onTransitionEnd, onClose, onHidden, etc. OnCreate
-                is called when the page is first created. This is where you should do
-                all of your normal static set up (this callback is called once). onReady
-                is called every time the page becomes visible to the user, onClose is called
-                only if data-prevent-close is true, this permits to prevent the page close
-                if we want to keep the user on the same page (for example to accept conditions before using the app).
+              <p class="text-justify">
+                Also known as single page applications, Phonon SPA (phonon-spa.js) comes with
+                simple modules such as Pager and I18n.
+              </p>
+              <p>
+                <ul class="pl-3">
+                  <li class="text-justify mb-3">
+                    <b>Pager:</b> is a lightweight <b>page controller</b> and <b>client-side router</b> to organize <b>navigation between pages</b>, read hash parameters
+                    and listen to <b>page events</b> such as
+                    <code>show</code>, <code>shown</code>, <code>hide</code>, <code>hidden</code> and <code>hash</code>.
+                    It also allows you to define <b>page templates</b> and <b>block navigation to a page</b>.
+                  </li>
+                  <li class="text-justify">
+                    <b>I18n:</b> contains texts in different languages and
+                    display the text in the active language in views.
+                  </li>
+                </ul>
               </p>
             </div>
             <div class="col-sm-4">
-              IMAGE
+              <span class="fas fa-window-maximize"></span>
             </div>
           </div>
         </div>
@@ -248,7 +289,7 @@
 
       <div class="story">
         <div class="container">
-          <h3>Technologies behind Phonon</h3>
+          <h2>Technologies behind Phonon</h2>
 
           <div class="d-flex">
             <div class="flex-fill">
@@ -273,23 +314,35 @@
 
       <div class="story bg-light">
         <div class="container">
-          <h2>Last words</h2>
+          <div class="row align-items-center">
+            <div class="col-sm-8">
+              <h2>Contribute, share or donate</h2>
 
-          <p>As a 100% free open-source project, developer participation is encouraged, as much or little as possible.</p>
+              <p class="text-justify">
+                As a 100% free open-source project, developer participation is encouraged, as much or little as possible.
+                Fork it, open issues and star the project!
+              </p>
 
-          <p>Fork it, open issues and star the project!</p>
+              <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=star&count=false&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+              <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=fork&count=false&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
 
-          <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=star&count=false&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-          <iframe src="https://ghbtns.com/github-btn.html?user=quark-dev&repo=Phonon-Framework&type=fork&count=false&size=large" frameborder="0" scrolling="0" width="158px" height="30px"></iframe>
+              <p class="text-justify mt-3">
+                If this framework saved your day and you wish to support future developments
+                you may consider sending some funds via PayPal.
+              </p>
 
-          <p>If this framework saved your day and you wish to support future developments you may consider sending some funds via PayPal.</p>
-
-          <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-            <input type="hidden" name="cmd" value="_s-xclick">
-            <input type="hidden" name="hosted_button_id" value="FR8F53JKB8P32">
-            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-          </form>
+              <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="FR8F53JKB8P32">
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+              </form>
+            </div>
+            <div class="col-sm-4">
+              <span class="fas d-inline-block fa-code-branch"></span>
+              <span class="fas d-inline-block fa-donate"></span>
+            </div>
+          </div>
         </div>
       </main>
     </div>
@@ -325,11 +378,9 @@
       </div>
     </div>
 
-    <script src="../dist/js/phonon.js"></script>
-
+    <script src="../dist/js/phonon.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="github.js"></script>
-
     <script>
       getLastCommit(function (data) {
         const link = `https://github.com/quark-dev/Phonon-Framework/commit/${data.sha}`;
