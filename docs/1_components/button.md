@@ -147,5 +147,9 @@ Furthermore, `tabindex="-1"` attribute prevent the keyboard focus on the element
 ```
 
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+
+This documentation "Buttons" is a derivative of "[Buttons](http://getbootstrap.com/docs/4.1/components/buttons/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Button" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
 </div>
+

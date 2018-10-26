@@ -9,7 +9,7 @@ It also offers a light and simple **router** for recovering parameters with the 
 
 If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.
 
-<iframe class="border border-light" src="../examples/single-page-apps/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
+<iframe class="border border-light" src="../examples/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
 <p class="text-dark">Source code</p>
 
 ## Configuration

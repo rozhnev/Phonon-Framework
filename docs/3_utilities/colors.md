@@ -53,3 +53,10 @@ Color utility classes.
 <div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
 <div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
 ```
+
+<div class="alert alert-secondary" role="alert">
+
+This documentation "Colors" is a derivative of "[Colors](http://getbootstrap.com/docs/4.1/utilities/colors/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Colors" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+</div>

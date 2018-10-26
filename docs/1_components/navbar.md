@@ -60,6 +60,8 @@ title: Navbar
 
 ## Dropdown
 
+In case you load the components in ES6, be sure to include `dropdown.js` (phonon/dist/js/components/dropdown.js).
+
 ```html
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -175,5 +177,8 @@ dropdowns.forEach(function (dropdown) {
 ```
 
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+
+This documentation "Navbar" is a derivative of "[Navbar](http://getbootstrap.com/docs/4.1/components/navbar/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Navbar" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
 </div>

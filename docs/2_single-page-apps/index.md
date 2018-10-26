@@ -8,5 +8,5 @@ This section is useful if you would like to build a [single-page application](ht
 
 We provide 2 examples:
 
-* [Standalone example](https://github.com/quark-dev/Phonon-Framework/tree/master/examples/single-page-apps/standalone)
-* [Webpack example](https://github.com/quark-dev/Phonon-Framework/tree/master/examples/single-page-apps/webpack)
+* [Standalone example](https://github.com/quark-dev/Phonon-Framework/tree/master/examples/standalone)
+* [Webpack example](https://github.com/quark-dev/Phonon-Framework/tree/master/examples/webpack)

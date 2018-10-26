@@ -43,3 +43,10 @@ Responsive content (video or slideshow) embeds based on a ratio.
   <iframe class="embed-responsive-item" src="..."></iframe>
 </div>
 ```
+
+<div class="alert alert-secondary" role="alert">
+
+This documentation "Embed" is a derivative of "[Embed](http://getbootstrap.com/docs/4.1/utilities/embed/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Embed" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+</div>

@@ -38,5 +38,4 @@ To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
 This documentation "Code" is a derivative of "[Code](http://getbootstrap.com/docs/4.1/content/code/)"
 by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
 "Code" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
-
 </div>

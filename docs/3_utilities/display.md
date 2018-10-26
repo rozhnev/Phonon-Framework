@@ -78,3 +78,10 @@ Example
 <div class="d-none d-print-block">Print Only (Hide on screen only)</div>
 <div class="d-none d-lg-block d-print-block">Hide up to large on screen, but always show on print</div>
 ```
+
+<div class="alert alert-secondary" role="alert">
+
+This documentation "Display" is a derivative of "[Display](http://getbootstrap.com/docs/4.1/utilities/display/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Display" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+</div>

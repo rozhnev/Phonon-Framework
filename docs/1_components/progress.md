@@ -161,3 +161,10 @@ document.querySelector('.progress').addEventListener('hidden.ph.progress', () =>
   console.log('It works!');
 });
 ```
+
+<div class="alert alert-secondary" role="alert">
+
+This documentation "Progress" is a derivative of "[Progress](http://getbootstrap.com/docs/4.1/components/progress/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Progress" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+</div>

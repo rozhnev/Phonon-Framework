@@ -15,27 +15,27 @@ A table permits to arrange data into rows and columns of cells.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -50,27 +50,27 @@ A table permits to arrange data into rows and columns of cells.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -85,27 +85,27 @@ A table permits to arrange data into rows and columns of cells.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -118,27 +118,27 @@ A table permits to arrange data into rows and columns of cells.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -153,27 +153,27 @@ A table permits to arrange data into rows and columns of cells.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -188,27 +188,27 @@ Dark striped rows.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -223,26 +223,26 @@ Dark striped rows.
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -257,26 +257,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -291,26 +291,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -325,26 +325,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -359,26 +359,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -393,26 +393,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -427,26 +427,26 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -494,27 +494,27 @@ Dark
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Framework</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
     </tr>
   </tbody>
 </table>
@@ -529,7 +529,34 @@ Horizontal scrolling.
 ```html
 <div class="table-responsive">
   <table class="table">
-    ...
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Framework</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Jordan</td>
+        <td>Walke</td>
+        <td>React</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Evan</td>
+        <td>You</td>
+        <td>Vue.js</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Misko</td>
+        <td>Hevery</td>
+        <td>AngularJS</td>
+      </tr>
+    </tbody>
   </table>
 </div>
 ```
@@ -538,7 +565,7 @@ Horizontal scrolling.
 
 `.table-responsive{-sm|-md|-lg|-xl}`.
 
-```html
+```html!
 <div class="table-responsive-sm">
   <table class="table">
     ...
@@ -547,5 +574,8 @@ Horizontal scrolling.
 ```
 
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+
+This documentation "Table" is a derivative of "[Tables](http://getbootstrap.com/docs/4.1/content/tables/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Table" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
 </div>

@@ -4,7 +4,7 @@ title: Spacing
 
 ## Introduction
 
-[WIP]
+Spacing utility classes.
 
 `{property}{sides}-{size}`
 
@@ -66,3 +66,10 @@ Example:
   Centered element
 </div>
 ```
+
+<div class="alert alert-secondary" role="alert">
+
+This documentation "Spacing" is a derivative of "[Spacing](http://getbootstrap.com/docs/4.1/utilities/spacing/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Spacing" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
+</div>

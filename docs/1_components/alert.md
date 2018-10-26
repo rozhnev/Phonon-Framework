@@ -177,5 +177,8 @@ document.querySelector('.alert').addEventListener('hidden.ph.alert', () => {
 ```
 
 <div class="alert alert-secondary" role="alert">
-  This page is adapted from the official documentation of <a href="http://getbootstrap.com">Bootstrap</a> (<a href="creativecommons.org/licenses/by/3.0/">license</a>) in order to take into account CSS features only.
+
+This documentation "Alert" is a derivative of "[Alerts](http://getbootstrap.com/docs/4.1/components/alerts/)"
+by Bootstrap, used under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+"Alert" is licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) by Bootstrap.
 </div>
