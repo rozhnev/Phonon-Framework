@@ -299,6 +299,9 @@ body {
         <li class="nav-item active">
           <a class="nav-link" href="docs">Documentation <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/quark-dev/Phonon-Framework/tree/master">Github</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -432,7 +435,7 @@ They provide convenient solutions that can be installed with no effort and that 
     &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
     &lt;!-- Optional JavaScript --&gt;
-    &lt;script src=&quot;phonon/dist/js/phonon.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;phonon/dist/js/phonon.min.js&quot;&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -454,8 +457,8 @@ you need to include the SPA modules <code>phonon-spa.js</code>.</p>
   &lt;body&gt;
     &lt;h1&gt;Hello, world!&lt;/h1&gt;
 
-    &lt;script src=&quot;phonon/dist/js/phonon.js&quot;&gt;&lt;/script&gt;
-    &lt;script src=&quot;phonon/dist/js/phonon-spa.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;phonon/dist/js/phonon.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;phonon/dist/js/phonon-spa.min.js&quot;&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
@@ -2271,31 +2274,70 @@ const modal = $().modal({
 });
 </code></pre>
 <h3>Prompt modal</h3>
-<pre><code class="language-js">const prompt = phonon.prompt({
+<pre><code class="language-js">// ES6
+const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
+
+const prompt = new ModalPrompt({
   title: 'Prompt title',
   message: 'Prompt body text goes here.',
 });
 
-prompt.show()
+// ES5
+const prompt = phonon.prompt({
+  title: 'Prompt title',
+  message: 'Prompt body text goes here.',
+});
+
+// jQuery
+const prompt = $().prompt({
+  title: 'Prompt title',
+  message: 'Prompt body text goes here.',
+});
 
 prompt.setInputValue() // only available with prompts
 prompt.getInputValue() // only available with prompts
 </code></pre>
 <h3>Confirm modal</h3>
-<pre><code class="language-js">const confirm = phonon.confirm({
+<pre><code class="language-js">// ES6
+const ModalConfirm = require('phonon/dist/js/components/modal/confirm');
+
+const confirm = new ModalConfirm({
   title: 'Confirm title',
   message: 'Confirm body text goes here.',
 });
 
-confirm.show()
+// ES5
+const confirm = phonon.confirm({
+  title: 'Confirm title',
+  message: 'Confirm body text goes here.',
+});
+
+// jQuery
+const confirm = $().confirm({
+  title: 'Confirm title',
+  message: 'Confirm body text goes here.',
+});
 </code></pre>
 <h3>Loader modal</h3>
-<pre><code class="language-js">const modalLoader = phonon.modalLoader({
+<pre><code class="language-js">// ES6
+const ModalLoader = require('phonon/dist/js/components/modal/loader');
+
+const modalLoader = new ModalLoader({
   title: 'Loader title',
   message: 'Loader body text goes here.',
 });
 
-modalLoader.show()
+// ES5
+const modalLoader = phonon.modalLoader({
+  title: 'Loader title',
+  message: 'Loader body text goes here.',
+});
+
+// jQuery
+const modalLoader = $().modalLoader({
+  title: 'Loader title',
+  message: 'Loader body text goes here.',
+});
 </code></pre>
 <h3>Modal with custom buttons</h3>
 <p>Each modal type (normal, prompt, confirm and prompt) supports custom buttons.
@@ -3114,12 +3156,15 @@ notification.addEventListener('hidden.ph.notification', () =&gt; {
         <h1 class="heading">Off-Canvas</h1>
         <h2>Introduction</h2>
 <p>An off-canvas is a sidebar visible from the left or the right.</p>
-<div style="width:100%;padding:8px;height:500px;background:#eee;position:relative;">
+<div class="mb-3" id="defaultOffCanvasContainer" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
+  <div class="p-2">
+    <button class="btn btn-primary float-right" data-toggle="offcanvas" data-target="#exampleOffCanvas">Toggle static</button>
+  </div>
   <div class="offcanvas offcanvas-left" style="position:static" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
     <div class="offcanvas-inner">
       <div class="offcanvas-content">
         <div class="offcanvas-header">
-          <h1 class="offcanvas-title">Title</h1>
+          <h3 class="offcanvas-title">Title</h3>
           <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -3134,10 +3179,47 @@ notification.addEventListener('hidden.ph.notification', () =&gt; {
     </div>
   </div>
 </div>
+<div id="disableAside" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
+  <div class="p-2">
+    <button class="btn btn-primary float-right" data-target="#exampleOffCanvas2">Toggle floating</button>
+  </div>
+  <div class="offcanvas offcanvas-left" style="position:absolute" id="exampleOffCanvas2" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvas2Title" data-aside-lg="false" data-aside-xl="false">
+    <div class="offcanvas-inner">
+      <div class="offcanvas-content">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title">Title</h3>
+          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="offcanvas-body">
+          <p>Content</p>
+        </div>
+        <div class="offcanvas-footer">
+          <p>Footer</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+window.addEventListener('load', function () {
+  document.querySelector('[data-target="#exampleOffCanvas2"]').addEventListener('click', function () {
+    var container = document.querySelector('#disableAside');
+    var offcanvas = phonon.offCanvas({ element: '#exampleOffCanvas2', container: container });
+    offcanvas.options.container = container;
+    offcanvas.toggle();
+
+    var backdrop = document.querySelector('.offcanvas-backdrop');
+    if (backdrop) {
+      backdrop.style.position = 'absolute';
+      backdrop.style.zIndex = '1';
+    }
+  });
+});
+</script>
 <h2>Markup</h2>
-<p>Add the class <code>offcanvas-left</code> if you want that the offcanvas appears from the left.
-Add the class <code>offcanvas-right</code> if you want that the offcanvas appears from the right.</p>
-<p><button class="btn btn-primary" data-toggle="offcanvas" data-target="#exampleOffCanvas">Launch demo offcanvas</button></p>
+<p>Use <code>.offcanvas-left</code> or <code>.offcanvas-right</code> to determine the direction of the offcanvas.</p>
 <pre><code class="language-html!">&lt;!-- Button trigger offcanvas --&gt;
 &lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;offcanvas&quot; data-target=&quot;#exampleOffCanvas&quot;&gt;Launch demo offcanvas&lt;/button&gt;
 
@@ -3180,7 +3262,7 @@ const offcanvas = new OffCanvas({
 });
 
 // ES5
-const offcanvas = phonon.offcanvas({
+const offcanvas = phonon.offCanvas({
   element: '#exampleOffCanvas',
   container: document.body,
   toggle: false,
@@ -3192,7 +3274,7 @@ const offcanvas = phonon.offcanvas({
 });
 
 // jQuery
-const offcanvas = $('#exampleOffCanvas').offcanvas({
+const offcanvas = $('#exampleOffCanvas').offCanvas({
   container: document.body,
   toggle: false,
   aside: {
@@ -3290,7 +3372,7 @@ For this, you can use object and DOM events.</p>
 </tbody>
 </table>
 <h4>Object Events</h4>
-<pre><code class="language-js">phonon.offcanvas({
+<pre><code class="language-js">phonon.offCanvas({
   element: '#exampleOffCanvas',
   show: () =&gt; { // or onShow
     console.log('It works!');
@@ -7369,7 +7451,7 @@ document.querySelector('button.toggle-sidebar').onclick = () => {
 */document.querySelector("button.toggle-light").onclick=function(){toggleClass(main,"dark")};document.querySelector("button.next-page").onclick=function(){var nextIndex=Math.min(getCurrentPageIndex(currentHash())+1,pageEls.length-1);window.location.hash="#".concat(pageEls[nextIndex].id)};document.querySelector("button.previous-page").onclick=function(){var prevIndex=Math.max(0,getCurrentPageIndex(currentHash())-1);window.location.hash="#".concat(pageEls[prevIndex].id)};document.querySelector(".tools").classList.remove("hide");var searchInputEl=document.querySelector(".search-input");searchInputEl.classList.remove("hide");var highlightClass="highlight";searchInputEl.addEventListener("keypress",function(e){var key=e.which||e.keyCode;if(key===13){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .highlight")));removeClassesSidebar(highlightClass);pageEls.forEach(function(el,pIndex){if(highlightWord(el,searchInputEl.value)){addClassSidebarIndex(pIndex,highlightClass)}})}});searchInputEl.addEventListener("keyup",function(e){var key=e.which||e.keyCode;if(key!==13&&searchInputEl.value.length<1){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .".concat(highlightClass))));removeClassesSidebar(highlightClass)}});var showPageFromCurrentHash=function showPageFromCurrentHash(){var index=showPageFromHash(currentHash());toggleActiveLinkSidebar(index)};// Listen for hash change
 window.onhashchange=function(){showPageFromCurrentHash()};showPageFromCurrentHash();
   </script>
-    <script src="../dist/js/phonon.js"></script>
+    <script src="../dist/js/phonon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scss.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
