@@ -37,7 +37,7 @@ The installation can take place in several ways:
     <h1>Hello, world!</h1>
 
     <!-- Optional JavaScript -->
-    <script src="phonon/dist/js/phonon.js"></script>
+    <script src="phonon/dist/js/phonon.min.js"></script>
   </body>
 </html>
 ```
@@ -63,8 +63,8 @@ you need to include the SPA modules `phonon-spa.js`.
   <body>
     <h1>Hello, world!</h1>
 
-    <script src="phonon/dist/js/phonon.js"></script>
-    <script src="phonon/dist/js/phonon-spa.js"></script>
+    <script src="phonon/dist/js/phonon.min.js"></script>
+    <script src="phonon/dist/js/phonon-spa.min.js"></script>
   </body>
 </html>
 ```
