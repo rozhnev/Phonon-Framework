@@ -325,10 +325,10 @@ const Modal = (($) => {
   document.addEventListener('click', (event) => {
     const dataToggleAttr = event.target.getAttribute('data-toggle');
     if (dataToggleAttr && dataToggleAttr === NAME) {
-      const id = event.target.getAttribute('data-target');
-      const element = document.querySelector(id);
+      const selector = event.target.getAttribute('data-target');
+      const element = document.querySelector(selector);
 
-      const component = components.find(c => c.element === element);
+      const component = components.find(c => c.getElement() === element);
 
       if (!component) {
         return;
@@ -337,7 +337,7 @@ const Modal = (($) => {
       // remove the focus state of the trigger
       event.target.blur();
 
-      component.modal.show();
+      component.show();
     }
   });
 
