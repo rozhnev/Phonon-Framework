@@ -242,7 +242,20 @@ body {
 }
 
 .dark .content code {
+  background-color: color(var(--mainColor) lightness(80%));
+}
+
+/* custom dark scrollbar */
+.dark div::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dark div::-webkit-scrollbar-thumb {
   background-color: color(var(--mainColor) lightness(20%));
+}
+
+.dark div::-webkit-scrollbar-track {
+  background-color: color(var(--mainColor) lightness(60%));
 }
 
 .dark .tools button, .dark .tools button .icon {
@@ -259,4 +272,27 @@ body {
 
 .sidebar .highlight:hover {
   background: rgb(255, 252, 53, .6);
+}
+
+/* iframe */
+.iframe-container .btn-group {
+  display: block;
+}
+
+.iframe-example {
+  border: 2px solid #ccc;
+  width: 320px;
+  height: 350px;
+}
+
+.iframe-example.sm {
+  width: 320px; /* default: max 576px, reduce border-width */
+}
+
+.iframe-example.md {
+  width: 772px; /* default: min 768px, add border-width */
+}
+
+.iframe-example.lg {
+  width: 996px; /* default: min 992px, add border-width */
 }

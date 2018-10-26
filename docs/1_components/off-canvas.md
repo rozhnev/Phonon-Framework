@@ -6,70 +6,22 @@ title: Off-Canvas
 
 An off-canvas is a sidebar visible from the left or the right.
 
-<div class="mb-3" id="defaultOffCanvasContainer" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
-  <div class="p-2">
-    <button class="btn btn-primary float-right" data-toggle="offcanvas" data-target="#exampleOffCanvas">Toggle static</button>
+## Live example
+
+Click on the different screen sizes to see the offcanvas in action.
+
+By default, for `sm` and `md` screen sizes, the offcanvas will float on top of the page.
+
+On larger screens such as `lg` and `xl`, the offcanvas will push the content to be placed side by side.
+
+<div class="iframe-container">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-sm btn-secondary" data-size="sm">sm</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
   </div>
-  <div class="offcanvas offcanvas-left" style="position:static" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
-    <div class="offcanvas-inner">
-      <div class="offcanvas-content">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title">Title</h3>
-          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="offcanvas-body">
-          <p>Content</p>
-        </div>
-        <div class="offcanvas-footer">
-          <p>Footer</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <iframe class="iframe-example" src="../examples/offcanvas/index.html"></iframe>
 </div>
-
-<div id="disableAside" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
-  <div class="p-2">
-    <button class="btn btn-primary float-right" data-target="#exampleOffCanvas2">Toggle floating</button>
-  </div>
-  <div class="offcanvas offcanvas-left" style="position:absolute" id="exampleOffCanvas2" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvas2Title" data-aside-lg="false" data-aside-xl="false">
-    <div class="offcanvas-inner">
-      <div class="offcanvas-content">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title">Title</h3>
-          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="offcanvas-body">
-          <p>Content</p>
-        </div>
-        <div class="offcanvas-footer">
-          <p>Footer</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-window.addEventListener('load', function () {
-  document.querySelector('[data-target="#exampleOffCanvas2"]').addEventListener('click', function () {
-    var container = document.querySelector('#disableAside');
-    var offcanvas = phonon.offCanvas({ element: '#exampleOffCanvas2', container: container });
-    offcanvas.options.container = container;
-    offcanvas.toggle();
-
-    var backdrop = document.querySelector('.offcanvas-backdrop');
-    if (backdrop) {
-      backdrop.style.position = 'absolute';
-      backdrop.style.zIndex = '1';
-    }
-  });
-});
-</script>
 
 ## Markup
 

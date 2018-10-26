@@ -9,8 +9,14 @@ It also offers a light and simple **router** for recovering parameters with the 
 
 If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.
 
-<iframe class="border border-light" src="../examples/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
-<p class="text-dark">Source code</p>
+<div class="iframe-container">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-sm btn-secondary" data-size="sm">sm</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
+  </div>
+  <iframe class="iframe-example" src="../examples/standalone/index.html"></iframe>
+</div>
 
 ## Configuration
 

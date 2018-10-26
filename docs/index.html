@@ -7,7 +7,6 @@
   <title>Documentation · Phonon</title>
   <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAEJgAABCYBCwj/ZAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAASASURBVHic5ZpNiBtVHMB/bzLZSZNNtroqrVrb2g+tuAjKIsKeCh5aUIsXZS8FDyJ66anFi5f1JPQgeBERFfHQCmoPQg891EOxighVa93tQbtdrJt0d5vNR5PJzDwPaWySmSST+YiZ5HcIZObNey+/vPfPe/8XceDoGalltqGoCcYNaeqoeiGLqZeJp+4jviUzXiKkQAUwq0UATKNKTNXGRoQU1AXAXQkAZiE3NiLU5jcNCYqWxjSqYyFCbb/QLAEYaRECBwFglwCjK8JRADhLgBETIURnAdBZAoyICNllBDToJgEiLkK4EAC9JUA0RUhcCoDuEvY+lOaLt59rvSjuvAjhqn7LktwqmeRLBss3dS4uFvhhqchG0XDbxb4RbqZAM50kxBRBJhX33aGtKRXQeGp3ihdm70E3JF9fXOeTc1lymzXf9Tuh9PuAWS1iVQth9MXGhCp4ZW6a08f3M7tvMvgGhOhfAAxWAkAmGeOD13cz90Qm8Lr7mgLN9AqMm6Uap79b7vi8UGIoqoZQ7nYhOaGwd3uCmV1J4rHW2KHGBAvzO5g/eZUbG7rXbrf3wrsAaN5A2b+ZjaLOyS//6FmH06/GdFrlzcPbOPLsvS1lM8kYx17czonPrvnpdhPS2xRoxqwWsfSS9+eNKpVCjmohi2VUAFgrGCycWuHjc1lb+YMzGR65X/PcXjNCeAiCTlh62XcdTiI+PLvKcq7aUk5RBIef2eq7vToeg2CYNIuo6bc5+/MtW5mnH00F1t7QCWjQEPHL1X9s957cmXS7vuqKZIgFNFjP2+OLFleYTMQCqT88AdIKpBrTko7Xp5JDLkBKK9TFklFe/y9YeqVjRigo3Owie9Fprq/li1RKNZ+7T58LITf4lTDlsMkyTEmhXN8l+t2Ghy4A/El4bId9lXn5rzyWbI0NnkS4TYgEgRcJQsCh2Qdt139aXOvcTj8i+s0H+KVfCfMHd3Fgp30EfPvj373bciFC9kqKhoEbCVpc4bVDe3jrpX22exd+y3Hl2qb79rqIEMjwBKSTE7z6/OMd7yuqhoi3fiuTCZX9D6eZm3mA6cyE7ZmKbvLeqSue+uMsIsQRMD21hXffmAusPilh4fPLLK34W1s0RChqAlVLDX4KeEE3LN759FfOXFgJrE7LqKDXSsMtQEo4f2mV979aYvG6+3nvvoH/IQh2o2ZYbBR1/rxR4vvfb3L+UjacD34HKUIMgtdXCxw5/o3r8qZpcdvSfC2b+yfEEWBaFvlitXfBFuq5/4FJkEOYDxhkyl2IAJKiYTBICUMpAAYlYQiTos2ELmEYY0A7oUrwejY4aMKSIIM4GRoUYUmIjAAIR0KkBEDQEiISA9oJSoKIUgxoJxgJER0BDYKQEGkB4F9C5AWADwlB/UFiGPAqIZB8gGlJ296/WA7nf31d+9HnuYOUIPa8/JHz+XOEiWmTLiVE+GewG/1Mh5EUAC4lRGE77IeeEqKyHfZDLwkjLwC6SRjRIOiEo4RRjwHt2CSMQwxop13C2AmAVglDdTg6SOrLZsG/Pz1YgsHJJOIAAAAASUVORK5CYII=" />
     <link rel="stylesheet" href="../dist/css/phonon.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   <style>
     /*
@@ -260,7 +259,20 @@ body {
 }
 
 .dark .content code {
+  background-color: rgb(194, 200, 214);
+}
+
+/* custom dark scrollbar */
+.dark div::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dark div::-webkit-scrollbar-thumb {
   background-color: rgb(41, 47, 61);
+}
+
+.dark div::-webkit-scrollbar-track {
+  background-color: rgb(133, 145, 173);
 }
 
 .dark .tools button, .dark .tools button .icon {
@@ -277,6 +289,29 @@ body {
 
 .sidebar .highlight:hover {
   background: rgba(255, 252, 53, .6);
+}
+
+/* iframe */
+.iframe-container .btn-group {
+  display: block;
+}
+
+.iframe-example {
+  border: 2px solid #ccc;
+  width: 320px;
+  height: 350px;
+}
+
+.iframe-example.sm {
+  width: 320px; /* default: max 576px, reduce border-width */
+}
+
+.iframe-example.md {
+  width: 772px; /* default: min 768px, add border-width */
+}
+
+.iframe-example.lg {
+  width: 996px; /* default: min 992px, add border-width */
 }
 
   </style>
@@ -1247,7 +1282,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       <div class="page" id="1_components/code">
         <h1 class="heading">Code</h1>
         <h1>Introduction</h1>
-<p>[WIP]</p>
+<p>Define a piece of code.</p>
 <h1>Inline code</h1>
 <pre></pre> <div class="example">For example, <code>&lt;section&gt;</code> should be wrapped as inline.
 </div>
@@ -1284,7 +1319,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       <div class="page" id="1_components/collapse">
         <h1 class="heading">Collapse</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>A collapse is an element that toggles between showing and hiding.</p>
 <h2>Markup</h2>
 <pre></pre> <div class="example"><p>
   <a class="btn btn-primary" data-toggle="collapse" href="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
@@ -2063,6 +2098,466 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
 &quot;Grid&quot; is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> by Bootstrap.</p>
 </div>
+<h2>Equal widths</h2>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      1 of 2
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      2 of 2
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      1 of 3
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      2 of 3
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      3 of 3
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Different widths</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+</div>
+<div class="row">
+  <div class="col-8">col-8</div>
+  <div class="col-4">col-4</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-8&quot;&gt;col-8&lt;/div&gt;
+  &lt;div class=&quot;col-4&quot;&gt;col-4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Column breaks</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="w-100"></div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;w-100&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+  &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Nesting rows</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-sm-9">
+    Level 1: .col-sm-9
+    <div class="row">
+      <div class="col-8 col-sm-6">
+        Level 2: .col-8 .col-sm-6
+      </div>
+      <div class="col-4 col-sm-6">
+        Level 2: .col-4 .col-sm-6
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-sm-9&quot;&gt;
+    Level 1: .col-sm-9
+    &lt;div class=&quot;row&quot;&gt;
+      &lt;div class=&quot;col-8 col-sm-6&quot;&gt;
+        Level 2: .col-8 .col-sm-6
+      &lt;/div&gt;
+      &lt;div class=&quot;col-4 col-sm-6&quot;&gt;
+        Level 2: .col-4 .col-sm-6
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Responsive classes</h2>
+<pre></pre> <div class="example"><!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  <div class="col-12 col-md-8">.col-12 .col-md-8</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
+<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+<div class="row">
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+  <div class="col-6">.col-6</div>
+  <div class="col-6">.col-6</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;!-- Stack the columns on mobile by making one full-width and the other half-width --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-12 col-md-8&quot;&gt;.col-12 .col-md-8&lt;/div&gt;
+  &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
+  &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
+  &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Columns are always 50% wide, on mobile and desktop --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-6&quot;&gt;.col-6&lt;/div&gt;
+  &lt;div class=&quot;col-6&quot;&gt;.col-6&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Alignment</h2>
+<h3>Vertical alignement</h3>
+<h4>Columns</h4>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row align-items-start&quot;&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row align-items-center&quot;&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row align-items-end&quot;&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h4>Self align</h4>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col align-self-start">
+      One of three columns
+    </div>
+    <div class="col align-self-center">
+      One of three columns
+    </div>
+    <div class="col align-self-end">
+      One of three columns
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col align-self-start&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col align-self-center&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col align-self-end&quot;&gt;
+      One of three columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Horizontal alignement</h3>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row justify-content-start">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-around">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row justify-content-start&quot;&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row justify-content-center&quot;&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row justify-content-end&quot;&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row justify-content-around&quot;&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;row justify-content-between&quot;&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+    &lt;div class=&quot;col-4&quot;&gt;
+      One of two columns
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>No gutters</h2>
+<pre></pre> <div class="example"><div class="row no-gutters">
+  <div class="col-12 col-sm-6 col-md-8">.col-12 .col-sm-6 .col-md-8</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row no-gutters&quot;&gt;
+  &lt;div class=&quot;col-12 col-sm-6 col-md-8&quot;&gt;.col-12 .col-sm-6 .col-md-8&lt;/div&gt;
+  &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Order</h2>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col order-last">
+      First, but last
+    </div>
+    <div class="col">
+      Second, but unordered
+    </div>
+    <div class="col order-first">
+      Third, but first
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col order-last&quot;&gt;
+      First, but last
+    &lt;/div&gt;
+    &lt;div class=&quot;col&quot;&gt;
+      Second, but unordered
+    &lt;/div&gt;
+    &lt;div class=&quot;col order-first&quot;&gt;
+      Third, but first
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Column offsets</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4 offset-md-4">.col-md-4 .offset-md-4</div>
+</div>
+<div class="row">
+  <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+  <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+</div>
+<div class="row">
+  <div class="col-md-6 offset-md-3">.col-md-6 .offset-md-3</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-4&quot;&gt;.col-md-4&lt;/div&gt;
+  &lt;div class=&quot;col-md-4 offset-md-4&quot;&gt;.col-md-4 .offset-md-4&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-3 offset-md-3&quot;&gt;.col-md-3 .offset-md-3&lt;/div&gt;
+  &lt;div class=&quot;col-md-3 offset-md-3&quot;&gt;.col-md-3 .offset-md-3&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6 offset-md-3&quot;&gt;.col-md-6 .offset-md-3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Margin</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+</div>
+<div class="row">
+  <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+  <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+</div>
+<div class="row">
+  <div class="col-auto mr-auto">.col-auto .mr-auto</div>
+  <div class="col-auto">.col-auto</div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-4&quot;&gt;.col-md-4&lt;/div&gt;
+  &lt;div class=&quot;col-md-4 ml-auto&quot;&gt;.col-md-4 .ml-auto&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-3 ml-md-auto&quot;&gt;.col-md-3 .ml-md-auto&lt;/div&gt;
+  &lt;div class=&quot;col-md-3 ml-md-auto&quot;&gt;.col-md-3 .ml-md-auto&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-auto mr-auto&quot;&gt;.col-auto .mr-auto&lt;/div&gt;
+  &lt;div class=&quot;col-auto&quot;&gt;.col-auto&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Sass</h2>
+<pre><code class="language-scss">$grid-columns:      12;
+$grid-gutter-width: 30px;
+
+$grid-breakpoints: (
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
+  sm: 576px,
+  // Medium screen / tablet
+  md: 768px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+);
+</code></pre>
 
       </div>
       <div class="page" id="1_components/loader">
@@ -2540,7 +3035,241 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
       <div class="page" id="1_components/nav">
         <h1 class="heading">Nav</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>Nav is a menu containing items (links). It can be displayed horizontally or vertically.</p>
+<h2>List navigation</h2>
+<pre></pre> <div class="example"><ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Link-only navigation</h2>
+<pre></pre> <div class="example"><nav class="nav">
+  <a class="nav-link active" href="#">Active</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
+<pre><code class="language-html">&lt;nav class=&quot;nav&quot;&gt;
+  &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+<h2>Horizontal alignement</h2>
+<h3>Center</h3>
+<pre></pre> <div class="example"><ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav justify-content-center&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3>Right</h3>
+<pre></pre> <div class="example"><ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav justify-content-end&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Vertical</h2>
+<pre></pre> <div class="example"><ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav flex-column&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Pills</h2>
+<pre></pre> <div class="example"><ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav nav-pills&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Fill</h2>
+<pre></pre> <div class="example"><ul class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Longer nav link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
+<pre><code class="language-html">&lt;ul class=&quot;nav nav-pills nav-fill&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Longer nav link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;
+    &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h2>Justify</h2>
+<pre></pre> <div class="example"><nav class="nav nav-pills nav-justified">
+  <a class="nav-link active" href="#">Active</a>
+  <a class="nav-link" href="#">Longer nav link</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
+<pre><code class="language-html">&lt;nav class=&quot;nav nav-pills nav-justified&quot;&gt;
+  &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Longer nav link&lt;/a&gt;
+  &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;a class=&quot;nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+<h2>Working with flex utilities</h2>
+<p>Use responsive flex utilities to modify the style of the nav.
+On a small screen size, the below example shows the items with an extended width.</p>
+<pre></pre> <div class="example"><nav class="nav nav-pills flex-column flex-sm-row">
+  <a class="flex-sm-fill text-sm-center nav-link active" href="#">Active</a>
+  <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+  <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
+<pre><code class="language-html">&lt;nav class=&quot;nav nav-pills flex-column flex-sm-row&quot;&gt;
+  &lt;a class=&quot;flex-sm-fill text-sm-center nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
+  &lt;a class=&quot;flex-sm-fill text-sm-center nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;a class=&quot;flex-sm-fill text-sm-center nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
+  &lt;a class=&quot;flex-sm-fill text-sm-center nav-link disabled&quot; href=&quot;#&quot;&gt;Disabled&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
 <div class="alert alert-secondary" role="alert">
 <p>This documentation &quot;Nav&quot; is a derivative of &quot;<a href="http://getbootstrap.com/docs/4.1/components/navs/">Navs</a>&quot;
 by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
@@ -2551,7 +3280,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       <div class="page" id="1_components/navbar">
         <h1 class="heading">Navbar</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>Navbar is a responsive navigation containing links.</p>
 <h2>Brand</h2>
 <pre></pre> <div class="example"><!-- As a link -->
 <nav class="navbar navbar-light bg-light">
@@ -3156,68 +3885,18 @@ notification.addEventListener('hidden.ph.notification', () =&gt; {
         <h1 class="heading">Off-Canvas</h1>
         <h2>Introduction</h2>
 <p>An off-canvas is a sidebar visible from the left or the right.</p>
-<div class="mb-3" id="defaultOffCanvasContainer" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
-  <div class="p-2">
-    <button class="btn btn-primary float-right" data-toggle="offcanvas" data-target="#exampleOffCanvas">Toggle static</button>
+<h2>Live example</h2>
+<p>Click on the different screen sizes to see the offcanvas in action.</p>
+<p>By default, for <code>sm</code> and <code>md</code> screen sizes, the offcanvas will float on top of the page.</p>
+<p>On larger screens such as <code>lg</code> and <code>xl</code>, the offcanvas will push the content to be placed side by side.</p>
+<div class="iframe-container">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-sm btn-secondary" data-size="sm">sm</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
   </div>
-  <div class="offcanvas offcanvas-left" style="position:static" id="exampleOffCanvas" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvasTitle">
-    <div class="offcanvas-inner">
-      <div class="offcanvas-content">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title">Title</h3>
-          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="offcanvas-body">
-          <p>Content</p>
-        </div>
-        <div class="offcanvas-footer">
-          <p>Footer</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <iframe class="iframe-example" src="../examples/offcanvas/index.html"></iframe>
 </div>
-<div id="disableAside" style="width:100%;height:250px;background:#eee;position:relative;overflow:hidden">
-  <div class="p-2">
-    <button class="btn btn-primary float-right" data-target="#exampleOffCanvas2">Toggle floating</button>
-  </div>
-  <div class="offcanvas offcanvas-left" style="position:absolute" id="exampleOffCanvas2" role="navigation" aria-hidden="true" aria-labelledby="exampleOffCanvas2Title" data-aside-lg="false" data-aside-xl="false">
-    <div class="offcanvas-inner">
-      <div class="offcanvas-content">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title">Title</h3>
-          <button type="button" class="close" data-dismiss="offcanvas" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="offcanvas-body">
-          <p>Content</p>
-        </div>
-        <div class="offcanvas-footer">
-          <p>Footer</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<script>
-window.addEventListener('load', function () {
-  document.querySelector('[data-target="#exampleOffCanvas2"]').addEventListener('click', function () {
-    var container = document.querySelector('#disableAside');
-    var offcanvas = phonon.offCanvas({ element: '#exampleOffCanvas2', container: container });
-    offcanvas.options.container = container;
-    offcanvas.toggle();
-
-    var backdrop = document.querySelector('.offcanvas-backdrop');
-    if (backdrop) {
-      backdrop.style.position = 'absolute';
-      backdrop.style.zIndex = '1';
-    }
-  });
-});
-</script>
 <h2>Markup</h2>
 <p>Use <code>.offcanvas-left</code> or <code>.offcanvas-right</code> to determine the direction of the offcanvas.</p>
 <pre><code class="language-html!">&lt;!-- Button trigger offcanvas --&gt;
@@ -5110,8 +5789,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <p>The pager is Phonon's main module for designing a single-page application (SPA). It connects pages together by providing <strong>page navigation</strong> and allows you to listen to <strong>page events</strong>.
 It also offers a light and simple <strong>router</strong> for recovering parameters with the <code>hash</code> event.</p>
 <p>If your website or web application will not be designed in SPA mode, the pager will only be useful for its router.</p>
-<iframe class="border border-light" src="../examples/standalone/index.html" style="border-width: 4px;width:360px;height:500px"></iframe>
-<p class="text-dark">Source code</p>
+<div class="iframe-container">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-sm btn-secondary" data-size="sm">sm</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
+  </div>
+  <iframe class="iframe-example" src="../examples/standalone/index.html"></iframe>
+</div>
 <h2>Configuration</h2>
 <pre><code class="language-js">const pager = phonon.pager({
   hashPrefix: '#!',
@@ -5593,7 +6278,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       <div class="page" id="3_utilities/clearfix">
         <h1 class="heading">Clearfix</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>Clearfix allows to fix floating elements.</p>
 <h2>Example</h2>
 <pre></pre> <div class="example"><div class="bg-info clearfix">
   <button type="button" class="btn btn-secondary float-left">Example Button floated left</button>
@@ -5615,13 +6300,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       <div class="page" id="3_utilities/close-icon">
         <h1 class="heading">Close icon</h1>
         <h2>Introduction</h2>
-<p>[WIP]</p>
+<p>Display a simple close icon.</p>
 <h2>Example</h2>
-<pre></pre> <div class="example"><button type="button" class="close" aria-label="Close">
-  <span aria-hidden="true">&times;</span>
-</button>
+<div class="float-left">
+  <button type="button" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
-<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;close&quot; aria-label=&quot;Close&quot;&gt;
+<pre><code class="language-html!">&lt;button type=&quot;button&quot; class=&quot;close&quot; aria-label=&quot;Close&quot;&gt;
   &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
 &lt;/button&gt;
 </code></pre>

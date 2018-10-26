@@ -59,3 +59,24 @@ if (codes) {
     setListener('#' + btnId, code);
   });
 }
+
+// iframes
+function setWidth(iframe, size) {
+  if (!size) {
+    return;
+  }
+
+  iframe.setAttribute('class', 'iframe-example');
+  iframe.classList.add(size);
+}
+
+var iframeContainers = document.querySelectorAll('.iframe-container');
+
+if (iframeContainers) {
+  iframeContainers.forEach(function (iframeContainer) {
+    iframeContainer.querySelector('.btn-group').addEventListener('click', function (event) {
+      var iframe = iframeContainer.querySelector('iframe');
+      setWidth(iframe, event.target.getAttribute('data-size'));
+    });
+  });
+}

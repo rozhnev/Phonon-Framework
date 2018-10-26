@@ -4,7 +4,7 @@ title: Collapse
 
 ## Introduction
 
-[WIP]
+A collapse is an element that toggles between showing and hiding.
 
 ## Markup
 

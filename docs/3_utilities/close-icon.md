@@ -4,11 +4,17 @@ title: Close icon
 
 ## Introduction
 
-[WIP]
+Display a simple close icon.
 
 ## Example
 
-```html
+<div class="float-left">
+  <button type="button" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+```html!
 <button type="button" class="close" aria-label="Close">
   <span aria-hidden="true">&times;</span>
 </button>

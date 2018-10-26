@@ -4,7 +4,7 @@ title: Code
 
 # Introduction
 
-[WIP]
+Define a piece of code.
 
 # Inline code
 

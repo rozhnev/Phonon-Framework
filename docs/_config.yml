@@ -9,7 +9,6 @@ markdown-it:
   html: true
 htmlHeader:
   - <link rel="stylesheet" href="../dist/css/phonon.min.css">
-  - <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
   - <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 htmlBody:
   - <script src="../dist/js/phonon.min.js"></script>

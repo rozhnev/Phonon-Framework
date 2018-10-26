@@ -4,7 +4,7 @@ title: Clearfix
 
 ## Introduction
 
-[WIP]
+Clearfix allows to fix floating elements.
 
 ## Example
 

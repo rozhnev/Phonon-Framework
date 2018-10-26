@@ -4,7 +4,7 @@ title: Navbar
 
 ## Introduction
 
-[WIP]
+Navbar is a responsive navigation containing links.
 
 ## Brand
 
