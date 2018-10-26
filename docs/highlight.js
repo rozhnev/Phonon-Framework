@@ -28,10 +28,14 @@ function setPosition(btn) {
 }
 
 function setListener(btnId, code) {
-  new ClipboardJS(btnId, {
-    target: function(trigger) {
+  var clipboard = new ClipboardJS(btnId, {
+    target: function() {
       return code;
     }
+  });
+
+  clipboard.on('success', function (event) {
+    event.clearSelection();
   });
 
   document.querySelector(btnId).addEventListener('click', function (event) {
