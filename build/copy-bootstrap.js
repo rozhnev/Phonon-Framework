@@ -22,6 +22,7 @@ module.exports = async function () {
     'popover',
     'carousel',
     'jumbotron',
+    'shadows',
   ];
 
 
