@@ -36,9 +36,7 @@ module.exports = async function () {
 
   const fileContent = includeFiles.map(f => `@import '${f}';\n`).toString().replace(/,/g, '');
 
-  fs.writeFileSync(path.resolve(__dirname, `${destScssPath}/bootstrap.scss`), `/*
-  * Bootstrap dependencies
-  */\n${fileContent}`);
+  fs.writeFileSync(path.resolve(__dirname, `${destScssPath}/bootstrap.scss`), `// Bootstrap dependencies\n${fileContent}`);
 
   // move bootstrap files
   includeFiles.forEach((f) => {
