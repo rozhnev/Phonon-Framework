@@ -62,18 +62,19 @@ $offcanvas-lg: 20rem;
   bottom: 0;
   visibility: hidden;
   z-index: $offcanvas-zindex;
-  border-right: $offcanvas-container-border-width solid $offcanvas-container-border-color;
   background-color: $offcanvas-background;
   width: $offcanvas-sm;
   height: 100%;
   will-change: transform;
 
   &.offcanvas-left {
+    border-right: $offcanvas-container-border-width solid $offcanvas-container-border-color;
     left: 0;
     transform: translate3d(#{-($offcanvas-sm + $offcanvas-inner-padding)}, 0, 0);
   }
 
   &.offcanvas-right {
+    border-left: $offcanvas-container-border-width solid $offcanvas-container-border-color;
     right: 0;
     transform: translate3d(#{$offcanvas-sm + $offcanvas-inner-padding}, 0, 0);
   }
