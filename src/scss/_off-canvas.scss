@@ -16,9 +16,9 @@ $offcanvas-footer-border-color: gray('300');
 $offcanvas-container-border-width: 1px;
 $offcanvas-container-border-color: gray('300');
 
-$offcanvas-sm: 310px; // almost full width
-$offcanvas-md: 250px; // should be around 20 - 30%
-$offcanvas-lg: 320px;
+$offcanvas-sm: 19.38rem; // almost full width
+$offcanvas-md: 15.63rem; // should be around 20 - 30%
+$offcanvas-lg: 20rem;
 
 .offcanvas-backdrop {
   position: fixed;
@@ -70,12 +70,12 @@ $offcanvas-lg: 320px;
 
   &.offcanvas-left {
     left: 0;
-    transform: translate3d(#{-$offcanvas-sm}, 0, 0);
+    transform: translate3d(#{-($offcanvas-sm + $offcanvas-inner-padding)}, 0, 0);
   }
 
   &.offcanvas-right {
     right: 0;
-    transform: translate3d(#{$offcanvas-sm}, 0, 0);
+    transform: translate3d(#{$offcanvas-sm + $offcanvas-inner-padding}, 0, 0);
   }
 
   &.animate {
@@ -141,14 +141,14 @@ $offcanvas-lg: 320px;
 
 @include media-breakpoint-up(md) {
   .offcanvas {
-    transform: translate3d(#{-$offcanvas-md}, 0, 0);
+    transform: translate3d(#{-($offcanvas-md + $offcanvas-inner-padding)}, 0, 0);
     width: $offcanvas-md;
   }
 
   .offcanvas-aside-left {
     &.show {
       margin-left: $offcanvas-md;
-      width: calc(100% - #{$offcanvas-md});
+      width: calc(100% - #{($offcanvas-md + $offcanvas-inner-padding)});
     }
   }
 

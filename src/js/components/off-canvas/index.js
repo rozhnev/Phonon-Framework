@@ -118,13 +118,13 @@ const OffCanvas = (($) => {
         }
 
         // in case of many visible or hidden off-canvas
-        if (this.visibleOffCanvas > 0 && !content.classList.contains('show')) {
+        if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
           content.classList.add('show');
-        } else if (this.visibleOffCanvas === 0 && content.classList.contains('show')) {
+        } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
           content.classList.remove('show');
         }
       } else {
-        if (content.classList.contains(`offcanvas-aside-${this.direction}`)) {
+        if (this.visibleOffCanvas() === 0 && content.classList.contains(`offcanvas-aside-${this.direction}`)) {
           content.classList.remove(`offcanvas-aside-${this.direction}`);
         }
 
@@ -224,14 +224,14 @@ const OffCanvas = (($) => {
         this.options.element.classList.add('animate');
       }
 
+      this.options.element.classList.remove('show');
+
       if (this.showAside) {
         const container = this.getConfig('container', DEFAULT_PROPERTIES.container);
-        if (container.classList.contains('show')) {
+        if (this.visibleOffCanvas() === 0 && container.classList.contains('show')) {
           container.classList.remove('show');
         }
       }
-
-      this.options.element.classList.remove('show');
 
       if (!this.showAside) {
         const backdrop = this.getBackdrop();
@@ -266,7 +266,8 @@ const OffCanvas = (($) => {
       backdrop.setAttribute('data-id', this.id);
       backdrop.classList.add(BACKDROP_SELECTOR);
 
-      document.body.appendChild(backdrop);
+      const content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+      content.appendChild(backdrop);
     }
 
     getBackdrop() {
@@ -276,7 +277,8 @@ const OffCanvas = (($) => {
     removeBackdrop() {
       const backdrop = this.getBackdrop();
       if (backdrop) {
-        document.body.removeChild(backdrop);
+        const content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+        content.removeChild(backdrop);
       }
     }
 
@@ -334,7 +336,7 @@ const OffCanvas = (($) => {
     const config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
     config.element = element;
 
-    components.push({ element, offCanvas: new OffCanvas(config) });
+    components.push(new OffCanvas(config));
   });
 
   document.addEventListener('click', (event) => {
@@ -348,7 +350,7 @@ const OffCanvas = (($) => {
       const id = target.getAttribute('data-target');
       const element = document.querySelector(id);
 
-      const component = components.find(c => c.element === element);
+      const component = components.find(c => c.getElement() === element);
 
       if (!component) {
         return;
@@ -356,7 +358,7 @@ const OffCanvas = (($) => {
 
       target.blur();
 
-      component.offCanvas.toggle();
+      component.toggle();
     }
   });
 
