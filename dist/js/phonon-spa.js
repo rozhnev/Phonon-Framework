@@ -1,6 +1,6 @@
 /*!
-    * Phonon v2.0.0 (https://github.com/quark-dev/Phonon-Framework)
-    * Copyright 2015-2018 Quarkdev
+    * Phonon v2.0.0-alpha.1 (https://github.com/quark-dev/Phonon-Framework)
+    * Copyright 2015-2019 Quarkdev
     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
     */
 /**
@@ -734,8 +734,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global['phonon-spa'] = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global['phonon-spa'] = factory());
+}(this, function () { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -1010,9 +1010,11 @@
             }, _callee2, this);
           }));
 
-          return function renderTemplate() {
+          function renderTemplate() {
             return _renderTemplate.apply(this, arguments);
-          };
+          }
+
+          return renderTemplate;
         }() // public
 
         /**
@@ -1363,9 +1365,11 @@
             }, _callee, this);
           }));
 
-          return function preventChangePage(_x, _x2, _x3) {
+          function preventChangePage(_x, _x2, _x3) {
             return _preventChangePage.apply(this, arguments);
-          };
+          }
+
+          return preventChangePage;
         }() // public
 
       }, {
@@ -1500,9 +1504,11 @@
             }, _callee2, this);
           }));
 
-          return function showPage(_x4) {
+          function showPage(_x4) {
             return _showPage.apply(this, arguments);
-          };
+          }
+
+          return showPage;
         }()
       }, {
         key: "addUniquePageModel",
@@ -2050,5 +2056,5 @@
 
   return api;
 
-})));
+}));
 //# sourceMappingURL=phonon-spa.js.map

@@ -1082,6 +1082,7 @@ function getAttributesConfig(element) {
   var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var attrs = arguments.length > 2 ? arguments[2] : undefined;
   var start = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+  // copy object
   var newObj = Object.assign({}, obj);
   var keys = Object.keys(obj);
   keys.forEach(function (key) {
@@ -1113,7 +1114,7 @@ function getAttributesConfig(element) {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!Number.isNaN(attrValue)) {
+      } else if (/^-{0,1}\d+$/.test(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -1218,6 +1219,9 @@ function () {
       var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
+      /**
+       * If the key isn't specified, we return the full configuration (Object)
+       */
       if (!key) {
         return this.options;
       }
@@ -1541,16 +1545,16 @@ var OffCanvas = function ($) {
       }
     }, {
       key: "setAside",
-      value: function setAside(name) {
-        if (this.currentWidthName === name) {
+      value: function setAside(sizeName) {
+        if (this.currentWidthName === sizeName) {
           return;
         }
 
-        this.currentWidthName = name;
+        this.currentWidthName = sizeName;
         var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
-        this.showAside = this.options.aside[name] === true;
+        this.showAside = this.options.aside[sizeName] === true;
 
-        if (this.options.aside[name] === true) {
+        if (this.options.aside[sizeName] === true) {
           if (!content.classList.contains("offcanvas-aside-".concat(this.direction))) {
             content.classList.add("offcanvas-aside-".concat(this.direction));
           } // avoid animation by setting animate to false
@@ -1560,14 +1564,11 @@ var OffCanvas = function ($) {
 
           if (this.getBackdrop()) {
             this.removeBackdrop();
-          } // in case of many visible or hidden off-canvas
+          }
 
-
-          console.log('! ' + this.visibleOffCanvas());
-
-          if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
+          if (this.isVisible() && !content.classList.contains('show')) {
             content.classList.add('show');
-          } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
+          } else if (!this.isVisible() && content.classList.contains('show')) {
             content.classList.remove('show');
           }
         } else {
@@ -1575,12 +1576,9 @@ var OffCanvas = function ($) {
             content.classList.remove("offcanvas-aside-".concat(this.direction));
           }
 
-          this.animate = true;
+          this.animate = true; // force hide
 
-          if (!this.getBackdrop() && this.isVisible()) {
-            this.createBackdrop();
-            this.attachEvents();
-          }
+          this.hide();
         }
       }
     }, {
@@ -1597,12 +1595,6 @@ var OffCanvas = function ($) {
       key: "isVisible",
       value: function isVisible() {
         return this.options.element.classList.contains('show');
-      }
-    }, {
-      key: "visibleOffCanvas",
-      value: function visibleOffCanvas() {
-        var offCanvas = Array.from(document.querySelectorAll(".".concat(NAME, ".show")) || []);
-        return offCanvas.length;
       }
       /**
        * Shows the off-canvas
@@ -1700,6 +1692,8 @@ var OffCanvas = function ($) {
           this.options.element.classList.add('animate');
         }
 
+        this.options.element.classList.remove('show');
+
         if (this.showAside) {
           var container = this.getConfig('container', DEFAULT_PROPERTIES.container);
 
@@ -1707,8 +1701,6 @@ var OffCanvas = function ($) {
             container.classList.remove('show');
           }
         }
-
-        this.options.element.classList.remove('show');
 
         if (!this.showAside) {
           var backdrop = this.getBackdrop();
@@ -1725,8 +1717,10 @@ var OffCanvas = function ($) {
             _this4.removeBackdrop();
           };
 
-          backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-          backdrop.classList.add('fadeout');
+          if (backdrop) {
+            backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+            backdrop.classList.add('fadeout');
+          }
         }
 
         return true;
@@ -1746,7 +1740,8 @@ var OffCanvas = function ($) {
         var backdrop = document.createElement('div');
         backdrop.setAttribute('data-id', this.id);
         backdrop.classList.add(BACKDROP_SELECTOR);
-        document.body.appendChild(backdrop);
+        var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+        content.appendChild(backdrop);
       }
     }, {
       key: "getBackdrop",
@@ -1759,7 +1754,8 @@ var OffCanvas = function ($) {
         var backdrop = this.getBackdrop();
 
         if (backdrop) {
-          document.body.removeChild(backdrop);
+          var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
+          content.removeChild(backdrop);
         }
       }
     }, {
@@ -1773,9 +1769,9 @@ var OffCanvas = function ($) {
             event: 'click'
           });
         });
+        var backdrop = this.getBackdrop();
 
-        if (!this.showAside) {
-          var backdrop = this.getBackdrop();
+        if (!this.showAside && backdrop) {
           this.registerElement({
             target: backdrop,
             event: Event.START
@@ -1803,8 +1799,9 @@ var OffCanvas = function ($) {
           });
         }
 
-        if (!this.showAside) {
-          var backdrop = this.getBackdrop();
+        var backdrop = this.getBackdrop();
+
+        if (!this.showAside && backdrop) {
           this.unregisterElement({
             target: backdrop,
             event: Event.START
@@ -1848,10 +1845,7 @@ var OffCanvas = function ($) {
   offCanvas.forEach(function (element) {
     var config = getAttributesConfig(element, DEFAULT_PROPERTIES, DATA_ATTRS_PROPERTIES);
     config.element = element;
-    components.push({
-      element: element,
-      offCanvas: new OffCanvas(config)
-    });
+    components.push(new OffCanvas(config));
   });
   document.addEventListener('click', function (event) {
     var target = findTargetByAttr(event.target, 'data-toggle');
@@ -1866,7 +1860,7 @@ var OffCanvas = function ($) {
       var id = target.getAttribute('data-target');
       var element = document.querySelector(id);
       var component = components.find(function (c) {
-        return c.element === element;
+        return c.getElement() === element;
       });
 
       if (!component) {
@@ -1874,7 +1868,7 @@ var OffCanvas = function ($) {
       }
 
       target.blur();
-      component.offCanvas.toggle();
+      component.toggle();
     }
   });
   return OffCanvas;

@@ -1,6 +1,6 @@
 /*!
-    * Phonon v2.0.0 (https://github.com/quark-dev/Phonon-Framework)
-    * Copyright 2015-2018 Quarkdev
+    * Phonon v2.0.0-alpha.1 (https://github.com/quark-dev/Phonon-Framework)
+    * Copyright 2015-2019 Quarkdev
     * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
     */
 /**
@@ -734,8 +734,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.phonon = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global.phonon = factory());
+}(this, function () { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -1099,6 +1099,7 @@
     var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var attrs = arguments.length > 2 ? arguments[2] : undefined;
     var start = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+    // copy object
     var newObj = Object.assign({}, obj);
     var keys = Object.keys(obj);
     keys.forEach(function (key) {
@@ -1130,7 +1131,7 @@
         if (type === 'boolean') {
           // convert string to boolean
           value = attrValue === 'true';
-        } else if (!Number.isNaN(attrValue)) {
+        } else if (/^-{0,1}\d+$/.test(attrValue)) {
           value = parseInt(attrValue, 10);
         } else {
           value = attrValue;
@@ -1235,6 +1236,9 @@
         var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
         var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
+        /**
+         * If the key isn't specified, we return the full configuration (Object)
+         */
         if (!key) {
           return this.options;
         }
@@ -1667,6 +1671,7 @@
       message: null,
       cancelable: true,
       type: null,
+      background: null,
       cancelableKeyCodes: [27, // Escape
       13],
       buttons: [{
@@ -1676,7 +1681,7 @@
         class: 'btn btn-primary'
       }]
     };
-    var DATA_ATTRS_PROPERTIES = ['cancelable'];
+    var DATA_ATTRS_PROPERTIES = ['cancelable', 'background'];
     var components = [];
     /**
      * ------------------------------------------------------------------------
@@ -1703,6 +1708,8 @@
         if (_this.dynamicElement) {
           _this.build();
         }
+
+        _this.setBackgroud();
 
         return _this;
       }
@@ -1743,6 +1750,23 @@
 
           document.body.appendChild(this.options.element);
           this.setAttributes();
+        }
+      }, {
+        key: "setBackgroud",
+        value: function setBackgroud() {
+          var background = this.getConfig('background');
+
+          if (!background) {
+            return;
+          }
+
+          if (!this.options.element.classList.contains("modal-".concat(background))) {
+            this.options.element.classList.add("modal-".concat(background));
+          }
+
+          if (!this.options.element.classList.contains('text-white')) {
+            this.options.element.classList.add('text-white');
+          }
         }
       }, {
         key: "buildButton",
@@ -2737,10 +2761,10 @@
           }
 
           this.setPosition();
+          var buttonElement = this.options.element.querySelector('button[data-dismiss]');
 
-          if (this.options.button) {
+          if (this.options.button && buttonElement) {
             // attach the button handler
-            var buttonElement = this.options.element.querySelector('button');
             this.registerElement({
               target: buttonElement,
               event: 'click'
@@ -2812,9 +2836,9 @@
           }
 
           this.triggerEvent(Event.HIDE);
+          var buttonElement = this.options.element.querySelector('button[data-dismiss]');
 
-          if (this.options.button) {
-            var buttonElement = this.options.element.querySelector('button');
+          if (this.options.button && buttonElement) {
             this.unregisterElement({
               target: buttonElement,
               event: 'click'
@@ -3785,16 +3809,16 @@
         }
       }, {
         key: "setAside",
-        value: function setAside(name) {
-          if (this.currentWidthName === name) {
+        value: function setAside(sizeName) {
+          if (this.currentWidthName === sizeName) {
             return;
           }
 
-          this.currentWidthName = name;
+          this.currentWidthName = sizeName;
           var content = this.getConfig('container', DEFAULT_PROPERTIES.container);
-          this.showAside = this.options.aside[name] === true;
+          this.showAside = this.options.aside[sizeName] === true;
 
-          if (this.options.aside[name] === true) {
+          if (this.options.aside[sizeName] === true) {
             if (!content.classList.contains("offcanvas-aside-".concat(this.direction))) {
               content.classList.add("offcanvas-aside-".concat(this.direction));
             } // avoid animation by setting animate to false
@@ -3804,25 +3828,21 @@
 
             if (this.getBackdrop()) {
               this.removeBackdrop();
-            } // in case of many visible or hidden off-canvas
+            }
 
-
-            if (this.visibleOffCanvas() > 0 && !content.classList.contains('show')) {
+            if (this.isVisible() && !content.classList.contains('show')) {
               content.classList.add('show');
-            } else if (this.visibleOffCanvas() === 0 && content.classList.contains('show')) {
+            } else if (!this.isVisible() && content.classList.contains('show')) {
               content.classList.remove('show');
             }
           } else {
-            if (this.visibleOffCanvas() === 0 && content.classList.contains("offcanvas-aside-".concat(this.direction))) {
+            if (content.classList.contains("offcanvas-aside-".concat(this.direction))) {
               content.classList.remove("offcanvas-aside-".concat(this.direction));
             }
 
-            this.animate = true;
+            this.animate = true; // force hide
 
-            if (!this.getBackdrop() && this.isVisible()) {
-              this.createBackdrop();
-              this.attachEvents();
-            }
+            this.hide();
           }
         }
       }, {
@@ -3839,12 +3859,6 @@
         key: "isVisible",
         value: function isVisible() {
           return this.options.element.classList.contains('show');
-        }
-      }, {
-        key: "visibleOffCanvas",
-        value: function visibleOffCanvas() {
-          var offCanvas = Array.from(document.querySelectorAll(".".concat(NAME, ".show")) || []);
-          return offCanvas.length;
         }
         /**
          * Shows the off-canvas
@@ -3947,7 +3961,7 @@
           if (this.showAside) {
             var container = this.getConfig('container', DEFAULT_PROPERTIES.container);
 
-            if (this.visibleOffCanvas() === 0 && container.classList.contains('show')) {
+            if (container.classList.contains('show')) {
               container.classList.remove('show');
             }
           }
@@ -3967,8 +3981,10 @@
               _this4.removeBackdrop();
             };
 
-            backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-            backdrop.classList.add('fadeout');
+            if (backdrop) {
+              backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+              backdrop.classList.add('fadeout');
+            }
           }
 
           return true;
@@ -4017,9 +4033,9 @@
               event: 'click'
             });
           });
+          var backdrop = this.getBackdrop();
 
-          if (!this.showAside) {
-            var backdrop = this.getBackdrop();
+          if (!this.showAside && backdrop) {
             this.registerElement({
               target: backdrop,
               event: Event.START
@@ -4047,8 +4063,9 @@
             });
           }
 
-          if (!this.showAside) {
-            var backdrop = this.getBackdrop();
+          var backdrop = this.getBackdrop();
+
+          if (!this.showAside && backdrop) {
             this.unregisterElement({
               target: backdrop,
               event: Event.START
@@ -4538,9 +4555,11 @@
             }, _callee, this);
           }));
 
-          return function hide() {
+          function hide() {
             return _hide.apply(this, arguments);
-          };
+          }
+
+          return hide;
         }()
       }], [{
         key: "DOMInterface",
@@ -5114,5 +5133,5 @@
 
   return api;
 
-})));
+}));
 //# sourceMappingURL=phonon.js.map

@@ -1073,6 +1073,7 @@ function getAttributesConfig(element) {
   var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var attrs = arguments.length > 2 ? arguments[2] : undefined;
   var start = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
+  // copy object
   var newObj = Object.assign({}, obj);
   var keys = Object.keys(obj);
   keys.forEach(function (key) {
@@ -1104,7 +1105,7 @@ function getAttributesConfig(element) {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!Number.isNaN(attrValue)) {
+      } else if (/^-{0,1}\d+$/.test(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
@@ -1209,6 +1210,9 @@ function () {
       var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
+      /**
+       * If the key isn't specified, we return the full configuration (Object)
+       */
       if (!key) {
         return this.options;
       }
@@ -1550,10 +1554,10 @@ var Notification = function ($) {
         }
 
         this.setPosition();
+        var buttonElement = this.options.element.querySelector('button[data-dismiss]');
 
-        if (this.options.button) {
+        if (this.options.button && buttonElement) {
           // attach the button handler
-          var buttonElement = this.options.element.querySelector('button');
           this.registerElement({
             target: buttonElement,
             event: 'click'
@@ -1625,9 +1629,9 @@ var Notification = function ($) {
         }
 
         this.triggerEvent(Event.HIDE);
+        var buttonElement = this.options.element.querySelector('button[data-dismiss]');
 
-        if (this.options.button) {
-          var buttonElement = this.options.element.querySelector('button');
+        if (this.options.button && buttonElement) {
           this.unregisterElement({
             target: buttonElement,
             event: 'click'
