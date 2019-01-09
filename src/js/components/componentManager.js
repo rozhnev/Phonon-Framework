@@ -31,6 +31,7 @@ export function setAttributesConfig(element, obj = {}, attrs, start = '') {
 }
 
 export function getAttributesConfig(element, obj = {}, attrs, start = '') {
+  // copy object
   const newObj = Object.assign({}, obj);
   const keys = Object.keys(obj);
 
@@ -60,7 +61,7 @@ export function getAttributesConfig(element, obj = {}, attrs, start = '') {
       if (type === 'boolean') {
         // convert string to boolean
         value = attrValue === 'true';
-      } else if (!Number.isNaN(attrValue)) {
+      } else if (/^-{0,1}\d+$/.test(attrValue)) {
         value = parseInt(attrValue, 10);
       } else {
         value = attrValue;
