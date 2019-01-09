@@ -79,7 +79,8 @@ pager.getPage('myPage').addEvents({
 });
 ```
 
-In some situations, it may be useful to listen to certain events that affect all pages.
+In some situations, it may be useful to listen to certain events that affect **all pages**.
+For this, we use the `*` selector.
 
 ```js
 pager.getPage('*').addEvents({
@@ -155,7 +156,7 @@ pager.getPage('myPage').setTemplate('<div>This is my template</div>'), async (pa
 
 Replace `data-navigation` by `data-navigate`.
 Note: `data-navigate="$back"` still works.
-Use `data-pop-page` for back animation if you want to force the back animation.
+Use `data-pop-page` for back animation if you want to force it.
 
 ### Ajax <i>removed</i>
 
@@ -211,27 +212,36 @@ axios.get('/locales')
 
 #### Padding and margin
 
-Please, see [#2_utilities/spacing](spacing).
+Please, see [spacing utilities](#2_utilities/spacing).
 
 Replace **.padded-full** by **.p-1**.
+
 Replace **.padded-top** by **.pt-1**.
+
 Replace **.padded-left** by **.pl-1**.
+
 Replace **.padded-right** by **.pr-1**.
+
 Replace **.padded-bottom** by **.pb-1**.
 
 #### Text alignment
 
-More information can be found here: [https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment](https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment)
+More information can be found here: [text utilities](#3_utilities/text)
 
 Replace **.padded-full** by **.p-1**.
+
 Replace **.padded-top** by **.pt-1**.
+
 Replace **.padded-left** by **.pl-1**.
+
 Replace **.padded-right** by **.pr-1**.
+
 Replace **.padded-bottom** by **.pb-1**.
 
 #### Float
 
 Replace **.pull-left** by **.float-left**.
+
 Replace **.pull-right** by **.float-right**.
 
 #### Fit parent width

@@ -24,14 +24,102 @@ A modal is a flexible window that is visible on top of the main window.
       </div>
     </div>
   </div>
+
+  <div class="modal show modal-primary" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal show modal-danger" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-## Modal without markup
+## Live example
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+
+<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
+
+
+```html!
+<!-- Button trigger modal -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="modal">
+  <div class="modal-inner" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group float-right" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## JavaScript control
+
+### Modal with markup
+
+Use `element` to specify the target modal.
+
+```js
+// ES6
+const Modal = require('phonon/dist/js/components/modal');
+
+const modal = new Modal({
+  element: '#exampleModal',
+});
+
+// ES5
+const modal = phonon.modal({
+  element: '#exampleModal',
+});
+
+// jQuery
+const modal = $('#exampleModal').modal();
+```
+
+### Modal without markup
 
 By not using the `element` property, it will create a modal's HTMLElement dynamically.
 This is particularly useful if you want to set up a modal without worrying about its HTML code.
-
-### Simple modal
 
 ```js
 // ES6
@@ -57,6 +145,17 @@ const modal = $().modal({
 
 ### Prompt modal
 
+<button class="btn btn-primary" id="tryPromptModal">Try it</button>
+
+<script>
+document.querySelector('#tryPromptModal').addEventListener('click', function () {
+  phonon.prompt({
+    title: 'Modal title',
+    message: 'Modal body text goes here.',
+  }).show();
+});
+</script>
+
 ```js
 // ES6
 const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
@@ -78,11 +177,22 @@ const prompt = $().prompt({
   message: 'Prompt body text goes here.',
 });
 
-prompt.setInputValue() // only available with prompts
-prompt.getInputValue() // only available with prompts
+prompt.setInputValue() // only available with prompt objects
+prompt.getInputValue() // only available with prompt objects
 ```
 
 ### Confirm modal
+
+<button class="btn btn-primary" id="tryConfirmModal">Try it</button>
+
+<script>
+document.querySelector('#tryConfirmModal').addEventListener('click', function () {
+  phonon.confirm({
+    title: 'Quit',
+    message: 'Are you sure you want to quit?',
+  }).show();
+});
+</script>
 
 ```js
 // ES6
@@ -107,6 +217,24 @@ const confirm = $().confirm({
 ```
 
 ### Loader modal
+
+<button class="btn btn-primary" id="tryLoaderModal">Try it</button>
+
+<script>
+document.querySelector('#tryLoaderModal').addEventListener('click', function () {
+  var loader = phonon.modalLoader({
+    title: 'Loading',
+    message: 'Please wait 3 seconds.',
+    cancelable: false,
+  })
+
+  loader.show();
+
+  setTimeout(function () {
+    loader.hide();
+  }, 3000);
+});
+</script>
 
 ```js
 // ES6
@@ -135,6 +263,27 @@ const modalLoader = $().modalLoader({
 Each modal type (normal, prompt, confirm and prompt) supports custom buttons.
 Note that the event of the button **must be unique**.
 The click event of a button will fire the associated callback automatically.
+
+<button class="btn btn-primary" id="tryCustomButtons">Try it</button>
+
+<script>
+document.querySelector('#tryCustomButtons').addEventListener('click', function () {
+  phonon.modal({
+    title: 'Modal title',
+    message: 'Modal body text goes here.',
+    buttons: [
+      { event: 'cancel', text: 'Cancel', dismiss: true, class: 'btn btn-secondary' },
+      { event: 'confirm', text: 'Ok', dismiss: true, class: 'btn btn-primary' },
+    ],
+    onCancel: () => {
+      phonon.modal({ title: 'Event', message: 'Cancel' }).show();
+    },
+    onConfirm: () => {
+      phonon.modal({ title: 'Event', message: 'Confirm' }).show();
+    },
+  }).show();
+});
+</script>
 
 ```js
 const modal = phonon.modal({
@@ -169,50 +318,6 @@ const modal = phonon.modal({
 });
 ```
 
-
-## Custom modals
-
-Conversely, you can create your own modal by specifying the `element` property.
-
-<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
-
-<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
-
-```html!
-<!-- Button trigger modal -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button>
-
-<!-- Modal -->
-<div class="modal" id="exampleModal" tabindex="-1" role="modal">
-  <div class="modal-inner" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <div class="btn-group float-right" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-```
-
-Then, you can work with it by using the correct `element` property.
-
-```js
-const modal = phonon.modal({
-  element: '#exampleModal',
-});
-
-// jQuery support
-const modal = $('#exampleModal').modal();
-```
-
 ## Options
 
 |     Name     |     Description      |     Default value      |     Available as a data attribute      |
@@ -221,6 +326,7 @@ const modal = $('#exampleModal').modal();
 |    message      |  The modal message. | null | no |
 |    cancelable      |  Determines if a modal is cancelable or not cancelable by pressing a key or by clicking outside of the modal. | true | yes `data-cancelable` |
 |    cancelableKeyCodes   |  Array of keys that allow to hide the modal. Default keys are escape and enter. | [27, 13] | no |
+|    background      | The background color such as `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light` and `dark`. | null | yes `data-background` |
 
 
 ## Methods

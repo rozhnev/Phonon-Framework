@@ -17,10 +17,8 @@ A notification is a floating message on top of the main window.
   </div>
 </div>
 
-## Dynamically Created Notifications
 
-By not using the `element` property, it will create a notification's HTMLElement dynamically.
-This is particularly useful if you want to set up a notification without worrying about its HTML code.
+## Live demo
 
 <button class="btn btn-primary" id="notificationDemo">Show</button>
 <script>
@@ -34,41 +32,7 @@ This is particularly useful if you want to set up a notification without worryin
   });
 </script>
 
-```js
-import Notification from 'phonon/dist/js/components/notification';
-
-const notif = new Notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-
-// ES5
-const notif = phonon.notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-
-// jQuery
-const notif = $().notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-```
-
-## Custom Notification
-
-Conversely, you can create your own notification by specifying the `element` property.
-
-```html
+```html!
 <div class="notification" id="myNotification">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
@@ -79,75 +43,95 @@ Conversely, you can create your own notification by specifying the `element` pro
 </div>
 ```
 
-Then, you can work with it by using the correct `element` property.
-
 ## Colors
 
 <div class="notification notification-primary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
 </div>
 <div class="notification notification-secondary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-success" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-danger" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-warning" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-info" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-light" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-dark" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 
 ```html
 <div class="notification notification-primary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-secondary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-success">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-danger">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-warning">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-info">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-light">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
@@ -158,9 +142,96 @@ Then, you can work with it by using the correct `element` property.
 </div>
 ```
 
+## Cookie consent notification
+
+The below example defines a way of getting valid consent for your website.
+
+<button class="btn btn-primary" id="buttonNotificationCookie">Try it</button>
+
+<script>
+document.querySelector('#buttonNotificationCookie').addEventListener('click', function () {
+  phonon.notification({
+    element: '#notificationCookie',
+    background: 'dark',
+  }).show();
+});
+</script>
+
+```html
+<div class="notification notification-dark" style="width: 500px;max-width: 80%;" id="notificationCookie">
+  <div class="notification-inner">
+    <div class="message mr-0">
+      <div class="float-right">
+        <button class="btn btn-primary btn-sm" type="button" data-dismiss="notification">Save</button>
+        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseSettings">Edit settings</button>
+      </div>
+      <div class="mb-2">
+        We use cookies to ensure that you get the best experience on our website.
+        <a class="text-white text-underline d-block" href="#">Learn more here</a>
+      </div>
+      <div class="collapse" id="collapseSettings">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c1" checked>
+          <label class="custom-control-label" for="c1">Retention and access to information</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c2" checked>
+          <label class="custom-control-label" for="c2">Personalization</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+
+## JavaScript control
+
+### Notification with markup
+
+Use `element` to specify the target notification.
+
 ```js
+import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
+  element: '#myNotification',
+  message: 'Hello',
+});
+
+// ES5
 const notif = phonon.notification({
   element: '#myNotification',
+  message: 'Hello',
+});
+
+// jQuery
+const notif = $().notification({
+  element: '#myNotification',
+  message: 'Hello',
+});
+```
+
+### Notification without markup
+
+By not using the `element` property, it will create a notification's HTMLElement dynamically.
+This is particularly useful if you want to set up a notification without worrying about its HTML code.
+
+
+```js
+import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
+  message: 'Hello',
+});
+
+// ES5
+const notif = phonon.notification({
+  message: 'Hello',
+});
+
+// jQuery
+const notif = $().notification({
   message: 'Hello',
 });
 ```
@@ -220,7 +291,7 @@ For this, you can use object and DOM events.
 ```js
 phonon.notification({
   element: '#myNotification',
-  message: 'Hello',
+  message: 'You have 2 messages in your inbox',
   show: () => { // or onShow
     console.log('It works!');
   },

@@ -205,3 +205,12 @@ window.onhashchange = () => {
 };
 
 showPageFromCurrentHash();
+
+// Add class table
+const tables = document.querySelectorAll('table');
+
+if (tables) {
+  tables.forEach((table) => {
+    table.classList.add('table');
+  });
+}

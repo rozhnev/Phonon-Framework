@@ -346,6 +346,9 @@ body {
       <div class="offcanvas-inner">
         <div class="offcanvas-content">
           <div class="offcanvas-body">
+            <button type="button" class="close float-right d-block d-sm-none text-white p-2" data-dismiss="offcanvas" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
             <ul class="menu">
               <li>
                 <a href="#0_getting-started">Getting started</a>
@@ -622,7 +625,8 @@ Assuming this page is present in the DOM like the following:</p>
   },
 });
 </code></pre>
-<p>In some situations, it may be useful to listen to certain events that affect all pages.</p>
+<p>In some situations, it may be useful to listen to certain events that affect <strong>all pages</strong>.
+For this, we use the <code>*</code> selector.</p>
 <pre><code class="language-js">pager.getPage('*').addEvents({
   show: function () {
     console.log('global: show');
@@ -678,7 +682,7 @@ Note that async functions are now supported.</p>
 <h3>Navigation between pages</h3>
 <p>Replace <code>data-navigation</code> by <code>data-navigate</code>.
 Note: <code>data-navigate=&quot;$back&quot;</code> still works.
-Use <code>data-pop-page</code> for back animation if you want to force the back animation.</p>
+Use <code>data-pop-page</code> for back animation if you want to force it.</p>
 <h3>Ajax <i>removed</i></h3>
 <p>Please, use a HTTP client such as <a href="https://github.com/axios/axios">axios</a>.</p>
 <h3>Internationalisation (i18n) <i>Changed</i></h3>
@@ -721,22 +725,22 @@ pass everything as the second argument.</p>
 <h2>Components</h2>
 <h3>Utility</h3>
 <h4>Padding and margin</h4>
-<p>Please, see <a href="spacing">#2_utilities/spacing</a>.</p>
-<p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.
-Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.
-Replace <strong>.padded-left</strong> by <strong>.pl-1</strong>.
-Replace <strong>.padded-right</strong> by <strong>.pr-1</strong>.
-Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
+<p>Please, see <a href="#2_utilities/spacing">spacing utilities</a>.</p>
+<p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.</p>
+<p>Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.</p>
+<p>Replace <strong>.padded-left</strong> by <strong>.pl-1</strong>.</p>
+<p>Replace <strong>.padded-right</strong> by <strong>.pr-1</strong>.</p>
+<p>Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
 <h4>Text alignment</h4>
-<p>More information can be found here: <a href="https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment">https://getbootstrap.com/docs/4.0/utilities/text/#text-alignment</a></p>
-<p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.
-Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.
-Replace <strong>.padded-left</strong> by <strong>.pl-1</strong>.
-Replace <strong>.padded-right</strong> by <strong>.pr-1</strong>.
-Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
+<p>More information can be found here: <a href="#3_utilities/text">text utilities</a></p>
+<p>Replace <strong>.padded-full</strong> by <strong>.p-1</strong>.</p>
+<p>Replace <strong>.padded-top</strong> by <strong>.pt-1</strong>.</p>
+<p>Replace <strong>.padded-left</strong> by <strong>.pl-1</strong>.</p>
+<p>Replace <strong>.padded-right</strong> by <strong>.pr-1</strong>.</p>
+<p>Replace <strong>.padded-bottom</strong> by <strong>.pb-1</strong>.</p>
 <h4>Float</h4>
-<p>Replace <strong>.pull-left</strong> by <strong>.float-left</strong>.
-Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
+<p>Replace <strong>.pull-left</strong> by <strong>.float-left</strong>.</p>
+<p>Replace <strong>.pull-right</strong> by <strong>.float-right</strong>.</p>
 <h4>Fit parent width</h4>
 <p>Replace <strong>.fit-parent</strong> by <strong>.w-100</strong>.</p>
 <h4>Unselectable</h4>
@@ -2743,11 +2747,87 @@ For this, you can use object and DOM events.</p>
       </div>
     </div>
   </div>
+  <div class="modal show modal-primary" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal show modal-danger" tabindex="-1" role="modal" style="position:relative;width: 350px;">
+    <div class="modal-inner" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <div class="btn-group float-right" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Modal without markup</h2>
+<h2>Live example</h2>
+<p><button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button></p>
+<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
+<pre><code class="language-html!">&lt;!-- Button trigger modal --&gt;
+&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;modal&quot; data-target=&quot;#exampleModal&quot;&gt;Launch demo modal&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class=&quot;modal&quot; id=&quot;exampleModal&quot; tabindex=&quot;-1&quot; role=&quot;modal&quot;&gt;
+  &lt;div class=&quot;modal-inner&quot; role=&quot;document&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-header&quot;&gt;
+        &lt;h5 class=&quot;modal-title&quot;&gt;Modal title&lt;/h5&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;
+        &lt;p&gt;Modal body text goes here.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-footer&quot;&gt;
+        &lt;div class=&quot;btn-group float-right&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
+          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-dismiss=&quot;modal&quot;&gt;Close&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>JavaScript control</h2>
+<h3>Modal with markup</h3>
+<p>Use <code>element</code> to specify the target modal.</p>
+<pre><code class="language-js">// ES6
+const Modal = require('phonon/dist/js/components/modal');
+
+const modal = new Modal({
+  element: '#exampleModal',
+});
+
+// ES5
+const modal = phonon.modal({
+  element: '#exampleModal',
+});
+
+// jQuery
+const modal = $('#exampleModal').modal();
+</code></pre>
+<h3>Modal without markup</h3>
 <p>By not using the <code>element</code> property, it will create a modal's HTMLElement dynamically.
 This is particularly useful if you want to set up a modal without worrying about its HTML code.</p>
-<h3>Simple modal</h3>
 <pre><code class="language-js">// ES6
 const Modal = require('phonon/dist/js/components/modal');
 
@@ -2769,6 +2849,15 @@ const modal = $().modal({
 });
 </code></pre>
 <h3>Prompt modal</h3>
+<p><button class="btn btn-primary" id="tryPromptModal">Try it</button></p>
+<script>
+document.querySelector('#tryPromptModal').addEventListener('click', function () {
+  phonon.prompt({
+    title: 'Modal title',
+    message: 'Modal body text goes here.',
+  }).show();
+});
+</script>
 <pre><code class="language-js">// ES6
 const ModalPrompt = require('phonon/dist/js/components/modal/prompt');
 
@@ -2789,10 +2878,19 @@ const prompt = $().prompt({
   message: 'Prompt body text goes here.',
 });
 
-prompt.setInputValue() // only available with prompts
-prompt.getInputValue() // only available with prompts
+prompt.setInputValue() // only available with prompt objects
+prompt.getInputValue() // only available with prompt objects
 </code></pre>
 <h3>Confirm modal</h3>
+<p><button class="btn btn-primary" id="tryConfirmModal">Try it</button></p>
+<script>
+document.querySelector('#tryConfirmModal').addEventListener('click', function () {
+  phonon.confirm({
+    title: 'Quit',
+    message: 'Are you sure you want to quit?',
+  }).show();
+});
+</script>
 <pre><code class="language-js">// ES6
 const ModalConfirm = require('phonon/dist/js/components/modal/confirm');
 
@@ -2814,6 +2912,22 @@ const confirm = $().confirm({
 });
 </code></pre>
 <h3>Loader modal</h3>
+<p><button class="btn btn-primary" id="tryLoaderModal">Try it</button></p>
+<script>
+document.querySelector('#tryLoaderModal').addEventListener('click', function () {
+  var loader = phonon.modalLoader({
+    title: 'Loading',
+    message: 'Please wait 3 seconds.',
+    cancelable: false,
+  })
+
+  loader.show();
+
+  setTimeout(function () {
+    loader.hide();
+  }, 3000);
+});
+</script>
 <pre><code class="language-js">// ES6
 const ModalLoader = require('phonon/dist/js/components/modal/loader');
 
@@ -2838,6 +2952,25 @@ const modalLoader = $().modalLoader({
 <p>Each modal type (normal, prompt, confirm and prompt) supports custom buttons.
 Note that the event of the button <strong>must be unique</strong>.
 The click event of a button will fire the associated callback automatically.</p>
+<p><button class="btn btn-primary" id="tryCustomButtons">Try it</button></p>
+<script>
+document.querySelector('#tryCustomButtons').addEventListener('click', function () {
+  phonon.modal({
+    title: 'Modal title',
+    message: 'Modal body text goes here.',
+    buttons: [
+      { event: 'cancel', text: 'Cancel', dismiss: true, class: 'btn btn-secondary' },
+      { event: 'confirm', text: 'Ok', dismiss: true, class: 'btn btn-primary' },
+    ],
+    onCancel: () => {
+      phonon.modal({ title: 'Event', message: 'Cancel' }).show();
+    },
+    onConfirm: () => {
+      phonon.modal({ title: 'Event', message: 'Confirm' }).show();
+    },
+  }).show();
+});
+</script>
 <pre><code class="language-js">const modal = phonon.modal({
   title: 'Modal title',
   message: 'Modal body text goes here.',
@@ -2865,40 +2998,6 @@ In the following example, we trigger the event called <code>neutralAnswer</code>
     console.log('Well we close it!')
   },
 });
-</code></pre>
-<h2>Custom modals</h2>
-<p>Conversely, you can create your own modal by specifying the <code>element</code> property.</p>
-<p><button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Launch demo modal</button></p>
-<script>document.querySelector('.page [data-target="#exampleModal"]').addEventListener('click', function () {phonon.modal({title: 'Modal title', message: 'Modal body text goes here.'}).show();});</script>
-<pre><code class="language-html!">&lt;!-- Button trigger modal --&gt;
-&lt;button class=&quot;btn btn-primary&quot; data-toggle=&quot;modal&quot; data-target=&quot;#exampleModal&quot;&gt;Launch demo modal&lt;/button&gt;
-
-&lt;!-- Modal --&gt;
-&lt;div class=&quot;modal&quot; id=&quot;exampleModal&quot; tabindex=&quot;-1&quot; role=&quot;modal&quot;&gt;
-  &lt;div class=&quot;modal-inner&quot; role=&quot;document&quot;&gt;
-    &lt;div class=&quot;modal-content&quot;&gt;
-      &lt;div class=&quot;modal-header&quot;&gt;
-        &lt;h5 class=&quot;modal-title&quot;&gt;Modal title&lt;/h5&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;modal-body&quot;&gt;
-        &lt;p&gt;Modal body text goes here.&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;modal-footer&quot;&gt;
-        &lt;div class=&quot;btn-group float-right&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
-          &lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-dismiss=&quot;modal&quot;&gt;Close&lt;/button&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-<p>Then, you can work with it by using the correct <code>element</code> property.</p>
-<pre><code class="language-js">const modal = phonon.modal({
-  element: '#exampleModal',
-});
-
-// jQuery support
-const modal = $('#exampleModal').modal();
 </code></pre>
 <h2>Options</h2>
 <table>
@@ -2934,6 +3033,12 @@ const modal = $('#exampleModal').modal();
 <td>Array of keys that allow to hide the modal. Default keys are escape and enter.</td>
 <td>[27, 13]</td>
 <td>no</td>
+</tr>
+<tr>
+<td>background</td>
+<td>The background color such as <code>primary</code>, <code>secondary</code>, <code>success</code>, <code>danger</code>, <code>warning</code>, <code>info</code>, <code>light</code> and <code>dark</code>.</td>
+<td>null</td>
+<td>yes <code>data-background</code></td>
 </tr>
 </tbody>
 </table>
@@ -3548,9 +3653,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
     </div>
   </div>
 </div>
-<h2>Dynamically Created Notifications</h2>
-<p>By not using the <code>element</code> property, it will create a notification's HTMLElement dynamically.
-This is particularly useful if you want to set up a notification without worrying about its HTML code.</p>
+<h2>Live demo</h2>
 <p><button class="btn btn-primary" id="notificationDemo">Show</button></p>
 <script>
   document.querySelector('#notificationDemo').addEventListener('click', function() {
@@ -3562,46 +3665,7 @@ This is particularly useful if you want to set up a notification without worryin
     }).show();
   });
 </script>
-<pre><code class="language-js">import Notification from 'phonon/dist/js/components/notification';
-
-const notif = new Notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-
-// ES5
-const notif = phonon.notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-
-// jQuery
-const notif = $().notification({
-  message: 'Hello',
-  directionY: 'top',
-  directionX: 'right',
-  offsetY: 0,
-  offsetX: 0,
-});
-</code></pre>
-<h2>Custom Notification</h2>
-<p>Conversely, you can create your own notification by specifying the <code>element</code> property.</p>
-<pre></pre> <div class="example"><div class="notification" id="myNotification">
-  <div class="notification-inner">
-    <div class="message">You have 2 messages in your inbox</div>
-    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-</div>
-</div>
-<pre><code class="language-html">&lt;div class=&quot;notification&quot; id=&quot;myNotification&quot;&gt;
+<pre><code class="language-html!">&lt;div class=&quot;notification&quot; id=&quot;myNotification&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
     &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
@@ -3610,71 +3674,92 @@ const notif = $().notification({
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<p>Then, you can work with it by using the correct <code>element</code> property.</p>
 <h2>Colors</h2>
 <div class="notification notification-primary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
 </div>
 <div class="notification notification-secondary" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-success" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-danger" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-warning" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-info" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-light" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <div class="notification notification-dark" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
-  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div></div>
+  <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
 <pre></pre> <div class="example"><div class="notification notification-primary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-secondary">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-success">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-danger">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-warning">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-info">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
 <div class="notification notification-light">
   <div class="notification-inner">
     <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 </div>
 
@@ -3687,42 +3772,63 @@ const notif = $().notification({
 <pre><code class="language-html">&lt;div class=&quot;notification notification-primary&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-secondary&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-success&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-danger&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-warning&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-info&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notification notification-light&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
+    &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;notification&quot; aria-label=&quot;Close&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;&amp;times;&lt;/span&gt;
+    &lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -3732,8 +3838,105 @@ const notif = $().notification({
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<pre><code class="language-js">const notif = phonon.notification({
+<h2>Cookie consent notification</h2>
+<p>The below example defines a way of getting valid consent for your website.</p>
+<p><button class="btn btn-primary" id="buttonNotificationCookie">Try it</button></p>
+<script>
+document.querySelector('#buttonNotificationCookie').addEventListener('click', function () {
+  phonon.notification({
+    element: '#notificationCookie',
+    background: 'dark',
+  }).show();
+});
+</script>
+<pre></pre> <div class="example"><div class="notification notification-dark" style="width: 500px;max-width: 80%;" id="notificationCookie">
+  <div class="notification-inner">
+    <div class="message mr-0">
+      <div class="float-right">
+        <button class="btn btn-primary btn-sm" type="button" data-dismiss="notification">Save</button>
+        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseSettings">Edit settings</button>
+      </div>
+      <div class="mb-2">
+        We use cookies to ensure that you get the best experience on our website.
+        <a class="text-white text-underline d-block" href="#">Learn more here</a>
+      </div>
+      <div class="collapse" id="collapseSettings">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c1" checked>
+          <label class="custom-control-label" for="c1">Retention and access to information</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c2" checked>
+          <label class="custom-control-label" for="c2">Personalization</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<pre><code class="language-html">&lt;div class=&quot;notification notification-dark&quot; style=&quot;width: 500px;max-width: 80%;&quot; id=&quot;notificationCookie&quot;&gt;
+  &lt;div class=&quot;notification-inner&quot;&gt;
+    &lt;div class=&quot;message mr-0&quot;&gt;
+      &lt;div class=&quot;float-right&quot;&gt;
+        &lt;button class=&quot;btn btn-primary btn-sm&quot; type=&quot;button&quot; data-dismiss=&quot;notification&quot;&gt;Save&lt;/button&gt;
+        &lt;button class=&quot;btn btn-primary btn-sm&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#collapseSettings&quot;&gt;Edit settings&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;mb-2&quot;&gt;
+        We use cookies to ensure that you get the best experience on our website.
+        &lt;a class=&quot;text-white text-underline d-block&quot; href=&quot;#&quot;&gt;Learn more here&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;collapse&quot; id=&quot;collapseSettings&quot;&gt;
+        &lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
+          &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;c1&quot; checked&gt;
+          &lt;label class=&quot;custom-control-label&quot; for=&quot;c1&quot;&gt;Retention and access to information&lt;/label&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
+          &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;c2&quot; checked&gt;
+          &lt;label class=&quot;custom-control-label&quot; for=&quot;c2&quot;&gt;Personalization&lt;/label&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>JavaScript control</h2>
+<h3>Notification with markup</h3>
+<p>Use <code>element</code> to specify the target notification.</p>
+<pre><code class="language-js">import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
   element: '#myNotification',
+  message: 'Hello',
+});
+
+// ES5
+const notif = phonon.notification({
+  element: '#myNotification',
+  message: 'Hello',
+});
+
+// jQuery
+const notif = $().notification({
+  element: '#myNotification',
+  message: 'Hello',
+});
+</code></pre>
+<h3>Notification without markup</h3>
+<p>By not using the <code>element</code> property, it will create a notification's HTMLElement dynamically.
+This is particularly useful if you want to set up a notification without worrying about its HTML code.</p>
+<pre><code class="language-js">import Notification from 'phonon/dist/js/components/notification';
+
+const notif = new Notification({
+  message: 'Hello',
+});
+
+// ES5
+const notif = phonon.notification({
+  message: 'Hello',
+});
+
+// jQuery
+const notif = $().notification({
   message: 'Hello',
 });
 </code></pre>
@@ -3845,7 +4048,7 @@ For this, you can use object and DOM events.</p>
 <h3>Object Events</h3>
 <pre><code class="language-js">phonon.notification({
   element: '#myNotification',
-  message: 'Hello',
+  message: 'You have 2 messages in your inbox',
   show: () =&gt; { // or onShow
     console.log('It works!');
   },
@@ -6110,11 +6313,7 @@ window.addEventListener('myPage.hash', (event) =&gt; {
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
 <p>If the locale is <code>en</code>, the result would be:</p>
-<pre></pre> <div class="example"><h1 data-t="text: welcome">Welcome</h1>
-<input type="text" class="form-control" data-t="value: welcome" value="Welcome">
-<input type="text" class="form-control" data-attr="Welcome" placeholder="Welcome" data-t="data-attr: welcome, placeholder: welcome" value="">
-</div>
-<pre><code class="language-html">&lt;h1 data-t=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
+<pre><code class="language-html!">&lt;h1 data-t=&quot;text: welcome&quot;&gt;Welcome&lt;/h1&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-t=&quot;value: welcome&quot; value=&quot;Welcome&quot;&gt;
 &lt;input type=&quot;text&quot; class=&quot;form-control&quot; data-attr=&quot;Welcome&quot; placeholder=&quot;Welcome&quot; data-t=&quot;data-attr: welcome, placeholder: welcome&quot; value=&quot;&quot;&gt;
 </code></pre>
@@ -8089,7 +8288,7 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
       </div>
 
       <footer class="docs-footer">
-        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.2
+        Build with <a href="https://github.com/BafS/Documentor">Documentor</a> 0.1.3
       </footer>
     </section>
   </div>
@@ -8135,7 +8334,8 @@ document.querySelector('button.toggle-sidebar').onclick = () => {
   toggleClass(main, 'full-width');
 };
 */document.querySelector("button.toggle-light").onclick=function(){toggleClass(main,"dark")};document.querySelector("button.next-page").onclick=function(){var nextIndex=Math.min(getCurrentPageIndex(currentHash())+1,pageEls.length-1);window.location.hash="#".concat(pageEls[nextIndex].id)};document.querySelector("button.previous-page").onclick=function(){var prevIndex=Math.max(0,getCurrentPageIndex(currentHash())-1);window.location.hash="#".concat(pageEls[prevIndex].id)};document.querySelector(".tools").classList.remove("hide");var searchInputEl=document.querySelector(".search-input");searchInputEl.classList.remove("hide");var highlightClass="highlight";searchInputEl.addEventListener("keypress",function(e){var key=e.which||e.keyCode;if(key===13){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .highlight")));removeClassesSidebar(highlightClass);pageEls.forEach(function(el,pIndex){if(highlightWord(el,searchInputEl.value)){addClassSidebarIndex(pIndex,highlightClass)}})}});searchInputEl.addEventListener("keyup",function(e){var key=e.which||e.keyCode;if(key!==13&&searchInputEl.value.length<1){removeHighlight(_toConsumableArray(document.querySelectorAll(".content .".concat(highlightClass))));removeClassesSidebar(highlightClass)}});var showPageFromCurrentHash=function showPageFromCurrentHash(){var index=showPageFromHash(currentHash());toggleActiveLinkSidebar(index)};// Listen for hash change
-window.onhashchange=function(){showPageFromCurrentHash()};showPageFromCurrentHash();
+window.onhashchange=function(){showPageFromCurrentHash()};showPageFromCurrentHash();// Add class table
+var tables=document.querySelectorAll("table");if(tables){tables.forEach(function(table){table.classList.add("table")})}
   </script>
     <script src="../dist/js/phonon.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
