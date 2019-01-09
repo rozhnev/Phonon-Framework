@@ -24,6 +24,7 @@ const Modal = (($) => {
     message: null,
     cancelable: true,
     type: null,
+    background: null,
     cancelableKeyCodes: [
       27, // Escape
       13, // Enter
@@ -39,6 +40,7 @@ const Modal = (($) => {
   };
   const DATA_ATTRS_PROPERTIES = [
     'cancelable',
+    'background',
   ];
   const components = [];
 
@@ -71,6 +73,8 @@ const Modal = (($) => {
       if (this.dynamicElement) {
         this.build();
       }
+
+      this.setBackgroud();
     }
 
     build() {
@@ -109,6 +113,22 @@ const Modal = (($) => {
       document.body.appendChild(this.options.element);
 
       this.setAttributes();
+    }
+
+    setBackgroud() {
+      const background = this.getConfig('background');
+
+      if (!background) {
+        return;
+      }
+
+      if (!this.options.element.classList.contains(`modal-${background}`)) {
+        this.options.element.classList.add(`modal-${background}`);
+      }
+
+      if (!this.options.element.classList.contains('text-white')) {
+        this.options.element.classList.add('text-white');
+      }
     }
 
     buildButton(buttonInfo = {}) {

@@ -117,6 +117,17 @@ $modal-md: 550px;
   }
 }
 
+@each $color, $value in $theme-colors {
+  .modal-#{$color} {
+    background-color: theme-color-level($color);
+    color: $white;
+
+    @if $color == 'light' {
+      color: $dark;
+    }
+  }
+}
+
 @keyframes hideAlert {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
