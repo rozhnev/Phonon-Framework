@@ -143,9 +143,10 @@ const Notification = (($) => {
 
       this.setPosition();
 
-      if (this.options.button) {
+      const buttonElement = this.options.element.querySelector('button[data-dismiss]');
+
+      if (this.options.button && buttonElement) {
         // attach the button handler
-        const buttonElement = this.options.element.querySelector('button');
         this.registerElement({ target: buttonElement, event: 'click' });
       }
 
@@ -194,8 +195,9 @@ const Notification = (($) => {
 
       this.triggerEvent(Event.HIDE);
 
-      if (this.options.button) {
-        const buttonElement = this.options.element.querySelector('button');
+      const buttonElement = this.options.element.querySelector('button[data-dismiss]');
+
+      if (this.options.button && buttonElement) {
         this.unregisterElement({ target: buttonElement, event: 'click' });
       }
 
