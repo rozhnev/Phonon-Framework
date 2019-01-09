@@ -10,11 +10,11 @@ const args = process.argv.slice(2);
     const files = [
       {
         name: 'phonon',
-        path: '../src/js/phonon.js',
+        path: '../../src/js/phonon.js',
       },
       {
         name: 'phonon-spa',
-        path: '../src/js/phonon-spa.js',
+        path: '../../src/js/phonon-spa.js',
       },
     ];
 

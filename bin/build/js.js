@@ -5,7 +5,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const UglifyJS = require('uglify-js');
 const fs = require('fs');
 const regenerator = require('rollup-plugin-regenerator');
-const pkg     = require(path.resolve(__dirname, '../package.json'));
+const pkg     = require(path.resolve(__dirname, '../../package.json'));
 const year    = new Date().getFullYear();
 
 const format = 'umd';
@@ -33,9 +33,9 @@ module.exports = async function (fileName, srcFile) {
   });
 
   try {
-    const file = path.resolve(__dirname, `../dist/js/${fileDest}`);
-    const fileMin = path.resolve(__dirname, `../dist/js/${fileDestMin}`);
-    const fileMinMap = path.resolve(__dirname, `../dist/js/${fileDestMin}.map`);
+    const file = path.resolve(__dirname, `../../dist/js/${fileDest}`);
+    const fileMin = path.resolve(__dirname, `../../dist/js/${fileDestMin}`);
+    const fileMinMap = path.resolve(__dirname, `../../dist/js/${fileDestMin}.map`);
 
     await bundle.write({
       banner: `/*!

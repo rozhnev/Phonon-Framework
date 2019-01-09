@@ -7,8 +7,8 @@ function copyFile(filePath, outputPath) {
 }
 
 module.exports = async function () {
-  const bootstrapScss = '../node_modules/bootstrap/scss';
-  const destScssPath = '../src/scss/bootstrap';
+  const bootstrapScss = '../../node_modules/bootstrap/scss';
+  const destScssPath = '../../src/scss/bootstrap';
   const bootstrap = fs.readFileSync(path.resolve(__dirname, `${bootstrapScss}/bootstrap.scss`));
 
   const reg = /@import ["']+([a-z_-]*?)["']+/g;

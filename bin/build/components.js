@@ -9,7 +9,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const fs = require('fs');
 const regenerator = require('rollup-plugin-regenerator');
 
-const rootPath = '../dist/js/components/';
+const rootPath = '../../dist/js/components/';
 
 const plugins = [
   resolve({
@@ -24,19 +24,19 @@ const plugins = [
 
 const format = 'cjs'
 const components = {
-  Alert: path.resolve(__dirname, '../src/js/components/alert/index.js'),
-  Collapse: path.resolve(__dirname, '../src/js/components/collapse/index.js'),
-  Accordion: path.resolve(__dirname, '../src/js/components/accordion/index.js'),
-  Modal: path.resolve(__dirname, '../src/js/components/modal/index.js'),
-  ModalConfirm: path.resolve(__dirname, '../src/js/components/modal/confirm.js'),
-  ModalLoader: path.resolve(__dirname, '../src/js/components/modal/loader.js'),
-  ModalPrompt: path.resolve(__dirname, '../src/js/components/modal/prompt.js'),
-  Selectbox: path.resolve(__dirname, '../src/js/components/selectbox/index.js'),
-  Loader: path.resolve(__dirname, '../src/js/components/loader/index.js'),
-  Notification: path.resolve(__dirname, '../src/js/components/notification/index.js'),
-  OffCanvas: path.resolve(__dirname, '../src/js/components/off-canvas/index.js'),
-  Progress: path.resolve(__dirname, '../src/js/components/progress/index.js'),
-  Tab: path.resolve(__dirname, '../src/js/components/tab/index.js'),
+  Alert: path.resolve(__dirname, '../../src/js/components/alert/index.js'),
+  Collapse: path.resolve(__dirname, '../../src/js/components/collapse/index.js'),
+  Accordion: path.resolve(__dirname, '../../src/js/components/accordion/index.js'),
+  Modal: path.resolve(__dirname, '../../src/js/components/modal/index.js'),
+  ModalConfirm: path.resolve(__dirname, '../../src/js/components/modal/confirm.js'),
+  ModalLoader: path.resolve(__dirname, '../../src/js/components/modal/loader.js'),
+  ModalPrompt: path.resolve(__dirname, '../../src/js/components/modal/prompt.js'),
+  Selectbox: path.resolve(__dirname, '../../src/js/components/selectbox/index.js'),
+  Loader: path.resolve(__dirname, '../../src/js/components/loader/index.js'),
+  Notification: path.resolve(__dirname, '../../src/js/components/notification/index.js'),
+  OffCanvas: path.resolve(__dirname, '../../src/js/components/off-canvas/index.js'),
+  Progress: path.resolve(__dirname, '../../src/js/components/progress/index.js'),
+  Tab: path.resolve(__dirname, '../../src/js/components/tab/index.js'),
 }
 
 async function asyncForEach(array, callback) {
