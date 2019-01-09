@@ -129,10 +129,8 @@ const OffCanvas = (($) => {
 
         this.animate = true;
 
-        if (!this.getBackdrop() && this.isVisible()) {
-          this.createBackdrop();
-          this.attachEvents();
-        }
+        // force hide
+        this.hide();
       }
     }
 
@@ -240,8 +238,10 @@ const OffCanvas = (($) => {
           this.removeBackdrop();
         };
 
-        backdrop.addEventListener(Event.TRANSITION_END, onHidden);
-        backdrop.classList.add('fadeout');
+        if (backdrop) {
+          backdrop.addEventListener(Event.TRANSITION_END, onHidden);
+          backdrop.classList.add('fadeout');
+        }
       }
 
       return true;
@@ -280,8 +280,8 @@ const OffCanvas = (($) => {
       Array.from(this.options.element.querySelectorAll('[data-dismiss]') || [])
         .forEach(button => this.registerElement({ target: button, event: 'click' }));
 
-      if (!this.showAside) {
-        const backdrop = this.getBackdrop();
+      const backdrop = this.getBackdrop();
+      if (!this.showAside && backdrop) {
         this.registerElement({ target: backdrop, event: Event.START });
       }
 
@@ -295,8 +295,8 @@ const OffCanvas = (($) => {
         Array.from(dismissButtons).forEach(button => this.unregisterElement({ target: button, event: 'click' }));
       }
 
-      if (!this.showAside) {
-        const backdrop = this.getBackdrop();
+      const backdrop = this.getBackdrop();
+      if (!this.showAside && backdrop) {
         this.unregisterElement({ target: backdrop, event: Event.START });
       }
 
