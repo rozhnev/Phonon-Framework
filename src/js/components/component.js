@@ -71,6 +71,9 @@ export default class Component {
   }
 
   getConfig(key = null, defaultValue = null) {
+    /**
+     * If the key isn't specified, we return the full configuration (Object)
+     */
     if (!key) {
       return this.options;
     }
