@@ -23,6 +23,8 @@ module.exports = async function () {
     'carousel',
     'jumbotron',
     'shadows',
+    'spinners',
+    'toasts',
   ];
 
 
