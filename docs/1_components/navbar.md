@@ -24,7 +24,7 @@ Navbar is a responsive navigation containing links.
 <!-- Just an image -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img src="../site/icon.svg" width="30" height="30" alt="">
+    <img src="../../assets/icon.svg" width="30" height="30" alt="">
   </a>
 </nav>
 ```
@@ -33,7 +33,7 @@ Navbar is a responsive navigation containing links.
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
-    <img src="../site/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    <img src="../../assets/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Phonon
   </a>
 </nav>

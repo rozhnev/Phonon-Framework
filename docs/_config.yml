@@ -1,9 +1,8 @@
 name: Documentation · Phonon
-version: 2.0.0
+version: 2.0.0-alpha.1
 sourceUrl: https://github.com/quark-dev/Phonon-Framework
 homepageUrl: https://quark-dev.github.io/Phonon-Framework/
-logo: ../../icon-64.png
-icon: ../../icon-64.png
+icon: ../../assets/icon-64.png
 template: ./docs/_layout
 markdown-it:
   html: true
@@ -15,5 +14,5 @@ htmlBody:
   - <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   - <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scss.min.js"></script>
   - <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-  - <script src="./highlight.js"></script>
+  - <script src="./docs.js"></script>
 

@@ -14,7 +14,7 @@ A footer is a container listed at the bottom of the page.
     <div class="row align-items-end">
       <div class="col-sm-6">
         <div class="d-flex align-items-end mb-3 mb-sm-0">
-          <img src="../site/icon.svg" width="60" height="60" alt="">
+          <img src="../../assets/icon.svg" width="60" height="60" alt="">
           <span class="text-white ml-3">© 2018 Company, Inc.</span>
         </div>
       </div>

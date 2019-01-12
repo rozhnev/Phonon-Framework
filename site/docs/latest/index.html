@@ -318,7 +318,7 @@ body {
 <body class="offcanvas-aside-left show">
   <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
     <a class="navbar-brand" href="../../">
-      <img src="../..//icon.svg" width="30" height="30" class="d-inline-block align-top" alt="Phonon Framework Icon">
+      <img src="../../assets/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="Phonon Framework Icon">
       Phonon
     </a>
 
@@ -331,7 +331,7 @@ body {
           <a class="nav-link" href="../../">Home</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="docs">Documentation <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./">Documentation <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="https://github.com/quark-dev/Phonon-Framework/tree/master">Github</a>
@@ -429,7 +429,7 @@ body {
         <button class="previous-page">&lt;</button>
         <button class="next-page">&gt;</button>
 
-        <span class="float-right"> | 2.0.0</span>
+        <span class="float-right"> | 2.0.0-alpha.1</span>
       </div>
 
       <div class="page" id="0_getting-started">
@@ -757,6 +757,26 @@ pass everything as the second argument.</p>
 <p>An accordion is a component that displays one of the collapsible elements in a limited amout of space.</p>
 <h2>Markup</h2>
 <p>You can use links and buttons to toggle the collapsible elements.</p>
+<pre></pre> <div class="example"><div class="accordion" id="exampleAccordion" role="tablist">
+  <a class="d-block" data-toggle="accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+    Collapsible Group Item #1
+  </a>
+
+  <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+    <div class="card-body">
+      This is the content of the group item #1.
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="button" data-toggle="accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Collapsible Group Item #2</button>
+
+  <div id="collapseTwo" class="collapse" role="tabpane2" aria-labelledby="headingTwo">
+    <div class="card-body">
+      This is the content of the group item #2.
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;accordion&quot; id=&quot;exampleAccordion&quot; role=&quot;tablist&quot;&gt;
   &lt;a class=&quot;d-block&quot; data-toggle=&quot;accordion&quot; href=&quot;#collapseOne&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;collapseOne&quot;&gt;
     Collapsible Group Item #1
@@ -820,6 +840,31 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
         <h2>Introduction</h2>
 <p>An alert displays a box with a specified message.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
+  A simple primary alert—check it out!
+</div>
+<div class="alert alert-secondary" role="alert">
+  A simple secondary alert—check it out!
+</div>
+<div class="alert alert-success" role="alert">
+  A simple success alert—check it out!
+</div>
+<div class="alert alert-danger" role="alert">
+  A simple danger alert—check it out!
+</div>
+<div class="alert alert-warning" role="alert">
+  A simple warning alert—check it out!
+</div>
+<div class="alert alert-info" role="alert">
+  A simple info alert—check it out!
+</div>
+<div class="alert alert-light" role="alert">
+  A simple light alert—check it out!
+</div>
+<div class="alert alert-dark" role="alert">
+  A simple dark alert—check it out!
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert—check it out!
 &lt;/div&gt;
@@ -846,6 +891,31 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Link color</h3>
+<pre></pre> <div class="example"><div class="alert alert-primary" role="alert">
+  A simple primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-secondary" role="alert">
+  A simple secondary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-success" role="alert">
+  A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-danger" role="alert">
+  A simple danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-warning" role="alert">
+  A simple warning alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-info" role="alert">
+  A simple info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-light" role="alert">
+  A simple light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+<div class="alert alert-dark" role="alert">
+  A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;
   A simple primary alert with &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;an example link&lt;/a&gt;. Give it a click if you like.
 &lt;/div&gt;
@@ -872,6 +942,13 @@ See events of <a href="#1_components/collapse">collapse</a> component.</p>
 &lt;/div&gt;
 </code></pre>
 <h3>Dismissable</h3>
+<pre></pre> <div class="example"><div class="alert alert-warning" id="exampleAlert" role="alert">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;alert alert-warning&quot; id=&quot;exampleAlert&quot; role=&quot;alert&quot;&gt;
   &lt;strong&gt;Holy guacamole!&lt;/strong&gt; You should check in on some of those fields below.
   &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;Close&quot;&gt;
@@ -1005,6 +1082,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>A button is a clickable element that allows the user to do an action.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+
+<button type="button" class="btn btn-link">Link</button>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;Primary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Secondary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-success&quot;&gt;Success&lt;/button&gt;
@@ -1016,6 +1104,15 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 
 &lt;button type=&quot;button&quot; class=&quot;btn btn-link&quot;&gt;Link&lt;/button&gt;
 </code></pre>
+<pre></pre> <div class="example"><button type="button" class="btn btn-outline-primary">Primary</button>
+<button type="button" class="btn btn-outline-secondary">Secondary</button>
+<button type="button" class="btn btn-outline-success">Success</button>
+<button type="button" class="btn btn-outline-danger">Danger</button>
+<button type="button" class="btn btn-outline-warning">Warning</button>
+<button type="button" class="btn btn-outline-info">Info</button>
+<button type="button" class="btn btn-outline-light">Light</button>
+<button type="button" class="btn btn-outline-dark">Dark</button>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-outline-primary&quot;&gt;Primary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-secondary&quot;&gt;Secondary&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-success&quot;&gt;Success&lt;/button&gt;
@@ -1027,6 +1124,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h3>Tag compatibility</h3>
 <p>You can use different tags.</p>
+<pre></pre> <div class="example"><a class="btn btn-primary" href="#" role="button">Link</a>
+<button class="btn btn-primary" type="submit">Button</button>
+<input class="btn btn-primary" type="button" value="Input">
+<input class="btn btn-primary" type="submit" value="Submit">
+<input class="btn btn-primary" type="reset" value="Reset">
+</div>
 <pre><code class="language-html">&lt;a class=&quot;btn btn-primary&quot; href=&quot;#&quot; role=&quot;button&quot;&gt;Link&lt;/a&gt;
 &lt;button class=&quot;btn btn-primary&quot; type=&quot;submit&quot;&gt;Button&lt;/button&gt;
 &lt;input class=&quot;btn btn-primary&quot; type=&quot;button&quot; value=&quot;Input&quot;&gt;
@@ -1034,29 +1137,52 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;input class=&quot;btn btn-primary&quot; type=&quot;reset&quot; value=&quot;Reset&quot;&gt;
 </code></pre>
 <h2>Sizing</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg">Large button</button>
+<button type="button" class="btn btn-secondary btn-lg">Large button</button>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg&quot;&gt;Large button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot;&gt;Large button&lt;/button&gt;
 </code></pre>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-sm">Small button</button>
+<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-sm&quot;&gt;Small button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-sm&quot;&gt;Small button&lt;/button&gt;
 </code></pre>
 <h2>Block</h2>
+<pre></pre> <div class="example"><button type="button" class="btn btn-primary btn-lg btn-block">Block level button</button>
+<button type="button" class="btn btn-secondary btn-lg btn-block">Block level button</button>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-primary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg btn-block&quot;&gt;Block level button&lt;/button&gt;
 </code></pre>
 <h2>Active state</h2>
+<pre></pre> <div class="example"><a href="#" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Primary link</a>
+<a href="#" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Link</a>
+</div>
 <pre><code class="language-html">&lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Primary link&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-secondary btn-lg active&quot; role=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;Link&lt;/a&gt;
 </code></pre>
 <h2>Disabled state</h2>
 <p>Disabled buttons with the <code>&lt;a&gt;</code> tag need the class <code>.disabled</code> and <code>aria-disabled=&quot;true&quot;</code> attribue.
 Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard focus on the element.</p>
+<pre></pre> <div class="example"><button type="button" class="btn btn-lg btn-primary" disabled>Primary button</button>
+<button type="button" class="btn btn-secondary btn-lg" disabled>Button</button>
+<a href="#" class="btn btn-primary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Primary link</a>
+<a href="#" class="btn btn-secondary btn-lg disabled" tabindex="-1" role="button" aria-disabled="true">Link</a>
+</div>
 <pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;btn btn-lg btn-primary&quot; disabled&gt;Primary button&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary btn-lg&quot; disabled&gt;Button&lt;/button&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-lg disabled&quot; tabindex=&quot;-1&quot; role=&quot;button&quot; aria-disabled=&quot;true&quot;&gt;Primary link&lt;/a&gt;
 &lt;a href=&quot;#&quot; class=&quot;btn btn-secondary btn-lg disabled&quot; tabindex=&quot;-1&quot; role=&quot;button&quot; aria-disabled=&quot;true&quot;&gt;Link&lt;/a&gt;
 </code></pre>
 <h2>Button group</h2>
+<pre></pre> <div class="example"><div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1064,6 +1190,12 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h3>Vertical button group</h3>
+<pre></pre> <div class="example"><div class="btn-group-vertical" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group-vertical&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1071,6 +1203,23 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h2>Button toolbar</h2>
+<pre></pre> <div class="example"><div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button type="button" class="btn btn-secondary">1</button>
+    <button type="button" class="btn btn-secondary">2</button>
+    <button type="button" class="btn btn-secondary">3</button>
+    <button type="button" class="btn btn-secondary">4</button>
+  </div>
+  <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <button type="button" class="btn btn-secondary">5</button>
+    <button type="button" class="btn btn-secondary">6</button>
+    <button type="button" class="btn btn-secondary">7</button>
+  </div>
+  <div class="btn-group" role="group" aria-label="Third group">
+    <button type="button" class="btn btn-secondary">8</button>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-toolbar&quot; role=&quot;toolbar&quot; aria-label=&quot;Toolbar with button groups&quot;&gt;
   &lt;div class=&quot;btn-group mr-2&quot; role=&quot;group&quot; aria-label=&quot;First group&quot;&gt;
     &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;1&lt;/button&gt;
@@ -1089,6 +1238,24 @@ Furthermore, <code>tabindex=&quot;-1&quot;</code> attribute prevent the keyboard
 &lt;/div&gt;
 </code></pre>
 <h2>Sizing</h2>
+<pre></pre> <div class="example"><div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+
+<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-secondary">Left</button>
+  <button type="button" class="btn btn-secondary">Middle</button>
+  <button type="button" class="btn btn-secondary">Right</button>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;btn-group btn-group-lg&quot; role=&quot;group&quot; aria-label=&quot;Basic example&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary&quot;&gt;Middle&lt;/button&gt;
@@ -1119,18 +1286,29 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h1>Introduction</h1>
 <p>Define a piece of code.</p>
 <h1>Inline code</h1>
+<pre></pre> <div class="example">For example, <code>&lt;section&gt;</code> should be wrapped as inline.
+</div>
 <pre><code class="language-html">For example, &lt;code&gt;&amp;lt;section&amp;gt;&lt;/code&gt; should be wrapped as inline.
 </code></pre>
 <h1>Code blocks</h1>
+<pre></pre> <div class="example"><pre><code>&lt;p&gt;Sample text here...&lt;/p&gt;
+&lt;p&gt;And another line of sample text here...&lt;/p&gt;
+</code></pre>
+</div>
 <pre><code class="language-html">&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;Sample text here...&amp;lt;/p&amp;gt;
 &amp;lt;p&amp;gt;And another line of sample text here...&amp;lt;/p&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 <h1>User input</h1>
+<pre></pre> <div class="example">To switch directories, type <kbd>cd</kbd> followed by the name of the directory.<br>
+To edit settings, press <kbd><kbd>ctrl</kbd> + <kbd>,</kbd></kbd>
+</div>
 <pre><code class="language-html">To switch directories, type &lt;kbd&gt;cd&lt;/kbd&gt; followed by the name of the directory.&lt;br&gt;
 To edit settings, press &lt;kbd&gt;&lt;kbd&gt;ctrl&lt;/kbd&gt; + &lt;kbd&gt;,&lt;/kbd&gt;&lt;/kbd&gt;
 </code></pre>
 <h1>Sample output</h1>
+<pre></pre> <div class="example"><samp>This text is meant to be treated as sample output from a computer program.</samp>
+</div>
 <pre><code class="language-html">&lt;samp&gt;This text is meant to be treated as sample output from a computer program.&lt;/samp&gt;
 </code></pre>
 <div class="alert alert-secondary" role="alert">
@@ -1145,6 +1323,19 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>A collapse is an element that toggles between showing and hiding.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
+    Link with href
+  </a>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#exampleCollapse" aria-expanded="false" aria-controls="exampleCollapse">
+    Button with data-target
+  </button>
+</p>
+
+<div class="collapse" id="exampleCollapse">
+  Collapse content.
+</div>
+</div>
 <pre><code class="language-html">&lt;p&gt;
   &lt;a class=&quot;btn btn-primary&quot; data-toggle=&quot;collapse&quot; href=&quot;#exampleCollapse&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;exampleCollapse&quot;&gt;
     Link with href
@@ -1159,6 +1350,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>External content</h2>
+<pre></pre> <div class="example"><div>
+  <div class="collapse" id="navbarToggleExternalContent">
+    <div class="bg-dark p-4">
+      <h5 class="text-white h4">Collapsed content</h5>
+      <span class="text-muted">Toggleable via the navbar brand.</span>
+    </div>
+  </div>
+  <nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+</div>
+</div>
 <pre><code class="language-html">&lt;div&gt;
   &lt;div class=&quot;collapse&quot; id=&quot;navbarToggleExternalContent&quot;&gt;
     &lt;div class=&quot;bg-dark p-4&quot;&gt;
@@ -1292,12 +1497,44 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
         <h2>Introduction</h2>
 <p>A footer is a container listed at the bottom of the page.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><footer class="footer bg-primary">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-sm-6">
+        <div class="d-flex align-items-end mb-3 mb-sm-0">
+          <img src="../../assets/icon.svg" width="60" height="60" alt="">
+          <span class="text-white ml-3">© 2018 Company, Inc.</span>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="row">
+          <div class="col-sm-6">
+            <ul>
+              <li><a class="text-white" href="#">Home</a></li>
+              <li><a class="text-white" href="#">Blog</a></li>
+              <li><a class="text-white" href="#">About</a></li>
+              <li><a class="text-white" href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-6">
+            <ul>
+              <li><a class="text-white" href="#">Terms</a></li>
+              <li><a class="text-white" href="#">Privacy</a></li>
+              <li><a class="text-white" href="#">Help</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
 <pre><code class="language-html">&lt;footer class=&quot;footer bg-primary&quot;&gt;
   &lt;div class=&quot;container&quot;&gt;
     &lt;div class=&quot;row align-items-end&quot;&gt;
       &lt;div class=&quot;col-sm-6&quot;&gt;
         &lt;div class=&quot;d-flex align-items-end mb-3 mb-sm-0&quot;&gt;
-          &lt;img src=&quot;../site/icon.svg&quot; width=&quot;60&quot; height=&quot;60&quot; alt=&quot;&quot;&gt;
+          &lt;img src=&quot;../../assets/icon.svg&quot; width=&quot;60&quot; height=&quot;60&quot; alt=&quot;&quot;&gt;
           &lt;span class=&quot;text-white ml-3&quot;&gt;© 2018 Company, Inc.&lt;/span&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -1331,6 +1568,13 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
         <h2>Introduction</h2>
 <p>A form contains inputs to collect user input.</p>
 <h2>Input</h2>
+<pre></pre> <div class="example"><form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  </div>
+</form>
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group&quot;&gt;
     &lt;label for=&quot;exampleFormControlInput1&quot;&gt;Email address&lt;/label&gt;
@@ -1339,17 +1583,40 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h3>Sizing</h3>
+<pre></pre> <div class="example"><input class="form-control form-control-lg" type="text" placeholder=".form-control-lg">
+<input class="form-control" type="text" placeholder="Default input">
+<input class="form-control form-control-sm" type="text" placeholder=".form-control-sm">
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control form-control-lg&quot; type=&quot;text&quot; placeholder=&quot;.form-control-lg&quot;&gt;
 &lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Default input&quot;&gt;
 &lt;input class=&quot;form-control form-control-sm&quot; type=&quot;text&quot; placeholder=&quot;.form-control-sm&quot;&gt;
 </code></pre>
 <h3>Readonly</h3>
+<pre></pre> <div class="example"><input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; type=&quot;text&quot; placeholder=&quot;Readonly input here…&quot; readonly&gt;
 </code></pre>
 <h3>Disabled</h3>
+<pre></pre> <div class="example"><input class="form-control" id="disabledInput" type="text" placeholder="Disabled input here..." disabled>
+</div>
 <pre><code class="language-html">&lt;input class=&quot;form-control&quot; id=&quot;disabledInput&quot; type=&quot;text&quot; placeholder=&quot;Disabled input here...&quot; disabled&gt;
 </code></pre>
 <h3>Readonly plain text</h3>
+<pre></pre> <div class="example"><form>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+  </div>
+</form>
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;staticEmail&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1366,6 +1633,17 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h2>Form with grid</h2>
+<pre></pre> <div class="example"><form>
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="First name">
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Last name">
+    </div>
+  </div>
+</form>
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1378,6 +1656,17 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <p>More compact with <code>.form-row</code>.</p>
+<pre></pre> <div class="example"><form>
+  <div class="form-row">
+    <div class="col">
+      <input type="text" class="form-control" placeholder="First name">
+    </div>
+    <div class="col">
+      <input type="text" class="form-control" placeholder="Last name">
+    </div>
+  </div>
+</form>
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1390,6 +1679,21 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/form&gt;
 </code></pre>
 <h2>Horizontal form</h2>
+<pre></pre> <div class="example"><form>
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+</form>
+</div>
 <pre><code class="language-html">&lt;form&gt;
   &lt;div class=&quot;form-group row&quot;&gt;
     &lt;label for=&quot;inputEmail3&quot; class=&quot;col-sm-2 col-form-label&quot;&gt;Email&lt;/label&gt;
@@ -1407,6 +1711,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </code></pre>
 <h2>Validation</h2>
 <h3>Info</h3>
+<pre></pre> <div class="example"><label for="inputPassword4">Password</label>
+<input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpBlock">
+<small id="passwordHelpBlock" class="form-text text-muted">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+</small>
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword4&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword4&quot; class=&quot;form-control&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;form-text text-muted&quot;&gt;
@@ -1414,6 +1724,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/small&gt;
 </code></pre>
 <h3>Error</h3>
+<pre></pre> <div class="example"><label for="inputPassword5">Password</label>
+<input type="password" id="inputPassword5" class="form-control is-invalid" aria-describedby="passwordHelpBlock">
+<small id="passwordHelpBlock" class="invalid-feedback">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+</small>
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword5&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword5&quot; class=&quot;form-control is-invalid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;invalid-feedback&quot;&gt;
@@ -1421,6 +1737,12 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 &lt;/small&gt;
 </code></pre>
 <h3>Success</h3>
+<pre></pre> <div class="example"><label for="inputPassword6">Password</label>
+<input type="password" id="inputPassword6" class="form-control is-valid" aria-describedby="passwordHelpBlock">
+<small id="passwordHelpBlock" class="valid-feedback">
+  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+</small>
+</div>
 <pre><code class="language-html">&lt;label for=&quot;inputPassword6&quot;&gt;Password&lt;/label&gt;
 &lt;input type=&quot;password&quot; id=&quot;inputPassword6&quot; class=&quot;form-control is-valid&quot; aria-describedby=&quot;passwordHelpBlock&quot;&gt;
 &lt;small id=&quot;passwordHelpBlock&quot; class=&quot;valid-feedback&quot;&gt;
@@ -1429,6 +1751,15 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 </code></pre>
 <h2>Selectboxes</h2>
 <p>Alternatively, you can use our advanced <a href="#1_components/selectbox">selectbox</a> that supports a filter.</p>
+<pre></pre> <div class="example"><label for="exampleFormControlSelect1">Example select</label>
+<select class="form-control" id="exampleFormControlSelect1">
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+  <option>4</option>
+  <option>5</option>
+</select>
+</div>
 <pre><code class="language-html">&lt;label for=&quot;exampleFormControlSelect1&quot;&gt;Example select&lt;/label&gt;
 &lt;select class=&quot;form-control&quot; id=&quot;exampleFormControlSelect1&quot;&gt;
   &lt;option&gt;1&lt;/option&gt;
@@ -1441,6 +1772,13 @@ document.querySelector('.collapse').addEventListener('hidden.ph.collapse', () =&
 <h2>Input group</h2>
 <p>Input groups are extendable inputs containing before and after elements.
 You can add one or many elements in <code>.input-group-prepend</code> or <code>.input-group-append</code>.</p>
+<pre></pre> <div class="example"><div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1">@</span>
+  </div>
+  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;input-group&quot;&gt;
   &lt;div class=&quot;input-group-prepend&quot;&gt;
     &lt;span class=&quot;input-group-text&quot; id=&quot;basic-addon1&quot;&gt;@&lt;/span&gt;
@@ -1449,6 +1787,27 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Sizing</h3>
+<pre></pre> <div class="example"><div class="input-group input-group-sm mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+</div>
+
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+</div>
+
+<div class="input-group input-group-lg">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-lg">Large</span>
+  </div>
+  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;input-group input-group-sm mb-3&quot;&gt;
   &lt;div class=&quot;input-group-prepend&quot;&gt;
     &lt;span class=&quot;input-group-text&quot; id=&quot;inputGroup-sizing-sm&quot;&gt;Small&lt;/span&gt;
@@ -1471,6 +1830,24 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Checkboxes and radios</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" aria-label="Checkbox for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with checkbox">
+</div>
+
+<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="radio" aria-label="Radio button for following text input">
+    </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with radio button">
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
   &lt;div class=&quot;input-group-prepend&quot;&gt;
     &lt;div class=&quot;input-group-text&quot;&gt;
@@ -1490,6 +1867,13 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Buttons</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon1">Button</button>
+  </div>
+  <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
   &lt;div class=&quot;input-group-prepend&quot;&gt;
     &lt;button class=&quot;btn btn-outline-secondary&quot; type=&quot;button&quot; id=&quot;button-addon1&quot;&gt;Button&lt;/button&gt;
@@ -1498,6 +1882,21 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Custom select</h3>
+<pre></pre> <div class="example"><div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="inputGroupSelect01">Options</label>
+  </div>
+  <select class="custom-select" id="inputGroupSelect01">
+    <option selected>Choose...</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Button</button>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;input-group mb-3&quot;&gt;
   &lt;div class=&quot;input-group-prepend&quot;&gt;
     &lt;label class=&quot;input-group-text&quot; for=&quot;inputGroupSelect01&quot;&gt;Options&lt;/label&gt;
@@ -1515,6 +1914,19 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 </code></pre>
 <h2>Checkboxes and radios</h2>
 <h3>Default checkbox</h3>
+<pre></pre> <div class="example"><div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Default checkbox
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+  <label class="form-check-label" for="defaultCheck2">
+    Disabled checkbox
+  </label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;form-check&quot;&gt;
   &lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; value=&quot;&quot; id=&quot;defaultCheck1&quot;&gt;
   &lt;label class=&quot;form-check-label&quot; for=&quot;defaultCheck1&quot;&gt;
@@ -1529,12 +1941,36 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Custom checkbox</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheck1">
+  <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;customCheck1&quot;&gt;
   &lt;label class=&quot;custom-control-label&quot; for=&quot;customCheck1&quot;&gt;Check this custom checkbox&lt;/label&gt;
 &lt;/div&gt;
 </code></pre>
 <h3>Default radios</h3>
+<pre></pre> <div class="example"><div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+  <label class="form-check-label" for="exampleRadios1">
+    Default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Second default radio
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+  <label class="form-check-label" for="exampleRadios3">
+    Disabled radio
+  </label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;form-check&quot;&gt;
   &lt;input class=&quot;form-check-input&quot; type=&quot;radio&quot; name=&quot;exampleRadios&quot; id=&quot;exampleRadios1&quot; value=&quot;option1&quot; checked&gt;
   &lt;label class=&quot;form-check-label&quot; for=&quot;exampleRadios1&quot;&gt;
@@ -1555,6 +1991,15 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Custom radios</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-control custom-radio&quot;&gt;
   &lt;input type=&quot;radio&quot; id=&quot;customRadio1&quot; name=&quot;customRadio&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadio1&quot;&gt;Toggle this custom radio&lt;/label&gt;
@@ -1565,6 +2010,15 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Inline</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline1">Toggle this custom radio</label>
+</div>
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+  <label class="custom-control-label" for="customRadioInline2">Or toggle this other custom radio</label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-control custom-radio custom-control-inline&quot;&gt;
   &lt;input type=&quot;radio&quot; id=&quot;customRadioInline1&quot; name=&quot;customRadioInline1&quot; class=&quot;custom-control-input&quot;&gt;
   &lt;label class=&quot;custom-control-label&quot; for=&quot;customRadioInline1&quot;&gt;Toggle this custom radio&lt;/label&gt;
@@ -1575,6 +2029,16 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 &lt;/div&gt;
 </code></pre>
 <h3>Disabled</h3>
+<pre></pre> <div class="example"><div class="custom-control custom-checkbox">
+  <input type="checkbox" class="custom-control-input" id="customCheckDisabled" disabled>
+  <label class="custom-control-label" for="customCheckDisabled">Check this custom checkbox</label>
+</div>
+
+<div class="custom-control custom-radio">
+  <input type="radio" id="radio3" name="radioDisabled" id="customRadioDisabled" class="custom-control-input" disabled>
+  <label class="custom-control-label" for="customRadioDisabled">Toggle this custom radio</label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-control custom-checkbox&quot;&gt;
   &lt;input type=&quot;checkbox&quot; class=&quot;custom-control-input&quot; id=&quot;customCheckDisabled&quot; disabled&gt;
   &lt;label class=&quot;custom-control-label&quot; for=&quot;customCheckDisabled&quot;&gt;Check this custom checkbox&lt;/label&gt;
@@ -1587,20 +2051,34 @@ You can add one or many elements in <code>.input-group-prepend</code> or <code>.
 </code></pre>
 <h2>Range</h2>
 <p>By default, the <code>min</code> value is 0, the <code>max</code> value is 100 and <code>step</code> is 1.</p>
+<pre></pre> <div class="example"><label for="customRange1">Example range</label>
+<input type="range" class="custom-range" id="customRange1">
+</div>
 <pre><code class="language-html">&lt;label for=&quot;customRange1&quot;&gt;Example range&lt;/label&gt;
 &lt;input type=&quot;range&quot; class=&quot;custom-range&quot; id=&quot;customRange1&quot;&gt;
 </code></pre>
 <h3>Custom min and max</h3>
 <p>You can also define the <code>min</code> and <code>max</code> attributes.</p>
+<pre></pre> <div class="example"><label for="customRange2">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" id="customRange2">
+</div>
 <pre><code class="language-html">&lt;label for=&quot;customRange2&quot;&gt;Example range&lt;/label&gt;
 &lt;input type=&quot;range&quot; class=&quot;custom-range&quot; min=&quot;0&quot; max=&quot;5&quot; id=&quot;customRange2&quot;&gt;
 </code></pre>
 <h3>Custom step</h3>
 <p>You may want to change the <code>step</code> value.</p>
+<pre></pre> <div class="example"><label for="customRange3">Example range</label>
+<input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
+</div>
 <pre><code class="language-html">&lt;label for=&quot;customRange3&quot;&gt;Example range&lt;/label&gt;
 &lt;input type=&quot;range&quot; class=&quot;custom-range&quot; min=&quot;0&quot; max=&quot;5&quot; step=&quot;0.5&quot; id=&quot;customRange3&quot;&gt;
 </code></pre>
 <h2>File browser</h2>
+<pre></pre> <div class="example"><div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;custom-file&quot;&gt;
   &lt;input type=&quot;file&quot; class=&quot;custom-file-input&quot; id=&quot;customFile&quot;&gt;
   &lt;label class=&quot;custom-file-label&quot; for=&quot;customFile&quot;&gt;Choose file&lt;/label&gt;
@@ -1623,6 +2101,28 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &quot;Grid&quot; is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> by Bootstrap.</p>
 </div>
 <h2>Equal widths</h2>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col">
+      1 of 2
+    </div>
+    <div class="col">
+      2 of 2
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      1 of 3
+    </div>
+    <div class="col">
+      2 of 3
+    </div>
+    <div class="col">
+      3 of 3
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1646,6 +2146,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Different widths</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+</div>
+<div class="row">
+  <div class="col-8">col-8</div>
+  <div class="col-4">col-4</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
   &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
@@ -1658,6 +2169,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Column breaks</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col">col</div>
+  <div class="col">col</div>
+  <div class="w-100"></div>
+  <div class="col">col</div>
+  <div class="col">col</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
   &lt;div class=&quot;col&quot;&gt;col&lt;/div&gt;
@@ -1667,6 +2186,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Nesting rows</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-sm-9">
+    Level 1: .col-sm-9
+    <div class="row">
+      <div class="col-8 col-sm-6">
+        Level 2: .col-8 .col-sm-6
+      </div>
+      <div class="col-4 col-sm-6">
+        Level 2: .col-4 .col-sm-6
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-sm-9&quot;&gt;
     Level 1: .col-sm-9
@@ -1682,6 +2215,25 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Responsive classes</h2>
+<pre></pre> <div class="example"><!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  <div class="col-12 col-md-8">.col-12 .col-md-8</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
+<!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
+<div class="row">
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+  <div class="col-6">.col-6</div>
+  <div class="col-6">.col-6</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;!-- Stack the columns on mobile by making one full-width and the other half-width --&gt;
 &lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-12 col-md-8&quot;&gt;.col-12 .col-md-8&lt;/div&gt;
@@ -1704,6 +2256,42 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <h2>Alignment</h2>
 <h3>Vertical alignement</h3>
 <h4>Columns</h4>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+  <div class="row align-items-end">
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+    <div class="col">
+      One of three columns
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row align-items-start&quot;&gt;
     &lt;div class=&quot;col&quot;&gt;
@@ -1741,6 +2329,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h4>Self align</h4>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col align-self-start">
+      One of three columns
+    </div>
+    <div class="col align-self-center">
+      One of three columns
+    </div>
+    <div class="col align-self-end">
+      One of three columns
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col align-self-start&quot;&gt;
@@ -1756,6 +2358,49 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Horizontal alignement</h3>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row justify-content-start">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-around">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <div class="col-4">
+      One of two columns
+    </div>
+    <div class="col-4">
+      One of two columns
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row justify-content-start&quot;&gt;
     &lt;div class=&quot;col-4&quot;&gt;
@@ -1800,12 +2445,31 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>No gutters</h2>
+<pre></pre> <div class="example"><div class="row no-gutters">
+  <div class="col-12 col-sm-6 col-md-8">.col-12 .col-sm-6 .col-md-8</div>
+  <div class="col-6 col-md-4">.col-6 .col-md-4</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row no-gutters&quot;&gt;
   &lt;div class=&quot;col-12 col-sm-6 col-md-8&quot;&gt;.col-12 .col-sm-6 .col-md-8&lt;/div&gt;
   &lt;div class=&quot;col-6 col-md-4&quot;&gt;.col-6 .col-md-4&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <h2>Order</h2>
+<pre></pre> <div class="example"><div class="container">
+  <div class="row">
+    <div class="col order-last">
+      First, but last
+    </div>
+    <div class="col">
+      Second, but unordered
+    </div>
+    <div class="col order-first">
+      Third, but first
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
   &lt;div class=&quot;row&quot;&gt;
     &lt;div class=&quot;col order-last&quot;&gt;
@@ -1821,6 +2485,18 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Column offsets</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4 offset-md-4">.col-md-4 .offset-md-4</div>
+</div>
+<div class="row">
+  <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+  <div class="col-md-3 offset-md-3">.col-md-3 .offset-md-3</div>
+</div>
+<div class="row">
+  <div class="col-md-6 offset-md-3">.col-md-6 .offset-md-3</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-md-4&quot;&gt;.col-md-4&lt;/div&gt;
   &lt;div class=&quot;col-md-4 offset-md-4&quot;&gt;.col-md-4 .offset-md-4&lt;/div&gt;
@@ -1834,6 +2510,19 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h2>Margin</h2>
+<pre></pre> <div class="example"><div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4 ml-auto">.col-md-4 .ml-auto</div>
+</div>
+<div class="row">
+  <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+  <div class="col-md-3 ml-md-auto">.col-md-3 .ml-md-auto</div>
+</div>
+<div class="row">
+  <div class="col-auto mr-auto">.col-auto .mr-auto</div>
+  <div class="col-auto">.col-auto</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-md-4&quot;&gt;.col-md-4&lt;/div&gt;
   &lt;div class=&quot;col-md-4 ml-auto&quot;&gt;.col-md-4 .ml-auto&lt;/div&gt;
@@ -1878,6 +2567,38 @@ $container-max-widths: (
         <h2>Introduction</h2>
 <p>A loader is typically used to show an animation while loading.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><div class="loader">
+  <div class="loader-spinner loader-primary"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-secondary"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-success"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-danger"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-warning"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-info"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-light"></div>
+</div>
+
+<div class="loader">
+  <div class="loader-spinner loader-dark"></div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;loader&quot;&gt;
   &lt;div class=&quot;loader-spinner loader-primary&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -1911,6 +2632,10 @@ $container-max-widths: (
 &lt;/div&gt;
 </code></pre>
 <p>it may be useful not to show the loader, but after a while. For this, we add the <code>hide</code> class.</p>
+<pre></pre> <div class="example"><div class="loader hide">
+  <div class="loader-spinner"></div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;loader hide&quot;&gt;
   &lt;div class=&quot;loader-spinner&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -2415,6 +3140,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
         <h2>Introduction</h2>
 <p>Nav is a menu containing items (links). It can be displayed horizontally or vertically.</p>
 <h2>List navigation</h2>
+<pre></pre> <div class="example"><ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2431,6 +3171,13 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h2>Link-only navigation</h2>
+<pre></pre> <div class="example"><nav class="nav">
+  <a class="nav-link active" href="#">Active</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;nav&quot;&gt;
   &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
   &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
@@ -2440,6 +3187,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 </code></pre>
 <h2>Horizontal alignement</h2>
 <h3>Center</h3>
+<pre></pre> <div class="example"><ul class="nav justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav justify-content-center&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2456,6 +3218,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h3>Right</h3>
+<pre></pre> <div class="example"><ul class="nav justify-content-end">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav justify-content-end&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2472,6 +3249,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h2>Vertical</h2>
+<pre></pre> <div class="example"><ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav flex-column&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2488,6 +3280,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h2>Pills</h2>
+<pre></pre> <div class="example"><ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-pills&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2504,6 +3311,21 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h2>Fill</h2>
+<pre></pre> <div class="example"><ul class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Longer nav link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Disabled</a>
+  </li>
+</ul>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-pills nav-fill&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
@@ -2520,6 +3342,13 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 &lt;/ul&gt;
 </code></pre>
 <h2>Justify</h2>
+<pre></pre> <div class="example"><nav class="nav nav-pills nav-justified">
+  <a class="nav-link active" href="#">Active</a>
+  <a class="nav-link" href="#">Longer nav link</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;nav nav-pills nav-justified&quot;&gt;
   &lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
   &lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Longer nav link&lt;/a&gt;
@@ -2530,6 +3359,13 @@ document.querySelector('.modal').addEventListener('hidden.ph.modal', () =&gt; {
 <h2>Working with flex utilities</h2>
 <p>Use responsive flex utilities to modify the style of the nav.
 On a small screen size, the below example shows the items with an extended width.</p>
+<pre></pre> <div class="example"><nav class="nav nav-pills flex-column flex-sm-row">
+  <a class="flex-sm-fill text-sm-center nav-link active" href="#">Active</a>
+  <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+  <a class="flex-sm-fill text-sm-center nav-link" href="#">Link</a>
+  <a class="flex-sm-fill text-sm-center nav-link disabled" href="#">Disabled</a>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;nav nav-pills flex-column flex-sm-row&quot;&gt;
   &lt;a class=&quot;flex-sm-fill text-sm-center nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;
   &lt;a class=&quot;flex-sm-fill text-sm-center nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;
@@ -2549,6 +3385,16 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Navbar is a responsive navigation containing links.</p>
 <h2>Brand</h2>
+<pre></pre> <div class="example"><!-- As a link -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+</nav>
+
+<!-- As a heading -->
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand mb-0 h1">Navbar</span>
+</nav>
+</div>
 <pre><code class="language-html">&lt;!-- As a link --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
@@ -2559,22 +3405,52 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
   &lt;span class=&quot;navbar-brand mb-0 h1&quot;&gt;Navbar&lt;/span&gt;
 &lt;/nav&gt;
 </code></pre>
+<pre></pre> <div class="example"><!-- Just an image -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="../../assets/icon.svg" width="30" height="30" alt="">
+  </a>
+</nav>
+</div>
 <pre><code class="language-html">&lt;!-- Just an image --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;
-    &lt;img src=&quot;../site/icon.svg&quot; width=&quot;30&quot; height=&quot;30&quot; alt=&quot;&quot;&gt;
+    &lt;img src=&quot;../../assets/icon.svg&quot; width=&quot;30&quot; height=&quot;30&quot; alt=&quot;&quot;&gt;
   &lt;/a&gt;
 &lt;/nav&gt;
 </code></pre>
+<pre></pre> <div class="example"><!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="../../assets/icon.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Phonon
+  </a>
+</nav>
+</div>
 <pre><code class="language-html">&lt;!-- Image and text --&gt;
 &lt;nav class=&quot;navbar navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;
-    &lt;img src=&quot;../site/icon.svg&quot; width=&quot;30&quot; height=&quot;30&quot; class=&quot;d-inline-block align-top&quot; alt=&quot;&quot;&gt;
+    &lt;img src=&quot;../../assets/icon.svg&quot; width=&quot;30&quot; height=&quot;30&quot; class=&quot;d-inline-block align-top&quot; alt=&quot;&quot;&gt;
     Phonon
   &lt;/a&gt;
 &lt;/nav&gt;
 </code></pre>
 <h2>Nav items</h2>
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+  </div>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavAltMarkup&quot; aria-controls=&quot;navbarNavAltMarkup&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
@@ -2592,6 +3468,37 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h2>Dropdown</h2>
 <p>In case you load the components in ES6, be sure to include <code>dropdown.js</code> (phonon/dist/js/components/dropdown.js).</p>
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Hover Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" data-hover="false">
+        <a class="nav-link dropdown-toggle caret" href="#" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Clickable Dropdown link + caret
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-dark bg-dark&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavDropdown&quot; aria-controls=&quot;navbarNavDropdown&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
@@ -2634,6 +3541,36 @@ dropdowns.forEach(function (dropdown) {
 });
 </script>
 <h2>Collapse</h2>
+<pre></pre> <div class="example"><nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavCollapse" aria-controls="navbarNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavCollapse">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+</div>
 <pre><code class="language-html">&lt;nav class=&quot;navbar navbar-expand-lg navbar-light bg-light&quot;&gt;
   &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Navbar&lt;/a&gt;
   &lt;button class=&quot;navbar-toggler&quot; type=&quot;button&quot; data-toggle=&quot;collapse&quot; data-target=&quot;#navbarNavCollapse&quot; aria-controls=&quot;navbarNavCollapse&quot; aria-expanded=&quot;false&quot; aria-label=&quot;Toggle navigation&quot;&gt;
@@ -2761,6 +3698,75 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <div class="notification notification-dark" style="visibility:visible;opacity:1;top:0;left:auto;bottom:auto;position:relative">
   <div class="notification-inner"><div class="message">You have 2 messages in your inbox</div><button type="button" class="close" data-dismiss="notification" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
 </div>
+<pre></pre> <div class="example"><div class="notification notification-primary">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-secondary">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-success">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-danger">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-warning">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-info">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-light">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+    <button type="button" class="close" data-dismiss="notification" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>
+
+<div class="notification notification-dark">
+  <div class="notification-inner">
+    <div class="message">You have 2 messages in your inbox</div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;notification notification-primary&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message&quot;&gt;You have 2 messages in your inbox&lt;/div&gt;
@@ -2841,6 +3847,31 @@ document.querySelector('#buttonNotificationCookie').addEventListener('click', fu
   }).show();
 });
 </script>
+<pre></pre> <div class="example"><div class="notification notification-dark" style="width: 500px;max-width: 80%;" id="notificationCookie">
+  <div class="notification-inner">
+    <div class="message mr-0">
+      <div class="float-right">
+        <button class="btn btn-primary btn-sm" type="button" data-dismiss="notification">Save</button>
+        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseSettings">Edit settings</button>
+      </div>
+      <div class="mb-2">
+        We use cookies to ensure that you get the best experience on our website.
+        <a class="text-white text-underline d-block" href="#">Learn more here</a>
+      </div>
+      <div class="collapse" id="collapseSettings">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c1" checked>
+          <label class="custom-control-label" for="c1">Retention and access to information</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="c2" checked>
+          <label class="custom-control-label" for="c2">Personalization</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;notification notification-dark&quot; style=&quot;width: 500px;max-width: 80%;&quot; id=&quot;notificationCookie&quot;&gt;
   &lt;div class=&quot;notification-inner&quot;&gt;
     &lt;div class=&quot;message mr-0&quot;&gt;
@@ -3065,7 +4096,7 @@ notification.addEventListener('hidden.ph.notification', () =&gt; {
     <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
     <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
   </div>
-  <iframe class="iframe-example" src="../examples/offcanvas/index.html"></iframe>
+  <iframe class="iframe-example" src="./examples/offcanvas/index.html"></iframe>
 </div>
 <h2>Markup</h2>
 <p>Use <code>.offcanvas-left</code> or <code>.offcanvas-right</code> to determine the direction of the offcanvas.</p>
@@ -3174,6 +4205,12 @@ const offcanvas = $('#exampleOffCanvas').offCanvas({
 <td>body</td>
 <td>no</td>
 </tr>
+<tr>
+<td>closableKeyCodes</td>
+<td>Array of keys that allow to hide the off-canvas. Default key is escape.</td>
+<td>[27]</td>
+<td>no</td>
+</tr>
 </tbody>
 </table>
 <h3>Methods</h3>
@@ -3261,11 +4298,19 @@ document.querySelector('.offcanvas').addEventListener('hidden.ph.offcanvas', () 
         <h2>Introduction</h2>
 <p>A progress indicates the completion status of a task or of a process with a horizontal bar.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><div class="progress" id="myProgress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;0&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 <p>You can specify the height and the value of the progress in HTML if you don't want to use JavaScript:</p>
+<pre></pre> <div class="example"><div class="progress" id="myProgress" style="height: 8px">
+  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;progress&quot; id=&quot;myProgress&quot; style=&quot;height: 8px&quot;&gt;
   &lt;div class=&quot;progress-bar&quot; role=&quot;progressbar&quot; style=&quot;width: 50%&quot; aria-valuenow=&quot;50&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
@@ -3456,6 +4501,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>A selectbox is an element to choose a value in a list of selection items.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+  <input type="hidden" name="color">
+  <i class="selectbox-icon"></i>
+  <div class="default-text">Blue</div>
+  <div class="selectbox-menu">
+    <div class="item" data-value="blue" data-selected="true">Blue</div>
+    <div class="item" data-value="red">Red</div>
+    <div class="item selected" data-value="green">
+      <span class="description">Best one!</span>
+      <span class="text">Green</span>
+    </div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3472,6 +4531,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h3>Selectbox with invalid item</h3>
 <p>Add the class <code>disabled</code> to the item.</p>
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+  <input type="hidden" name="color">
+  <i class="selectbox-icon"></i>
+  <div class="default-text">Blue</div>
+  <div class="selectbox-menu">
+    <div class="item" data-value="blue" data-selected="true">Blue</div>
+    <div class="item" data-value="red">Red</div>
+    <div class="item disabled">Invalid item</div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3484,6 +4554,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with header</h3>
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+  <input type="hidden" name="color">
+  <i class="selectbox-icon"></i>
+  <div class="default-text">Blue</div>
+  <div class="selectbox-menu">
+    <div class="header">Header</div>
+    <div class="item" data-value="blue" data-selected=true>Blue</div>
+    <div class="item" data-value="red">Red</div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3496,6 +4577,19 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with divider</h3>
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-toggle="selectbox">
+  <input type="hidden" name="color">
+  <i class="selectbox-icon"></i>
+  <div class="default-text">Blue</div>
+  <div class="selectbox-menu">
+    <div class="item" data-value="blue" data-selected=true>Blue</div>
+    <div class="item" data-value="red">Red</div>
+    <div class="divider"></div>
+    <div class="item" data-value="orange">Orange</div>
+    <div class="item" data-value="yellow">Yellow</div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3510,6 +4604,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Selectbox with search input</h3>
+<pre></pre> <div class="example"><div class="selectbox" role="button" tabindex="0" data-search="true" data-toggle="selectbox">
+  <input type="hidden" name="color">
+  <i class="selectbox-icon"></i>
+  <div class="default-text">Blue</div>
+  <div class="selectbox-menu">
+    <div class="input-search-container">
+      <input class="form-control" type="text" name="search">
+    </div>
+    <div class="item" data-value="blue" data-selected=true>Blue</div>
+    <div class="item" data-value="red">Red</div>
+    <div class="item" data-value="green">Green</div>
+  </div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;selectbox&quot; role=&quot;button&quot; tabindex=&quot;0&quot; data-search=&quot;true&quot; data-toggle=&quot;selectbox&quot;&gt;
   &lt;input type=&quot;hidden&quot; name=&quot;color&quot;&gt;
   &lt;i class=&quot;selectbox-icon&quot;&gt;&lt;/i&gt;
@@ -3732,6 +4840,19 @@ document.querySelector('.selectbox').addEventListener('hidden.ph.selectbox', () 
 <p>A tab is made up of 2 elements. One is a clickable button and the other is the content.
 It is used to show a fragment of content.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="news-tab" data-toggle="tab" href="#news" role="tab" aria-controls="news" aria-selected="true">News</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="news" role="tabpanel" aria-labelledby="news-tab">News</div>
+  <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">Settings</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;ul class=&quot;nav nav-tabs&quot; id=&quot;myTab&quot; role=&quot;tablist&quot;&gt;
   &lt;li class=&quot;nav-item&quot;&gt;
     &lt;a class=&quot;nav-link active&quot; id=&quot;news-tab&quot; data-toggle=&quot;tab&quot; href=&quot;#news&quot; role=&quot;tab&quot; aria-controls=&quot;news&quot; aria-selected=&quot;true&quot;&gt;News&lt;/a&gt;
@@ -3848,6 +4969,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
         <h2>Introduction</h2>
 <p>A table permits to arrange data into rows and columns of cells.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3880,6 +5032,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Invert colors</h2>
+<pre></pre> <div class="example"><table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -3912,6 +5095,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Head</h2>
+<pre></pre> <div class="example"><table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead class=&quot;thead-dark&quot;&gt;
     &lt;tr&gt;
@@ -3943,6 +5157,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
   &lt;/tbody&gt;
 &lt;/table&gt;
 </code></pre>
+<pre></pre> <div class="example"><table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;thead class=&quot;thead-light&quot;&gt;
     &lt;tr&gt;
@@ -3975,6 +5220,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Striped rows</h2>
+<pre></pre> <div class="example"><table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-striped&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4007,6 +5283,37 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark striped rows.</p>
+<pre></pre> <div class="example"><table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-striped table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4039,6 +5346,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Borders</h2>
+<pre></pre> <div class="example"><table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-bordered&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4070,6 +5407,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
+<pre></pre> <div class="example"><table class="table table-bordered table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-bordered table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4101,6 +5468,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Borderless</h2>
+<pre></pre> <div class="example"><table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-borderless&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4132,6 +5529,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
+<pre></pre> <div class="example"><table class="table table-borderless table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-borderless table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4163,6 +5590,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Rows with hover</h2>
+<pre></pre> <div class="example"><table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-hover&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4194,6 +5651,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <p>Dark</p>
+<pre></pre> <div class="example"><table class="table table-hover table-dark">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-hover table-dark&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4225,6 +5712,36 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Sizing</h2>
+<pre></pre> <div class="example"><table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Misko Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table table-sm&quot;&gt;
   &lt;thead&gt;
     &lt;tr&gt;
@@ -4256,6 +5773,34 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Contextual</h2>
+<pre></pre> <div class="example"><!-- On rows -->
+<table>
+  <tr class="table-active">...</tr>
+
+  <tr class="table-primary">...</tr>
+  <tr class="table-secondary">...</tr>
+  <tr class="table-success">...</tr>
+  <tr class="table-danger">...</tr>
+  <tr class="table-warning">...</tr>
+  <tr class="table-info">...</tr>
+  <tr class="table-light">...</tr>
+  <tr class="table-dark">...</tr>
+
+  <!-- On cells (`td` or `th`) -->
+  <tr>
+    <td class="table-active">...</td>
+
+    <td class="table-primary">...</td>
+    <td class="table-secondary">...</td>
+    <td class="table-success">...</td>
+    <td class="table-danger">...</td>
+    <td class="table-warning">...</td>
+    <td class="table-info">...</td>
+    <td class="table-light">...</td>
+    <td class="table-dark">...</td>
+  </tr>
+</table>
+</div>
 <pre><code class="language-html">&lt;!-- On rows --&gt;
 &lt;table&gt;
   &lt;tr class=&quot;table-active&quot;&gt;...&lt;/tr&gt;
@@ -4285,6 +5830,38 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 &lt;/table&gt;
 </code></pre>
 <h2>Caption</h2>
+<pre></pre> <div class="example"><table class="table">
+  <caption>List of users</caption>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Framework</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Jordan</td>
+      <td>Walke</td>
+      <td>React</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Evan</td>
+      <td>You</td>
+      <td>Vue.js</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Misko</td>
+      <td>Hevery</td>
+      <td>AngularJS</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table class=&quot;table&quot;&gt;
   &lt;caption&gt;List of users&lt;/caption&gt;
   &lt;thead&gt;
@@ -4320,6 +5897,39 @@ document.querySelector('.tab').addEventListener('hidden.ph.tab', () =&gt; {
 <h2>Responsive</h2>
 <h3>Always responsive</h3>
 <p>Horizontal scrolling.</p>
+<pre></pre> <div class="example"><div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Framework</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Jordan</td>
+        <td>Walke</td>
+        <td>React</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Evan</td>
+        <td>You</td>
+        <td>Vue.js</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Misko</td>
+        <td>Hevery</td>
+        <td>AngularJS</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;table-responsive&quot;&gt;
   &lt;table class=&quot;table&quot;&gt;
     &lt;thead&gt;
@@ -4472,6 +6082,10 @@ in the HTML view.</p>
 <pre><code class="language-js">pager.getPage('myPage').setTemplate('&lt;div&gt;This is my template&lt;/div&gt;')
 </code></pre>
 <p>The page template will be injected as a node child where the attribute <code>data-push-template</code> is.</p>
+<pre></pre> <div class="example"><div data-push-template>
+  <!-- The template will be injected here -->
+</div>
+</div>
 <pre><code class="language-html">&lt;div data-push-template&gt;
   &lt;!-- The template will be injected here --&gt;
 &lt;/div&gt;
@@ -4869,6 +6483,11 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Clearfix allows to fix floating elements.</p>
 <h2>Example</h2>
+<pre></pre> <div class="example"><div class="bg-info clearfix">
+  <button type="button" class="btn btn-secondary float-left">Example Button floated left</button>
+  <button type="button" class="btn btn-secondary float-right">Example Button floated right</button>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;bg-info clearfix&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-left&quot;&gt;Example Button floated left&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;btn btn-secondary float-right&quot;&gt;Example Button floated right&lt;/button&gt;
@@ -4907,6 +6526,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Color utility classes.</p>
 <h3>Color</h3>
+<pre></pre> <div class="example"><p class="text-primary">.text-primary</p>
+<p class="text-secondary">.text-secondary</p>
+<p class="text-success">.text-success</p>
+<p class="text-danger">.text-danger</p>
+<p class="text-warning">.text-warning</p>
+<p class="text-info">.text-info</p>
+<p class="text-light bg-dark">.text-light</p>
+<p class="text-dark">.text-dark</p>
+<p class="text-body">.text-body</p>
+<p class="text-muted">.text-muted</p>
+<p class="text-white bg-dark">.text-white</p>
+<p class="text-black-50">.text-black-50</p>
+<p class="text-white-50 bg-dark">.text-white-50</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;text-primary&quot;&gt;.text-primary&lt;/p&gt;
 &lt;p class=&quot;text-secondary&quot;&gt;.text-secondary&lt;/p&gt;
 &lt;p class=&quot;text-success&quot;&gt;.text-success&lt;/p&gt;
@@ -4922,6 +6555,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;p class=&quot;text-white-50 bg-dark&quot;&gt;.text-white-50&lt;/p&gt;
 </code></pre>
 <h3>Link</h3>
+<pre></pre> <div class="example"><p><a href="#" class="text-primary">Primary link</a></p>
+<p><a href="#" class="text-secondary">Secondary link</a></p>
+<p><a href="#" class="text-success">Success link</a></p>
+<p><a href="#" class="text-danger">Danger link</a></p>
+<p><a href="#" class="text-warning">Warning link</a></p>
+<p><a href="#" class="text-info">Info link</a></p>
+<p><a href="#" class="text-light bg-dark">Light link</a></p>
+<p><a href="#" class="text-dark">Dark link</a></p>
+<p><a href="#" class="text-muted">Muted link</a></p>
+<p><a href="#" class="text-white bg-dark">White link</a></p>
+</div>
 <pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-primary&quot;&gt;Primary link&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-secondary&quot;&gt;Secondary link&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-success&quot;&gt;Success link&lt;/a&gt;&lt;/p&gt;
@@ -4934,6 +6578,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;p&gt;&lt;a href=&quot;#&quot; class=&quot;text-white bg-dark&quot;&gt;White link&lt;/a&gt;&lt;/p&gt;
 </code></pre>
 <h3>Background color</h3>
+<pre></pre> <div class="example"><div class="p-3 mb-2 bg-primary text-white">.bg-primary</div>
+<div class="p-3 mb-2 bg-secondary text-white">.bg-secondary</div>
+<div class="p-3 mb-2 bg-success text-white">.bg-success</div>
+<div class="p-3 mb-2 bg-danger text-white">.bg-danger</div>
+<div class="p-3 mb-2 bg-warning text-dark">.bg-warning</div>
+<div class="p-3 mb-2 bg-info text-white">.bg-info</div>
+<div class="p-3 mb-2 bg-light text-dark">.bg-light</div>
+<div class="p-3 mb-2 bg-dark text-white">.bg-dark</div>
+<div class="p-3 mb-2 bg-white text-dark">.bg-white</div>
+<div class="p-3 mb-2 bg-transparent text-dark">.bg-transparent</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;p-3 mb-2 bg-primary text-white&quot;&gt;.bg-primary&lt;/div&gt;
 &lt;div class=&quot;p-3 mb-2 bg-secondary text-white&quot;&gt;.bg-secondary&lt;/div&gt;
 &lt;div class=&quot;p-3 mb-2 bg-success text-white&quot;&gt;.bg-success&lt;/div&gt;
@@ -4970,6 +6625,12 @@ table-row
 flex
 inline-flex</p>
 <h3>Examples</h3>
+<pre></pre> <div class="example"><div class="d-inline p-2 bg-primary text-white">d-inline</div>
+<div class="d-inline p-2 bg-dark text-white">d-inline</div>
+
+<span class="d-block mt-2 p-2 bg-primary text-white">d-block</span>
+<span class="d-block mt-2 p-2 bg-dark text-white">d-block</span>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-inline p-2 bg-primary text-white&quot;&gt;d-inline&lt;/div&gt;
 &lt;div class=&quot;d-inline p-2 bg-dark text-white&quot;&gt;d-inline&lt;/div&gt;
 
@@ -4977,6 +6638,9 @@ inline-flex</p>
 &lt;span class=&quot;d-block mt-2 p-2 bg-dark text-white&quot;&gt;d-block&lt;/span&gt;
 </code></pre>
 <h3>Responsive examples</h3>
+<pre></pre> <div class="example"><div class="d-lg-none">hide on screens wider than lg</div>
+<div class="d-none d-lg-block">hide on screens smaller than lg</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-lg-none&quot;&gt;hide on screens wider than lg&lt;/div&gt;
 &lt;div class=&quot;d-none d-lg-block&quot;&gt;hide on screens smaller than lg&lt;/div&gt;
 </code></pre>
@@ -5051,6 +6715,10 @@ inline-flex</p>
 <li><code>.d-print-inline-flex</code></li>
 </ul>
 <p>Example</p>
+<pre></pre> <div class="example"><div class="d-print-none">Screen Only (Hide on print only)</div>
+<div class="d-none d-print-block">Print Only (Hide on screen only)</div>
+<div class="d-none d-lg-block d-print-block">Hide up to large on screen, but always show on print</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-print-none&quot;&gt;Screen Only (Hide on print only)&lt;/div&gt;
 &lt;div class=&quot;d-none d-print-block&quot;&gt;Print Only (Hide on screen only)&lt;/div&gt;
 &lt;div class=&quot;d-none d-lg-block d-print-block&quot;&gt;Hide up to large on screen, but always show on print&lt;/div&gt;
@@ -5073,6 +6741,10 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li>Usage of <code>.embed-responsive-item</code> is recommended for the child (embed) element.</li>
 </ul>
 <h3>Example</h3>
+<pre></pre> <div class="example"><div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;embed-responsive embed-responsive-16by9&quot;&gt;
   &lt;iframe class=&quot;embed-responsive-item&quot; src=&quot;https://www.youtube.com/embed/zpOULjyy-n8?rel=0&quot; allowfullscreen&gt;&lt;/iframe&gt;
 &lt;/div&gt;
@@ -5111,9 +6783,13 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <p>Flex utility classes.</p>
 <h2>Flex container</h2>
 <h3>Flex</h3>
+<pre></pre> <div class="example"><div class="d-flex p-2 bg-primary">I'm a flexbox container!</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex p-2 bg-primary&quot;&gt;I'm a flexbox container!&lt;/div&gt;
 </code></pre>
 <h3>Inline flex</h3>
+<pre></pre> <div class="example"><div class="d-inline-flex p-2 bg-primary">I'm an inline flexbox container!</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-inline-flex p-2 bg-primary&quot;&gt;I'm an inline flexbox container!&lt;/div&gt;
 </code></pre>
 <h3>Responsive flex container</h3>
@@ -5133,6 +6809,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <h3>Horizontal</h3>
 <p><code>.flex-row</code></p>
 <p><code>.flex-row-reverse</code></p>
+<pre></pre> <div class="example"><div class="d-flex flex-row bg-primary mb-3">
+  <div class="p-2 bg-primary">Flex item 1</div>
+  <div class="p-2 bg-primary">Flex item 2</div>
+  <div class="p-2 bg-primary">Flex item 3</div>
+</div>
+<div class="d-flex flex-row-reverse bg-primary">
+  <div class="p-2 bg-primary">Flex item 1</div>
+  <div class="p-2 bg-primary">Flex item 2</div>
+  <div class="p-2 bg-primary">Flex item 3</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex flex-row bg-primary mb-3&quot;&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item 1&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item 2&lt;/div&gt;
@@ -5146,6 +6833,17 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h3>Columns</h3>
 <p>Use <code>.flex-column</code> or <code>.flex-column-reverse</code></p>
+<pre></pre> <div class="example"><div class="d-flex flex-column bg-primary mb-3">
+  <div class="p-2 bg-primary">Flex item 1</div>
+  <div class="p-2 bg-primary">Flex item 2</div>
+  <div class="p-2 bg-primary">Flex item 3</div>
+</div>
+<div class="d-flex flex-column-reverse bg-primary">
+  <div class="p-2 bg-primary">Flex item 1</div>
+  <div class="p-2 bg-primary">Flex item 2</div>
+  <div class="p-2 bg-primary">Flex item 3</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex flex-column bg-primary mb-3&quot;&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item 1&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item 2&lt;/div&gt;
@@ -5182,6 +6880,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </ul>
 <h2>Justify content</h2>
 <h3>Start</h3>
+<pre></pre> <div class="example"><div class="d-flex justify-content-start bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex justify-content-start bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5191,6 +6897,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>End</h3>
+<pre></pre> <div class="example"><div class="d-flex justify-content-end bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex justify-content-end bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5200,6 +6914,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Center</h3>
+<pre></pre> <div class="example"><div class="d-flex justify-content-center bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex justify-content-center bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5209,6 +6931,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Between</h3>
+<pre></pre> <div class="example"><div class="d-flex justify-content-between bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex justify-content-between bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5218,6 +6948,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Around</h3>
+<pre></pre> <div class="example"><div class="d-flex justify-content-around bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex justify-content-around bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5256,6 +6994,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </ul>
 <h2>Align items</h2>
 <h3>Start</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-start bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-start bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5265,6 +7011,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>End</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-end bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-end bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5274,6 +7028,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Center</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-center bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-center bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5283,6 +7045,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Baseline</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-baseline bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-baseline bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5292,6 +7062,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Stretch</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-stretch bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-stretch bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5330,6 +7108,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </ul>
 <h2>Align self</h2>
 <h3>Start</h3>
+<pre></pre> <div class="example"><div class="d-flex bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary align-self-start">Aligned flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary align-self-start&quot;&gt;Aligned flex item&lt;/div&gt;
@@ -5337,6 +7121,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>End</h3>
+<pre></pre> <div class="example"><div class="d-flex bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary align-self-end">Aligned flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary align-self-end&quot;&gt;Aligned flex item&lt;/div&gt;
@@ -5344,6 +7134,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Center</h3>
+<pre></pre> <div class="example"><div class="d-flex bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary align-self-center">Aligned flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary align-self-center&quot;&gt;Aligned flex item&lt;/div&gt;
@@ -5351,6 +7147,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Baseline</h3>
+<pre></pre> <div class="example"><div class="d-flex bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary align-self-baseline">Aligned flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary align-self-baseline&quot;&gt;Aligned flex item&lt;/div&gt;
@@ -5358,6 +7160,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Stretch</h3>
+<pre></pre> <div class="example"><div class="d-flex bg-primary" style="height: 120px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary align-self-stretch">Aligned flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary align-self-stretch&quot;&gt;Aligned flex item&lt;/div&gt;
@@ -5393,6 +7201,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-self-xl-stretch</code></li>
 </ul>
 <h2>Fill</h2>
+<pre></pre> <div class="example"><div class="d-flex bg-primary">
+  <div class="p-2 flex-fill bg-primary">Flex item</div>
+  <div class="p-2 flex-fill bg-primary">Flex item</div>
+  <div class="p-2 flex-fill bg-primary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot;&gt;
   &lt;div class=&quot;p-2 flex-fill bg-primary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 flex-fill bg-primary&quot;&gt;Flex item&lt;/div&gt;
@@ -5408,6 +7222,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.flex-xl-fill</code></li>
 </ul>
 <h2>Grow</h2>
+<pre></pre> <div class="example"><div class="d-flex bg-primary">
+  <div class="p-2 flex-grow-1 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Third flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot;&gt;
   &lt;div class=&quot;p-2 flex-grow-1 bg-primary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item&lt;/div&gt;
@@ -5428,6 +7248,11 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.flex-xl-grow-1</code></li>
 </ul>
 <h2>Shrink</h2>
+<pre></pre> <div class="example"><div class="d-flex bg-primary">
+  <div class="p-2 w-100 bg-primary">Flex item</div>
+  <div class="p-2 flex-shrink-1 bg-primary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary&quot;&gt;
   &lt;div class=&quot;p-2 w-100 bg-primary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 flex-shrink-1 bg-primary&quot;&gt;Flex item&lt;/div&gt;
@@ -5447,6 +7272,24 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.flex-xl-shrink-1</code></li>
 </ul>
 <h2>Auto margin</h2>
+<pre></pre> <div class="example"><div class="d-flex bg-primary mb-3">
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+</div>
+
+<div class="d-flex bg-primary mb-3">
+  <div class="mr-auto p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+</div>
+
+<div class="d-flex bg-primary mb-3">
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="ml-auto p-2 bg-primary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex bg-primary mb-3&quot;&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item&lt;/div&gt;
@@ -5466,6 +7309,18 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Auto margin with align-items</h3>
+<pre></pre> <div class="example"><div class="d-flex align-items-start flex-column bg-primary mb-3" style="height: 200px">
+  <div class="mb-auto p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+</div>
+
+<div class="d-flex align-items-end flex-column bg-primary mb-3" style="height: 200px">
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="p-2 bg-primary">Flex item</div>
+  <div class="mt-auto p-2 bg-primary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-items-start flex-column bg-primary mb-3&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;mb-auto p-2 bg-primary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-primary&quot;&gt;Flex item&lt;/div&gt;
@@ -5480,6 +7335,14 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h2>Wrap</h2>
 <h3>No wrap</h3>
+<pre></pre> <div class="example"><div class="d-flex flex-nowrap bg-primary" style="width: 100px;">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex flex-nowrap bg-primary&quot; style=&quot;width: 100px;&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5497,6 +7360,23 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.flex-xl-nowrap</code></li>
 </ul>
 <h3>Wrap</h3>
+<pre></pre> <div class="example"><div class="d-flex flex-wrap bg-primary">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex flex-wrap bg-primary&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5523,6 +7403,23 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.flex-xl-wrap</code></li>
 </ul>
 <h3>Reverse wrap</h3>
+<pre></pre> <div class="example"><div class="d-flex flex-wrap-reverse bg-primary">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex flex-wrap-reverse bg-primary&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5624,6 +7521,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </ul>
 <h2>Align content</h2>
 <h3>Start</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-start flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-start flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5649,6 +7562,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-content-xl-start</code></li>
 </ul>
 <h3>End</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-end flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-end flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5674,6 +7603,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-content-xl-end</code></li>
 </ul>
 <h3>Center</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-center flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-center flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5699,6 +7644,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-content-xl-center</code></li>
 </ul>
 <h3>Between</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-between flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-between flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5724,6 +7685,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-content-xl-between</code></li>
 </ul>
 <h3>Around</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-around flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-around flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5749,6 +7726,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <li><code>.align-content-xl-around</code></li>
 </ul>
 <h3>Stretch</h3>
+<pre></pre> <div class="example"><div class="d-flex align-content-stretch flex-wrap bg-primary" style="height: 200px">
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+  <div class="p-2 bg-secondary">Flex item</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;d-flex align-content-stretch flex-wrap bg-primary&quot; style=&quot;height: 200px&quot;&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
   &lt;div class=&quot;p-2 bg-secondary&quot;&gt;Flex item&lt;/div&gt;
@@ -5785,11 +7778,20 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Float utility classes.</p>
 <h2>Classes</h2>
+<pre></pre> <div class="example"><div class="float-left">Float left on all viewport sizes</div><br>
+<div class="float-right">Float right on all viewport sizes</div><br>
+<div class="float-none">Don't float on all viewport sizes</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;float-left&quot;&gt;Float left on all viewport sizes&lt;/div&gt;&lt;br&gt;
 &lt;div class=&quot;float-right&quot;&gt;Float right on all viewport sizes&lt;/div&gt;&lt;br&gt;
 &lt;div class=&quot;float-none&quot;&gt;Don't float on all viewport sizes&lt;/div&gt;
 </code></pre>
 <h2>Responsive classes</h2>
+<pre></pre> <div class="example"><div class="float-sm-left">Float left on viewports sized SM (small) or wider</div><br>
+<div class="float-md-left">Float left on viewports sized MD (medium) or wider</div><br>
+<div class="float-lg-left">Float left on viewports sized LG (large) or wider</div><br>
+<div class="float-xl-left">Float left on viewports sized XL (extra-large) or wider</div><br>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;float-sm-left&quot;&gt;Float left on viewports sized SM (small) or wider&lt;/div&gt;&lt;br&gt;
 &lt;div class=&quot;float-md-left&quot;&gt;Float left on viewports sized MD (medium) or wider&lt;/div&gt;&lt;br&gt;
 &lt;div class=&quot;float-lg-left&quot;&gt;Float left on viewports sized LG (large) or wider&lt;/div&gt;&lt;br&gt;
@@ -5951,11 +7953,15 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <p>Hide elements from assistive technology such as screen readers to improve web accessibility.</p>
 <h2>Class</h2>
 <p>Use <code>.sr-only</code> to hide an element to all devices except screen readers.</p>
+<pre></pre> <div class="example"><a class="sr-only" href="#content">Skip to main content</a>
+</div>
 <pre><code class="language-html">&lt;a class=&quot;sr-only&quot; href=&quot;#content&quot;&gt;Skip to main content&lt;/a&gt;
 </code></pre>
 <h3>Focusable class</h3>
 <p>Use <code>.sr-only</code> and <code>.sr-only-focusable</code> to show the element again when it's focused.
 Press TAB or another key to test it.</p>
+<pre></pre> <div class="example"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+</div>
 <pre><code class="language-html">&lt;a class=&quot;sr-only sr-only-focusable&quot; href=&quot;#content&quot;&gt;Skip to main content&lt;/a&gt;
 </code></pre>
 <h2>Sass mixin</h2>
@@ -5977,6 +7983,12 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <p>Sizing utility classes.</p>
 <h2>Classes</h2>
 <h3>Width</h3>
+<pre></pre> <div class="example"><div class="w-25 p-3" style="background-color: #eee;">Width 25%</div>
+<div class="w-50 p-3" style="background-color: #eee;">Width 50%</div>
+<div class="w-75 p-3" style="background-color: #eee;">Width 75%</div>
+<div class="w-100 p-3" style="background-color: #eee;">Width 100%</div>
+<div class="w-auto p-3" style="background-color: #eee;">Width auto</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;w-25 p-3&quot; style=&quot;background-color: #eee;&quot;&gt;Width 25%&lt;/div&gt;
 &lt;div class=&quot;w-50 p-3&quot; style=&quot;background-color: #eee;&quot;&gt;Width 50%&lt;/div&gt;
 &lt;div class=&quot;w-75 p-3&quot; style=&quot;background-color: #eee;&quot;&gt;Width 75%&lt;/div&gt;
@@ -5984,9 +7996,19 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;div class=&quot;w-auto p-3&quot; style=&quot;background-color: #eee;&quot;&gt;Width auto&lt;/div&gt;
 </code></pre>
 <h3>Max width</h3>
+<pre></pre> <div class="example"><div class="mw-100 bg-secondary" style="9999px">Max width 100%</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;mw-100 bg-secondary&quot; style=&quot;9999px&quot;&gt;Max width 100%&lt;/div&gt;
 </code></pre>
 <h3>Height</h3>
+<pre></pre> <div class="example"><div style="height: 100px; background-color: rgba(255,0,0,0.1);">
+  <div class="h-25 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 25%</div>
+  <div class="h-50 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 50%</div>
+  <div class="h-75 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 75%</div>
+  <div class="h-100 d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height 100%</div>
+  <div class="h-auto d-inline-block" style="width: 120px; background-color: rgba(0,0,255,.1)">Height auto</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div style=&quot;height: 100px; background-color: rgba(255,0,0,0.1);&quot;&gt;
   &lt;div class=&quot;h-25 d-inline-block&quot; style=&quot;width: 120px; background-color: rgba(0,0,255,.1)&quot;&gt;Height 25%&lt;/div&gt;
   &lt;div class=&quot;h-50 d-inline-block&quot; style=&quot;width: 120px; background-color: rgba(0,0,255,.1)&quot;&gt;Height 50%&lt;/div&gt;
@@ -5996,6 +8018,10 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/div&gt;
 </code></pre>
 <h3>Max height</h3>
+<pre></pre> <div class="example"><div class="w-100 bg-primary" style="height: 120px">
+  <div class="mh-100 bg-secondary" style="height: 150px">Max height 100%</div>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;w-100 bg-primary&quot; style=&quot;height: 120px&quot;&gt;
   &lt;div class=&quot;mh-100 bg-secondary&quot; style=&quot;height: 150px&quot;&gt;Max height 100%&lt;/div&gt;
 &lt;/div&gt;
@@ -6030,6 +8056,10 @@ auto sets margin or padding to <code>auto</code></p>
 <code>my-{size}</code> - sets both margin-top and margin-bottom of size <code>{size}</code>
 <code>m-{size}</code> - sets margin in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
+<pre></pre> <div class="example"><div class="mt-2 mr-1 mb-1 mr-1 bg-primary" style="height: 50px"></div>
+
+<div class="mx-2 my-4 bg-secondary" style="height: 50px"></div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;mt-2 mr-1 mb-1 mr-1 bg-primary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;mx-2 my-4 bg-secondary&quot; style=&quot;height: 50px&quot;&gt;&lt;/div&gt;
@@ -6044,11 +8074,19 @@ auto sets margin or padding to <code>auto</code></p>
 <code>py-{size}</code> - sets both padding-top and padding-bottom of size <code>{size}</code>
 <code>p-{size}</code> - sets padding in 4 directions of size <code>{size}</code></p>
 <p>Example:</p>
+<pre></pre> <div class="example"><div class="pt-2 pr-1 pb-1 pr-1 bg-primary"></div>
+
+<div class="px-2 py-4 bg-secondary"></div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;pt-2 pr-1 pb-1 pr-1 bg-primary&quot;&gt;&lt;/div&gt;
 
 &lt;div class=&quot;px-2 py-4 bg-secondary&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2>Horizontal centering</h2>
+<pre></pre> <div class="example"><div class="mx-auto" style="width: 200px;">
+  Centered element
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;mx-auto&quot; style=&quot;width: 200px;&quot;&gt;
   Centered element
 &lt;/div&gt;
@@ -6065,12 +8103,22 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Text utility classes.</p>
 <h2>Classes</h2>
+<pre></pre> <div class="example"><p class="text-justify">Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+<p class="text-left">Left aligned text on all viewport sizes.</p>
+<p class="text-center">Center aligned text on all viewport sizes.</p>
+<p class="text-right">Right aligned text on all viewport sizes.</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;text-justify&quot;&gt;Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.&lt;/p&gt;
 &lt;p class=&quot;text-left&quot;&gt;Left aligned text on all viewport sizes.&lt;/p&gt;
 &lt;p class=&quot;text-center&quot;&gt;Center aligned text on all viewport sizes.&lt;/p&gt;
 &lt;p class=&quot;text-right&quot;&gt;Right aligned text on all viewport sizes.&lt;/p&gt;
 </code></pre>
 <h2>Responsive classes</h2>
+<pre></pre> <div class="example"><p class="text-sm-left">Left aligned text on viewports sized SM (small) or wider.</p>
+<p class="text-md-left">Left aligned text on viewports sized MD (medium) or wider.</p>
+<p class="text-lg-left">Left aligned text on viewports sized LG (large) or wider.</p>
+<p class="text-xl-left">Left aligned text on viewports sized XL (extra-large) or wider.</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;text-sm-left&quot;&gt;Left aligned text on viewports sized SM (small) or wider.&lt;/p&gt;
 &lt;p class=&quot;text-md-left&quot;&gt;Left aligned text on viewports sized MD (medium) or wider.&lt;/p&gt;
 &lt;p class=&quot;text-lg-left&quot;&gt;Left aligned text on viewports sized LG (large) or wider.&lt;/p&gt;
@@ -6078,12 +8126,28 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 </code></pre>
 <h2>Text wrapping and overflow</h2>
 <h3>No wrap</h3>
+<pre></pre> <div class="example"><div class="text-nowrap bg-warning" style="width: 8rem;">
+  This text should overflow the parent.
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;text-nowrap bg-warning&quot; style=&quot;width: 8rem;&quot;&gt;
   This text should overflow the parent.
 &lt;/div&gt;
 </code></pre>
 <h3>Truncate</h3>
 <p>Truncate the text with an ellipsis. This requires a block element (<code>display: block</code> or <code>display: inline-block</code>).</p>
+<pre></pre> <div class="example"><!-- Block level -->
+<div class="row">
+  <div class="col-2 text-truncate">
+    Praeterea iter est quasdam res quas ex communi.
+  </div>
+</div>
+
+<!-- Inline level -->
+<span class="d-inline-block text-truncate" style="max-width: 150px;">
+  Praeterea iter est quasdam res quas ex communi.
+</span>
+</div>
 <pre><code class="language-html">&lt;!-- Block level --&gt;
 &lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-2 text-truncate&quot;&gt;
@@ -6097,17 +8161,28 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 &lt;/span&gt;
 </code></pre>
 <h2>Text transform</h2>
+<pre></pre> <div class="example"><p class="text-lowercase">Lowercased text.</p>
+<p class="text-uppercase">Uppercased text.</p>
+<p class="text-capitalize">CapiTaliZed text.</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;text-lowercase&quot;&gt;Lowercased text.&lt;/p&gt;
 &lt;p class=&quot;text-uppercase&quot;&gt;Uppercased text.&lt;/p&gt;
 &lt;p class=&quot;text-capitalize&quot;&gt;CapiTaliZed text.&lt;/p&gt;
 </code></pre>
 <h2>Font weight and italics</h2>
+<pre></pre> <div class="example"><p class="font-weight-bold">Bold text.</p>
+<p class="font-weight-normal">Normal weight text.</p>
+<p class="font-weight-light">Light weight text.</p>
+<p class="font-italic">Italic text.</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;font-weight-bold&quot;&gt;Bold text.&lt;/p&gt;
 &lt;p class=&quot;font-weight-normal&quot;&gt;Normal weight text.&lt;/p&gt;
 &lt;p class=&quot;font-weight-light&quot;&gt;Light weight text.&lt;/p&gt;
 &lt;p class=&quot;font-italic&quot;&gt;Italic text.&lt;/p&gt;
 </code></pre>
 <h2>Monospace</h2>
+<pre></pre> <div class="example"><p class="text-monospace">This is in monospace</p>
+</div>
 <pre><code class="language-html">&lt;p class=&quot;text-monospace&quot;&gt;This is in monospace&lt;/p&gt;
 </code></pre>
 <div class="alert alert-secondary" role="alert">
@@ -6124,6 +8199,10 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
 <p>This class improves the user experience on mobile by reducing user frustration from
 unintended selections.</p>
 <h2>Markup</h2>
+<pre></pre> <div class="example"><div class="unselectable">
+  <p>I am unselectable.</p>
+</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;unselectable&quot;&gt;
   &lt;p&gt;I am unselectable.&lt;/p&gt;
 &lt;/div&gt;
@@ -6136,6 +8215,13 @@ unintended selections.</p>
 <p>Vertical align utility classes.</p>
 <h2>Classes</h2>
 <p>For inline elements.</p>
+<pre></pre> <div class="example"><span class="align-baseline">baseline</span>
+<span class="align-top">top</span>
+<span class="align-middle">middle</span>
+<span class="align-bottom">bottom</span>
+<span class="align-text-top">text-top</span>
+<span class="align-text-bottom">text-bottom</span>
+</div>
 <pre><code class="language-html">&lt;span class=&quot;align-baseline&quot;&gt;baseline&lt;/span&gt;
 &lt;span class=&quot;align-top&quot;&gt;top&lt;/span&gt;
 &lt;span class=&quot;align-middle&quot;&gt;middle&lt;/span&gt;
@@ -6145,6 +8231,19 @@ unintended selections.</p>
 </code></pre>
 <h2>Table-cell classes</h2>
 <p>For table-cells.</p>
+<pre></pre> <div class="example"><table style="height: 100px;">
+  <tbody>
+    <tr>
+      <td class="align-baseline">baseline</td>
+      <td class="align-top">top</td>
+      <td class="align-middle">middle</td>
+      <td class="align-bottom">bottom</td>
+      <td class="align-text-top">text-top</td>
+      <td class="align-text-bottom">text-bottom</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 <pre><code class="language-html">&lt;table style=&quot;height: 100px;&quot;&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
@@ -6170,6 +8269,9 @@ by Bootstrap, used under <a href="https://creativecommons.org/licenses/by/3.0/">
         <h2>Introduction</h2>
 <p>Visibility align utility classes.</p>
 <h2>Classes</h2>
+<pre></pre> <div class="example"><div class="visible">I am visible</div>
+<div class="invisible">I am invisible</div>
+</div>
 <pre><code class="language-html">&lt;div class=&quot;visible&quot;&gt;I am visible&lt;/div&gt;
 &lt;div class=&quot;invisible&quot;&gt;I am invisible&lt;/div&gt;
 </code></pre>
@@ -6243,6 +8345,6 @@ var tables=document.querySelectorAll("table");if(tables){tables.forEach(function
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scss.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-    <script src="./highlight.js"></script>
+    <script src="./docs.js"></script>
 </body>
 </html>

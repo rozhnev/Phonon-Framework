@@ -20,7 +20,7 @@ On larger screens such as `lg` and `xl`, the offcanvas will push the content to 
     <button type="button" class="btn btn-sm btn-secondary" data-size="md">md</button>
     <button type="button" class="btn btn-sm btn-secondary" data-size="lg">lg</button>
   </div>
-  <iframe class="iframe-example" src="../examples/offcanvas/index.html"></iframe>
+  <iframe class="iframe-example" src="./examples/offcanvas/index.html"></iframe>
 </div>
 
 ## Markup
