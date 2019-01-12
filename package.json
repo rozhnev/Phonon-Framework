@@ -14,9 +14,10 @@
     "unit": "jest test/unit --no-watchman",
     "unit:coverage": "jest test/unit --no-watchman --coverage",
     "e2e": "testcafe chromium ./test/e2e/**",
-    "docs": "documentor docs -o docs/index.html",
+    "docs": "node ./bin/docs",
     "lint": "node ./node_modules/eslint/bin/eslint.js --ext .js src test/unit test/e2e",
-    "release": "node ./bin/release"
+    "release": "node ./bin/release",
+    "deploy": "node ./bin/deploy"
   },
   "engines": {
     "node": ">= 6.0.0",
@@ -47,7 +48,6 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
     "node-sass": "^4.11.0",
     "release": "^5.0.3",
