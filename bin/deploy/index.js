@@ -10,7 +10,11 @@ async function deploy() {
   await exec(`cp ./dist/js/${phononJS} ./site/${phononJS}`);
 
   // Push to gh-pages
-  await exec('git subtree push --prefix site origin gh-pages');
+  // first push
+  // await exec('git subtree push --prefix site origin gh-pages');
+
+  // update
+  await exec('git subtree split --prefix site origin gh-pages');
 }
 
 (async () => {
