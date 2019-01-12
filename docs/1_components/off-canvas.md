@@ -108,7 +108,7 @@ const offcanvas = $('#exampleOffCanvas').offCanvas({
 |    aside.xl      |  Displays the off-canvas menu next to the container when the screen size is `xl` size. | true | yes `data-aside-xl` |
 |    toggle      |  Toggles the off-canvas menu when it is initialized. | false | yes `data-toggle` |
 |    container      |  The container that will be moved to the right or left if the off-canvas menu is displayed in aside mode. | body | no |
-
+|    closableKeyCodes   |  Array of keys that allow to hide the off-canvas. Default key is escape. | [27] | no |
 
 ### Methods
 

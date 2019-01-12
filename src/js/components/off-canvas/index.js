@@ -22,6 +22,9 @@ const OffCanvas = (($) => {
     element: null,
     container: document.body,
     toggle: false,
+    closableKeyCodes: [
+      27, // Escape
+    ],
     aside: {
       md: false,
       lg: true,
@@ -135,7 +138,7 @@ const OffCanvas = (($) => {
     }
 
     onElementEvent(event) {
-      if (event.type === 'keyup' && event.keyCode !== 27 && event.keyCode !== 13) {
+      if (event.type === 'keyup' && !this.options.closableKeyCodes.find(k => k === event.keyCode)) {
         return;
       }
 
